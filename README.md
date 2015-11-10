@@ -1,10 +1,1 @@
 Please note that you will want to edit the pom.xml with your own proper names and description. Also you might want to make this readme more personal.
-
-test
-test <jack>
-test Jelle
-
-test123
-
-Test Lel
-
