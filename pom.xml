@@ -16,7 +16,7 @@
     </developer>
   </developers>
   <build>
-    <finalName>appprovisioner</finalName>
+    <finalName>HalewijnPersoonlijkheidstest</finalName>
     <plugins>
       <plugin>
         <groupId>org.jacoco</groupId>
