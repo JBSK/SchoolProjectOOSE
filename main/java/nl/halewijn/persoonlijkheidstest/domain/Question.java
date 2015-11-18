@@ -8,30 +8,35 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "Vraag")
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-public abstract class Vraag {
+@Table(name = "Question")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Question {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	private int vraagNummer;
-	
-	private String vraag;
-	
-	@ManyToOne
-	@JoinColumn(name = "typeNummer")
-	private Type type;
-	
-	public Vraag(String vraag) {
-		this.vraag = vraag;
-	}
-	
-	public Vraag() {
+	private int questionID;
 
-	}
+    @NotNull
+    private String text;
 	
+	public Question(String questionText) {
+        this.text = questionText;
+	}
+
+	public int getID() {
+		return questionID;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
 }
