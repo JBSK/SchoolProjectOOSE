@@ -26,6 +26,9 @@ public class Theorem {
         this.text = text;
 		this.weight = weight;
 	}
+	
+	public Theorem() {
+	}
 
 	public int getTheoremID() {
 		return theoremID;

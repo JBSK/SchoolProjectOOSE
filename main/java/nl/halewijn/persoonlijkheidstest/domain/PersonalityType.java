@@ -28,4 +28,43 @@ public class PersonalityType {
 		this.primaryDescription = primaryDescription;
 		this.secondaryDescription = secondaryDescription;
 	}
+
+	public PersonalityType() {
+	}
+
+	public int getTypeID() {
+		return typeID;
+	}
+
+	public void setTypeID(int typeID) {
+		this.typeID = typeID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPrimaryDescription() {
+		return primaryDescription;
+	}
+
+	public void setPrimaryDescription(String primaryDescription) {
+		this.primaryDescription = primaryDescription;
+	}
+
+	public String getSecondaryDescription() {
+		return secondaryDescription;
+	}
+
+	public void setSecondaryDescription(String secondaryDescription) {
+		this.secondaryDescription = secondaryDescription;
+	}
+	
+	
+	
+	
 }
