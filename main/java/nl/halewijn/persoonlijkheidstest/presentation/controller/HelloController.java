@@ -42,11 +42,10 @@ public class HelloController {
       return "Success";
     }
     
-    @RequestMapping(value="/stellingen")
-    public String showStellingen(Model model) {
-        model.addAttribute("stellingen", localTheoremService.getAll());
-
-      return "stellingen";
+    @RequestMapping(value="/theorems")
+    public String showTheorems(Model model) {
+        model.addAttribute("theorems", localTheoremService.getAll());
+        return "theorems";
     }
 
 }

@@ -18,11 +18,11 @@
     		<th>Weight</th>
     	</thead>
     	<tbody>
-		    <tr th:each="stelling : ${stellingen}">
-		    	<td th:text="${stelling.theoremID}">id</td>
-		    	<td th:text="${stelling.personalityType.name}">type</td>
-		   		<td th:text="${stelling.text}">stelling text</td>
-		   		<td th:text="${stelling.weight}">weight</td>
+		    <tr th:each="theorem : ${theorems}">
+		    	<td th:text="${theorem.theoremID}">id</td>
+		    	<td th:text="${theorem.personalityType.name}">type</td>
+		   		<td th:text="${theorem.text}">stelling text</td>
+		   		<td th:text="${theorem.weight}">weight</td>
 			</tr>
 		</tbody>
 	</table>
