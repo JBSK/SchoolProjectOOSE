@@ -14,10 +14,15 @@ public class TheoremBattle extends Question {
 	@JoinColumn(name = "secondTheorem", referencedColumnName = "theoremID", insertable = false, updatable = false)
 	private Theorem secondTheorem;
 	
-	public TheoremBattle(PersonalityType personalityType, String questionText, Theorem firstTheorem, Theorem secondTheorem) {
+	public TheoremBattle(String questionText, Theorem firstTheorem, Theorem secondTheorem) {
 		super(questionText);
 		this.firstTheorem = firstTheorem;
 		this.secondTheorem = secondTheorem;
+	}
+	
+	public TheoremBattle() {
+		super("");
+
 	}
 
 	public Theorem getFirstTheorem() {

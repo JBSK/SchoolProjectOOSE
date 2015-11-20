@@ -2,7 +2,11 @@ package nl.halewijn.persoonlijkheidstest.datasource.dao;
 
 import java.util.List;
 import javax.transaction.Transactional;
+
+import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
+import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +38,7 @@ public class QuestionDao {
 	}
 
     /**
-	* Retrieve a question by ID.
+	* Retrieve an OpenQuestion by ID.
 	*/
 	public Question getById(int questionID) {
 		return (Question) getSession().load(Question.class, questionID);

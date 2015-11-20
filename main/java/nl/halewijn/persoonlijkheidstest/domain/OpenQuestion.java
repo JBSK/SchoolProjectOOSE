@@ -8,12 +8,16 @@ import javax.persistence.Table;
 @Table(name = "OpenQuestion")
 public class OpenQuestion extends Question {
 
-	@ManyToOne
-	private PersonalityType personalityType;
-
-	public OpenQuestion(PersonalityType personalityType, String questionText) {
+	public OpenQuestion(String questionText) {
 		super(questionText);
-		this.personalityType = personalityType;
+	}
+	
+	public OpenQuestion() {
+		super("");
+	}
+	
+	public String getText() {
+		return super.getText();
 	}
 
 }

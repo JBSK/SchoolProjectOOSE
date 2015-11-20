@@ -1,8 +1,8 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.datasource.dao.PersonalityTypeDao;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
+import nl.halewijn.persoonlijkheidstest.services.PasswordHashExample;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +46,18 @@ public class HelloController {
     public String showTheorems(Model model) {
         model.addAttribute("theorems", localTheoremService.getAll());
         return "theorems";
+    }
+
+    @RequestMapping(value="/hashpassword")
+    @ResponseBody
+    public String hash(@RequestParam(value="password", required=true, defaultValue="abc") String argPassword) {
+        return new PasswordHashExample().hashPassword(argPassword);
+    }
+
+    @RequestMapping(value="/verifypassword")
+    @ResponseBody
+    public boolean verify(@RequestParam(value="password", required=true, defaultValue="abc") String argPassword, @RequestParam(value="hash", required=true, defaultValue="abc") String argHash) {
+        return new PasswordHashExample().verifyPassword(argPassword, argHash);
     }
 
 }
