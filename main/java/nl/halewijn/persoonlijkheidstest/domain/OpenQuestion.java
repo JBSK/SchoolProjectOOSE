@@ -6,7 +6,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "OpenQuestion")
 public class OpenQuestion extends Question {
 
 	@Transient

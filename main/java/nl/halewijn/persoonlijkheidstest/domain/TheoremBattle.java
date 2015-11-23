@@ -3,7 +3,6 @@ package nl.halewijn.persoonlijkheidstest.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TheoremBattle")
 public class TheoremBattle extends Question {
 	
 	@ManyToOne
