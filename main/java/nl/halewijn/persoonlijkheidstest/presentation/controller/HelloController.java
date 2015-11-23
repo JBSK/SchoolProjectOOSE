@@ -1,9 +1,13 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
+import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
+import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.PasswordHashExample;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +25,14 @@ public class HelloController {
 
     @Autowired
     private LocalTheoremService localTheoremService;
+    
+    @Autowired
+    private LocalQuestionService localQuestionService;
 	
     @RequestMapping("/")
     public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
-        return "greeting";
+        return "login";
     }
     
     @RequestMapping(value="/save")
@@ -36,6 +43,16 @@ public class HelloController {
             localPersonalityTypeService.save(optimist);
             Theorem theorem = new Theorem(optimist, argTheoremText, argTheoremWeight);
             localTheoremService.save(theorem);
+            
+            Theorem theorem2 = new Theorem(optimist, argTheoremText, argTheoremWeight);
+            localTheoremService.save(theorem);
+            
+            OpenQuestion openQ = new OpenQuestion("Is dit een open vraag? 1111111");
+            localQuestionService.save(openQ);
+            
+            TheoremBattle theoremBattle = new TheoremBattle("Stelling Battle test!!!!", theorem, theorem2);
+            localQuestionService.save(theoremBattle);
+            
         } catch(Exception ex) {
             return ex.getMessage();
         }

@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	
+	<div th:if="${session.questionnaire == null}">
+		<form action="showQuestion" method="post">
+        	<p><input type="submit" value="Klik hier om een test te starten!" /> </p>
+    	</form>
+	</div>
+	
+	<div th:if="${session.questionnaire != null}">
+	
+		<div th:if="${currentQuestion != null}">
+			<span th:text="${currentQuestion.text}"></span><br /><br /> 	
+			
+			<div th:if="${currentQuestion.type == 'OpenQuestion'}">
+				<form action="showQuestion" method="post">
+					<textarea name="answer" cols="25" rows="5"> Antwoord hier</textarea>
+					<p><input type="submit" value="Volgende vraag" /> </p>
+				</form>
+			</div>
+			
+			<div th:if="${currentQuestion.type == 'TheoremBattle'}">
+				<form action="showQuestion" method="post">
+					<div class="pure-u-md-1-3">
+						<div id="stelling1" class="stelling">
+							Stelling 1: <span th:text="${currentQuestion.firstTheorem.text}"></span>
+						</div>
+	                </div>
+	                <div class="pure-u-md-1-3">
+								<table class="pure-table pure-table-bordered stellingbattle" >
+									<thead class="pure-datatable-columns">
+										<tr>
+											<th class="pure-datatable-header pure-datatable-first-header ">Vaak</th>
+											<th class="pure-datatable-header">Soms</th>
+											<th class="pure-datatable-header">Gemiddeld</th>
+											<th class="pure-datatable-header">Soms</th>
+											<th class="pure-datatable-header pure-datatable-last-header">Vaak</th>
+										</tr>
+									</thead>
+	
+									<tbody class="pure-datatable-data">
+										<tr class="pure-datatable-even">
+											<td class="pure-datatable-cell"><input id="option-one" type="radio" name="answer" value="A" ></input></td>
+											<td class="pure-datatable-cell"><input id="option-two" type="radio" name="answer" value="B" ></input></td>
+											<td class="pure-datatable-cell"><input id="option-three" type="radio" name="answer" value="C"></input></td>
+											<td class="pure-datatable-cell"><input id="option-four" type="radio" name="answer" value="D" ></input></td>
+											<td class="pure-datatable-cell"><input id="option-five" type="radio" name="answer" value="E" ></input></td>
+										</tr>
+									</tbody>
+								</table>
+					</div>
+		            <div class="pure-u-md-1-4">
+						<div id="stelling2" class="stelling">
+							Stelling 2: <span th:text="${currentQuestion.secondTheorem.text}"></span>
+						</div>
+	                </div>
+        			<p><input type="submit" value="Volgende vraag" /> </p>
+        			
+    			</form>
+			</div>
+		</div>
+		
+		<div th:if="${result != null}">
+			<span th:text="${result}"></span>
+		</div>
+	
+	</div>
+	
+</body>
+</html>

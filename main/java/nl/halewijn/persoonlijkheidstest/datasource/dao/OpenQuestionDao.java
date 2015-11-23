@@ -14,9 +14,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public class QuestionDao {
+public class OpenQuestionDao {
 	
-	@Autowired
+	@Autowired	
 	private SessionFactory sessionFactory;
 	
 	private Session getSession() {
@@ -26,43 +26,35 @@ public class QuestionDao {
 	/**
 	* Save the new question in the database.
 	*/
-	public void save(Question question) {
+	public void save(OpenQuestion question) {
 		getSession().save(question);
 	}
 
 	/**
 	* Return all the questions stored in the database.
 	*/
-	public List<Question> getAll() {
-		return getSession().createQuery("FROM Question").list();
+	public List<OpenQuestion> getAll() {
+		return getSession().createQuery("FROM OpenQuestion").list();
 	}
 
     /**
 	* Retrieve an OpenQuestion by ID.
 	*/
-	public Question getById(int questionID) {
-		return (Question) getSession().load(Question.class, questionID);
-	}
-	
-	/**
-	* Retrieve an questionType by ID.
-	*/
-	public String getTypeById(int questionID) {
-		Question q = (Question) getSession().createQuery("FROM Question").list();
-		return q.getClassName();
+	public OpenQuestion getById(int questionID) {
+		return (OpenQuestion) getSession().get(OpenQuestion.class, questionID);
 	}
 
 	/**
 	* Update the passed question in the database.
 	*/
-	public void update(Question question) {
+	public void update(OpenQuestion question) {
 		getSession().update(question);
 	}
 
 	/**
 	 * Delete the question from the database.
 	 */
-	public void delete(Question question) {
+	public void delete(OpenQuestion question) {
 		getSession().delete(question);
 	}
 

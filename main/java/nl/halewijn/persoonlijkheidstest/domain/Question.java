@@ -38,5 +38,10 @@ public abstract class Question {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	public String getClassName() {
+		return getClass().getName();
+		
+	}
 
 }

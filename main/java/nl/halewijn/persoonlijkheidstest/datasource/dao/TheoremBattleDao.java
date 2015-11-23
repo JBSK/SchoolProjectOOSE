@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Transactional
-public class QuestionDao {
+public class TheoremBattleDao {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -26,7 +26,7 @@ public class QuestionDao {
 	/**
 	* Save the new question in the database.
 	*/
-	public void save(Question question) {
+	public void save(TheoremBattle question) {
 		getSession().save(question);
 	}
 
@@ -34,35 +34,27 @@ public class QuestionDao {
 	* Return all the questions stored in the database.
 	*/
 	public List<Question> getAll() {
-		return getSession().createQuery("FROM Question").list();
+		return getSession().createQuery("FROM TheoremBattle").list();
 	}
 
     /**
 	* Retrieve an OpenQuestion by ID.
 	*/
-	public Question getById(int questionID) {
-		return (Question) getSession().load(Question.class, questionID);
-	}
-	
-	/**
-	* Retrieve an questionType by ID.
-	*/
-	public String getTypeById(int questionID) {
-		Question q = (Question) getSession().createQuery("FROM Question").list();
-		return q.getClassName();
+	public TheoremBattle getById(int id) {
+		return (TheoremBattle) getSession().get(TheoremBattle.class, id);
 	}
 
 	/**
 	* Update the passed question in the database.
 	*/
-	public void update(Question question) {
+	public void update(TheoremBattle question) {
 		getSession().update(question);
 	}
 
 	/**
 	 * Delete the question from the database.
 	 */
-	public void delete(Question question) {
+	public void delete(TheoremBattle question) {
 		getSession().delete(question);
 	}
 

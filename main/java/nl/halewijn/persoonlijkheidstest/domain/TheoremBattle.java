@@ -14,6 +14,9 @@ public class TheoremBattle extends Question {
 	@JoinColumn(name = "secondTheorem", referencedColumnName = "theoremID", insertable = false, updatable = false)
 	private Theorem secondTheorem;
 	
+	@Transient
+	private char answer;
+	
 	public TheoremBattle(String questionText, Theorem firstTheorem, Theorem secondTheorem) {
 		super(questionText);
 		this.firstTheorem = firstTheorem;
@@ -39,5 +42,18 @@ public class TheoremBattle extends Question {
 
 	public void setSecondTheorem(Theorem secondTheorem) {
 		this.secondTheorem = secondTheorem;
+	}
+	
+	
+	public char getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(char answer) {
+		this.answer = answer;
+	}
+
+	public String getType() {
+		return "TheoremBattle";	
 	}
 }

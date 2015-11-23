@@ -1,109 +1,414 @@
-body {
-	background: #fafafa url(http://jackrugile.com/images/misc/noise-diagonal.png);
-	color: #444;
-	font: 100%/30px 'Helvetica Neue', helvetica, arial, sans-serif;
-	text-shadow: 0 1px 0 #fff;
+body{
+	/* background-image: url("imgs/bg.png"); */
+    background-color: #BDCDF5;
+	background-repeat: no-repeat;
+
+
 }
 
-strong {
-	font-weight: bold; 
+#main{
+	padding:15px;
 }
 
-em {
-	font-style: italic; 
+/**header/menu **/
+
+#headerpusher{
+		position:relative;
+	width: 100%; 
+	height: 120px; 
 }
 
-table {
-	background: #f5f5f5;
-	border-collapse: separate;
-	box-shadow: inset 0 1px 0 #fff;
-	font-size: 12px;
-	line-height: 24px;
-	margin: 30px auto;
-	text-align: left;
-	width: 800px;
-}	
+#header {
+	width: 100%; 
+	height: 120px; 
+	background-color:#1f8dd6;
+	position:fixed;
+	top:0;
+	z-index: 10;
 
-th {
-	background: url(http://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#777, #444);
-	border-left: 1px solid #555;
-	border-right: 1px solid #777;
-	border-top: 1px solid #555;
-	border-bottom: 1px solid #333;
-	box-shadow: inset 0 1px 0 #999;
-	color: #fff;
-  font-weight: bold;
-	padding: 10px 15px;
-	position: relative;
-	text-shadow: 0 1px 0 #000;	
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+50,7db9e8+100 */
+	background: rgb(30,87,153); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(41,137,216,1) 50%, rgba(125,185,232,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(125,185,232,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(125,185,232,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+
+}
+	div.logo {
+	   background:url(imgs/logo.jpg);
+	   background-size:100%;
+	   margin:0px; /* If you want no margin */
+	   padding:0px; /*if your want to padding */
+	   height:120px;
+	   width:100%;
+	}
+
+	
+	#header .titel{
+		text-align:center;
+		color:white;
+		font-size: 2.5em;
+		max-font-size: 50px;
+		min-font-size: 20px;
+		display: block;
+	}
+	#header .login{
+		right:0px;
+		margin:10px;
+		height:95px;
+	
+	}
+	#header .login button{
+		height:100%;
+		width:auto;
+		padding:30px;
+		float:right;
+		
+	}
+	
+	
+/*******************Content*************/
+.content{
+    padding: 10px;
+    margin-top: 20px;
+    /*background: white;*/
+    border-radius: 35px;
+    border: 15px solid #E6EAF4;
+	margin-bottom: 0; /* overrides menu margin to prevent scrollbars */
+
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+30,2989d8+30,207cca+65,7db9e8+100 */
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f9ff+0,cbebff+47,a1dbff+100;Blue+3D+%2313 */
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f9ff+0,cbebff+47,a1dbff+100;Blue+3D+%2313 */
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f9ff+45,d1edff+77 */
+	background: rgb(240,249,255); /* Old browsers */
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(240,249,255,1) 45%, rgba(209,237,255,1) 77%); /* FF3.6-15 */
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(240,249,255,1) 45%,rgba(209,237,255,1) 77%); /* Chrome10-25,Safari5.1-6 */
+	background: radial-gradient(ellipse at center,  rgba(240,249,255,1) 45%,rgba(209,237,255,1) 77%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f9ff', endColorstr='#d1edff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-th:after {
-	background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.08));
-	content: '';
-	display: block;
-	height: 25%;
-	left: 0;
-	margin: 1px 0 0 0;
-	position: absolute;
-	top: 25%;
-	width: 100%;
+/*********Navi*************/
+
+#btn{ /* button next question*/
+	text-align: center;
+	padding-top: 20px;
 }
 
-th:first-child {
-	border-left: 1px solid #777;	
-	box-shadow: inset 1px 1px 0 #999;
+#naviButtons{
 }
+	#naviButtons input[type="submit"]{
+				margin: 5px 10px;
+	}
 
-th:last-child {
-	box-shadow: inset -1px 1px 0 #999;
+	#naviButtons .back{
+
+	}
+	@media screen and (min-width: 600px) and (max-width: 4000px) {
+		#naviButtons .downloadPDF{
+			float:right;
+		}
+
+		#naviButtons .mailResult{
+			float:right;
+		}
 }
+/*******************Index*************/
 
-td {
-	border-right: 1px solid #fff;
-	border-left: 1px solid #e8e8e8;
-	border-top: 1px solid #fff;
-	border-bottom: 1px solid #e8e8e8;
-	padding: 10px 15px;
-	position: relative;
-	transition: all 300ms;
-}
+	.content .shoutOut{
+		font-size: 1.5em;
+		color:yellow;
+	}
 
-td:first-child {
-	box-shadow: inset 1px 0 0 #fff;
-}	
+	
+	
+/**************test/vragenlijst**********/
+/**************Stellingbattle************/
+	.content #vraag{
+		width:100%;
+		padding-top:0px;
+		margin-top:0px;
+		text-align: center;
 
-td:last-child {
-	border-right: 1px solid #e8e8e8;
-	box-shadow: inset -1px 0 0 #fff;
-}	
+	}
 
-tr {
-	background: url(http://jackrugile.com/images/misc/noise-diagonal.png);	
-}
+	.stellingen{
+		text-align:center;
+	}
 
-tr:nth-child(odd) td {
-	background: #f1f1f1 url(http://jackrugile.com/images/misc/noise-diagonal.png);	
-}
+	/************Div Table****************/
 
-tr:last-of-type td {
-	box-shadow: inset 0 -1px 0 #fff; 
-}
+	.tabel{
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+	.tableHeader{
+		text-align:center;
+		border:1px solid #e6eaf4;
+		margin:-1px;
+		background-color:#d1d7eb;
+		font-weight: bold;
+	}
 
-tr:last-of-type td:first-child {
-	box-shadow: inset 1px -1px 0 #fff;
-}	
+	.radioButtonSoms{
+		text-align:center;
+		margin:0;
+		background-color: #f1f3f9;
 
-tr:last-of-type td:last-child {
-	box-shadow: inset -1px -1px 0 #fff;
-}	
+	}
 
-tbody:hover td {
-	color: transparent;
-	text-shadow: 0 0 3px #aaa;
-}
+	.radioButtonVaak{
+		text-align:center;
+		margin:0;
+		background-color:#e6eaf4;
 
-tbody:hover tr:hover td {
-	color: #444;
-	text-shadow: 0 1px 0 #fff;
-}
+	}
+	.radioButtonMidden{
+		text-align:center;
+		margin:0px;
+		background-color: #ffffff;
+
+	}
+
+
+/******************Login*********/
+
+	.content .loginForm{
+	  width: 400px;
+	  background: #edeff1;
+      margin: 0px auto 30px auto;
+	  padding-top: 20px;
+	  padding-bottom: 20px;
+	  border-radius: 10px;
+	  text-align:center;
+	  -moz-border-radius: 10px;
+	  -webkit-border-radius: 10px;
+	}
+
+	.content .loginForm input[type="text"]{
+	  display: block;
+	  width: 309px;
+	  height: 35px;
+	  margin: 15px auto;
+	  background: #fff;
+	  border: 0px;
+	  padding: 5px;
+	  font-size: 16px;
+	   border: 2px solid #fff;
+	  transition: all 0.3s ease;
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+	}
+
+	.content .loginForm input[type="text"]:focus{
+	  border: 2px solid #1abc9d
+	}
+
+	.content .loginForm input[type="submit"]{
+	  display: block;
+	 /* background: #1abc9d;*/
+	  width: 314px;
+	  padding: 12px;
+	  cursor: pointer;
+	  color: #fff;
+	  border: 0px;
+	  margin: auto;
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+	  font-size: 17px;
+	  transition: all 0.3s ease;
+	}
+
+	.content .loginForm input[type="submit"]:hover{
+	/*  background: #09cca6*/
+	}
+
+	.content .loginForm a{
+	  text-align: center;
+	  font-family: Arial;
+	  color: gray;
+	  display: block;
+	  margin: 15px auto;
+	  text-decoration: none;
+	  transition: all 0.3s ease;
+	  font-size: 12px;
+	}
+
+	.content .loginForm a:hover{
+	  color: #1abc9d;
+	}
+
+
+	.content .loginForm ::-webkit-input-placeholder {
+	   color: gray;
+	}
+
+	.content .loginForm :-moz-placeholder { /* Firefox 18- */
+	   color: gray;  
+	}
+
+	.content .loginForm ::-moz-placeholder {  /* Firefox 19+ */
+	   color: gray;  
+	}
+
+	.content .loginForm :-ms-input-placeholder {  
+	   color: gray;  
+	}
+	
+/******************Registreerpagina*********/
+
+	.content .registerForm{
+	  width: 400px;
+	  background: #edeff1;
+	  margin: 0px auto 30px auto;
+	  padding-top: 20px;
+	  padding-bottom: 20px;
+	  text-align:center;
+	  border-radius: 10px;
+	  -moz-border-radius: 10px;
+	  -webkit-border-radius: 10px;
+	}
+
+	.content .registerForm input[type="text"]{
+	  display: block;
+	  width: 309px;
+	  height: 35px;
+	  margin: 15px auto;
+	  background: #fff;
+	  border: 0px;
+	  padding: 5px;
+	  font-size: 16px;
+	   border: 2px solid #fff;
+	  transition: all 0.3s ease;
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+	}
+
+	.content .registerForm input[type="text"]:focus{
+	  border: 2px solid #1abc9d
+	}
+
+	.content .registerForm input[type="submit"]{
+	  display: block;
+	 /* background: #1abc9d;*/
+	  width: 314px;
+	  padding: 12px;
+	  cursor: pointer;
+	  color: #fff;
+	  border: 0px;
+	  margin: auto;
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+	  font-size: 17px;
+	  transition: all 0.3s ease;
+	}
+
+	.content .registerForm input[type="submit"]:hover{
+	/*  background: #09cca6*/
+	}
+
+	.content .registerForm a{
+	  text-align: center;
+	  font-family: Arial;
+	  color: gray;
+	  display: block;
+	  margin: 15px auto;
+	  text-decoration: none;
+	  transition: all 0.3s ease;
+	  font-size: 12px;
+	}
+
+	.content .registerForm a:hover{
+	  color: #1abc9d;
+	}
+
+
+	.content .registerForm ::-webkit-input-placeholder {
+	   color: gray;
+	}
+
+	.content .registerForm :-moz-placeholder { /* Firefox 18- */
+	   color: gray;  
+	}
+
+	.content .registerForm ::-moz-placeholder {  /* Firefox 19+ */
+	   color: gray;  
+	}
+
+	.content .registerForm :-ms-input-placeholder {  
+	   color: gray;  
+	}
+	
+/***************Geschiedenis*************************/
+	.content .resultList{
+		width:100%;
+	}
+		.content .resultList .butCol{
+			max-width:120px;
+			min-width:100px;
+			width:100px;
+		
+		}
+/***************Geschiedenis*************************/
+	.content .resultList{
+		width:100%;
+	}
+		.content .resultList .butCol{
+			max-width:120px;
+			min-width:100px;
+			width:100px;
+		
+		}
+/****************resultaten**********/
+	.content .resultrow1{
+	min-height:200px;
+	margin-bottom:20px;
+	
+	}
+	/****************grafiekenrij**********/
+		.content .resultrow1 .radarGrafiek{
+			background-color:red;
+		}
+		.content .resultrow1 .staafGrafiek{
+			background-color:green;
+		}
+		.content .resultrow1 .uitkomst{
+			
+			background-color:blue;
+		}
+			.content .resultrow1 .uitkomst .resultTitle{
+				padding:10px;
+			}
+			.content .resultrow1 .uitkomst .primaryPType{
+				padding:10px;
+			}
+			.content .resultrow1 .uitkomst .secondaryPType{
+				padding:10px;
+			}
+	/*************begeleidende teksten**********/
+	.content .resultrow2 {
+		
+	}	
+		.content .resultrow2 .tekstResult1 {
+			
+		}	
+		.content .resultrow2 .tekstResult2 {
+			
+		}	
+	/**************antwoorden van de test**********/
+	.content .resultrow3{
+	
+	}
+		.content .resultrow3 .antwoordenLijst{
+		
+		}
+	
+
+
+
+
+	
+	
