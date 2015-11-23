@@ -4,8 +4,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class PasswordHashExample {
 
+    private int HASH_STRENGTH = 12;
+
     public String hashPassword(String password) {
-        int HASH_STRENGTH = 12;
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(HASH_STRENGTH);
         return passwordEncoder.encode(password);
     }
