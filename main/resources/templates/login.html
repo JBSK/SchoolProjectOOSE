@@ -10,15 +10,15 @@
 	
 	    <div id="main" class="pure-skin-PT">
 	        <div class="content">
-	            <h2 class="content-subhead">
-	            	<p>Login</p>
-	            </h2>
-				<div class="loginForm">
+	            <h2 class="content-subhead">Login</h2>
+				
+	
+				<form class="loginForm ">
 					<input type="text" class="zocial-dribbble" placeholder="Enter your email" />
 					<input type="text" placeholder="Password" />
-					 <input type="submit" value="Login" />
-					<a href="">Lost your password?</a>
-				</div> 
+					<input type="submit" value="Login" class="pure-button" />
+	
+				</form>
 	        </div>
 	        <div th:include="fragments/footer" th:remove="tag"></div>
 	    </div>

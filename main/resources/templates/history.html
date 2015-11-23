@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head th:replace="fragments/headTag :: headTag"> </head>
+<body>
+
+	<div th:include="fragments/header" th:remove="tag"></div>
+
+	<div id="layout">
+	    <div th:include="fragments/menu" th:remove="tag"></div>
+	
+	    <div id="main" class="pure-skin-PT">
+	          <div class="content">
+					<div class="pure-g-r">
+						<div id="naviButtons">
+							<input type="submit" name="back" value="back" class="back pure-button" >
+							<input type="submit" name="downloadPDF" value="Download als pdf" class="downloadPDF pure-button" >
+							<input type="submit" name="mailResult" value="Resultaten mailen" class="mailResult pure-button" >
+						</div>
+					</div>
+		            <h2 class="content-subhead">Geschiedenis</h2>
+		
+					<div class="pure-g-r">
+						<div class="pure-u-1">
+							<table class="pure-table resultList">
+								<thead>
+									<tr>
+										<th>Datum</th>
+										<th>Uitkomst</th>
+										<th class="butCol">Bekijken</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="pure-table-odd">
+										<td>20-1-2015</td>
+										<td>Optimist</td>
+										<td><input type="submit" name="Bekijken" value="Bekijken" class="bekijken pure-button" ></td>
+									</tr>
+									<tr>
+										<td>19-1-2015</td>
+										<td>Optimist</td>
+										<td><input type="submit" name="Bekijken" value="Bekijken" class="bekijken pure-button" ></td>
+									</tr>
+									<tr class="pure-table-odd">
+										<td>18-1-2015</td>
+										<td>Optimist</td>
+										<td><input type="submit" name="Bekijken" value="Bekijken" class="bekijken pure-button" ></td>
+									</tr>
+									<tr>
+										<td>17-1-2015</td>
+										<td>Baas</td>
+										<td><input type="submit" name="Bekijken" value="Bekijken" class="bekijken pure-button" ></td>
+									</tr>
+									<tr class="pure-table-odd">
+										<td>16-1-2015</td>
+										<td>Baas</td>
+										<td><input type="submit" name="Bekijken" value="Bekijken" class="bekijken pure-button" ></td>
+									</tr>
+									<tr>
+										<td>13-1-2015</td>
+										<td>Baas</td>
+										<td><input type="submit" name="Bekijken" value="Bekijken" class="bekijken pure-button" ></td>
+									</tr>
+									<tr class="pure-table-odd">
+										<td>09-1-2015</td>
+										<td>Beer</td>
+										<td><input type="submit" name="Bekijken" value="Bekijken" class="bekijken pure-button" ></td>
+									</tr>
+									<tr>
+										<td>02-1-2015</td>
+										<td>Beer</td>
+										<td><input type="submit" name="Bekijken" value="Bekijken" class="bekijken pure-button" ></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+		        </div>
+	        <div th:include="fragments/footer" th:remove="tag">
+	        </div>
+	    </div>
+	</div>
+</body>
+</html>

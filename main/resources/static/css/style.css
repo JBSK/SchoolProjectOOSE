@@ -69,7 +69,8 @@ body{
 	
 /*******************Content*************/
 .content{
-    padding: 10px;
+	padding-top: 15px;
+    padding-bottom: 20px;
     margin-top: 20px;
     /*background: white;*/
     border-radius: 35px;
@@ -116,7 +117,8 @@ body{
 
 	.content .shoutOut{
 		font-size: 1.5em;
-		color:yellow;
+		color:#FFFF00 ;
+		text-shadow: 2px 2px #888;
 	}
 
 	
@@ -364,20 +366,30 @@ body{
 		}
 /****************resultaten**********/
 	.content .resultrow1{
-	min-height:200px;
-	margin-bottom:20px;
+		min-height:450px;
+		margin-bottom:20px;
 	
 	}
 	/****************grafiekenrij**********/
 		.content .resultrow1 .radarGrafiek{
-			background-color:red;
+			background:url(imgs/radar.png);
+			background-size: contain;
+			background-repeat:no-repeat;
+			margin:0px; /* If you want no margin */
+			padding:0px; /*if your want to padding */
 		}
 		.content .resultrow1 .staafGrafiek{
-			background-color:green;
+			background:url(imgs/barchart.png);
+			background-size: contain;
+			background-repeat:no-repeat;
+			margin:0px; /* If you want no margin */
+			padding:0px; /*if your want to padding */
 		}
 		.content .resultrow1 .uitkomst{
 			
-			background-color:blue;
+			    border-radius: 35px;
+				background: #D1EDFF;
+			
 		}
 			.content .resultrow1 .uitkomst .resultTitle{
 				padding:10px;
@@ -405,10 +417,3 @@ body{
 		.content .resultrow3 .antwoordenLijst{
 		
 		}
-	
-
-
-
-
-	
-	

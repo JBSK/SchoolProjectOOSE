@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	
+	<div th:if="${session.questionnaire != null}">
+		<h1 style="text-align: center">Resultaten pagina hier:</h1>
+    <table>
+    	<tbody>
+	    	<thead>
+	    		<th>Vraag Id</th>
+	    		<th>Vraag Type</th>
+	    		<th>Vraag</th>
+	    		<th>Antwoord</th>
+	    	</thead>
+		    <tr th:each="question : ${result}">
+		    	<td th:text="${question.ID}">id</td>
+		    	<td th:text="${question.type}">type</td>
+		   		<td th:text="${question.text}"> text</td>
+		   		<td th:text="${question.answer}">answer</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</body>
+</html>

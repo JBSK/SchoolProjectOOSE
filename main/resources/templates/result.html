@@ -1,29 +1,71 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
+<!doctype html>
+<html lang="en">
+
+<head th:replace="fragments/headTag :: headTag"> </head>
 <body>
+
+	<div th:include="fragments/header" th:remove="tag"></div>
+
+	<div id="layout">
+	    <div th:include="fragments/menu" th:remove="tag"></div>
 	
-	<div th:if="${session.questionnaire != null}">
-		<h1 style="text-align: center">Resultaten pagina hier:</h1>
-    <table>
-    	<tbody>
-	    	<thead>
-	    		<th>Vraag Id</th>
-	    		<th>Vraag Type</th>
-	    		<th>Vraag</th>
-	    		<th>Antwoord</th>
-	    	</thead>
-		    <tr th:each="question : ${result}">
-		    	<td th:text="${question.ID}">id</td>
-		    	<td th:text="${question.type}">type</td>
-		   		<td th:text="${question.text}"> text</td>
-		   		<td th:text="${question.answer}">answer</td>
-			</tr>
-		</tbody>
-	</table>
+	    <div id="main" class="pure-skin-PT">
+        <div class="content">
+				<div id="naviButtons">
+					<input type="submit" name="back" value="back" class="back pure-button" >
+					<input type="submit" name="downloadPDF" value="Download als pdf" class="downloadPDF pure-button" >
+					<input type="submit" name="mailResult" value="Resultaten mailen" class="mailResult pure-button" >
+				</div>
+            <h2 class="content-subhead">Resultaten</h2>
+			
+			<div class="pure-g resultrow1">
+					<div class="radarGrafiek pure-u-1-3">.
+					
+					</div>
+					<div class="staafGrafiek pure-u-1-3">
+					
+					</div>
+					<div class="uitkomst pure-u-1-3">
+						<h2 class="resultTitle">Result</h2>
+						<p class="primaryPType">
+							Uw persoonlijkheidstype is: Baas
+						<p/>
+						<p class="secondaryPType">
+							secondary: Ontkenning
+						<p/>
+						<p class="gegevenResult">
+						<p/>
+					</div>	
+			</div>
+			
+			
+			<div class="pure-g resultrow2">
+					<div class="tekstResult1 pure-u-1">
+					<h3>Baas</h3>
+					Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+					Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+					Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+					Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+					</div>
+					<div class="tekstResult2 pure-u-1">
+					<h3>Ontkenning</h3>
+					Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
+					Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
+					Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
+					Ontkenning	Ontkenning	
+					</div>						
+			</div>
+			<div class="pure-g resultrow3">
+				<div class="pure-u-1 antwoordenLijst">
+					Social media:<br>
+					<div class="socialmediabar"></div>
+				</div>
+			</div>
+				
+
+			</div>
+	        <div th:include="fragments/footer" th:remove="tag"></div>
+	    </div>
 	</div>
 </body>
 </html>
