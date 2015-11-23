@@ -38,7 +38,7 @@ public class QuestionDao {
 	}
 
     /**
-	* Retrieve an OpenQuestion by ID.
+	* Retrieve a question by ID.
 	*/
 	public Question getById(int questionID) {
 		return (Question) getSession().load(Question.class, questionID);
