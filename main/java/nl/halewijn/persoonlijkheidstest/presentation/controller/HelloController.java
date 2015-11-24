@@ -32,7 +32,7 @@ public class HelloController {
     @RequestMapping("/")
     public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
-        return "login";
+        return "index";
     }
     
     @RequestMapping(value="/save")
