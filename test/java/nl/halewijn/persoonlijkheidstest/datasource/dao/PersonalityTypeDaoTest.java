@@ -30,9 +30,16 @@ import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 @SpringApplicationConfiguration(Application.class)
 //@WebIntegrationTest
 public class PersonalityTypeDaoTest {
-	
 	@Autowired
 	private PersonalityTypeDao dao;
+	
+	private String type = "TestPersonality";
+	private String description1 = "Description1";
+	private String description2 = "Description2";
+	private int TypeID;
+	
+	private String newDescription1 = "UpdatedDescription1";
+	private String newDescription2 = "UpdatedDescription2";
 	
 //	@Before
 //	public void setUpDB(){
@@ -49,15 +56,16 @@ public class PersonalityTypeDaoTest {
 //		return sessionFactory.getCurrentSession();
 //	}
 	
-//	@Test
-//	public void testSave(){
-//		PersonalityType personalityType = new PersonalityType("TestPersonality", "Description1", "Description2");
-//		dao.save(personalityType);
-//		PersonalityType personality = dao.getById(personalityType.getTypeID());
-//		assertEquals("TestPersonality", personality.getName());
-//		assertEquals("Description1", personality.getSecondaryDescription());
-//		assertEquals("Description1", personality.getPrimaryDescription());
-//	}
+	@Test
+	public void testSave(){
+		PersonalityType personalityType = new PersonalityType(type, description1, description2);
+		dao.save(personalityType);
+		PersonalityType personality = dao.getById(personalityType.getTypeID());
+		this.TypeID = personality.getTypeID();
+		assertEquals(type, personality.getName());
+		assertEquals(description1, personality.getSecondaryDescription());
+		assertEquals(description2, personality.getPrimaryDescription());
+	}
 	
 	@Test
 	public void testGetAll(){
@@ -69,37 +77,40 @@ public class PersonalityTypeDaoTest {
 	
 	@Test
 	public void testGetById(){
-		int personalityTypeID = 1;
-		PersonalityType personality = dao.getById(personalityTypeID);
+		PersonalityType personality = dao.getById(TypeID);
 		assertNotNull(personality);
-		assertEquals("Perfectionist", personality.getName());
+		assertEquals(type, personality.getName());
 	}
 	
-//	@Test
-//	public void testUpdate(){
-//		PersonalityType toUpdate;
-//		toUpdate = dao.getById(10);
-//		assertNotNull(toUpdate);
-//		assertEquals(toUpdate.getName(), "TestPersonality");
-//		assertEquals(toUpdate.getPrimaryDescription(), "Description1");
-//		
-//		toUpdate.setPrimaryDescription("UpdatedDescription1");
-//		dao.update(toUpdate);
-//		
-//		PersonalityType updated;
-//		updated = dao.getById(10);
-//		assertEquals("UpdatedDescription1", updated.getPrimaryDescription());
-//	}
-//	
-//	@Test
-//	public void testDelete(){
-//		PersonalityType toDelete;
-//		toDelete = dao.getById(10);
-//		assertNotNull(toDelete);
-//		assertEquals(toDelete.getName(), "TestPersonality");
-//		
-//		dao.delete(toDelete);
-//		toDelete = dao.getById(10);
-//		assertNull(toDelete);
-//	}
+	@Test
+	public void testUpdate(){
+		PersonalityType toUpdate;
+		toUpdate = dao.getById(TypeID);
+		assertNotNull(toUpdate);
+		assertEquals(toUpdate.getName(), type);
+		assertEquals(toUpdate.getPrimaryDescription(), description1);
+		assertEquals(toUpdate.getSecondaryDescription(), description2);
+		
+		toUpdate.setPrimaryDescription(newDescription1);
+		toUpdate.setSecondaryDescription(newDescription2);
+		dao.update(toUpdate);
+		
+		PersonalityType updated;
+		updated = dao.getById(TypeID);
+		assertEquals(newDescription1, updated.getPrimaryDescription());
+		assertEquals(newDescription2, updated.getSecondaryDescription());
+	}
+	
+	@Test
+	public void testDelete(){
+		PersonalityType toDelete;
+		toDelete = dao.getById(TypeID);
+		assertNotNull(toDelete);
+		assertEquals(toDelete.getName(), type);
+		
+		dao.delete(toDelete);
+		PersonalityType deleted = dao.getById(TypeID);
+		//assertNull(toDelete);
+		assertNull(deleted);
+	}
 }

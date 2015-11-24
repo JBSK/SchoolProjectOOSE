@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
 
@@ -67,3 +68,74 @@
 	<div th:include="fragments/GraphsJS" th:remove="tag"></div>
 </body>
 </html>
+=======
+<!doctype html>
+<html lang="en">
+
+<head th:replace="fragments/headTag-resultpage :: headTag"> </head>
+<body>
+
+	<div th:include="fragments/header" th:remove="tag"></div>
+
+	<div id="layout">
+	    <div th:include="fragments/menu" th:remove="tag"></div>
+	
+	    <div id="main" class="pure-skin-PT">
+				<div class="content">
+					<div id="naviButtons">
+						<input type="submit" name="back" value="back" class="back pure-button"></input>
+						<input type="submit" name="downloadPDF" value="Download als pdf" class="downloadPDF pure-button"></input>
+						<input type="submit" name="mailResult" value="Resultaten mailen" class="mailResult pure-button"></input>
+					</div>
+					<h2 class="content-subhead">Resultaten</h2>
+					
+					<div class="pure-g resultrow1">
+						<div id="radarGrafiek" class="pure-u-1-3">
+							<div class="radarChart"></div>
+						</div>
+						<div id="staafGrafiek" class="pure-u-1-3">
+						</div>
+						<div id="uitkomst" class="pure-u-1-3">
+							<h2 class="resultTitle">Result</h2>
+							<p class="primaryPType">
+								Uw persoonlijkheidstype is: Baas
+							</p>
+							<p class="secondaryPType">
+								secondary: Ontkenning
+							</p>
+							<p class="gegevenResult">
+							</p>
+						</div>
+					</div>
+				
+					<div class="pure-g resultrow2">
+						<div class="tekstResult1 pure-u-1">
+							<h3>Baas</h3>
+							Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+							Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+							Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+							Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+						</div>
+						<div class="tekstResult2 pure-u-1">
+							<h3>Ontkenning</h3>
+							Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
+							Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
+							Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
+							Ontkenning	Ontkenning	
+						</div>						
+					</div>
+					<div class="pure-g resultrow3">
+						<div class="pure-u-1 antwoordenLijst">
+							Social media:<br />
+							<div class="socialmediabar">
+							</div>
+						</div>
+					</div>
+				</div>
+	        <div th:include="fragments/footer" th:remove="tag"></div>
+	    </div>
+	</div>
+	<div th:include="fragments/GraphsJS" th:remove="tag"></div>
+</body>
+</html>
+>>>>>>> c85e55ce5e2ee5a3a7570431b59ddbb963bbfb68

@@ -68,7 +68,46 @@ public class Questionnaire {
 		
 		for(Question question : answeredQuestions) {
 			if(question instanceof TheoremBattle) {
-				calculateQuestionPoints(resultArray, question);
+				char questionAnswer = ((TheoremBattle) question).getAnswer();
+				
+				Theorem firstTheorem = ((TheoremBattle) question).getFirstTheorem();
+				Theorem secondTheorem = ((TheoremBattle) question).getSecondTheorem();
+				
+				double firstTheoremPoints = 0;
+				double secondTheoremPoints = 0;
+				int firstTheoremPersonalityTypeID = firstTheorem.getPersonalityType().getTypeID();
+				int secondTheoremPersonalityTypeID = secondTheorem.getPersonalityType().getTypeID();
+							
+				switch(questionAnswer) {
+					case 'A': 
+						firstTheoremPoints = ANSWER_A * firstTheorem.getWeight();				
+						break;
+						
+					case 'B': 
+						firstTheoremPoints = ANSWER_B * firstTheorem.getWeight();
+						break;
+						
+					case 'C': 
+						firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();					
+						secondTheoremPoints = ANSWER_C * secondTheorem.getWeight();
+						break;
+						
+					case 'D': 
+						secondTheoremPoints = ANSWER_D * secondTheorem.getWeight();
+						break;
+						
+					case 'E': 
+						secondTheoremPoints = ANSWER_E * secondTheorem.getWeight();
+						break;
+						
+					default: 
+						firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
+						secondTheoremPoints = ANSWER_C * secondTheorem.getWeight();
+						break;
+				}
+				
+				resultArray[firstTheoremPersonalityTypeID - 1] += firstTheoremPoints;
+				resultArray[secondTheoremPersonalityTypeID - 1] += secondTheoremPoints;
 			}
 		}
 		
@@ -83,51 +122,6 @@ public class Questionnaire {
 		}
 		
 		return resultArray;
-	}
-
-	private void calculateQuestionPoints(double[] resultArray, Question question) {
-		
-		char questionAnswer = ((TheoremBattle) question).getAnswer();
-		
-		Theorem firstTheorem = ((TheoremBattle) question).getFirstTheorem();
-		Theorem secondTheorem = ((TheoremBattle) question).getSecondTheorem();
-		
-		int firstTheoremPersonalityTypeID = firstTheorem.getPersonalityType().getTypeID();
-		int secondTheoremPersonalityTypeID = secondTheorem.getPersonalityType().getTypeID();				
-		
-		double firstTheoremPoints = 0;
-		double secondTheoremPoints = 0;
-		
-		switch(questionAnswer) {
-			case 'A': 
-				firstTheoremPoints = ANSWER_A * firstTheorem.getWeight();				
-				break;
-				
-			case 'B': 
-				firstTheoremPoints = ANSWER_B * firstTheorem.getWeight();
-				break;
-				
-			case 'C': 
-				firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();					
-				secondTheoremPoints = ANSWER_C * secondTheorem.getWeight();
-				break;
-				
-			case 'D': 
-				secondTheoremPoints = ANSWER_D * secondTheorem.getWeight();
-				break;
-				
-			case 'E': 
-				secondTheoremPoints = ANSWER_E * secondTheorem.getWeight();
-				break;
-				
-			default: 
-				firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
-				secondTheoremPoints = ANSWER_C * secondTheorem.getWeight();
-				break;
-		}
-		
-		resultArray[firstTheoremPersonalityTypeID - 1] += firstTheoremPoints;
-		resultArray[secondTheoremPersonalityTypeID - 1] += secondTheoremPoints;
 	}
 	
 }
