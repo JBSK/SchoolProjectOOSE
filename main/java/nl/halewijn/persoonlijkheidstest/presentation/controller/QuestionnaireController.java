@@ -80,8 +80,11 @@ public class QuestionnaireController {
 			}
 			else {
 				
-				double[] resultArray = questionnaire.calculateResults();	
-				model.addAttribute("result", resultArray);
+				double[] resultArray = questionnaire.calculateResults();
+				String personalityTypes[] = { "Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar" };
+
+				model.addAttribute("personalityTypes", personalityTypes);
+				model.addAttribute("scores", resultArray);
 				
 				return "result";
 			}				
