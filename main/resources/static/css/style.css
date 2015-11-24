@@ -1,6 +1,6 @@
 body{
 	/* background-image: url("imgs/bg.png"); */
-    background-color: #BDCDF5;
+    background-color: #EECB6D;
 	background-repeat: no-repeat;
 
 
@@ -25,13 +25,13 @@ body{
 	position:fixed;
 	top:0;
 	z-index: 10;
-
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+50,7db9e8+100 */
-	background: rgb(30,87,153); /* Old browsers */
-	background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(41,137,216,1) 50%, rgba(125,185,232,1) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(125,185,232,1) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom,  rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(125,185,232,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+	
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,7db9e8+50,1e5799+100 */
+	background: #1e5799; /* Old browsers */
+	background: -moz-linear-gradient(top,  hsla(212,67%,36%,1) 0%, hsla(206,70%,70%,1) 50%, hsla(212,67%,36%,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  hsla(212,67%,36%,1) 0%,hsla(206,70%,70%,1) 50%,hsla(212,67%,36%,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  hsla(212,67%,36%,1) 0%,hsla(206,70%,70%,1) 50%,hsla(212,67%,36%,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
 
 }
 	div.logo {
@@ -77,15 +77,11 @@ body{
     border: 15px solid #E6EAF4;
 	margin-bottom: 0; /* overrides menu margin to prevent scrollbars */
 
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+30,2989d8+30,207cca+65,7db9e8+100 */
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f9ff+0,cbebff+47,a1dbff+100;Blue+3D+%2313 */
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f9ff+0,cbebff+47,a1dbff+100;Blue+3D+%2313 */
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f0f9ff+45,d1edff+77 */
-	background: rgb(240,249,255); /* Old browsers */
-	background: -moz-radial-gradient(center, ellipse cover,  rgba(240,249,255,1) 45%, rgba(209,237,255,1) 77%); /* FF3.6-15 */
-	background: -webkit-radial-gradient(center, ellipse cover,  rgba(240,249,255,1) 45%,rgba(209,237,255,1) 77%); /* Chrome10-25,Safari5.1-6 */
-	background: radial-gradient(ellipse at center,  rgba(240,249,255,1) 45%,rgba(209,237,255,1) 77%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f9ff', endColorstr='#d1edff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	background: #eecb6d; /* Old browsers */
+	background: -moz-linear-gradient(top,  hsla(44,94%,75%,1) 0%, hsla(43,85%,95%,1) 50%, hsla(44,100%,72%,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  hsla(44,94%,75%,1) 0%, hsla(43,85%,95%,1) 50%, hsla(44,100%,72%,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, hsla(44,94%,75%,1) 0%, hsla(43,85%,95%,1) 50%, hsla(44,100%,72%,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eecb6d', endColorstr='#eecb6d',GradientType=0 ); /* IE6-9 */
 }
 
 /*********Navi*************/
@@ -371,33 +367,34 @@ body{
 	
 	}
 	/****************grafiekenrij**********/
-		.content .resultrow1 .radarGrafiek{
+		.content .resultrow1 #radarGrafiek{
 			background:url(imgs/radar.png);
 			background-size: contain;
 			background-repeat:no-repeat;
 			margin:0px; /* If you want no margin */
 			padding:0px; /*if your want to padding */
+			
 		}
-		.content .resultrow1 .staafGrafiek{
+		.content .resultrow1 #staafGrafiek{
 			background:url(imgs/barchart.png);
 			background-size: contain;
 			background-repeat:no-repeat;
 			margin:0px; /* If you want no margin */
 			padding:0px; /*if your want to padding */
 		}
-		.content .resultrow1 .uitkomst{
+		.content .resultrow1 #uitkomst{
 			
 			    border-radius: 35px;
-				background: #D1EDFF;
+				background: #FFFFFF;
 			
 		}
-			.content .resultrow1 .uitkomst .resultTitle{
+			.content .resultrow1 #uitkomst .resultTitle{
 				padding:10px;
 			}
-			.content .resultrow1 .uitkomst .primaryPType{
+			.content .resultrow1 #uitkomst .primaryPType{
 				padding:10px;
 			}
-			.content .resultrow1 .uitkomst .secondaryPType{
+			.content .resultrow1 #uitkomst .secondaryPType{
 				padding:10px;
 			}
 	/*************begeleidende teksten**********/
@@ -417,3 +414,10 @@ body{
 		.content .resultrow3 .antwoordenLijst{
 		
 		}
+	
+
+
+
+
+	
+	

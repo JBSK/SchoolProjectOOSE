@@ -1,0 +1,26 @@
+/****************radargrafiek**********/
+		.content .resultrow1 #radarGrafiek{
+			
+			background-size: contain;
+			background-repeat:no-repeat;
+			margin:0px; /* If you want no margin */
+			padding:0px; /*if your want to padding */
+			
+		}
+		.content .resultrow1 #radarGrafiek .legend {
+				font-family: 'Raleway', sans-serif;
+				fill: #333333;
+			}
+			
+		.content .resultrow1 .radarGrafiek.tooltip {
+				fill: #333333;
+			}
+			
+		.content .resultrow1 #radarGrafiek svg {
+				background:url(imgs/star.png);
+				background-size: contain;
+				background-repeat:no-repeat;
+				background-position: center; 
+				margin:0px; /* If you want no margin */
+				padding:0px; /*if your want to padding */
+			}
