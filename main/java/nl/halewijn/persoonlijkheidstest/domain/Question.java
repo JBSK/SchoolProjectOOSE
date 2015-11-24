@@ -1,5 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,7 @@ public abstract class Question {
 	private int questionID;
 
     @NotNull
+    @Column(name="text", columnDefinition="varchar(255) default 'Kies de stelling die het meest voor u van toepassing is'")
     private String text;
 	
 	public Question(String questionText) {
