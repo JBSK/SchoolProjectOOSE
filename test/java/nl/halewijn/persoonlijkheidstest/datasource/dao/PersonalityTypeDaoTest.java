@@ -23,13 +23,14 @@ import nl.halewijn.persoonlijkheidstest.datasource.util.DatabaseConfig;
 //import nl.halewijn.persoonlijkheidstest.datasource.util.TestDatabaseConfig;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 
-//@Transactional
-//@RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration("applicationContext.xml")
 //@ContextConfiguration(classes = {TestDatabaseConfig.class})
-//@SpringApplicationConfiguration(Application.class)
+@SpringApplicationConfiguration(Application.class)
 //@WebIntegrationTest
 public class PersonalityTypeDaoTest {
+	
 	@Autowired
 	private PersonalityTypeDao dao;
 	
