@@ -52,9 +52,14 @@ public class QuestionnaireController {
     	Questionnaire questionnaire = null;
     	if(session.getAttribute("questionnaire") == null) {
 			questionnaire = new Questionnaire();
-			session.setAttribute("questionnaire", questionnaire);		
-			
 			Question firstQuestion = localQuestionService.getFirstQuestion(questionnaire);
+			
+			if(firstQuestion == null) {
+				return "questionnaire";
+			}
+			
+			session.setAttribute("questionnaire", questionnaire);	
+			
 			model.addAttribute("currentQuestion", firstQuestion);
 			
 		} else {

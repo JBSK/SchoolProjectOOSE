@@ -94,27 +94,22 @@ public class LocalQuestionService implements IQuestionService {
 		// TODO Routing rules invoeren.
 		
 		Question next = null;
-		
-		
-		if(getOpenQuestionById(previousQuestion.getID()+1) != null)
-			next = getOpenQuestionById(previousQuestion.getID()+1);
-		
-		if(getTheoremBattleById(previousQuestion.getID()+1) != null)
-			next = getTheoremBattleById(previousQuestion.getID()+1);
-		
+
+        if(getQuestionById(previousQuestion.getID()+1) != null) {
+            next = getQuestionById(previousQuestion.getID() + 1);
+        }
+
 		return next;
 	}
 	
 	@Override
 	public Question getFirstQuestion(Questionnaire questionnaire) {
 		Question firstQuestion = null;
-		
-		if(getOpenQuestionById(1) != null)
-			firstQuestion = getOpenQuestionById(1);
-		
-		if(getTheoremBattleById(1) != null)
-			firstQuestion = getTheoremBattleById(1);
-			
+
+        if(getQuestionById(1) != null) {
+            firstQuestion = getQuestionById(1);
+        }
+
 		questionnaire.addQuestion(firstQuestion);
 		return firstQuestion;
 	}
@@ -128,6 +123,5 @@ public class LocalQuestionService implements IQuestionService {
 			((OpenQuestion) previousQuestion).setAnswer(answer);
 		}
 	}
-
 
 }
