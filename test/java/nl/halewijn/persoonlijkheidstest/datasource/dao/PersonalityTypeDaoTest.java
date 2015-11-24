@@ -20,21 +20,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import nl.halewijn.persoonlijkheidstest.Application;
 import nl.halewijn.persoonlijkheidstest.datasource.dao.PersonalityTypeDao;
 import nl.halewijn.persoonlijkheidstest.datasource.util.DatabaseConfig;
+//import nl.halewijn.persoonlijkheidstest.datasource.util.TestDatabaseConfig;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 
-@Transactional
-@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = DatabaseConfig.class)
-@SpringApplicationConfiguration(Application.class)
-@WebIntegrationTest
+//@Transactional
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("applicationContext.xml")
+//@ContextConfiguration(classes = {TestDatabaseConfig.class})
+//@SpringApplicationConfiguration(Application.class)
+//@WebIntegrationTest
 public class PersonalityTypeDaoTest {
 	@Autowired
 	private PersonalityTypeDao dao;
-	
-//	@Autowired
-//	private SessionFactory sessionFactory;
-//	
-//	private Session session;
 	
 //	@Before
 //	public void setUpDB(){
@@ -46,18 +43,21 @@ public class PersonalityTypeDaoTest {
 //		
 //	}
 //	
-	
+//	
 //	public Session testGetSession(){
 //		return sessionFactory.getCurrentSession();
 //	}
-//	
+	
 //	@Test
-//	@Transactional
-//	public void testSave(PersonalityType personalityType){
-//		getSession.save(personalityType);
-//		assertEquals();
+//	public void testSave(){
+//		PersonalityType personalityType = new PersonalityType("TestPersonality", "Description1", "Description2");
+//		dao.save(personalityType);
+//		PersonalityType personality = dao.getById(personalityType.getTypeID());
+//		assertEquals("TestPersonality", personality.getName());
+//		assertEquals("Description1", personality.getSecondaryDescription());
+//		assertEquals("Description1", personality.getPrimaryDescription());
 //	}
-//	
+	
 	@Test
 	public void testGetAll(){
 		List<PersonalityType> results = dao.getAll();
@@ -68,31 +68,37 @@ public class PersonalityTypeDaoTest {
 	
 	@Test
 	public void testGetById(){
-		//DatabaseConfig dbc = new DatabaseConfig();
-		//dbc.transactionManager();
-		//dao = new PersonalityTypeDao();
 		int personalityTypeID = 1;
-		//PersonalityType result = dao.getById(personalityTypeID);
-		//assertEquals(personalityTypeID, result.getTypeID());
-		assertNotNull(dao.getById(personalityTypeID));
-		assertEquals("Perfectionist", dao.getById(personalityTypeID).getName());
-		//assertEquals("test", "test");
-		//assertNull((PersonalityType) testGetSession().load(PersonalityType.class, personalityTypeID));
+		PersonalityType personality = dao.getById(personalityTypeID);
+		assertNotNull(personality);
+		assertEquals("Perfectionist", personality.getName());
 	}
 	
 //	@Test
-//	@Transactional
 //	public void testUpdate(){
-//		dao = new PersonalityTypeDao();
-//		PersonalityType personalityType = ;
-//		assertEquals();
+//		PersonalityType toUpdate;
+//		toUpdate = dao.getById(10);
+//		assertNotNull(toUpdate);
+//		assertEquals(toUpdate.getName(), "TestPersonality");
+//		assertEquals(toUpdate.getPrimaryDescription(), "Description1");
+//		
+//		toUpdate.setPrimaryDescription("UpdatedDescription1");
+//		dao.update(toUpdate);
+//		
+//		PersonalityType updated;
+//		updated = dao.getById(10);
+//		assertEquals("UpdatedDescription1", updated.getPrimaryDescription());
 //	}
 //	
 //	@Test
-//	@Transactional
 //	public void testDelete(){
-//		dao = new PersonalityTypeDao();
-//		PersonalityType personalityType = ;
+//		PersonalityType toDelete;
+//		toDelete = dao.getById(10);
+//		assertNotNull(toDelete);
+//		assertEquals(toDelete.getName(), "TestPersonality");
 //		
+//		dao.delete(toDelete);
+//		toDelete = dao.getById(10);
+//		assertNull(toDelete);
 //	}
 }
