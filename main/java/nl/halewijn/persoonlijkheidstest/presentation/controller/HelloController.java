@@ -59,10 +59,9 @@ public class HelloController {
       return "Success";
     }
     
-    @RequestMapping(value="/theorems")
+    @RequestMapping(value="/resultpagina")
     public String showTheorems(Model model) {
-        model.addAttribute("theorems", localTheoremService.getAll());
-        return "theorems";
+        return "result";
     }
 
     @RequestMapping(value="/hashpassword")

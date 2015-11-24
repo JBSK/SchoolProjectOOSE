@@ -79,7 +79,10 @@ public class QuestionnaireController {
 				model.addAttribute("currentQuestion", nextQuestion);
 			}
 			else {
-				model.addAttribute("result", questionnaire.getAnsweredQuestions());
+				
+				double[] resultArray = questionnaire.calculateResults();	
+				model.addAttribute("result", resultArray);
+				
 				return "result";
 			}				
 		}

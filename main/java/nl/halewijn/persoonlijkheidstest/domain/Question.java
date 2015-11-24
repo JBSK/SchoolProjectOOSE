@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 public abstract class Question {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue
 	private int questionID;
 
     @NotNull
