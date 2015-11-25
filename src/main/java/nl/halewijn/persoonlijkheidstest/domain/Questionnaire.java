@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
@@ -14,7 +15,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 public class Questionnaire {
 	
 	private List<Question> answeredQuestions = new ArrayList<Question>();
-	
+
 	private static final double ANSWER_A = 5.0;
 	private static final double ANSWER_B = 3.0;
 	private static final double ANSWER_C = 1.0;
@@ -37,7 +38,7 @@ public class Questionnaire {
 		return "";
 	}
 	
-	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, Model model, HttpSession session) {
+	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session) {
 		Question previousQuestion = getPreviousQuestion();
 		
 		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
@@ -47,7 +48,7 @@ public class Questionnaire {
 			return showNextQuestion(model, nextQuestion);
 		}
 		else {
-			return showResults(model, session);
+			return showResults(model, session, localPersonalityTypeService);
 		}	
 	}
 
@@ -61,16 +62,57 @@ public class Questionnaire {
 		return answeredQuestions.get(answeredQuestions.size()-1);
 	}
 	
-	public String showResults(Model model, HttpSession session) {
-		double[] resultArray = this.calculateResults();
-		String personalityTypes[] = { "Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar" };
+	public String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
+        double[] resultArray = this.calculateResults();
+        String personalityTypes[] = {"Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar"};
 
-		model.addAttribute("personalityTypes", personalityTypes);
-		model.addAttribute("scores", resultArray);
-		
-		session.removeAttribute("questionnaire");
-		return "result";
-	}
+        model.addAttribute("personalityTypes", personalityTypes);
+        model.addAttribute("scores", resultArray);
+
+        double[] resultArrayCopy = resultArray;
+        int primaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
+        resultArrayCopy[primaryPersonalityTypeID - 1] = 0;
+        int secondaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
+
+        PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
+        PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
+
+        /*
+
+        Error:
+
+            Whitelabel Error Page
+
+            This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+            Tue Nov 24 16:10:19 CET 2015
+            There was an unexpected error (type=Internal Server Error, status=500).
+            could not initialize proxy - no Session
+
+         */
+
+        System.out.println(primaryPersonalityType.getName() + " " + secondaryPersonalityType.getName());
+        for (int i = 0; i < 9; i++) {
+            System.out.println(personalityTypes[i] + ": " + resultArrayCopy[i]);
+        }
+        model.addAttribute("primaryPersonalityType", primaryPersonalityType);
+        model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
+
+        session.removeAttribute("questionnaire");
+        return "result";
+    }
+
+    private int getIndexOfHighestNumber(double[] numbers) {
+        double highestNumber = 0.0;
+        int indexOfHighestNumber = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] > highestNumber) {
+                highestNumber = numbers[i];
+                indexOfHighestNumber = i;
+            }
+        }
+        return indexOfHighestNumber;
+    }
 	
 	public void getCurrentQuestion(Model model) {
 		List<Question> answeredQuestions = this.getAnsweredQuestions();

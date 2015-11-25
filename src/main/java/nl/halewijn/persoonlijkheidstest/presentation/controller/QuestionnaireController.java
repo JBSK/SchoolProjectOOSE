@@ -4,6 +4,7 @@ import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +28,10 @@ public class QuestionnaireController {
 
 	@Autowired
     private LocalQuestionService localQuestionService;
-	
-	
+
+    @Autowired
+    private LocalPersonalityTypeService localPersonalityTypeService;
+
 	@RequestMapping(value="/session", method=RequestMethod.GET)
     public String session(Model model, HttpSession session) {
 		
@@ -59,7 +63,7 @@ public class QuestionnaireController {
 			if(session.getAttribute("questionnaire") instanceof Questionnaire) {
 				questionnaire = (Questionnaire) session.getAttribute("questionnaire");
 			}
-			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, model, session);
+			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session);
 		}
 		return "questionnaire";
     }
