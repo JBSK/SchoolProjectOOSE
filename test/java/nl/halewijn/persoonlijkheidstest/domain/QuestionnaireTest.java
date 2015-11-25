@@ -18,6 +18,7 @@ public class QuestionnaireTest {
 	@Before
     public void setUp() {
 		questionnaire = new Questionnaire();
+		
     }
 	
 	@Test
