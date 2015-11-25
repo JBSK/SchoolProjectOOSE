@@ -3,14 +3,14 @@ package nl.halewijn.persoonlijkheidstest.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 
 public class Questionnaire {
-	
-	@Autowired
-	LocalQuestionService localQuestionService;
 	
 	private List<Question> answeredQuestions = new ArrayList<Question>();
 	
@@ -22,6 +22,18 @@ public class Questionnaire {
 	
 	public Questionnaire() {
 
+	}
+	
+	public String startNewTest(Model model, HttpSession session, LocalQuestionService localQuestionService) {
+		Question firstQuestion = localQuestionService.getFirstQuestion(this);
+		
+		if(firstQuestion == null) {
+			return "questionnaire";
+		}
+		
+		session.setAttribute("questionnaire", this);	
+		model.addAttribute("currentQuestion", firstQuestion);
+		return "";
 	}
 	
 	public void addQuestion(Question question) {

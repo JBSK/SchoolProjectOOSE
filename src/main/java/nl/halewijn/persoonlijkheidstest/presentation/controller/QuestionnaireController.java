@@ -52,15 +52,7 @@ public class QuestionnaireController {
     	Questionnaire questionnaire = null;
     	if(session.getAttribute("questionnaire") == null) {
 			questionnaire = new Questionnaire();
-			Question firstQuestion = localQuestionService.getFirstQuestion(questionnaire);
-			
-			if(firstQuestion == null) {
-				return "questionnaire";
-			}
-			
-			session.setAttribute("questionnaire", questionnaire);	
-			
-			model.addAttribute("currentQuestion", firstQuestion);
+			questionnaire.startNewTest(model, session, localQuestionService);
 			
 		} else {
 			
@@ -92,8 +84,8 @@ public class QuestionnaireController {
 		}
 		return "questionnaire";
     }
-	
-    @RequestMapping(value="/showQuestion", method=RequestMethod.GET)
+
+	@RequestMapping(value="/showQuestion", method=RequestMethod.GET)
     public String showQuestionGET(Model model, HttpSession session) {
 		
     	Questionnaire questionnaire = null;
