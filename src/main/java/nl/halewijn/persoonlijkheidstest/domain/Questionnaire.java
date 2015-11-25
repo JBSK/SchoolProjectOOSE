@@ -3,6 +3,7 @@ package nl.halewijn.persoonlijkheidstest.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,47 @@ public class Questionnaire {
 		session.setAttribute("questionnaire", this);	
 		model.addAttribute("currentQuestion", firstQuestion);
 		return "";
+	}
+	
+	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, Model model, HttpSession session) {
+		Question previousQuestion = getPreviousQuestion();
+		
+		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
+		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
+		
+		if(nextQuestion != null) {
+			return showNextQuestion(model, nextQuestion);
+		}
+		else {
+			return showResults(model, session);
+		}	
+	}
+
+	private String showNextQuestion(Model model, Question nextQuestion) {
+		this.addQuestion(nextQuestion);
+		model.addAttribute("currentQuestion", nextQuestion);
+		return "questionnaire";
+	}
+	
+	public Question getPreviousQuestion() {
+		return answeredQuestions.get(answeredQuestions.size()-1);
+	}
+	
+	public String showResults(Model model, HttpSession session) {
+		double[] resultArray = this.calculateResults();
+		String personalityTypes[] = { "Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar" };
+
+		model.addAttribute("personalityTypes", personalityTypes);
+		model.addAttribute("scores", resultArray);
+		
+		session.removeAttribute("questionnaire");
+		return "result";
+	}
+	
+	public void getCurrentQuestion(Model model) {
+		List<Question> answeredQuestions = this.getAnsweredQuestions();
+		Question currentQuestion = answeredQuestions.get(answeredQuestions.size()-1);
+		model.addAttribute("currentQuestion", currentQuestion);
 	}
 	
 	public void addQuestion(Question question) {
