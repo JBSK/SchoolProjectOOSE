@@ -50,7 +50,8 @@ public class Questionnaire {
 
 	public double[] calculateResults() {
 
-		double[] resultArray = { 0,0,0,0,0,0,0,0,0 };
+		double[] resultArray = new double[9];
+		double totalPoints = 0;
 		
 		for(Question question : answeredQuestions) {
 			if(question instanceof TheoremBattle) {
@@ -58,17 +59,26 @@ public class Questionnaire {
 			}
 		}
 		
-		double totalPoints = 0;
-		for(int i = 0; i < 9; i++) {
-			totalPoints += resultArray[i];
-		}
-		
-		for(int i = 0; i < 9; i++) {
-			double typePercentage = resultArray[i]/totalPoints;
-			resultArray[i] = (double) Math.round(typePercentage * 100) / 100; //Math.round(typePercentage * 100, 2);
-		}
+		totalPoints = calculateTotalPoints(resultArray);	
+		calculateTypePercentages(resultArray, totalPoints);
 		
 		return resultArray;
+	}
+
+	private void calculateTypePercentages(double[] resultArray, double totalPoints) {
+		for(int i = 0; i < resultArray.length; i++) {
+			double typePercentage = resultArray[i]/totalPoints;
+			resultArray[i] = (double) Math.round(typePercentage * 100) / 100;
+		}
+	}
+
+	private double calculateTotalPoints(double[] resultArray) {
+		double totalPoints = 0;
+		
+		for(int i = 0; i < resultArray.length; i++) {
+			totalPoints += resultArray[i];
+		}
+		return totalPoints;
 	}
 	
 	private void calculateQuestionPoints(double[] resultArray, Question question) {
