@@ -54,33 +54,11 @@ public class QuestionnaireController {
 			questionnaire = new Questionnaire();
 			questionnaire.startNewTest(model, session, localQuestionService);
 			
-		} else {
-			
+		} else {			
 			if(session.getAttribute("questionnaire") instanceof Questionnaire) {
 				questionnaire = (Questionnaire) session.getAttribute("questionnaire");
-			}
-			
-			List<Question> answeredQuestions = questionnaire.getAnsweredQuestions();
-			Question previousQuestion = answeredQuestions.get(answeredQuestions.size()-1);
-			
-			localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
-			Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
-			
-			if(nextQuestion != null) {
-				questionnaire.addQuestion(nextQuestion);
-				model.addAttribute("currentQuestion", nextQuestion);
-			}
-			else {
-				
-				double[] resultArray = questionnaire.calculateResults();
-				String personalityTypes[] = { "Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar" };
-
-				model.addAttribute("personalityTypes", personalityTypes);
-				model.addAttribute("scores", resultArray);
-				
-				session.removeAttribute("questionnaire");
-				return "result";
-			}				
+			}					
+			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, model, session);			
 		}
 		return "questionnaire";
     }
@@ -96,11 +74,8 @@ public class QuestionnaireController {
 		} else {
 			if(session.getAttribute("questionnaire") instanceof Questionnaire) {
 				questionnaire = (Questionnaire) session.getAttribute("questionnaire");
-			}
-			
-			List<Question> answeredQuestions = questionnaire.getAnsweredQuestions();
-			Question currentQuestion = answeredQuestions.get(answeredQuestions.size()-1);
-			model.addAttribute("currentQuestion", currentQuestion);
+			}		
+			questionnaire.getCurrentQuestion(model);
 		}
 		
 		return "questionnaire";
