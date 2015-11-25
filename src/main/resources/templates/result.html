@@ -27,10 +27,10 @@
 						<div id="uitkomst" class="pure-u-1-3">
 							<h2 class="resultTitle">Result</h2>
 							<p class="primaryPType">
-								Uw persoonlijkheidstype is: Baas
+								Uw persoonlijkheidstype is: <span th:text="${primaryPersonalityType.name}">onbekend</span>
 							</p>
 							<p class="secondaryPType">
-								secondary: Ontkenning
+								secondary: <p th:text="${secondaryPersonalityType.name}">onbekend</p>
 							</p>
 							<p class="gegevenResult">
 							</p>
@@ -39,19 +39,13 @@
 				
 					<div class="pure-g resultrow2">
 						<div class="tekstResult1 pure-u-1">
-							<h3>Baas</h3>
-							Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
-							Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
-							Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
-							Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	Baas 	
+							<h3 th:text="${primaryPersonalityType.name}">onbekend</h3>
+							<p th:text="${primaryPersonalityType.primaryDescription}">placeholder</p>
 						</div>
 						<div class="tekstResult2 pure-u-1">
-							<h3>Ontkenning</h3>
-							Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
-							Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
-							Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	Ontkenning	
-							Ontkenning	Ontkenning	
-						</div>						
+							<h3 th:text="${secondaryPersonalityType.name}">onbekend</h3>
+							<p th:text="${secondaryPersonalityType.secondaryDescription}">placeholder</p>
+						</div>
 					</div>
 					<div class="pure-g resultrow3">
 						<div class="pure-u-1 antwoordenLijst">

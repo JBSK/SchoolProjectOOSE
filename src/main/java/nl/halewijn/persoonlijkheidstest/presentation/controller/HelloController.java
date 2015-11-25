@@ -4,7 +4,7 @@ import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
-import nl.halewijn.persoonlijkheidstest.services.PasswordHashExample;
+import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 
@@ -67,13 +67,13 @@ public class HelloController {
     @RequestMapping(value="/hashpassword")
     @ResponseBody
     public String hash(@RequestParam(value="password", required=true, defaultValue="abc") String argPassword) {
-        return new PasswordHashExample().hashPassword(argPassword);
+        return new PasswordHash().hashPassword(argPassword);
     }
 
     @RequestMapping(value="/verifypassword")
     @ResponseBody
     public boolean verify(@RequestParam(value="password", required=true, defaultValue="abc") String argPassword, @RequestParam(value="hash", required=true, defaultValue="abc") String argHash) {
-        return new PasswordHashExample().verifyPassword(argPassword, argHash);
+        return new PasswordHash().verifyPassword(argPassword, argHash);
     }
 
 }

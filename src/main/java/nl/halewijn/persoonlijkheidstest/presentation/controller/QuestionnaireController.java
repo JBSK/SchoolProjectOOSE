@@ -1,9 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
-import nl.halewijn.persoonlijkheidstest.domain.Question;
-import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
-import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
+import nl.halewijn.persoonlijkheidstest.domain.*;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 
 import java.util.ArrayList;
@@ -15,6 +13,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +25,9 @@ public class QuestionnaireController {
 
 	@Autowired
     private LocalQuestionService localQuestionService;
+
+    @Autowired
+    private LocalPersonalityTypeService localPersonalityTypeService;
 	
 	
 	@RequestMapping(value="/session", method=RequestMethod.GET)
@@ -45,7 +47,8 @@ public class QuestionnaireController {
     		return "redirect:/showQuestion";
     	}
     }
-    
+
+    @Transactional
     @RequestMapping(value="/showQuestion", method=RequestMethod.POST)
     public String showQuestionPOST(Model model, HttpSession session, HttpServletRequest httpServletRequest) {
     	
@@ -71,7 +74,7 @@ public class QuestionnaireController {
 				model.addAttribute("currentQuestion", nextQuestion);
 			}
 			else {
-				
+				/*
 				double[] resultArray = questionnaire.calculateResults();
 				String personalityTypes[] = { "Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar" };
 
@@ -80,10 +83,68 @@ public class QuestionnaireController {
 				
 				session.removeAttribute("questionnaire");
 				return "result";
+				*/
+
+				double[] resultArray = questionnaire.calculateResults();
+				String personalityTypes[] = { "Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar" };
+
+				model.addAttribute("personalityTypes", personalityTypes);
+				model.addAttribute("scores", resultArray);
+
+                double[] resultArrayCopy = resultArray;
+                int primaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
+                resultArrayCopy[primaryPersonalityTypeID - 1] = 0;
+                int secondaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
+
+                PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
+                PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
+
+                /*
+
+                Error:
+
+                    Whitelabel Error Page
+
+                    This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+                    Tue Nov 24 16:10:19 CET 2015
+                    There was an unexpected error (type=Internal Server Error, status=500).
+                    could not initialize proxy - no Session
+
+                 */
+
+                System.out.println(primaryPersonalityType.getName() + " " + secondaryPersonalityType.getName());
+                for (int i = 0; i < 9; i++) {
+                    System.out.println(personalityTypes[i] + ": " + resultArrayCopy[i]);
+                }
+                model.addAttribute("primaryPersonalityType", primaryPersonalityType);
+                model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
+
+                session.removeAttribute("questionnaire");
+				return "result";
+			}
+		}
+		return "questionnaire";
+    }
+
+    private int getIndexOfHighestNumber(double[] numbers) {
+        double highestNumber = 0.0;
+        int indexOfHighestNumber = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] > highestNumber) {
+                highestNumber = numbers[i];
+                indexOfHighestNumber = i;
+            }
+        }
+        return indexOfHighestNumber;
+    }
+
+		/*
 			}				
 		}
 		return "questionnaire";
     }
+*/
 
 	@RequestMapping(value="/showQuestion", method=RequestMethod.GET)
     public String showQuestionGET(Model model, HttpSession session) {
