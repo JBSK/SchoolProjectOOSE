@@ -17,8 +17,7 @@ public class QuestionnaireTest {
 	
 	@Before
     public void setUp() {
-		questionnaire = new Questionnaire();
-		
+		questionnaire = new Questionnaire();	
     }
 	
 	@Test
@@ -74,6 +73,5 @@ public class QuestionnaireTest {
 		double[] testResultArray = { typeOnePercentage,typeTwoPercentage,typeThreePercentage,0,0,0,0,0,0 };
 		
 		assertArrayEquals(testResultArray, methodResultArray, 0);
-	}
-	
+	}	
 }
