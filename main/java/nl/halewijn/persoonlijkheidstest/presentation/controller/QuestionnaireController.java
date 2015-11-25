@@ -86,6 +86,7 @@ public class QuestionnaireController {
 				model.addAttribute("personalityTypes", personalityTypes);
 				model.addAttribute("scores", resultArray);
 				
+				session.removeAttribute("questionnaire");
 				return "result";
 			}				
 		}
