@@ -31,7 +31,7 @@ public class QuestionnaireTest {
 		
 		questionnaire.addQuestion(openQuestion);
 		
-		Assert.assertEquals(questionnaire.getAnsweredQuestions(), questionList);
+		assertEquals(questionnaire.getAnsweredQuestions(), questionList);
 	}
 	
 	@Test
@@ -73,7 +73,7 @@ public class QuestionnaireTest {
 		
 		double[] testResultArray = { typeOnePercentage,typeTwoPercentage,typeThreePercentage,0,0,0,0,0,0 };
 		
-		Assert.assertArrayEquals(testResultArray, methodResultArray, 0);
+		assertArrayEquals(testResultArray, methodResultArray, 0);
 	}
 	
 }
