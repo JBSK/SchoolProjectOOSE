@@ -24,32 +24,6 @@ public class Questionnaire {
 
 	}
 	
-	public void startNewTest() {
-		Question firstQuestion = getFirstQuestion();
-	}
-	
-	public Question getFirstQuestion() {
-		
-		return null;
-	}
-
-
-	public void showQuestion(Question question) {
-		
-	}
-	
-	public void submitAnswer(char answer) {
-		
-	}
-	
-	public void submitAnswer(String answer) {
-		
-	}
-	
-	public void showResults() {
-		
-	}
-	
 	public void addQuestion(Question question) {
 		answeredQuestions.add(question);
 	}
