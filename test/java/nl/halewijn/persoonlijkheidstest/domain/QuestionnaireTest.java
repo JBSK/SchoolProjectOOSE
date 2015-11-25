@@ -22,7 +22,7 @@ public class QuestionnaireTest {
     }
 	
 	@Test
-	public void testAddQuestion(){
+	public void addQuestionTest(){
 		List<Question> questionList = new ArrayList<Question>();
 		assertEquals(questionnaire.getAnsweredQuestions(), questionList);
 		
@@ -35,7 +35,7 @@ public class QuestionnaireTest {
 	}
 	
 	@Test
-	public void testCalculateResults(){
+	public void calculateResultsTest(){
 		double[] methodResultArray = { 0,0,0,0,0,0,0,0,0 };
 		
 		PersonalityType typePerfectionist = new PersonalityType("Perfectionist", "primary tekst", "secondary tekst");
