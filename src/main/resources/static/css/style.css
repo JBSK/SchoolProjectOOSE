@@ -1,13 +1,9 @@
 body{
-	/* background-image: url("imgs/bg.png"); */
-    background-color: #EECB6D;
-	background-repeat: no-repeat;
-
-
+	background-color: #EECB6D;
 }
 
 #main{
-	padding:15px;
+	/** padding:15px; **/
 }
 
 /**header/menu **/
@@ -25,24 +21,25 @@ body{
 	position:fixed;
 	top:0;
 	z-index: 10;
-	
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,7db9e8+50,1e5799+100 */
-	background: #1e5799; /* Old browsers */
-	background: -moz-linear-gradient(top,  hsla(212,67%,36%,1) 0%, hsla(206,70%,70%,1) 50%, hsla(212,67%,36%,1) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top,  hsla(212,67%,36%,1) 0%,hsla(206,70%,70%,1) 50%,hsla(212,67%,36%,1) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom,  hsla(212,67%,36%,1) 0%,hsla(206,70%,70%,1) 50%,hsla(212,67%,36%,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#1e5799',GradientType=0 ); /* IE6-9 */
+
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+50,7db9e8+100 */
+	background: rgb(30,87,153); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(41,137,216,1) 50%, rgba(125,185,232,1) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(125,185,232,1) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(30,87,153,1) 0%,rgba(41,137,216,1) 50%,rgba(125,185,232,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
 
 }
-	div.logo {
-	   background:url(imgs/logo.jpg);
-	   background-size:100%;
-	   margin:0px; /* If you want no margin */
+	.logo {
+	   content:url(imgs/logo.jpg);
+	   margin:0px 0px 0px 5px; /* If you want no margin */
 	   padding:0px; /*if your want to padding */
-	   height:120px;
-	   width:100%;
+	   height: 78px;
+       width: 100px;
+       top: -8px;
+       left: -4px;
+       position: relative;
 	}
-
 	
 	#header .titel{
 		text-align:center;
@@ -66,22 +63,287 @@ body{
 		
 	}
 	
+	.login{
+		text-align:right;
+	}
+	
 	
 /*******************Content*************/
 .content{
-	padding-top: 15px;
-    padding-bottom: 20px;
-    margin-top: 20px;
-    /*background: white;*/
-    border-radius: 35px;
-    border: 15px solid #E6EAF4;
-	margin-bottom: 0; /* overrides menu margin to prevent scrollbars */
+    padding: 10px;
+    background: white;
+	border: 5px solid #0C1F7E;
+    margin: 20px auto;
+    border-radius: 12px;
+    max-width: 60%;
 
-	background: #eecb6d; /* Old browsers */
-	background: -moz-linear-gradient(top,  hsla(44,94%,75%,1) 0%, hsla(43,85%,95%,1) 50%, hsla(44,100%,72%,1) 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top,  hsla(44,94%,75%,1) 0%, hsla(43,85%,95%,1) 50%, hsla(44,100%,72%,1) 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, hsla(44,94%,75%,1) 0%, hsla(43,85%,95%,1) 50%, hsla(44,100%,72%,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eecb6d', endColorstr='#eecb6d',GradientType=0 ); /* IE6-9 */
+}
+/********************** Test Menu *****************/
+.menu{
+
+	border: 0px;
+}
+.menulist{
+
+height:100%;
+
+}
+.menupusher{
+height:70px;
+width:100%;
+}
+
+
+
+
+.custom-menu-wrapper {
+z-index:90;
+	position:fixt;
+    background-color: #0C1F7E;
+    margin-bottom: 2.5em;
+    white-space: nowrap;
+    position: relative;
+	width:100%;
+	height:78px;
+	position:fixed;
+}
+
+.custom-menu {
+	z-index:90;
+	position:fixt;
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+    -webkit-font-smoothing: antialiased;
+}
+.balkfill{
+	    z-index: 8;
+		top: 78px;
+		}
+
+.custom-menu .pure-menu-link,
+.custom-menu .pure-menu-heading {
+    color: white;
+}
+
+.custom-menu .pure-menu-link:hover,
+.custom-menu .pure-menu-heading:hover {
+    background-color: #5462a4;
+}
+
+.custom-menu-top {
+    position: relative;
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+.custom-menu-brand {
+    display: block;
+    text-align: center;
+    position: relative;
+}
+
+.custom-menu-toggle {
+    width: 44px;
+    height: 44px;
+    display: block;
+    position: absolute;
+    top: 3px;
+    right: 0;
+    display: none;
+}
+
+.custom-menu-toggle .bar {
+    background-color: white;
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 100px;
+    position: absolute;
+    top: 22px;
+    right: 12px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.custom-menu-toggle .bar:first-child {
+    -webkit-transform: translateY(-6px);
+    -moz-transform: translateY(-6px);
+    -ms-transform: translateY(-6px);
+    transform: translateY(-6px);
+}
+
+.custom-menu-toggle.x .bar {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.custom-menu-toggle.x .bar:first-child {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.custom-menu-screen {
+    background-color: rgba(12, 31, 126, 0.7);
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    transition: all 0.5s;
+    height: 3em;
+    width: 70em;
+    position: absolute;
+    top: -5px;
+    z-index: -1;
+}
+
+.custom-menu-tucked .custom-menu-screen {
+    -webkit-transform: translateY(-44px);
+    -moz-transform: translateY(-44px);
+    -ms-transform: translateY(-44px);
+    transform: translateY(-44px);
+}
+
+@media (max-width: 62em) {
+
+    .custom-menu {
+        display: block;
+    }
+
+    .custom-menu-toggle {
+        display: block;
+        display: none\9;
+    }
+
+    .custom-menu-bottom {
+        position: absolute;
+        width: 100%;
+		border-top: 1px solid #6f6f6f;
+        background-color: #808080\9;
+        z-index: 100;
+    }
+
+    .custom-menu-bottom .pure-menu-link {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        -moz-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -ms-transition: all 0.5s;
+        transition: all 0.5s;
+    }
+
+    .custom-menu-bottom.custom-menu-tucked .pure-menu-link {
+        -webkit-transform: translateX(-140px);
+        -moz-transform: translateX(-140px);
+        -ms-transform: translateX(-140px);
+        transform: translateX(-140px);
+        opacity: 0;
+        opacity: 1\9;
+		padding:0px;
+    }
+
+    .pure-menu-horizontal.custom-menu-tucked {
+        z-index: -1;
+        top: 78px;
+        position: absolute;
+        overflow: hidden;
+    }
+}
+
+/***************slash**************/
+.splash-container {
+    z-index: 1;
+    overflow: hidden;
+    /* The following styles are required for the "scroll-over" effect */
+    width: 100%;
+    height: 50%;
+    top: 0;
+    left: 0;
+    position: fixed !important;
+}
+.splashbg{
+	height:100%;
+	width:100%;
+    background-image: url('imgs/bg.png');
+    background-repeat: no-repeat;
+    background-position: center; 
+	background-size:100%;
+	position: absolute;
+    top: 50px;
+	background-color:#0C1F7E;
+}
+
+.splash {
+    /* absolute center .splash within .splash-container */
+    width: 40%;
+	min-width:500px;
+    height: 70%;
+    margin: auto;
+    position: absolute;
+    top: 100px; left: 0; bottom: 0; right: 0;
+    text-align: center;
+}
+
+/* This is the main heading that appears on the blue section */
+.shoutTitle {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    font-weight: 100;
+    border-radius: 5px;
+    line-height: 1em;
+	text-align:left;
+}
+
+/* This is the subheading that appears on the blue section */
+.splash-subhead {
+    color: white;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+	.shoutOut{
+		font-size: 1.5em;
+		color:yellow;
+		text-align:center-left;
+	}
+
+/*
+ * -- CONTENT STYLES --
+ * This represents the content area (everything below the blue section)
+ */
+.content-wrapper {
+    /* These styles are required for the "scroll-over" effect */
+    position: absolute;
+    top: 50%;
+	left:0;
+    width: 100%;
+    min-height: 12%;
+    z-index: 2;
+	background-color:#EECB6D;
+}
+/******footer****/
+.footer{
+    width: 916px;
+    font: normal 90% 'trebuchet ms', arial, sans-serif;
+    height: 28px;
+    padding: 20px 0 5px 0;
+    text-align: center;
+    background: transparent;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+	margin-left: auto;
+    margin-right: auto;
+	padding-bottom:45px;
 }
 
 /*********Navi*************/
@@ -111,11 +373,7 @@ body{
 }
 /*******************Index*************/
 
-	.content .shoutOut{
-		font-size: 1.5em;
-		color:#FFFF00 ;
-		text-shadow: 2px 2px #888;
-	}
+
 
 	
 	
@@ -350,74 +608,12 @@ body{
 			width:100px;
 		
 		}
-/***************Geschiedenis*************************/
-	.content .resultList{
-		width:100%;
-	}
-		.content .resultList .butCol{
-			max-width:120px;
-			min-width:100px;
-			width:100px;
-		
-		}
 /****************resultaten**********/
-	.content .resultrow1{
-		min-height:450px;
-		margin-bottom:20px;
-	
-	}
-	/****************grafiekenrij**********/
-		.content .resultrow1 #radarGrafiek{
-			background:url(imgs/radar.png);
-			background-size: contain;
-			background-repeat:no-repeat;
-			margin:0px; /* If you want no margin */
-			padding:0px; /*if your want to padding */
-			
-		}
-		.content .resultrow1 #staafGrafiek{
-			background:url(imgs/barchart.png);
-			background-size: contain;
-			background-repeat:no-repeat;
-			margin:0px; /* If you want no margin */
-			padding:0px; /*if your want to padding */
-		}
-		.content .resultrow1 #uitkomst{
-			
-			    border-radius: 35px;
-				background: #FFFFFF;
-			
-		}
-			.content .resultrow1 #uitkomst .resultTitle{
-				padding:10px;
-			}
-			.content .resultrow1 #uitkomst .primaryPType{
-				padding:10px;
-			}
-			.content .resultrow1 #uitkomst .secondaryPType{
-				padding:10px;
-			}
-	/*************begeleidende teksten**********/
-	.content .resultrow2 {
-		
-	}	
-		.content .resultrow2 .tekstResult1 {
-			
-		}	
-		.content .resultrow2 .tekstResult2 {
-			
-		}	
-	/**************antwoorden van de test**********/
-	.content .resultrow3{
-	
-	}
-		.content .resultrow3 .antwoordenLijst{
-		
-		}
-	
-
 
 
 
 	
+
+
+
 	

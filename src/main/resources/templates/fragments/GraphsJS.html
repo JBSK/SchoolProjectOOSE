@@ -1,63 +1,56 @@
-<script src="js/radarChart.js" xmlns:th="http://www.w3.org/1999/xhtml"></script>
-<script th:inline="javascript">
-    /*<![CDATA[*/
+		<script src="js/radarChart.js"></script>	
+			<script>
+				////////////////////////////////////////////////////////////// 
+				//////////////////////// Set-Up ////////////////////////////// 
+				////////////////////////////////////////////////////////////// 
+				var DivBr = document.getElementById("radarGrafiek").offsetWidth;
+				var margin = {top: 80, right: 80, bottom: 80, left: 80},
+					width = Math.min(DivBr, window.innerWidth - 10) - margin.left - margin.right,
+					height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+						
+				////////////////////////////////////////////////////////////// 
+				////////////////////////// Data ////////////////////////////// 
+				////////////////////////////////////////////////////////////// 
 
-    var personalityTypes = /*[[${personalityTypes}]]*/ [ "Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar" ];
-    var scores = /*[[${scores}]]*/ [ 0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11, 0.11 ];
+				var data = [
+						  [
+							{axis:"Perfectie",value:0.65},
+							{axis:"Sociale houding",value:0.59},
+							{axis:"Succes",value:1.00},
+							{axis:"Schoonheid/bijzonderheid",value:0.81},
+							{axis:"Kennis",value:0.56},
+							{axis:"Zekerheid",value:0.55},
+							{axis:"Plezier",value:0.40},
+							{axis:"Macht",value:0.12},
+							{axis:"Harmonie",value:0.23}
+						  ],[
+							{axis:"Perfectie",value:0.78},
+							{axis:"Sociale houding",value:0.56},
+							{axis:"Succes",value:0.45},
+							{axis:"Schoonheid/bijzonderheid",value:0.14},
+							{axis:"Kennis",value:0.28},
+							{axis:"Zekerheid",value:0.49},
+							{axis:"Plezier",value:0.81},
+							{axis:"Macht",value:0.61},
+							{axis:"Harmonie",value:0.58}
+						  ]
+						];
+				////////////////////////////////////////////////////////////// 
+				//////////////////// Draw the Chart ////////////////////////// 
+				////////////////////////////////////////////////////////////// 
 
-    //////////////////////////////////////////////////////////////
-    //////////////////////// Set-Up //////////////////////////////
-    //////////////////////////////////////////////////////////////
-    var DivBr = document.getElementById("radarGrafiek").offsetWidth;
-    var margin = {top: 50, right: 50, bottom: 50, left: 50},
-        width = Math.min(DivBr, window.innerWidth - 10) - margin.left - margin.right,
-        height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
-
-    //////////////////////////////////////////////////////////////
-    ////////////////////////// Data //////////////////////////////
-    //////////////////////////////////////////////////////////////
-
-    var data = [
-              [
-                {axis: personalityTypes[0], value: scores[0] },
-                {axis: personalityTypes[1], value: scores[1] },
-                {axis: personalityTypes[2], value: scores[2] },
-                {axis: personalityTypes[3], value: scores[3] },
-                {axis: personalityTypes[4], value: scores[4] },
-                {axis: personalityTypes[5], value: scores[5] },
-                {axis: personalityTypes[6], value: scores[6] },
-                {axis: personalityTypes[7], value: scores[7] },
-                {axis: personalityTypes[8], value: scores[8] }
-              ]/*,[
-                {axis:"Perfectie",value:0.78},
-                {axis:"Sociale houding",value:0.56},
-                {axis:"Succes",value:0.45},
-                {axis:"Schoonheid/bijzonderheid",value:0.14},
-                {axis:"Kennis",value:0.28},
-                {axis:"Zekerheid",value:0.49},
-                {axis:"Plezier",value:0.81},
-                {axis:"Macht",value:0.61},
-                {axis:"Harmonie",value:0.58}
-              ]*/
-            ];
-    //////////////////////////////////////////////////////////////
-    //////////////////// Draw the Chart //////////////////////////
-    //////////////////////////////////////////////////////////////
-
-    var color = d3.scale.ordinal()
-        .range(["#1F77B4","#E17F0E", "#EECB6D" /*"#5FB2E0","#FFD700"*/]);
-
-    var radarChartOptions = {
-      w: width,
-      h: height,
-      margin: margin,
-      maxValue: 0.5,
-      levels: 5,
-      roundStrokes: true,
-      color: color
-    };
-    //Call function to draw the Radar chart
-    RadarChart(".radarChart", data, radarChartOptions);
-
-    /*]]>*/
-</script>
+				var color = d3.scale.ordinal()
+					.range(["#1F77B4","#E17F0E", "#EECB6D" /*"#5FB2E0","#FFD700"*/]);
+					
+				var radarChartOptions = {
+				  w: width,
+				  h: height,
+				  margin: margin,
+				  maxValue: 0.5,
+				  levels: 5,
+				  roundStrokes: true,
+				  color: color
+				};
+				//Call function to draw the Radar chart
+				RadarChart(".radarChart", data, radarChartOptions);
+			</script>

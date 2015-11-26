@@ -63,6 +63,7 @@ public class HelloController {
     public String showTheorems(Model model) {
         return "result";
     }
+    
 
     @RequestMapping(value="/hashpassword")
     @ResponseBody
