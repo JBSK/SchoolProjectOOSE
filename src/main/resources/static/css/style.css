@@ -398,6 +398,7 @@ z-index:90;
 	.content .statTest input[type="text"]{
 	  display: block;
 	  width: 309px;
+	  max-width: 80%;
 	  height: 35px;
 	  margin: 15px auto;
 	  background: #fff;
@@ -419,6 +420,7 @@ z-index:90;
 	  display: block;
 	 /* background: #1abc9d;*/
 	  width: 314px;
+	  max-width: 80%;
 	  padding: 12px;
 	  cursor: pointer;
 	  color: #fff;
@@ -533,6 +535,7 @@ z-index:90;
 	.content .loginForm input[type="text"]{
 	  display: block;
 	  width: 309px;
+	  max-width: 80%;
 	  height: 35px;
 	  margin: 15px auto;
 	  background: #fff;
@@ -554,6 +557,7 @@ z-index:90;
 	  display: block;
 	 /* background: #1abc9d;*/
 	  width: 314px;
+	  max-width: 80%;
 	  padding: 12px;
 	  cursor: pointer;
 	  color: #fff;
@@ -620,6 +624,7 @@ z-index:90;
 	.content .registerForm input[type="text"]{
 	  display: block;
 	  width: 309px;
+	  max-width: 80%;
 	  height: 35px;
 	  margin: 15px auto;
 	  background: #fff;
@@ -641,6 +646,7 @@ z-index:90;
 	  display: block;
 	 /* background: #1abc9d;*/
 	  width: 314px;
+	  max-width: 80%;
 	  padding: 12px;
 	  cursor: pointer;
 	  color: #fff;
