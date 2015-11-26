@@ -69,7 +69,7 @@ public class Questionnaire {
         model.addAttribute("personalityTypes", personalityTypes);
         model.addAttribute("scores", resultArray);
 
-        double[] resultArrayCopy = resultArray;
+        double[] resultArrayCopy = this.calculateResults();
         int primaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
         resultArrayCopy[primaryPersonalityTypeID - 1] = 0;
         int secondaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
