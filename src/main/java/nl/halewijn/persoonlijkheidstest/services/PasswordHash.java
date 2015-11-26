@@ -2,7 +2,7 @@ package nl.halewijn.persoonlijkheidstest.services;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public class PasswordHashExample {
+public class PasswordHash {
 
     private int HASH_STRENGTH = 12;
 

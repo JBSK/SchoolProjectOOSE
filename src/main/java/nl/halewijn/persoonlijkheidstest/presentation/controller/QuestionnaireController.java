@@ -4,6 +4,7 @@ import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +28,10 @@ public class QuestionnaireController {
 
 	@Autowired
     private LocalQuestionService localQuestionService;
-	
-	
+
+    @Autowired
+    private LocalPersonalityTypeService localPersonalityTypeService;
+
 	@RequestMapping(value="/session", method=RequestMethod.GET)
     public String session(Model model, HttpSession session) {
 		
@@ -45,7 +49,8 @@ public class QuestionnaireController {
     		return "redirect:/showQuestion";
     	}
     }
-    
+
+    @Transactional
     @RequestMapping(value="/showQuestion", method=RequestMethod.POST)
     public String showQuestionPOST(Model model, HttpSession session, HttpServletRequest httpServletRequest) {
     	
@@ -55,32 +60,10 @@ public class QuestionnaireController {
 			questionnaire.startNewTest(model, session, localQuestionService);
 			
 		} else {
-			
 			if(session.getAttribute("questionnaire") instanceof Questionnaire) {
 				questionnaire = (Questionnaire) session.getAttribute("questionnaire");
 			}
-			
-			List<Question> answeredQuestions = questionnaire.getAnsweredQuestions();
-			Question previousQuestion = answeredQuestions.get(answeredQuestions.size()-1);
-			
-			localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
-			Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
-			
-			if(nextQuestion != null) {
-				questionnaire.addQuestion(nextQuestion);
-				model.addAttribute("currentQuestion", nextQuestion);
-			}
-			else {
-				
-				double[] resultArray = questionnaire.calculateResults();
-				String personalityTypes[] = { "Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar" };
-
-				model.addAttribute("personalityTypes", personalityTypes);
-				model.addAttribute("scores", resultArray);
-				
-				session.removeAttribute("questionnaire");
-				return "result";
-			}				
+			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session);
 		}
 		return "questionnaire";
     }
@@ -97,10 +80,7 @@ public class QuestionnaireController {
 			if(session.getAttribute("questionnaire") instanceof Questionnaire) {
 				questionnaire = (Questionnaire) session.getAttribute("questionnaire");
 			}
-			
-			List<Question> answeredQuestions = questionnaire.getAnsweredQuestions();
-			Question currentQuestion = answeredQuestions.get(answeredQuestions.size()-1);
-			model.addAttribute("currentQuestion", currentQuestion);
+			questionnaire.getCurrentQuestion(model);
 		}
 		
 		return "questionnaire";

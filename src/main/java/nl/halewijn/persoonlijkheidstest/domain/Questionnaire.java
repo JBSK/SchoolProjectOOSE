@@ -3,8 +3,10 @@ package nl.halewijn.persoonlijkheidstest.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
@@ -13,7 +15,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 public class Questionnaire {
 	
 	private List<Question> answeredQuestions = new ArrayList<Question>();
-	
+
 	private static final double ANSWER_A = 5.0;
 	private static final double ANSWER_B = 3.0;
 	private static final double ANSWER_C = 1.0;
@@ -36,6 +38,88 @@ public class Questionnaire {
 		return "";
 	}
 	
+	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session) {
+		Question previousQuestion = getPreviousQuestion();
+		
+		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
+		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
+		
+		if(nextQuestion != null) {
+			return showNextQuestion(model, nextQuestion);
+		}
+		else {
+			return showResults(model, session, localPersonalityTypeService);
+		}	
+	}
+
+	private String showNextQuestion(Model model, Question nextQuestion) {
+		this.addQuestion(nextQuestion);
+		model.addAttribute("currentQuestion", nextQuestion);
+		return "questionnaire";
+	}
+	
+	public Question getPreviousQuestion() {
+		return answeredQuestions.get(answeredQuestions.size()-1);
+	}
+	
+	public String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
+        double[] resultArray = this.calculateResults();
+        String personalityTypes[] = {"Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar"};
+
+        model.addAttribute("personalityTypes", personalityTypes);
+        model.addAttribute("scores", resultArray);
+
+        double[] resultArrayCopy = resultArray;
+        int primaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
+        resultArrayCopy[primaryPersonalityTypeID - 1] = 0;
+        int secondaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
+
+        PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
+        PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
+
+        /*
+
+        Error:
+
+            Whitelabel Error Page
+
+            This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+            Tue Nov 24 16:10:19 CET 2015
+            There was an unexpected error (type=Internal Server Error, status=500).
+            could not initialize proxy - no Session
+
+         */
+
+        System.out.println(primaryPersonalityType.getName() + " " + secondaryPersonalityType.getName());
+        for (int i = 0; i < 9; i++) {
+            System.out.println(personalityTypes[i] + ": " + resultArrayCopy[i]);
+        }
+        model.addAttribute("primaryPersonalityType", primaryPersonalityType);
+        model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
+
+        session.removeAttribute("questionnaire");
+        return "result";
+    }
+
+    private int getIndexOfHighestNumber(double[] numbers) {
+        double highestNumber = 0.0;
+        int indexOfHighestNumber = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] > highestNumber) {
+                highestNumber = numbers[i];
+                indexOfHighestNumber = i;
+            }
+        }
+        return indexOfHighestNumber;
+    }
+	
+	public void getCurrentQuestion(Model model) {
+		List<Question> answeredQuestions = this.getAnsweredQuestions();
+		Question currentQuestion = answeredQuestions.get(answeredQuestions.size()-1);
+		model.addAttribute("currentQuestion", currentQuestion);
+	}
+	
 	public void addQuestion(Question question) {
 		answeredQuestions.add(question);
 	}
@@ -50,7 +134,8 @@ public class Questionnaire {
 
 	public double[] calculateResults() {
 
-		double[] resultArray = { 0,0,0,0,0,0,0,0,0 };
+		double[] resultArray = new double[9];
+		double totalPoints = 0;
 		
 		for(Question question : answeredQuestions) {
 			if(question instanceof TheoremBattle) {
@@ -58,17 +143,26 @@ public class Questionnaire {
 			}
 		}
 		
-		double totalPoints = 0;
-		for(int i = 0; i < 9; i++) {
-			totalPoints += resultArray[i];
-		}
-		
-		for(int i = 0; i < 9; i++) {
-			double typePercentage = resultArray[i]/totalPoints;
-			resultArray[i] = (double) Math.round(typePercentage * 100) / 100; //Math.round(typePercentage * 100, 2);
-		}
+		totalPoints = calculateTotalPoints(resultArray);	
+		calculateTypePercentages(resultArray, totalPoints);
 		
 		return resultArray;
+	}
+
+	private void calculateTypePercentages(double[] resultArray, double totalPoints) {
+		for(int i = 0; i < resultArray.length; i++) {
+			double typePercentage = resultArray[i]/totalPoints;
+			resultArray[i] = (double) Math.round(typePercentage * 100) / 100;
+		}
+	}
+
+	private double calculateTotalPoints(double[] resultArray) {
+		double totalPoints = 0;
+		
+		for(int i = 0; i < resultArray.length; i++) {
+			totalPoints += resultArray[i];
+		}
+		return totalPoints;
 	}
 	
 	private void calculateQuestionPoints(double[] resultArray, Question question) {
