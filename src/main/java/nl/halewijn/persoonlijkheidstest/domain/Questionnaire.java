@@ -77,6 +77,9 @@ public class Questionnaire {
         PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
         PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
 
+        System.out.println(primaryPersonalityType.getName() + " " + secondaryPersonalityType.getName());
+
+        
         model.addAttribute("primaryPersonalityType", primaryPersonalityType);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
 
