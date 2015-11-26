@@ -122,8 +122,12 @@ z-index:90;
 .balkfill{
 	    z-index: 8;
 		top: 78px;
-		overflow-x: hidden !important;
+
+
 		}
+.balkfill:not(:-moz-handler-blocked) {
+    overflow-x:hidden;
+}
 
 .custom-menu .pure-menu-link,
 .custom-menu .pure-menu-heading {
