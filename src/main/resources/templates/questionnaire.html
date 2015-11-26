@@ -7,8 +7,10 @@
 	<div id="main" class="pure-skin-PT">
 		<div class="content">
 			<div th:if="${session.questionnaire == null}">
-				<form action="showQuestion" method="post">
-		        	<p><input type="submit" value="Klik hier om een test te starten!" /> </p>
+				<form class="statTest" action="showQuestion" method="post">
+		        	<p>
+		        		<input class="pure-button" type="submit" value="Klik hier om een test te starten!" /> 
+	        		</p>
 		    	</form>
 			</div>
 			

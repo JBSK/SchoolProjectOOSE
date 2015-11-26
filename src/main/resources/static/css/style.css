@@ -379,10 +379,94 @@ z-index:90;
 /*******************Index*************/
 
 
-
-	
 	
 /**************test/vragenlijst**********/
+
+		.content .statTest{
+	  width: 400px;
+	  max-width: 100%;
+	  background: #edeff1;
+      margin: 0px auto 30px auto;
+	  padding-top: 20px;
+	  padding-bottom: 20px;
+	  border-radius: 10px;
+	  text-align:center;
+	  -moz-border-radius: 10px;
+	  -webkit-border-radius: 10px;
+	}
+
+	.content .statTest input[type="text"]{
+	  display: block;
+	  width: 309px;
+	  height: 35px;
+	  margin: 15px auto;
+	  background: #fff;
+	  border: 0px;
+	  padding: 5px;
+	  font-size: 16px;
+	   border: 2px solid #fff;
+	  transition: all 0.3s ease;
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+	}
+
+	.content .statTest input[type="text"]:focus{
+	  border: 2px solid #1abc9d
+	}
+
+	.content .statTest input[type="submit"]{
+	  display: block;
+	 /* background: #1abc9d;*/
+	  width: 314px;
+	  padding: 12px;
+	  cursor: pointer;
+	  color: #fff;
+	  border: 0px;
+	  margin: auto;
+	  border-radius: 5px;
+	  -moz-border-radius: 5px;
+	  -webkit-border-radius: 5px;
+	  font-size: 17px;
+	  transition: all 0.3s ease;
+	}
+
+	.content .statTest input[type="submit"]:hover{
+	/*  background: #09cca6*/
+	}
+
+	.content .statTest a{
+	  text-align: center;
+	  font-family: Arial;
+	  color: gray;
+	  display: block;
+	  margin: 15px auto;
+	  text-decoration: none;
+	  transition: all 0.3s ease;
+	  font-size: 12px;
+	}
+
+	.content .statTest a:hover{
+	  color: #1abc9d;
+	}
+
+
+	.content .statTest ::-webkit-input-placeholder {
+	   color: gray;
+	}
+
+	.content .statTest :-moz-placeholder { /* Firefox 18- */
+	   color: gray;  
+	}
+
+	.content .statTest ::-moz-placeholder {  /* Firefox 19+ */
+	   color: gray;  
+	}
+
+	.content .statTest :-ms-input-placeholder {  
+	   color: gray;  
+	}
+
 /**************Stellingbattle************/
 	.content #vraag{
 		width:100%;
@@ -435,6 +519,7 @@ z-index:90;
 
 	.content .loginForm{
 	  width: 400px;
+	  max-width: 100%;
 	  background: #edeff1;
       margin: 0px auto 30px auto;
 	  padding-top: 20px;
@@ -521,6 +606,7 @@ z-index:90;
 
 	.content .registerForm{
 	  width: 400px;
+	  max-width: 100%;
 	  background: #edeff1;
 	  margin: 0px auto 30px auto;
 	  padding-top: 20px;
