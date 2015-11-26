@@ -77,24 +77,6 @@ public class Questionnaire {
         PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
         PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
 
-        /*
-
-        Error:
-
-            Whitelabel Error Page
-
-            This application has no explicit mapping for /error, so you are seeing this as a fallback.
-
-            Tue Nov 24 16:10:19 CET 2015
-            There was an unexpected error (type=Internal Server Error, status=500).
-            could not initialize proxy - no Session
-
-         */
-
-        System.out.println(primaryPersonalityType.getName() + " " + secondaryPersonalityType.getName());
-        for (int i = 0; i < 9; i++) {
-            System.out.println(personalityTypes[i] + ": " + resultArrayCopy[i]);
-        }
         model.addAttribute("primaryPersonalityType", primaryPersonalityType);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
 
