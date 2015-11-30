@@ -22,8 +22,6 @@ public interface IQuestionService {
 	public Question getQuestionById(int id);
 	public String getTypeById(int id);
 	public Question getNextQuestion(Question previousQuestion);
-	public OpenQuestion getOpenQuestionById(int i);
-	public TheoremBattle getTheoremBattleById(int i);
 	public Question getFirstQuestion(Questionnaire questionnaire);
 	public void setQuestionAnswer(HttpServletRequest req, Question previousQuestion);
 }

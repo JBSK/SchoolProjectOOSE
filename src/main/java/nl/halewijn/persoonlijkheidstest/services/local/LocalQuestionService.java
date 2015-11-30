@@ -1,9 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 
-import nl.halewijn.persoonlijkheidstest.datasource.dao.OpenQuestionDao;
 import nl.halewijn.persoonlijkheidstest.datasource.dao.QuestionDao;
-import nl.halewijn.persoonlijkheidstest.datasource.dao.TheoremBattleDao;
 import nl.halewijn.persoonlijkheidstest.datasource.dao.TheoremDao;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
@@ -28,12 +26,6 @@ public class LocalQuestionService implements IQuestionService {
 	
 	@Autowired
 	private QuestionDao questionDao;
-	
-	@Autowired
-	private OpenQuestionDao openQuestionDao;
-	
-	@Autowired
-	private TheoremBattleDao theoremBattleDao;
 
 	@Override
 	public void save(Question question) {
@@ -76,16 +68,6 @@ public class LocalQuestionService implements IQuestionService {
 	public Question getFirstQuestion() {
 		
 		return questionDao.getById(1);
-	}
-
-	@Override
-	public OpenQuestion getOpenQuestionById(int i) {
-		return openQuestionDao.getById(i);
-	}
-	
-	@Override
-	public TheoremBattle getTheoremBattleById(int i) {
-		return theoremBattleDao.getById(i);
 	}
 	
 	/**
