@@ -30,7 +30,6 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class QuestionnaireTest {
 	
     private Questionnaire questionnaire;
@@ -51,7 +50,7 @@ public class QuestionnaireTest {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		
-		assertEquals("questionnaire", questionnaire.startNewTest(model, httpSession, localQuestionService));
+		assertEquals("", questionnaire.startNewTest(model, httpSession, localQuestionService));
 		
 		Question openQ = new OpenQuestion("test");
 		localQuestionService.save(openQ);
@@ -73,6 +72,11 @@ public class QuestionnaireTest {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+		
+		PersonalityType typePerfectionist = new PersonalityType("Perfectionist", "primary tekst", "secondary tekst");
+		
+		for(int i = 0; i < 10; i++)
+			localPersonalityTypeService.save(typePerfectionist);
 		
 		Question question = new OpenQuestion("Een vraag");
 		questionnaire.addQuestion(question);
