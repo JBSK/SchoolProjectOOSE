@@ -89,6 +89,9 @@ public class QuestionDao {
 	 * Delete the question from the database.
 	 */
 	public void delete(Question question) {
-		getSession().delete(question);
+		if(!(getSession().contains(question))) {
+			getSession().merge(question);
+		}
+		getSession().delete(getSession());
 	}
 }
