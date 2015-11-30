@@ -9,13 +9,13 @@ import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Transactional
 public class QuestionDao {
 	
 	@Autowired
@@ -28,6 +28,7 @@ public class QuestionDao {
 	/**
 	* Save the new question in the database.
 	*/
+	@Transactional
 	public void save(Question question) {
 		getSession().save(question);
 	}
@@ -35,6 +36,8 @@ public class QuestionDao {
 	/**
 	* Return all the questions stored in the database.
 	*/
+	
+	@Transactional
 	public List<Question> getAll() {
 		return getSession().createQuery("FROM Question").list();
 	}
@@ -47,6 +50,8 @@ public class QuestionDao {
 	* If a question type was found, it loads the question and assigns this value to the "result" variable.
 	* This variable is then returned.
 	*/
+	
+	@Transactional
 	public Question getById(int questionID) {
 		Question result;
 
@@ -68,6 +73,8 @@ public class QuestionDao {
 	/**
 	* Retrieve a questionType from the database by ID.
 	*/
+	
+	@Transactional
 	public String getTypeById(int questionID) {
 		List<Question> questions = getSession().createQuery("FROM Question WHERE questionId = " + questionID).list();
         try {
@@ -81,6 +88,8 @@ public class QuestionDao {
 	/**
 	* Update the passed question in the database.
 	*/
+	
+	@Transactional
 	public void update(Question question) {
 		getSession().update(question);
 	}
@@ -88,10 +97,8 @@ public class QuestionDao {
 	/**
 	 * Delete the question from the database.
 	 */
+	@Transactional
 	public void delete(Question question) {
-		if(!(getSession().contains(question))) {
-			getSession().merge(question);
-		}
-		getSession().delete(getSession());
+		getSession().delete(getSession().merge(question));
 	}
 }

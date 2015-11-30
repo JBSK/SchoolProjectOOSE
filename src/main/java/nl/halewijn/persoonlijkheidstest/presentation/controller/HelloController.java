@@ -76,5 +76,4 @@ public class HelloController {
     public boolean verify(@RequestParam(value="password", required=true, defaultValue="abc") String argPassword, @RequestParam(value="hash", required=true, defaultValue="abc") String argHash) {
         return new PasswordHash().verifyPassword(argPassword, argHash);
     }
-
 }
