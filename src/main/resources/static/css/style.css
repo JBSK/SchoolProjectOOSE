@@ -101,7 +101,7 @@ width:100%;
 
 .custom-menu-wrapper {
 z-index:90;
-	position:fixt;
+	/* position:fixt; */
     background-color: #0C1F7E;
     margin-bottom: 2.5em;
     white-space: nowrap;
@@ -113,7 +113,7 @@ z-index:90;
 
 .custom-menu {
 	z-index:90;
-	position:fixt;
+	/* position:fixt */
     display: inline-block;
     width: auto;
     vertical-align: middle;
@@ -321,7 +321,7 @@ z-index:90;
 	.shoutOut{
 		font-size: 1.5em;
 		color:yellow;
-		text-align:center-left;
+		text-align:center; /* center-left? */
 	}
 
 /*
@@ -613,54 +613,54 @@ z-index:90;
 /******************Registreerpagina*********/
 
 	.content .registerForm{
-	  width: 400px;
-	  max-width: 100%;
-	  background: #edeff1;
-	  margin: 0px auto 30px auto;
-	  padding-top: 20px;
-	  padding-bottom: 20px;
-	  text-align:center;
-	  border-radius: 10px;
-	  -moz-border-radius: 10px;
-	  -webkit-border-radius: 10px;
+        width: 400px;
+        max-width: 100%;
+        background: #edeff1;
+        margin: 0px auto 30px auto;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        text-align:center;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
 	}
 
-	.content .registerForm input[type="text"]{
-	  display: block;
-	  width: 309px;
-	  max-width: 80%;
-	  height: 35px;
-	  margin: 15px auto;
-	  background: #fff;
-	  border: 0px;
-	  padding: 5px;
-	  font-size: 16px;
-	   border: 2px solid #fff;
-	  transition: all 0.3s ease;
-	  border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  -webkit-border-radius: 5px;
+	.content .registerForm input[type="text"],input[type="email"],input[type="password"]{
+        display: block;
+        width: 309px;
+        max-width: 80%;
+        height: 35px;
+        margin: 15px auto;
+        background: #fff;
+        border: 0px;
+        padding: 5px;
+        font-size: 16px;
+        border: 2px solid #fff;
+        transition: all 0.3s ease;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
 	}
 
-	.content .registerForm input[type="text"]:focus{
-	  border: 2px solid #1abc9d
+	.content .registerForm input[type="text"]:focus,input[type="email"]:focus,input[type="password"]:focus{
+        border: 2px solid #1abc9d
 	}
 
 	.content .registerForm input[type="submit"]{
-	  display: block;
-	 /* background: #1abc9d;*/
-	  width: 314px;
-	  max-width: 80%;
-	  padding: 12px;
-	  cursor: pointer;
-	  color: #fff;
-	  border: 0px;
-	  margin: auto;
-	  border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  -webkit-border-radius: 5px;
-	  font-size: 17px;
-	  transition: all 0.3s ease;
+        display: block;
+        /* background: #1abc9d;*/
+        width: 314px;
+        max-width: 80%;
+        padding: 12px;
+        cursor: pointer;
+        color: #fff;
+        border: 0px;
+        margin: auto;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        font-size: 17px;
+        transition: all 0.3s ease;
 	}
 
 	.content .registerForm input[type="submit"]:hover{
@@ -668,14 +668,14 @@ z-index:90;
 	}
 
 	.content .registerForm a{
-	  text-align: center;
-	  font-family: Arial;
-	  color: gray;
-	  display: block;
-	  margin: 15px auto;
-	  text-decoration: none;
-	  transition: all 0.3s ease;
-	  font-size: 12px;
+        text-align: center;
+        font-family: Arial;
+        color: gray;
+        display: block;
+        margin: 15px auto;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 12px;
 	}
 
 	.content .registerForm a:hover{

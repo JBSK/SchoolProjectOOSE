@@ -14,7 +14,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 
 public class Questionnaire {
 	
-	private List<Question> answeredQuestions = new ArrayList<Question>();
+	private List<Question> answeredQuestions = new ArrayList<>();
 
 	private static final double ANSWER_A = 5.0;
 	private static final double ANSWER_B = 3.0;
@@ -79,7 +79,7 @@ public class Questionnaire {
 
         System.out.println(primaryPersonalityType.getName() + " " + secondaryPersonalityType.getName());
 
-        
+
         model.addAttribute("primaryPersonalityType", primaryPersonalityType);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
 
@@ -120,7 +120,6 @@ public class Questionnaire {
 	public double[] calculateResults() {
 
 		double[] resultArray = new double[9];
-		double totalPoints = 0;
 		
 		for(Question question : answeredQuestions) {
 			if(question instanceof TheoremBattle) {
@@ -128,7 +127,7 @@ public class Questionnaire {
 			}
 		}
 		
-		totalPoints = calculateTotalPoints(resultArray);	
+		double totalPoints = calculateTotalPoints(resultArray);
 		calculateTypePercentages(resultArray, totalPoints);
 		
 		return resultArray;
@@ -143,9 +142,8 @@ public class Questionnaire {
 
 	private double calculateTotalPoints(double[] resultArray) {
 		double totalPoints = 0;
-		
-		for(int i = 0; i < resultArray.length; i++) {
-			totalPoints += resultArray[i];
+		for (double resultPoints : resultArray) {
+			totalPoints += resultPoints;
 		}
 		return totalPoints;
 	}
