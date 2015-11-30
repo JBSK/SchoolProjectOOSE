@@ -22,7 +22,7 @@ public class QuestionDao {
 	private SessionFactory sessionFactory;
 	
 	private Session getSession() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	/**
@@ -48,10 +48,10 @@ public class QuestionDao {
 		String typeOfQuestion = getTypeById(questionID);
 		switch (typeOfQuestion) {
 			case "nl.halewijn.persoonlijkheidstest.domain.OpenQuestion":
-				result = (OpenQuestion) getSession().load(Question.class, questionID);
+				result = (OpenQuestion) getSession().load(OpenQuestion.class, questionID);
 				break;
 			case "nl.halewijn.persoonlijkheidstest.domain.TheoremBattle":
-				result = (TheoremBattle) getSession().load(Question.class, questionID);
+				result = (TheoremBattle) getSession().load(TheoremBattle.class, questionID);
 				break;
 			default:
 				result = null;

@@ -16,7 +16,7 @@ public class TheoremDao {
 	private SessionFactory sessionFactory;
 	
 	private Session getSession() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	/**

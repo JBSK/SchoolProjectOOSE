@@ -20,7 +20,7 @@ public class TheoremBattleDao {
 	private SessionFactory sessionFactory;
 	
 	private Session getSession() {
-		return sessionFactory.getCurrentSession();
+		return sessionFactory.openSession();
 	}
 	
 	/**

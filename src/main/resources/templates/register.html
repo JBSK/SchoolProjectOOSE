@@ -1,26 +1,19 @@
 <!doctype html>
-<html lang="en">
-
-<head th:replace="fragments/headTag :: headTag"> </head>
-<body>
-<div th:include="fragments/menu" th:remove="tag"></div>
-	<div id="main" class="pure-skin-PT">
-       <div class="content">
-           <h2 class="content-subhead"></h2>
-		
-
-				<form class="registerForm ">
-					Registreren
-					<input type="text" name="regEmail" class="zocial-dribbble" placeholder="Email" />
-					<input type="text" name="regPassword" placeholder="Wachtwoord" />
-					<input type="text" name="regPassword2" placeholder="Wachtwoord herhalen" />
-					<input type="submit" value="Registreer" class="pure-button" />
-			  </form>
-       </div><!-- einde content -->
-	
-				<div th:include="fragments/footer" th:remove="tag"></div>
-	 </div><!-- end pure skin / main -->
-
-
-</body>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+	<head th:replace="fragments/headTag :: headTag"></head>
+	<body>
+		<div th:include="fragments/menu" th:remove="tag"></div>
+		<div id="main" class="pure-skin-PT">
+			<div class="content">
+				<h2 class="content-subhead"></h2>
+				<form class="registerForm">
+					<input type="email" class="zocial-dribbble" name="regEmail"  placeholder="E-mailadres" />
+					<input type="password" name="regPassword" placeholder="Wachtwoord" />
+					<input type="password" name="regPassword2" placeholder="Wachtwoord herhalen" />
+					<input type="submit" class="pure-button" value="Registreren" />
+				</form>
+			</div><!-- einde content -->
+			<div th:include="fragments/footer" th:remove="tag"></div>
+		</div><!-- end pure skin / main -->
+	</body>
 </html>
