@@ -5,20 +5,59 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
+import static org.mockito.Mockito.*;
 
+@Transactional
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(Application.class)
+@ActiveProfiles("test")
 public class QuestionnaireTest {
 	
-    private Questionnaire questionnaire;	
-	
+    private Questionnaire questionnaire;
+    
+    @Autowired
+    private LocalQuestionService localQuestionService;
+    
 	@Before
     public void setUp() {
 		questionnaire = new Questionnaire();	
     }
+	
+	@Test
+	public void startNewTest() {
+		Model model = mock(Model.class);
+		HttpSession httpSession = mock(HttpSession.class);
+		
+		assertEquals("questionnaire", questionnaire.startNewTest(model, httpSession, localQuestionService));
+		
+		Question openQ = new OpenQuestion("test");
+		localQuestionService.save(openQ);
+		
+		assertEquals("", questionnaire.startNewTest(model, httpSession, localQuestionService));
+		
+		Question firstQuestion = null;
+		httpSession.setAttribute("questionnaire", questionnaire);
+//		assertEquals(session.getAttribute("questionnaire"), questionnaire);
+//		
+		model.addAttribute("currentQuestion", firstQuestion);
+//		assertEquals(model.containsAttribute("currentQuestion"), true);
+
+	}
 	
 	@Test
 	public void addQuestionTest(){
