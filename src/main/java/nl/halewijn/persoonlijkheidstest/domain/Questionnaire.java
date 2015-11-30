@@ -99,7 +99,11 @@ public class Questionnaire {
 	 */
 	private String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
         double[] resultArray = this.calculateResults();
-        String personalityTypes[] = {"Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar"};
+        //String personalityTypes[] = {"Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar"};
+        String personalityTypes[] = {};
+        for (int i = 0; i < localPersonalityTypeService.getAll().size(); i++){
+        	personalityTypes[i] = localPersonalityTypeService.getById(i).getName();
+        }
 
         model.addAttribute("personalityTypes", personalityTypes);
         model.addAttribute("scores", resultArray);
