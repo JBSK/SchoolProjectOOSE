@@ -155,7 +155,7 @@ public class QuestionnaireTest {
 		assertArrayEquals(testResultArray, methodResultArray, 0);
 	}
 	
-	@Test
+	@Test 
 	public void test5_getCurrentQuestion() {
 		Model model = mock(Model.class);
 		List<Question> newQuestionList = new ArrayList<>();
@@ -164,6 +164,9 @@ public class QuestionnaireTest {
 		OpenQuestion newQuestion = new OpenQuestion();
 		questionnaire.addQuestion(newQuestion);
 		assertEquals(newQuestion, questionnaire.getAnsweredQuestions().get(questionnaire.getAnsweredQuestions().size()-1));;
-		model.addAttribute("currentQuestion", newQuestion);
+		
+		questionnaire.getCurrentQuestion(model);
+		when(model.containsAttribute("currentQuestion")).thenReturn(true);
+		assertEquals(true, model.containsAttribute("currentQuestion"));
 	}
 }
