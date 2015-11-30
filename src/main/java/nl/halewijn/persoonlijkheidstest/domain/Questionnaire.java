@@ -83,7 +83,7 @@ public class Questionnaire {
         model.addAttribute("primaryPersonalityType", primaryPersonalityType);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
 
-        session.removeAttribute("questionnaire");
+        //session.removeAttribute("questionnaire"); // Disabled for debug
         return "result";
     }
 
