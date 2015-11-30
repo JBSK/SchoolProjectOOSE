@@ -62,7 +62,7 @@ public class Questionnaire {
 		return answeredQuestions.get(answeredQuestions.size()-1);
 	}
 	
-	public String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
+	private String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
         double[] resultArray = this.calculateResults();
         String personalityTypes[] = {"Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar"};
 

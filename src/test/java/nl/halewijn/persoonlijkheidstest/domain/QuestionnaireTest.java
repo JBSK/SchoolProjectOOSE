@@ -5,10 +5,13 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.runners.MethodSorters;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 import static org.mockito.Mockito.*;
 
@@ -26,6 +30,7 @@ import static org.mockito.Mockito.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class QuestionnaireTest {
 	
     private Questionnaire questionnaire;
@@ -33,13 +38,16 @@ public class QuestionnaireTest {
     @Autowired
     private LocalQuestionService localQuestionService;
     
+    @Autowired
+    private LocalPersonalityTypeService localPersonalityTypeService;
+    
 	@Before
     public void setUp() {
 		questionnaire = new Questionnaire();	
     }
 	
 	@Test
-	public void startNewTest() {
+	public void test1_startNewTest() {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		
@@ -52,15 +60,48 @@ public class QuestionnaireTest {
 		
 		Question firstQuestion = null;
 		httpSession.setAttribute("questionnaire", questionnaire);
-//		assertEquals(session.getAttribute("questionnaire"), questionnaire);
-//		
+		when(httpSession.getAttribute("questionnaire")).thenReturn(questionnaire);
+		assertEquals(questionnaire, httpSession.getAttribute("questionnaire"));
+		
 		model.addAttribute("currentQuestion", firstQuestion);
-//		assertEquals(model.containsAttribute("currentQuestion"), true);
-
+		when(model.containsAttribute("currentQuestion")).thenReturn(true);
+		assertEquals(model.containsAttribute("currentQuestion"), true);
 	}
 	
 	@Test
-	public void addQuestionTest(){
+	public void test2_submitAnswer() {
+		Model model = mock(Model.class);
+		HttpSession httpSession = mock(HttpSession.class);
+		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+		
+		Question question = new OpenQuestion("Een vraag");
+		questionnaire.addQuestion(question);
+		
+		OpenQuestion previousQuestion = (OpenQuestion) questionnaire.getPreviousQuestion();
+		localQuestionService.save(previousQuestion);
+		assertEquals(question, previousQuestion);
+		
+		when(httpServletRequest.getParameter("answer")).thenReturn("Antwoord");
+		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);
+		assertEquals("Antwoord", previousQuestion.getAnswer());
+		
+		PersonalityType typeOne = new PersonalityType("Type One", "test", "test");
+		localPersonalityTypeService.save(typeOne);
+		
+		Question nextQuestion = null;
+		nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
+		assertEquals(null, nextQuestion);
+		assertEquals("result", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession));
+		
+		Question question2 = new OpenQuestion("Een volgende vraag");
+		localQuestionService.save(question2);
+		nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
+		assertEquals(question2.getText(), nextQuestion.getText());
+		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession));
+	}
+	
+	@Test
+	public void test3_addQuestionTest(){
 		List<Question> questionList = new ArrayList<Question>();
 		assertEquals(questionnaire.getAnsweredQuestions(), questionList);
 		
@@ -73,7 +114,7 @@ public class QuestionnaireTest {
 	}
 	
 	@Test
-	public void calculateResultsTest(){
+	public void test4_calculateResultsTest(){
 		double[] methodResultArray = { 0,0,0,0,0,0,0,0,0 };
 		
 		PersonalityType typePerfectionist = new PersonalityType("Perfectionist", "primary tekst", "secondary tekst");
@@ -112,5 +153,17 @@ public class QuestionnaireTest {
 		double[] testResultArray = { typeOnePercentage,typeTwoPercentage,typeThreePercentage,0,0,0,0,0,0 };
 		
 		assertArrayEquals(testResultArray, methodResultArray, 0);
-	}	
+	}
+	
+	@Test
+	public void test5_getCurrentQuestion() {
+		Model model = mock(Model.class);
+		List<Question> newQuestionList = new ArrayList<>();
+		
+		assertEquals(newQuestionList, questionnaire.getAnsweredQuestions());	
+		OpenQuestion newQuestion = new OpenQuestion();
+		questionnaire.addQuestion(newQuestion);
+		assertEquals(newQuestion, questionnaire.getAnsweredQuestions().get(questionnaire.getAnsweredQuestions().size()-1));;
+		model.addAttribute("currentQuestion", newQuestion);
+	}
 }
