@@ -24,6 +24,8 @@ public class PersonalityTypeDao {
 	/**
 	* Save the new personality type in the database.
 	*/
+	
+	@Transactional
 	public void save(PersonalityType personalityType) {
 		getSession().save(personalityType);
 	}
@@ -45,6 +47,8 @@ public class PersonalityTypeDao {
 	/**
 	* Update the passed personality type in the database.
 	*/
+	
+	@Transactional
 	public void update(PersonalityType personalityType) {
 		getSession().update(personalityType);
 	}
