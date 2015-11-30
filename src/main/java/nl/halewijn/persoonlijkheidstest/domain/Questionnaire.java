@@ -26,6 +26,15 @@ public class Questionnaire {
 
 	}
 	
+	/**
+	 * Sets up the first question for the test.
+	 * 
+	 * Requests the first question from the database.
+	 * 
+	 * If something goes wrong, returns ...
+	 * 
+	 * If nothing goes wrong, however, the first question is displayed.
+	 */
 	public String startNewTest(Model model, HttpSession session, LocalQuestionService localQuestionService) {
 		Question firstQuestion = localQuestionService.getFirstQuestion(this);
 		
@@ -38,6 +47,14 @@ public class Questionnaire {
 		return "";
 	}
 	
+	/**
+	 * First requests the question which was just answered.
+	 * Then sets the answer that was given to this question.
+	 * Lastly requests the next question of the questionnaire.
+	 * 
+	 * If a next question exists, this question is shown.
+	 * If no next question exists, the results of the questionnaire are shown.
+	 */
 	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session) {
 		Question previousQuestion = getPreviousQuestion();
 		
@@ -51,7 +68,12 @@ public class Questionnaire {
 			return showResults(model, session, localPersonalityTypeService);
 		}	
 	}
-
+	
+	/**
+	 * Firstly adds the next question to the list of questions.
+	 * Secondly adds this question to the "model" object.
+	 * Lastly returns the kind of webpage that has to be shown.
+	 */
 	private String showNextQuestion(Model model, Question nextQuestion) {
 		this.addQuestion(nextQuestion);
 		model.addAttribute("currentQuestion", nextQuestion);
@@ -62,6 +84,19 @@ public class Questionnaire {
 		return answeredQuestions.get(answeredQuestions.size()-1);
 	}
 	
+	/**
+	 * This function determines the final results of the test.
+	 * 
+	 * Requests the calculated results and puts this into an array.
+	 * Requests the personality types from the database and puts these into an array.
+	 * 
+	 * Adds the arrays to their respective "model" values.
+	 * These values will later be used to generate the graphics in JavaScript.
+	 * 
+	 * Afterwards, determine which is the primary and secondary personality type.
+	 * These values are then added to their respective "model" values.
+	 * Finally, these values will be displayed on the result page.
+	 */
 	private String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
         double[] resultArray = this.calculateResults();
         String personalityTypes[] = {"Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar"};
@@ -99,6 +134,11 @@ public class Questionnaire {
         return indexOfHighestNumber;
     }
 	
+    /**
+     * Firstly requests all the questions which have been asked so far.
+     * Then it assigns the last question to the variable "currentQuestion".
+     * Lastly this variable is added to the "model".
+     */
 	public void getCurrentQuestion(Model model) {
 		List<Question> answeredQuestions = this.getAnsweredQuestions();
 		Question currentQuestion = answeredQuestions.get(answeredQuestions.size()-1);
@@ -117,8 +157,16 @@ public class Questionnaire {
 		return answeredQuestions;
 	}
 
+	/**
+	 * Calculates the results of the questionnaire.
+	 * 
+	 * The steps that are executed are as follows:
+	 * 1. Calculates the total points that were scored for each personality type. 
+	 * 2. Calculates the total amount of points that were scored during the questionnaire.
+	 * 3. Calculates the percentages for each type based on the data from the first two steps.
+	 * 4. Returns the data that was calculated in step 3.
+	 */
 	public double[] calculateResults() {
-
 		double[] resultArray = new double[9];
 		
 		for(Question question : answeredQuestions) {
@@ -132,14 +180,24 @@ public class Questionnaire {
 		
 		return resultArray;
 	}
-
+	
+	/**
+	 * Calculates the percentages for each personality type.
+	 * 
+	 * For every personality type the following is done:
+	 * 1. The points that were scored on a type are divided by the total amount of points scored.
+	 * 2. The old result value (the total points scored on that type) is overwritten by the new value (the percentage).
+	 */
 	private void calculateTypePercentages(double[] resultArray, double totalPoints) {
 		for(int i = 0; i < resultArray.length; i++) {
 			double typePercentage = resultArray[i]/totalPoints;
 			resultArray[i] = (double) Math.round(typePercentage * 100) / 100;
 		}
 	}
-
+	
+	/**
+	 * Calculates the total points amount of points that were scored during the questionnaire, and returns this value.
+	 */
 	private double calculateTotalPoints(double[] resultArray) {
 		double totalPoints = 0;
 		for (double resultPoints : resultArray) {
@@ -148,6 +206,18 @@ public class Questionnaire {
 		return totalPoints;
 	}
 	
+	/**
+	 * Calculates the total points that were scored on a specific question.
+	 * 
+	 * First requests the answer that was given, the first and second theorem,
+	 * and the respective theorem personality types.
+	 * 
+	 * Based on the answer that was given the points are calculated as follows:
+	 * 1. Get the default points which are allocated. These are requested from the database.
+	 * 2. Multiply the value from step 1 with the theorem-specific weight. This weight is also requested from the database.
+	 * 
+	 * The results of this calculation are added to the "resultArray".
+	 */
 	private void calculateQuestionPoints(double[] resultArray, Question question) {
 		
 		char questionAnswer = ((TheoremBattle) question).getAnswer();
@@ -192,5 +262,4 @@ public class Questionnaire {
 		resultArray[firstTheoremPersonalityTypeID - 1] += firstTheoremPoints;
 		resultArray[secondTheoremPersonalityTypeID - 1] += secondTheoremPoints;
 	}
-	
 }
