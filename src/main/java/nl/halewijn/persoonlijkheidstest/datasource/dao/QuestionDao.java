@@ -41,6 +41,11 @@ public class QuestionDao {
 
     /**
 	* Retrieve a question by ID.
+	* First it checks what type of question it is (e.g. open question, or a theorem battle).
+	* If no question type is found, a null value is assigned and returned.
+	* 
+	* If a question type was found, it loads the question and assigns this value to the "result" variable.
+	* This variable is then returned.
 	*/
 	public Question getById(int questionID) {
 		Question result;
@@ -61,7 +66,7 @@ public class QuestionDao {
 	}
 	
 	/**
-	* Retrieve an questionType by ID.
+	* Retrieve a questionType from the database by ID.
 	*/
 	public String getTypeById(int questionID) {
 		List<Question> questions = getSession().createQuery("FROM Question WHERE questionId = " + questionID).list();
@@ -89,5 +94,4 @@ public class QuestionDao {
 		}
 		getSession().delete(getSession());
 	}
-
 }

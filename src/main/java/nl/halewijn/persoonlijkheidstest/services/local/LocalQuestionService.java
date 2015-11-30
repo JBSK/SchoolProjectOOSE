@@ -1,4 +1,3 @@
-
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 
@@ -89,6 +88,13 @@ public class LocalQuestionService implements IQuestionService {
 		return theoremBattleDao.getById(i);
 	}
 	
+	/**
+	 * Checks whether a next question exists or not.
+	 * 
+	 * If a next question exists, this question is requested from the database, and then returned.
+	 * 
+	 * If no next question exists, a null value is returned.
+	 */
 	@Override
 	public Question getNextQuestion(Question previousQuestion) {
 		// TODO Routing rules invoeren.
@@ -102,6 +108,13 @@ public class LocalQuestionService implements IQuestionService {
 		return next;
 	}
 	
+	/**
+	 * Checks in the database whether a question with ID 1 exists.
+	 * 
+	 * If it exists, question ID 1 is requested from the database, and returned.
+	 * 
+	 * If it doesn't exist, a null value is returned.
+	 */
 	@Override
 	public Question getFirstQuestion(Questionnaire questionnaire) {
 		Question firstQuestion = null;
@@ -114,6 +127,14 @@ public class LocalQuestionService implements IQuestionService {
 		return firstQuestion;
 	}
 	
+	/**
+	 * This sets the answer for question X at Y.
+	 * 
+	 * If the question was a theorem battle, the answer is set between zero and four.
+	 * 
+	 * If the question was an open question, the answer is requested from the browser session.
+	 * The requested text will be set as the answer.
+	 */
 	@Override
 	public void setQuestionAnswer(HttpServletRequest req, Question previousQuestion) {
 		String answer = req.getParameter("answer");
@@ -123,5 +144,4 @@ public class LocalQuestionService implements IQuestionService {
 			((OpenQuestion) previousQuestion).setAnswer(answer);
 		}
 	}
-
 }
