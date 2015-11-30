@@ -102,7 +102,7 @@ public class Questionnaire {
         //String personalityTypes[] = {"Perfectionist", "Helper", "Winnaar", "Artistiekeling", "Waarnemer", "Loyalist", "Optimist", "Baas", "Bemiddelaar"};
         String personalityTypes[] = {};
         for (int i = 0; i < localPersonalityTypeService.getAll().size(); i++){
-        	personalityTypes[i] = localPersonalityTypeService.getById(i).getName();
+        	personalityTypes[i] = localPersonalityTypeService.getById(i+1).getName();
         }
 
         model.addAttribute("personalityTypes", personalityTypes);
