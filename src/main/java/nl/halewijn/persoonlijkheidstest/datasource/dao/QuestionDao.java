@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Transactional
 public class QuestionDao {
 	
 	@Autowired
@@ -28,7 +29,6 @@ public class QuestionDao {
 	/**
 	* Save the new question in the database.
 	*/
-	@Transactional
 	public void save(Question question) {
 		getSession().save(question);
 	}
@@ -37,7 +37,6 @@ public class QuestionDao {
 	* Return all the questions stored in the database.
 	*/
 	
-	@Transactional
 	public List<Question> getAll() {
 		return getSession().createQuery("FROM Question").list();
 	}
@@ -51,7 +50,6 @@ public class QuestionDao {
 	* This variable is then returned.
 	*/
 	
-	@Transactional
 	public Question getById(int questionID) {
 		Question result;
 
@@ -74,7 +72,6 @@ public class QuestionDao {
 	* Retrieve a questionType from the database by ID.
 	*/
 	
-	@Transactional
 	public String getTypeById(int questionID) {
 		List<Question> questions = getSession().createQuery("FROM Question WHERE questionId = " + questionID).list();
         try {
@@ -89,7 +86,6 @@ public class QuestionDao {
 	* Update the passed question in the database.
 	*/
 	
-	@Transactional
 	public void update(Question question) {
 		getSession().update(question);
 	}
@@ -97,7 +93,6 @@ public class QuestionDao {
 	/**
 	 * Delete the question from the database.
 	 */
-	@Transactional
 	public void delete(Question question) {
 		getSession().delete(getSession().merge(question));
 	}
