@@ -20,11 +20,23 @@ public class Theorem {
 
     @NotNull
 	private double weight;
+
+	@NotNull
+	private double subWeight1;
+
+	@NotNull
+	private double subWeight2;
+
+	@NotNull
+	private double subWeight3;
 	
-	public Theorem(PersonalityType personalityType, String text, double weight) {
+	public Theorem(PersonalityType personalityType, String text, double weight, double subWeight1, double subWeight2, double subWeight3) {
 		this.personalityType = personalityType;
         this.text = text;
 		this.weight = weight;
+		this.subWeight1 = subWeight1;
+		this.subWeight2 = subWeight2;
+		this.subWeight3 = subWeight3;
 	}
 	
 	public Theorem() {
@@ -57,5 +69,28 @@ public class Theorem {
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-	
+
+	public double getSubWeight1() {
+		return subWeight1;
+	}
+
+	public void setSubWeight1(int subWeight1) {
+		this.subWeight1 = subWeight1;
+	}
+
+	public double getSubWeight2() {
+		return subWeight2;
+	}
+
+	public void setSubWeight2(int subWeight2) {
+		this.subWeight2 = subWeight2;
+	}
+
+	public double getSubWeight3() {
+		return subWeight3;
+	}
+
+	public void setSubWeight3(int subWeight3) {
+		this.subWeight3 = subWeight3;
+	}
 }

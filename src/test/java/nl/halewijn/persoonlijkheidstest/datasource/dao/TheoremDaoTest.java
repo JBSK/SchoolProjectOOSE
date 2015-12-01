@@ -49,7 +49,7 @@ public class TheoremDaoTest {
 		List<Theorem> newResults = localTheoremService.getAll();
 		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
 		
-		Theorem newTheorem = new Theorem(type, "Stelling", 1.0);
+		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
 		localTheoremService.save(newTheorem);
 		newResults.add(newTheorem);
 		
@@ -61,7 +61,7 @@ public class TheoremDaoTest {
 	@Transactional
 	public void testGetById(){
 		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
-		Theorem newTheorem = new Theorem(type, "Stelling", 1.0);
+		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
 		localTheoremService.save(newTheorem);
 		
 		assertEquals(newTheorem.getText(), localTheoremService.getById(1).getText());
@@ -71,7 +71,7 @@ public class TheoremDaoTest {
 	@Transactional
 	public void testUpdate(){
 		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
-		Theorem newTheorem = new Theorem(type, "Stelling", 1.0);
+		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
 		localTheoremService.save(newTheorem);
 		
 		newTheorem.setText("Andere stelling");
@@ -84,7 +84,7 @@ public class TheoremDaoTest {
 //	@Transactional
 //	public void testDelete(){
 //		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
-//		Theorem newTheorem = new Theorem(type, "Stelling", 1.0);
+//		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
 //		localTheoremService.save(newTheorem);
 //		localTheoremService.delete(newTheorem);
 //		

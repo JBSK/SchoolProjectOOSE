@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.runners.MethodSorters;
 import org.junit.FixMethodOrder;
@@ -46,7 +45,7 @@ public class QuestionnaireTest {
     }
 	
 	@Test
-	public void test1_startNewTest() {
+	public void startNewTest() {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		
@@ -68,7 +67,7 @@ public class QuestionnaireTest {
 	}
 	
 	@Test
-	public void test2_submitAnswer() {
+	public void submitAnswer() {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
@@ -92,7 +91,7 @@ public class QuestionnaireTest {
 		PersonalityType typeOne = new PersonalityType("Type One", "test", "test");
 		localPersonalityTypeService.save(typeOne);
 		
-		Question nextQuestion = null;
+		Question nextQuestion;
 		nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
 		assertEquals(null, nextQuestion);
 		assertEquals("result", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession));
@@ -105,8 +104,8 @@ public class QuestionnaireTest {
 	}
 	
 	@Test
-	public void test3_addQuestionTest(){
-		List<Question> questionList = new ArrayList<Question>();
+	public void addQuestionTest(){
+		List<Question> questionList = new ArrayList<>();
 		assertEquals(questionnaire.getAnsweredQuestions(), questionList);
 		
 		OpenQuestion openQuestion = new OpenQuestion("Wat vind je er van?");
@@ -118,8 +117,8 @@ public class QuestionnaireTest {
 	}
 	
 	@Test
-	public void test4_calculateResultsTest(){
-		double[] methodResultArray = { 0,0,0,0,0,0,0,0,0 };
+	public void calculateResultsTest(){
+		double[] methodResultArray;
 		
 		PersonalityType typePerfectionist = new PersonalityType("Perfectionist", "primary tekst", "secondary tekst");
 		typePerfectionist.setTypeID(1);
@@ -128,9 +127,9 @@ public class QuestionnaireTest {
 		PersonalityType typeWinnaar = new PersonalityType("Winnaar", "primary tekst", "secondary tekst");
 		typeWinnaar.setTypeID(3);
 		
-		Theorem theorem1 = new Theorem(typePerfectionist, "Dit is een perfectionistische stelling met een weging van 1.0 .", 1.0);
-		Theorem theorem2 = new Theorem(typeHelper, "Dit is een behulpzame stelling met een weging van 2.2 .", 2.2);
-		Theorem theorem3 = new Theorem(typeWinnaar, "Dit is een winnaar stelling met een weging van 1.3 .", 1.3);
+		Theorem theorem1 = new Theorem(typePerfectionist, "Dit is een perfectionistische stelling met een weging van 1.0 .", 1.0, 0, 0, 0);
+		Theorem theorem2 = new Theorem(typeHelper, "Dit is een behulpzame stelling met een weging van 2.2 .", 2.2, 0, 1, 1);
+		Theorem theorem3 = new Theorem(typeWinnaar, "Dit is een winnaar stelling met een weging van 1.3 .", 1.3, 1, 0, 0);
 		
 		TheoremBattle battle1 = new TheoremBattle("Kies de stelling die het meest voor u van toepassing is", theorem1, theorem2);
 		TheoremBattle battle2 = new TheoremBattle("Kies de stelling die het meest voor u van toepassing is", theorem2, theorem3);
@@ -143,7 +142,7 @@ public class QuestionnaireTest {
 		battle2.setAnswer('C');
 		battle3.setAnswer('E');
 		
-		methodResultArray = questionnaire.calculateResults();
+		methodResultArray = questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions());
 		
 		double typeOnePoints = (5*1) + (1*5);
 		double typeTwoPoints = (1*2.2);
@@ -160,17 +159,41 @@ public class QuestionnaireTest {
 	}
 	
 	@Test 
-	public void test5_getCurrentQuestion() {
+	public void getCurrentQuestion() {
 		Model model = mock(Model.class);
 		List<Question> newQuestionList = new ArrayList<>();
 		
 		assertEquals(newQuestionList, questionnaire.getAnsweredQuestions());	
 		OpenQuestion newQuestion = new OpenQuestion();
 		questionnaire.addQuestion(newQuestion);
-		assertEquals(newQuestion, questionnaire.getAnsweredQuestions().get(questionnaire.getAnsweredQuestions().size()-1));;
+		assertEquals(newQuestion, questionnaire.getAnsweredQuestions().get(questionnaire.getAnsweredQuestions().size()-1));
 		
 		questionnaire.getCurrentQuestion(model);
 		when(model.containsAttribute("currentQuestion")).thenReturn(true);
 		assertEquals(true, model.containsAttribute("currentQuestion"));
 	}
+
+	@Test
+	public void calculatePercentageTest(){
+		double dividend = 5.0;
+        double divisor = 10.0;
+
+        double actualResult = questionnaire.calculatePercentage(dividend, divisor);
+
+        double expectedResult = dividend / divisor;
+        expectedResult = expectedResult * 100;
+        expectedResult = Math.round(expectedResult);
+        expectedResult = expectedResult / 100;
+
+        assert(actualResult == expectedResult);
+	}
+
+    /*
+
+    private double calculatePercentage(double number, double total) {
+        double percentage = number / total;
+        return (double) Math.round(percentage * 100) / 100;
+	}
+
+     */
 }

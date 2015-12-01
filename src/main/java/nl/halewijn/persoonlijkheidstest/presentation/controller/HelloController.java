@@ -41,10 +41,10 @@ public class HelloController {
         try {
             PersonalityType optimist  = new PersonalityType("Optimist", "Je bent mega blij en positief en je ziet het goede in alle mensen.", "Het glas is altijd half vol.");
             localPersonalityTypeService.save(optimist);
-            Theorem theorem = new Theorem(optimist, argTheoremText, argTheoremWeight);
+            Theorem theorem = new Theorem(optimist, argTheoremText, argTheoremWeight, 0, 1, 0);
             localTheoremService.save(theorem);
             
-            Theorem theorem2 = new Theorem(optimist, argTheoremText, argTheoremWeight);
+            Theorem theorem2 = new Theorem(optimist, argTheoremText, argTheoremWeight, 1, 0, 0);
             localTheoremService.save(theorem);
             
             OpenQuestion openQ = new OpenQuestion("Is dit een open vraag? 1111111");

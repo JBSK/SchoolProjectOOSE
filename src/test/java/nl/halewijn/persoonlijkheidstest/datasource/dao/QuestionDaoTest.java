@@ -42,9 +42,9 @@ public class QuestionDaoTest {
 		PersonalityType perfectionist = new PersonalityType("Perfectionist", "first", "second");
 		localPersonalityTypeService.save(perfectionist);
 		
-		Theorem theorem1 = new Theorem(perfectionist, "Stelling", 1.2);
+		Theorem theorem1 = new Theorem(perfectionist, "Stelling", 1.2, 0, 0, 0);
 		localTheoremService.save(theorem1);
-		Theorem theorem2 = new Theorem(perfectionist, "Stelling2", 1.2);
+		Theorem theorem2 = new Theorem(perfectionist, "Stelling2", 1.2, 0, 0, 0);
 		localTheoremService.save(theorem2);
 		
 		TheoremBattle theoremBattle = new TheoremBattle("TestTheoremBattle", theorem1, theorem2);
@@ -81,9 +81,9 @@ public class QuestionDaoTest {
 		PersonalityType perfectionist = new PersonalityType("Perfectionist", "first", "second");
 		localPersonalityTypeService.save(perfectionist);
 		
-		Theorem theorem1 = new Theorem(perfectionist, "Stelling", 1.2);
+		Theorem theorem1 = new Theorem(perfectionist, "Stelling", 1.2, 0, 0, 0);
 		localTheoremService.save(theorem1);
-		Theorem theorem2 = new Theorem(perfectionist, "Stelling2", 1.2);
+		Theorem theorem2 = new Theorem(perfectionist, "Stelling2", 1.2, 0, 0, 0);
 		localTheoremService.save(theorem2);
 		
 		TheoremBattle theoremBattle = new TheoremBattle("TestTheoremBattle", theorem1, theorem2);
