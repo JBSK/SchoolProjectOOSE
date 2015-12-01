@@ -119,7 +119,6 @@ public class Questionnaire {
 
         System.out.println(primaryPersonalityType.getName() + " " + secondaryPersonalityType.getName());
 
-
         model.addAttribute("primaryPersonalityType", primaryPersonalityType);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
 
@@ -182,7 +181,7 @@ public class Questionnaire {
 		
 		double totalPoints = calculateTotalPoints(resultArray);
 		calculateTypePercentages(resultArray, totalPoints);
-		
+
 		return resultArray;
 	}
 	
