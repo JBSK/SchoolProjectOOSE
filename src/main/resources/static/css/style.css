@@ -73,12 +73,16 @@ body{
 	
 /*******************Content*************/
 .content{
-    padding: 10px;
-    background: white;
-	border: 5px solid #0C1F7E;
+padding: 10px;
+   
+    background: -webkit-repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%);
+    /* background: white; */
+    /* border: 5px solid #F1DE84; */
+    border-color: #EECB6D;
     margin: 20px auto;
     border-radius: 12px;
     max-width: 60%;
+    font-size: 20px;
 
 }
 /********************** Test Menu *****************/
