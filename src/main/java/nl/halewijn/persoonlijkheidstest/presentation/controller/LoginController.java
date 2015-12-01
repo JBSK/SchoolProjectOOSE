@@ -10,7 +10,7 @@ public class LoginController {
 	/**
 	 * If the file path relative to the base was "/login", return the "login" web page.
 	 */
-	@RequestMapping(value="/login", method=RequestMethod.POST)
+	@RequestMapping(value="/login", method=RequestMethod.GET)
     public String login(Model model) {
        return "login";
     }
