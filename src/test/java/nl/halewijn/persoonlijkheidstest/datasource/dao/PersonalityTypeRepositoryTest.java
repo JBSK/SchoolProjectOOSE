@@ -18,7 +18,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeServi
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
-public class PersonalityTypeDaoTest {
+public class PersonalityTypeRepositoryTest {
 	
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
@@ -33,12 +33,12 @@ public class PersonalityTypeDaoTest {
 		
 	}
 	
-//	@Test
-//	@Transactional
-//	public void testDelete(){
-//		PersonalityType type = new PersonalityType("Een type", "test", "test");
-//		localPersonalityTypeService.save(type);	
-//		localPersonalityTypeService.delete(type);
-//		assertNull(type);
-//	}
+	@Test
+	@Transactional
+	public void testDelete(){
+		PersonalityType type = new PersonalityType("Een type", "test", "test");
+		localPersonalityTypeService.save(type);	
+		localPersonalityTypeService.delete(type);
+		assertEquals(null, localPersonalityTypeService.getById(type.getTypeID()));
+	}
 }

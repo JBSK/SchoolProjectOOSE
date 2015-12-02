@@ -103,6 +103,7 @@ public class Questionnaire {
         int numberOfTypes = localPersonalityTypeService.getAll().size();
         String personalityTypes[] = new String[numberOfTypes];
         for (int i = 0; i < numberOfTypes; i++){
+        	System.out.println(localPersonalityTypeService.getById(i+1));
         	personalityTypes[i] = localPersonalityTypeService.getById(i+1).getName();
         }
 

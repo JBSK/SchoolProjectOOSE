@@ -26,7 +26,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
-public class QuestionDaoTest {
+public class QuestionRepositoryTest {
 	
 	@Autowired
 	private LocalQuestionService localQuestionService;
@@ -50,7 +50,7 @@ public class QuestionDaoTest {
 		TheoremBattle theoremBattle = new TheoremBattle("TestTheoremBattle", theorem1, theorem2);
 		localQuestionService.save(theoremBattle);
 		
-		TheoremBattle insertedTheoremBattle = (TheoremBattle) localQuestionService.getById(theoremBattle.getID());
+		TheoremBattle insertedTheoremBattle = (TheoremBattle) localQuestionService.getQuestionById(theoremBattle.getID());
 		assertEquals(insertedTheoremBattle.getID(), theoremBattle.getID());
 		assertEquals("TestTheoremBattle", insertedTheoremBattle.getText());
 	}
@@ -72,7 +72,7 @@ public class QuestionDaoTest {
 		OpenQuestion newQuestion = new OpenQuestion("Nieuwe vraag...");
 		localQuestionService.save(newQuestion);
 		
-		Question question = localQuestionService.getById(2);
+		Question question = localQuestionService.getQuestionById(2);
 		assertEquals(newQuestion.getText(), question.getText());
 	}
 	
@@ -107,15 +107,11 @@ public class QuestionDaoTest {
 		assertEquals("nieuwe tekst", openQuestion.getText());
 	}
 	
-//	@Test
-//	public void testDelete(){
-//		//Question openQuestion = new OpenQuestion("Nieuwe vraag");
-//		Question openQuestion = new OpenQuestion("Nieuwe vraag");
-//		
-//		Question question = localQuestionService.getById(2);
-//		assertEquals("Nieuwe vraag...", question.getText());
-//		
-//		localQuestionService.delete(question);
-//		assertNull(question);
-//	}
+	@Test
+	public void testDelete(){
+		Question openQuestion = new OpenQuestion("Nieuwe vraag");
+		localQuestionService.save(openQuestion);	
+		localQuestionService.delete(openQuestion);
+		assertEquals(null, localQuestionService.getQuestionById(openQuestion.getID()));
+	}
 }
