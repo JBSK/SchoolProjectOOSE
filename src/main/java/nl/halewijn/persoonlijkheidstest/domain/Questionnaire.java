@@ -101,7 +101,7 @@ public class Questionnaire {
 	 */
 	private String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
         double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
-        double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
+        int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
 
         int numberOfTypes = localPersonalityTypeService.getAll().size();
         String personalityTypes[] = new String[numberOfTypes];
@@ -212,9 +212,9 @@ public class Questionnaire {
      * 3. Calculates the percentages for each type based on the data from the first two steps.
      * 4. Returns the data that was calculated in step 3.
      */
-	public double[] calculateSubTypeResults(List<Question> answeredQuestions) {
+	public int[] calculateSubTypeResults(List<Question> answeredQuestions) {
 		double[] subTypePoints = new double[3];
-		double[] subTypePercentages = new double[3];
+		int[] subTypePercentages = new int[3];
 
 		for (Question question : answeredQuestions) {
 			if (question instanceof TheoremBattle) {
@@ -224,7 +224,7 @@ public class Questionnaire {
 
 		double totalSubTypePoints = calculateTotalFromNumbersArray(subTypePoints);
 		for (int i = 0; i < subTypePoints.length; i++) {
-			subTypePercentages[i] = calculatePercentage(subTypePoints[i], totalSubTypePoints) * 100;
+			subTypePercentages[i] = (int) (calculatePercentage(subTypePoints[i], totalSubTypePoints) * 100);
 		}
 
 		return subTypePercentages;
@@ -235,7 +235,7 @@ public class Questionnaire {
      */
 	public double calculatePercentage(double number, double total) {
         double percentage = number / total;
-        return (double) Math.round(percentage * 100) / 100;
+        return (double) Math.round(percentage * 100.0) / 100.0;
 	}
 
     /**
