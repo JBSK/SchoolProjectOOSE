@@ -14,18 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.datasource.dao.PersonalityTypeDao;
-import nl.halewijn.persoonlijkheidstest.datasource.util.DatabaseConfig;
-import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
-//import nl.halewijn.persoonlijkheidstest.datasource.util.TestDatabaseConfig;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
@@ -34,7 +27,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
-public class TheoremDaoTest {
+public class TheoremRepositoryTest {
 	
 	@Autowired
 	private LocalTheoremService localTheoremService;
@@ -48,6 +41,8 @@ public class TheoremDaoTest {
 	public void testGetAll(){
 		List<Theorem> newResults = localTheoremService.getAll();
 		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
+		localPersonalityTypeService.save(type);
+		
 		
 		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
 		localTheoremService.save(newTheorem);
@@ -61,6 +56,8 @@ public class TheoremDaoTest {
 	@Transactional
 	public void testGetById(){
 		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
+		localPersonalityTypeService.save(type);
+		
 		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
 		localTheoremService.save(newTheorem);
 		
@@ -71,6 +68,8 @@ public class TheoremDaoTest {
 	@Transactional
 	public void testUpdate(){
 		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
+		localPersonalityTypeService.save(type);
+		
 		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
 		localTheoremService.save(newTheorem);
 		
@@ -80,14 +79,16 @@ public class TheoremDaoTest {
 		assertEquals("Andere stelling", newTheorem.getText());	
 	}
 	
-//	@Test
-//	@Transactional
-//	public void testDelete(){
-//		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
-//		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
-//		localTheoremService.save(newTheorem);
-//		localTheoremService.delete(newTheorem);
-//		
-//		assertNull(newTheorem);	
-//	}
+	@Test
+	@Transactional
+	public void testDelete(){
+		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
+		localPersonalityTypeService.save(type);
+		
+		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
+		localTheoremService.save(newTheorem);
+		localTheoremService.delete(newTheorem);
+		
+		assertEquals(null, localTheoremService.getById(newTheorem.getTheoremID()));	
+	}
 }

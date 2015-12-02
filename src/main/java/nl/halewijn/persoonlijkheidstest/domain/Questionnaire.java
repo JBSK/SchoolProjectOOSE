@@ -78,7 +78,10 @@ public class Questionnaire {
 		model.addAttribute("currentQuestion", nextQuestion);
 		return "questionnaire";
 	}
-	
+
+    /**
+     * Retrieves the last question that was answered.
+     */
 	public Question getPreviousQuestion() {
 		return answeredQuestions.get(answeredQuestions.size()-1);
 	}
@@ -103,6 +106,7 @@ public class Questionnaire {
         int numberOfTypes = localPersonalityTypeService.getAll().size();
         String personalityTypes[] = new String[numberOfTypes];
         for (int i = 0; i < numberOfTypes; i++){
+        	System.out.println(localPersonalityTypeService.getById(i+1));
         	personalityTypes[i] = localPersonalityTypeService.getById(i+1).getName();
         }
 
@@ -158,10 +162,16 @@ public class Questionnaire {
 		answeredQuestions.add(question);
 	}
 
+    /**
+     * Set the list of answered questions.
+     */
 	public void setAnsweredQuestions(List<Question> answeredQuestions) {
 		this.answeredQuestions = answeredQuestions;
 	}
 
+    /**
+     * Retrieves the list of answered questions.
+     */
 	public List<Question> getAnsweredQuestions() {
 		return answeredQuestions;
 	}

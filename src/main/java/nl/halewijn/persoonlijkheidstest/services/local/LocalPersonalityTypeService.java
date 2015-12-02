@@ -2,8 +2,7 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 
-import nl.halewijn.persoonlijkheidstest.datasource.dao.PersonalityTypeDao;
-import nl.halewijn.persoonlijkheidstest.datasource.dao.TheoremDao;
+import nl.halewijn.persoonlijkheidstest.datasource.repository.PersonalityTypeRepository;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.services.IPersonalityTypeService;
@@ -20,30 +19,30 @@ public class LocalPersonalityTypeService implements IPersonalityTypeService {
 	private Logger logger = Logger.getLogger(getClass().getName());
 	
 	@Autowired
-	private PersonalityTypeDao personalityTypeDao;
+	private PersonalityTypeRepository personalityTypeRepository;
 
 	@Override
-	public void save(PersonalityType personalityType) {
-		personalityTypeDao.save(personalityType);
+	public PersonalityType save(PersonalityType personalityType) {
+		return personalityTypeRepository.save(personalityType);
 	}
 
 	@Override
 	public void delete(PersonalityType personalityType) {
-		personalityTypeDao.delete(personalityType);
+		personalityTypeRepository.delete(personalityType);
 	}
 
 	@Override
 	public List<PersonalityType> getAll() {
-		return personalityTypeDao.getAll();
+		return personalityTypeRepository.findAll();
 	}
 
 	@Override
 	public PersonalityType getById(int id) {
-		return personalityTypeDao.getById(id);
+		return personalityTypeRepository.findById(id);
 	}
 
 	@Override
-	public void update(PersonalityType personalityType) {
-		personalityTypeDao.update(personalityType);
+	public PersonalityType update(PersonalityType personalityType) {
+		return personalityTypeRepository.save(personalityType);
 	}
 }

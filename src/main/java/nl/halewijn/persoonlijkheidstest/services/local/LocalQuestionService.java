@@ -1,8 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 
-import nl.halewijn.persoonlijkheidstest.datasource.dao.QuestionDao;
-import nl.halewijn.persoonlijkheidstest.datasource.dao.TheoremDao;
+import nl.halewijn.persoonlijkheidstest.datasource.repository.QuestionRepository;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
@@ -20,56 +19,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocalQuestionService implements IQuestionService {
+public class LocalQuestionService implements IQuestionService  {
 
 	private Logger logger = Logger.getLogger(getClass().getName());
 	
 	@Autowired
-	private QuestionDao questionDao;
+	private QuestionRepository questionRepository;
 
+	@Override
+	public List<Question> findAll() {
+		return questionRepository.findAll();
+	}
+	
+	@Override
+	public List<Question> findAllByText(String text) {
+		return questionRepository.findAllbyText(text);
+	}
+	
+	@Override
+	public void saveOpenQuestion(Question openQuestion) {
+		questionRepository.save(openQuestion);	
+	}
+	
 	@Override
 	public void save(Question question) {
-		questionDao.save(question);
+		questionRepository.save(question);
 	}
-
+	
 	@Override
 	public void delete(Question question) {
-		questionDao.delete(question);
+		questionRepository.delete(question);
 	}
-
+	
 	@Override
 	public List<Question> getAll() {
-		return questionDao.getAll();
+		return questionRepository.findAll();
 	}
 
 	@Override
 	public Question getQuestionById(int id) {
-		return questionDao.getById(id);
+		return questionRepository.findById(id);
 	}
 	
 	@Override
 	public String getTypeById(int id) {
-		return questionDao.getTypeById(id);
+		Question question = getQuestionById(id);
+		return question.getClassName();
 	}
 	
-	@Override
-	public Question getById(int id) {
-		return questionDao.getById(id);
-	}
-
 	@Override
 	public void update(Question question) {
-		questionDao.update(question);
+		questionRepository.save(question);
 	}
 
-	@Override
-	
-	// TODO check naar type
-	public Question getFirstQuestion() {
-		
-		return questionDao.getById(1);
-	}
-	
 	/**
 	 * Checks whether a next question exists or not.
 	 * 
@@ -77,6 +79,7 @@ public class LocalQuestionService implements IQuestionService {
 	 * 
 	 * If no next question exists, a null value is returned.
 	 */
+	
 	@Override
 	public Question getNextQuestion(Question previousQuestion) {
 		// TODO Routing rules invoeren.
@@ -97,6 +100,7 @@ public class LocalQuestionService implements IQuestionService {
 	 * 
 	 * If it doesn't exist, a null value is returned.
 	 */
+	
 	@Override
 	public Question getFirstQuestion(Questionnaire questionnaire) {
 		Question firstQuestion = null;
@@ -117,6 +121,7 @@ public class LocalQuestionService implements IQuestionService {
 	 * If the question was an open question, the answer is requested from the browser session.
 	 * The requested text will be set as the answer.
 	 */
+	
 	@Override
 	public void setQuestionAnswer(HttpServletRequest req, Question previousQuestion) {
 		String answer = req.getParameter("answer");
