@@ -95,7 +95,7 @@ public class Questionnaire {
 	 * Adds the arrays to their respective "model" values.
 	 * These values will later be used to generate the graphics in JavaScript.
 	 *
-	 * Afterwards, determine which is the primary and secondary personality type.
+	 * Afterwards, determine which is the primary and secondary personality type and calculate the subtype scores.
 	 * These values are then added to their respective "model" values.
 	 * Finally, these values will be displayed on the result page.
 	 */

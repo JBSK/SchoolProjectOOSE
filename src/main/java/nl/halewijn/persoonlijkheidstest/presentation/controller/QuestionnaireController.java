@@ -31,18 +31,6 @@ public class QuestionnaireController {
 
     @Autowired
     private LocalPersonalityTypeService localPersonalityTypeService;
-    
-    /**
-     * If the file path relative to the base was "/session", return the relevant web page.
-     * 
-     * Does this page even exist?
-     */
-	@RequestMapping(value="/session", method=RequestMethod.GET)
-    public String session(Model model, HttpSession session) {
-		session.setAttribute("questionnaire", 1);
-		model.addAttribute("name", "World");
-		return "greeting";
-	}
 	
 	/**
 	 * If the file path relative to the base was "/questionnaire", return the relevant web page.

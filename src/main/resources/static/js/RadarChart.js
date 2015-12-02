@@ -49,13 +49,17 @@ function RadarChart(id, data, options) {
 
 	//Remove whatever chart with the same id/class was present before
 	d3.select(id).select("svg").remove();
-	
+
+    var vbWidth = document.getElementById('radarChartBox').offsetWidth;
+    var vbHeight = vbWidth;
+
 	//Initiate the radar chart SVG
 	var svg = d3.select(id).append("svg")
 			//.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
 			//.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
 			.attr("class", "radar"+id)
-			.attr("viewBox","0 0 270 270");
+			//.attr("viewBox","0 0 270 270");
+			.attr("viewBox","0 0 " + vbWidth + " " + vbHeight);
 	//Append a g element		
 	var g = svg.append("g")
 			.attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + "," + (cfg.h/2 + cfg.margin.top) + ")");
