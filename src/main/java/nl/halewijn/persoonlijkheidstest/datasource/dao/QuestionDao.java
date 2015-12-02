@@ -36,7 +36,6 @@ public class QuestionDao {
 	/**
 	* Return all the questions stored in the database.
 	*/
-	
 	public List<Question> getAll() {
 		return getSession().createQuery("FROM Question").list();
 	}
@@ -49,7 +48,6 @@ public class QuestionDao {
 	* If a question type was found, it loads the question and assigns this value to the "result" variable.
 	* This variable is then returned.
 	*/
-	
 	public Question getById(int questionID) {
 		Question result;
 
@@ -71,7 +69,6 @@ public class QuestionDao {
 	/**
 	* Retrieve a questionType from the database by ID.
 	*/
-	
 	public String getTypeById(int questionID) {
 		List<Question> questions = getSession().createQuery("FROM Question WHERE questionId = " + questionID).list();
         try {
@@ -85,7 +82,6 @@ public class QuestionDao {
 	/**
 	* Update the passed question in the database.
 	*/
-	
 	public void update(Question question) {
 		getSession().update(question);
 	}

@@ -78,7 +78,10 @@ public class Questionnaire {
 		model.addAttribute("currentQuestion", nextQuestion);
 		return "questionnaire";
 	}
-	
+
+    /**
+     * Retrieves the last question that was answered.
+     */
 	public Question getPreviousQuestion() {
 		return answeredQuestions.get(answeredQuestions.size()-1);
 	}
@@ -158,10 +161,18 @@ public class Questionnaire {
 		answeredQuestions.add(question);
 	}
 
+    /**
+     * Firstly adds the next question to the list of questions.
+     * Secondly adds this question to the "model" object.
+     * Lastly returns the kind of webpage that has to be shown.
+     */
 	public void setAnsweredQuestions(List<Question> answeredQuestions) {
 		this.answeredQuestions = answeredQuestions;
 	}
 
+    /**
+     * Retrieves the list of answered questions.
+     */
 	public List<Question> getAnsweredQuestions() {
 		return answeredQuestions;
 	}
