@@ -78,7 +78,7 @@ public class Questionnaire {
 		model.addAttribute("currentQuestion", nextQuestion);
 		return "questionnaire";
 	}
-	
+
     /**
      * Retrieves the last question that was answered.
      */
