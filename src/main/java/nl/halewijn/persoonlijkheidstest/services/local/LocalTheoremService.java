@@ -6,7 +6,7 @@ import nl.halewijn.persoonlijkheidstest.datasource.repository.TheoremRepository;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
-import nl.halewijn.persoonlijkheidstest.services.ITheoremService;
+import nl.halewijn.persoonlijkheidstest.services.IObjectService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocalTheoremService implements ITheoremService {
+public class LocalTheoremService implements IObjectService<Theorem> {
 
 	private Logger logger = Logger.getLogger(getClass().getName());
 	
@@ -48,5 +48,4 @@ public class LocalTheoremService implements ITheoremService {
 	public void update(Theorem theorem) {
 		theoremRepository.save(theorem);
 	}
-
 }

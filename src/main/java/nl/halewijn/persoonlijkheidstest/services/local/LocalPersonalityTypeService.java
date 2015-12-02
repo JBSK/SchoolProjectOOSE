@@ -5,8 +5,7 @@ package nl.halewijn.persoonlijkheidstest.services.local;
 import nl.halewijn.persoonlijkheidstest.datasource.repository.PersonalityTypeRepository;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
-import nl.halewijn.persoonlijkheidstest.services.IPersonalityTypeService;
-import nl.halewijn.persoonlijkheidstest.services.ITheoremService;
+import nl.halewijn.persoonlijkheidstest.services.IObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Component
-public class LocalPersonalityTypeService implements IPersonalityTypeService {
+public class LocalPersonalityTypeService implements IObjectService<PersonalityType> {
 
 	private Logger logger = Logger.getLogger(getClass().getName());
 	
@@ -22,8 +21,8 @@ public class LocalPersonalityTypeService implements IPersonalityTypeService {
 	private PersonalityTypeRepository personalityTypeRepository;
 
 	@Override
-	public PersonalityType save(PersonalityType personalityType) {
-		return personalityTypeRepository.save(personalityType);
+	public void save(PersonalityType personalityType) {
+		personalityTypeRepository.save(personalityType);
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class LocalPersonalityTypeService implements IPersonalityTypeService {
 	}
 
 	@Override
-	public PersonalityType update(PersonalityType personalityType) {
-		return personalityTypeRepository.save(personalityType);
+	public void update(PersonalityType personalityType) {
+		personalityTypeRepository.save(personalityType);
 	}
 }

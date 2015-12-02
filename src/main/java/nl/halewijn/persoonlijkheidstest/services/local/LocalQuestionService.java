@@ -8,7 +8,6 @@ import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
-import nl.halewijn.persoonlijkheidstest.services.ITheoremService;
 
 import java.util.List;
 import java.util.logging.Logger;
