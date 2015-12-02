@@ -76,6 +76,9 @@ body{
 padding: 10px;
    
     background: -webkit-repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%);
+     background: -o-repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%);
+      background: -moz-repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%);
+       background: repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%);
     /* background: white; */
     /* border: 5px solid #F1DE84; */
     border-color: #EECB6D;
