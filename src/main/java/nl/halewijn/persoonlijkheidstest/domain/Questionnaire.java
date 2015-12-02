@@ -195,6 +195,7 @@ public class Questionnaire {
 			}
 		}
 
+		// TODO: Maybe extract these two loops or merge them if possible?
         double totalQuestionPoints = calculateTotalFromNumbersArray(pTypePoints);
 		for (int i = 0; i < pTypePoints.length; i++) {
             pTypePercentages[i] = calculatePercentage(pTypePoints[i], totalQuestionPoints);
@@ -296,7 +297,8 @@ public class Questionnaire {
 				secondTheoremPoints = ANSWER_E * secondTheorem.getWeight();
 				break;
 				
-			default: 
+			default:
+				// TODO: add warning because apparently the form input data was manipulated
 				firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
 				secondTheoremPoints = ANSWER_C * secondTheorem.getWeight();
 				break;
