@@ -6,6 +6,8 @@ import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,12 @@ public class QuestionnaireController {
 
     @Autowired
     private LocalPersonalityTypeService localPersonalityTypeService;
+    
+    @Autowired
+    private LocalResultService localResultService;
+    
+    @Autowired
+    private LocalUserService localUserService;
 	
 	/**
 	 * If the file path relative to the base was "/questionnaire", return the relevant web page.
@@ -68,7 +76,7 @@ public class QuestionnaireController {
 			if(session.getAttribute("questionnaire") instanceof Questionnaire) {
 				questionnaire = (Questionnaire) session.getAttribute("questionnaire");
 			}
-			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session);
+			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
 		}
 		return "questionnaire";
     }

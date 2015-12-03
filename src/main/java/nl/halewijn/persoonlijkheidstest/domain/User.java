@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "User")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class User {
+public class User {
 
 	@Id
 	private String emailAddress;
@@ -19,6 +19,8 @@ public abstract class User {
 	public User(String emailAddress) {
         this.emailAddress = emailAddress;
 	}
+	
+	public User() {  }
 
 	public String getEmailAddress() {
 		return emailAddress;

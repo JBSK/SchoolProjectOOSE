@@ -10,6 +10,8 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeServi
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 public class Questionnaire {
 	
@@ -54,7 +56,7 @@ public class Questionnaire {
 	 * If a next question exists, this question is shown.
 	 * If no next question exists, the results of the questionnaire are shown.
 	 */
-	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session) {
+	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session, LocalResultService localResultService, LocalUserService localUserService) {
 		Question previousQuestion = getPreviousQuestion();
 		
 		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
@@ -64,8 +66,58 @@ public class Questionnaire {
 			return showNextQuestion(model, nextQuestion);
 		}
 		else {
+			saveResults(session, localResultService, localUserService);
 			return showResults(model, session, localPersonalityTypeService);
 		}	
+	}
+
+	/**
+	 * Creates a new Result object that contains a list of newly created Answer objects based on
+	 * the questionlist in the Questionnaire object. Both the Result and Answer objects get saved
+	 * in the database.
+	 * 
+	 * If there is a logged in user, that user will be linked to the new result. Otherwise the user
+	 * column will remain null.
+	 */
+	private void saveResults(HttpSession session, LocalResultService localResultService, LocalUserService localUserService) {
+		Result result = null;
+		String userName = (String) session.getAttribute("userName");
+		if(userName != null) {
+			User user = localUserService.findByName(userName);
+			result = new Result(user);
+		} else {
+			result = new Result(null);
+		}
+		
+		Questionnaire questionnaire = null;
+		if(session.getAttribute("questionnaire") instanceof Questionnaire){
+			questionnaire = (Questionnaire) session.getAttribute("questionnaire");
+		}
+		
+		saveQuestionAnswerInDb(localResultService, result, questionnaire);
+		localResultService.saveResult(result);
+	}
+
+	/**
+	 * This method retrieves all the questions from the Questionnaire and loops through them.
+	 * Each Question gets it's own Answer object that contains the answer as well as 
+	 * a link to the original Question.
+	 * 
+	 * The new Answer object gets added to the Result.
+	 */
+	private void saveQuestionAnswerInDb(LocalResultService localResultService, Result result, Questionnaire questionnaire) {
+		List<Question> questions = questionnaire.getAnsweredQuestions();
+		for(Question question : questions) {			
+			Answer answer = null;
+			if(question instanceof TheoremBattle) {
+				answer = new Answer(question, "" + ((TheoremBattle) question).getAnswer());
+			}	
+			else if (question instanceof OpenQuestion) {
+				answer = new Answer(question, "" + ((OpenQuestion) question).getAnswer());
+			}
+			result.addTestResultAnswer(answer);
+			localResultService.saveAnswer(answer);		
+		}
 	}
 
 	/**
@@ -102,13 +154,7 @@ public class Questionnaire {
 	private String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
         double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
         int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
-
-        int numberOfTypes = localPersonalityTypeService.getAll().size();
-        String personalityTypes[] = new String[numberOfTypes];
-        for (int i = 0; i < numberOfTypes; i++){
-        	System.out.println(localPersonalityTypeService.getById(i+1));
-        	personalityTypes[i] = localPersonalityTypeService.getById(i+1).getName();
-        }
+        String[] personalityTypes = getPersonalityTypesFromDb(localPersonalityTypeService);
 
         model.addAttribute("personalityTypes", personalityTypes);
         model.addAttribute("scores", pTypeResultArray);
@@ -125,12 +171,24 @@ public class Questionnaire {
 
         model.addAttribute("primaryPersonalityType", primaryPersonalityType);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
-
         model.addAttribute("subTypeScores", subTypeResultArray);
 
         //session.removeAttribute("questionnaire"); // Disabled for debug. TODO: Remove for production
         return "result";
     }
+
+	/**
+     * Returns the list of all personality types from the database.
+     */
+	private String[] getPersonalityTypesFromDb(LocalPersonalityTypeService localPersonalityTypeService) {
+		int numberOfTypes = localPersonalityTypeService.getAll().size();
+        String personalityTypes[] = new String[numberOfTypes];
+        for (int i = 0; i < numberOfTypes; i++){
+        	System.out.println(localPersonalityTypeService.getById(i+1));
+        	personalityTypes[i] = localPersonalityTypeService.getById(i+1).getName();
+        }
+		return personalityTypes;
+	}
 
     /**
      * Returns the index of the item that has the highest value in the array
