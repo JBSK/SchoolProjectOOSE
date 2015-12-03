@@ -66,7 +66,7 @@ public class Questionnaire {
 			return showNextQuestion(model, nextQuestion);
 		}
 		else {
-			saveResults(session, localResultService, localUserService);
+			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
 			return showResults(model, session, localPersonalityTypeService);
 		}	
 	}
@@ -79,8 +79,11 @@ public class Questionnaire {
 	 * If there is a logged in user, that user will be linked to the new result. Otherwise the user
 	 * column will remain null.
 	 */
-	private void saveResults(HttpSession session, LocalResultService localResultService, LocalUserService localUserService) {
+	private void saveResults(HttpSession session, LocalResultService localResultService, LocalUserService localUserService, LocalPersonalityTypeService localPersonalityTypeService) {
+		double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
+        int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
 		Result result = null;
+        
 		String userName = (String) session.getAttribute("userName");
 		if(userName != null) {
 			User user = localUserService.findByName(userName);
@@ -89,12 +92,19 @@ public class Questionnaire {
 			result = new Result(null);
 		}
 		
-		Questionnaire questionnaire = null;
-		if(session.getAttribute("questionnaire") instanceof Questionnaire){
-			questionnaire = (Questionnaire) session.getAttribute("questionnaire");
-		}
+		localResultService.saveResult(result);
 		
-		saveQuestionAnswerInDb(localResultService, result, questionnaire);
+		result.setWeight2_score(subTypeResultArray[0]);
+		result.setWeight3_score(subTypeResultArray[1]);
+		result.setWeight4_score(subTypeResultArray[2]);
+		
+		for(int i = 0; i < pTypeResultArray.length; i++) {		
+			PersonalityType type = localPersonalityTypeService.getById(i+1);
+			ResultTypePercentage resultTypePercentage = new ResultTypePercentage(result, type, Math.round(pTypeResultArray[i]*100));
+			localResultService.saveResultTypePercentage(resultTypePercentage);
+		}
+        
+		saveQuestionAnswersInDb(localResultService, result, this);
 		localResultService.saveResult(result);
 	}
 
@@ -105,7 +115,7 @@ public class Questionnaire {
 	 * 
 	 * The new Answer object gets added to the Result.
 	 */
-	private void saveQuestionAnswerInDb(LocalResultService localResultService, Result result, Questionnaire questionnaire) {
+	private void saveQuestionAnswersInDb(LocalResultService localResultService, Result result, Questionnaire questionnaire) {
 		List<Question> questions = questionnaire.getAnsweredQuestions();
 		for(Question question : questions) {			
 			Answer answer = null;

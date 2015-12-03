@@ -28,6 +28,10 @@ public class Result {
 	
 	private Date date;
 	
+	private double weight2_score;
+	private double weight3_score;
+	private double weight4_score;
+	
 	@ManyToMany
     @JoinTable(
             name="Result_Answers",
@@ -68,5 +72,37 @@ public class Result {
 	
 	public void addTestResultAnswer(Answer testResultAnswer) {
 		testResultAnswers.add(testResultAnswer);
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public double getWeight2_score() {
+		return weight2_score;
+	}
+
+	public void setWeight2_score(double weight2_score) {
+		this.weight2_score = weight2_score;
+	}
+
+	public double getWeight3_score() {
+		return weight3_score;
+	}
+
+	public void setWeight3_score(double weight3_score) {
+		this.weight3_score = weight3_score;
+	}
+
+	public double getWeight4_score() {
+		return weight4_score;
+	}
+
+	public void setWeight4_score(double weight4_score) {
+		this.weight4_score = weight4_score;
 	}
 }
