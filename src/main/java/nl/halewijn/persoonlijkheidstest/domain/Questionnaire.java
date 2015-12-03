@@ -98,14 +98,18 @@ public class Questionnaire {
 		result.setWeight3_score(subTypeResultArray[1]);
 		result.setWeight4_score(subTypeResultArray[2]);
 		
+		saveResultTypePercentagesInDb(localResultService, localPersonalityTypeService, pTypeResultArray, result);
+		saveQuestionAnswersInDb(localResultService, result, this);
+		localResultService.saveResult(result);
+	}
+
+	private void saveResultTypePercentagesInDb(LocalResultService localResultService,
+			LocalPersonalityTypeService localPersonalityTypeService, double[] pTypeResultArray, Result result) {
 		for(int i = 0; i < pTypeResultArray.length; i++) {		
 			PersonalityType type = localPersonalityTypeService.getById(i+1);
 			ResultTypePercentage resultTypePercentage = new ResultTypePercentage(result, type, Math.round(pTypeResultArray[i]*100));
 			localResultService.saveResultTypePercentage(resultTypePercentage);
 		}
-        
-		saveQuestionAnswersInDb(localResultService, result, this);
-		localResultService.saveResult(result);
 	}
 
 	/**
