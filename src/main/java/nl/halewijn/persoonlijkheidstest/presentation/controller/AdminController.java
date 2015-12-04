@@ -130,17 +130,20 @@ public class AdminController {
 	}
 	
 	public boolean checkIfAdmin(HttpSession session) {
-		return true;
-//		String email = (String) session.getAttribute("email");
-//		System.out.println(email);
-//		String admin = "duncan@email.eu";
-//		
-//		if (email == admin) {
-//			System.out.println("TEST");
-//			return true;
-//		} else {
-//			System.out.println("FAIL");
-//			return false;
-//		}
+		//return true;
+		String email = (String) session.getAttribute("email");
+		//werkt wel
+		String admin = email;
+		//werkt niet
+		//String admin = "duncan@email.eu";
+		System.out.println(email);
+		System.out.println(admin);
+		if (email == admin) {
+			System.out.println("TEST");
+			return true;
+		} else {
+			System.out.println("FAIL");
+			return false;
+		}
 	}
 }
