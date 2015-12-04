@@ -25,8 +25,8 @@ public class LocalTheoremService implements IObjectService<Theorem> {
 	private TheoremRepository theoremRepository;
 
 	@Override
-	public void save(Theorem theorem) {
-		theoremRepository.save(theorem);
+	public Theorem save(Theorem theorem) {
+		return theoremRepository.save(theorem);
 	}
 
 	@Override

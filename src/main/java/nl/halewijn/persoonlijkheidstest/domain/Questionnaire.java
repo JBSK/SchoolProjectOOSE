@@ -181,8 +181,6 @@ public class Questionnaire {
         PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
         PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
 
-        System.out.println(primaryPersonalityType.getName() + " " + secondaryPersonalityType.getName());
-
         model.addAttribute("primaryPersonalityType", primaryPersonalityType);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
         model.addAttribute("subTypeScores", subTypeResultArray);
@@ -195,11 +193,15 @@ public class Questionnaire {
      * Returns the list of all personality types from the database.
      */
 	private String[] getPersonalityTypesFromDb(LocalPersonalityTypeService localPersonalityTypeService) {
+		List<PersonalityType> typeList = localPersonalityTypeService.getAll();
 		int numberOfTypes = localPersonalityTypeService.getAll().size();
         String personalityTypes[] = new String[numberOfTypes];
-        for (int i = 0; i < numberOfTypes; i++){
-        	personalityTypes[i] = localPersonalityTypeService.getById(i+1).getName();
-        }
+        
+		int type_nr = 0;
+		for(PersonalityType type : typeList) {
+			personalityTypes[type_nr] = type.getName();
+			type_nr ++;
+		}
 		return personalityTypes;
 	}
 

@@ -7,7 +7,9 @@ import nl.halewijn.persoonlijkheidstest.datasource.repository.ResultTypePercenta
 import nl.halewijn.persoonlijkheidstest.domain.Result;
 import nl.halewijn.persoonlijkheidstest.domain.ResultTypePercentage;
 import nl.halewijn.persoonlijkheidstest.domain.Answer;
+import nl.halewijn.persoonlijkheidstest.domain.Question;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -38,6 +40,10 @@ public class LocalResultService  {
 
 	public void saveResultTypePercentage(ResultTypePercentage resultTypePercentage) {
 		resultTypePercentageRepository.save(resultTypePercentage);
+	}
+
+	public List<Result> findAll() {
+		return testResultRepository.findAll();
 	}
 
 

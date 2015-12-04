@@ -1,4 +1,4 @@
-package nl.halewijn.persoonlijkheidstest.datasource.dao;
+package nl.halewijn.persoonlijkheidstest.repository;
 
 import static org.junit.Assert.*;
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IObjectService<O> {
 
-	public void save(O o);
+	public O save(O o);
 	public void delete(O o);
 	public List<O> getAll();
 	public O getById(int id);

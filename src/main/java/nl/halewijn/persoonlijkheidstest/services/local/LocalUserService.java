@@ -21,8 +21,8 @@ public class LocalUserService implements IObjectService<User>  {
 	private UserRepository userRepository;
 
 	@Override
-	public void save(User o) {
-		userRepository.save(o);
+	public User save(User o) {
+		return userRepository.save(o);
 	}
 
 	@Override

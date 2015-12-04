@@ -21,8 +21,8 @@ public class LocalPersonalityTypeService implements IObjectService<PersonalityTy
 	private PersonalityTypeRepository personalityTypeRepository;
 
 	@Override
-	public void save(PersonalityType personalityType) {
-		personalityTypeRepository.save(personalityType);
+	public PersonalityType save(PersonalityType personalityType) {
+		return personalityTypeRepository.save(personalityType);
 	}
 
 	@Override
