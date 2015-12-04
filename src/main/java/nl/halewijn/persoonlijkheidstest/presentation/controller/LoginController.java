@@ -50,10 +50,10 @@ public class LoginController {
 			if(user.getEmailAddress() != null && correctPassword) {
 				session.setAttribute("email", user.getEmailAddress());
 			} else {
-				return "login";
+				return "redirect:/login";
 			}
 		} else {
-			return "login";
+			return "redirect:/login";
 		}
 		return "redirect:/";
 	}
