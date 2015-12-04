@@ -11,7 +11,9 @@ import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 @Repository
 public interface TheoremRepository extends JpaSpecificationExecutor<Theorem>, JpaRepository<Theorem, Long> {
 
-	@Query("select t from Theorem t where t.id=?")
-	Theorem findById(int id);
+	// @Query annotation is not needed. Spring automatically generates the Query if you format the
+	// methodname correctly.
+	
+	Theorem findByTheoremID(int id);
 
 }

@@ -10,7 +10,6 @@ import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 @Repository
 public interface PersonalityTypeRepository extends JpaSpecificationExecutor<PersonalityType>, JpaRepository<PersonalityType, Long> {
 
-	@Query("select p from PersonalityType p where p.id=?")
-	PersonalityType findById(int id);
+	PersonalityType findByTypeID(int id);
 
 }

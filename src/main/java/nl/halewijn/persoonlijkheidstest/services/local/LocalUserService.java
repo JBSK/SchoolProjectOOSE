@@ -46,6 +46,6 @@ public class LocalUserService implements IObjectService<User>  {
 	}
 
 	public User findByName(String userName) {
-		return userRepository.findByName(userName);
+		return userRepository.findByEmailAddress(userName);
 	}
 }

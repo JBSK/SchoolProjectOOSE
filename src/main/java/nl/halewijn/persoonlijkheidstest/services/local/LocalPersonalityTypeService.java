@@ -37,7 +37,7 @@ public class LocalPersonalityTypeService implements IObjectService<PersonalityTy
 
 	@Override
 	public PersonalityType getById(int id) {
-		return personalityTypeRepository.findById(id);
+		return personalityTypeRepository.findByTypeID(id);
 	}
 
 	@Override

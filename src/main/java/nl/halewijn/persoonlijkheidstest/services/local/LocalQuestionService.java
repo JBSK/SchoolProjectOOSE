@@ -32,7 +32,7 @@ public class LocalQuestionService implements IQuestionService  {
 	
 	@Override
 	public List<Question> findAllByText(String text) {
-		return questionRepository.findAllbyText(text);
+		return questionRepository.findByText(text);
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class LocalQuestionService implements IQuestionService  {
 
 	@Override
 	public Question getQuestionById(int id) {
-		return questionRepository.findById(id);
+		return questionRepository.findByQuestionID(id);
 	}
 	
 	@Override

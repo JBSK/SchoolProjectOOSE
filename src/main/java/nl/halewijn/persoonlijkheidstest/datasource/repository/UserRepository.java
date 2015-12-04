@@ -17,7 +17,6 @@ public interface UserRepository extends JpaSpecificationExecutor<User>, JpaRepos
 	@Query("select u from User u where u.id=?")
 	User findById(int id);
 
-	@Query("select u from User u where u.emailAddress=?")
-	User findByName(String userName);
+	User findByEmailAddress(String userName);
 
 }

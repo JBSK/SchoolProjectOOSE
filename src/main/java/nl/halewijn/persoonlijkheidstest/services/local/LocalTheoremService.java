@@ -41,7 +41,7 @@ public class LocalTheoremService implements IObjectService<Theorem> {
 
 	@Override
 	public Theorem getById(int id) {
-		return theoremRepository.findById(id);
+		return theoremRepository.findByTheoremID(id);
 	}
 
 	@Override

@@ -12,10 +12,8 @@ import nl.halewijn.persoonlijkheidstest.domain.Question;
 @Repository
 public interface QuestionRepository extends JpaSpecificationExecutor<Question>, JpaRepository<Question, Long> {
 
-	@Query("select q from Question q where q.text=?")
-	List<Question> findAllbyText(String text);
+	List<Question> findByText(String text);
 
-	@Query("select q from Question q where q.id=?")
-	Question findById(int id);
+	Question findByQuestionID(int questionID);
 
 }
