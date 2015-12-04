@@ -230,14 +230,14 @@ public class QuestionnaireTest {
 		assertEquals(1.0, pTypeResultArray[0], 0);
 		assertEquals(33.0, subTypeResultArray[0], 0);
 		
-		when(session.getAttribute("userName")).thenReturn(null);
+		when(session.getAttribute("email")).thenReturn(null);
 		Result result = new Result(null);
-		assertEquals(session.getAttribute("userName"), result.getUser());
-		when(session.getAttribute("userName")).thenReturn(user);
-		if(session.getAttribute("userName") != null) {
+		assertEquals(session.getAttribute("email"), result.getUser());
+		when(session.getAttribute("email")).thenReturn(user);
+		if(session.getAttribute("email") != null) {
 			result.setUser(user);
 		}
-		assertEquals(session.getAttribute("userName"), result.getUser());
+		assertEquals(session.getAttribute("email"), result.getUser());
 		
 		result.setWeight2_score(subTypeResultArray[0]);
 		result.setWeight3_score(subTypeResultArray[1]);

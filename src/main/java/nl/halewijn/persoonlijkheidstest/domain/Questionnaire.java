@@ -84,7 +84,7 @@ public class Questionnaire {
         int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
 		Result result = null;
         
-		String userName = (String) session.getAttribute("userName");
+		String userName = (String) session.getAttribute("email");
 		if(userName != null) {
 			User user = localUserService.findByName(userName);
 			result = new Result(user);
