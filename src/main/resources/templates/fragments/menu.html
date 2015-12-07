@@ -10,7 +10,7 @@
 				<li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
 				<li class="pure-menu-item"><a href="questionnaire" class="pure-menu-link">Test starten</a></li>
 				<li th:if="${session.email == null}" class="pure-menu-item"><a href="register" class="pure-menu-link">Registreren</a></li>
-				<li th:if="${session.email != null}" class="pure-menu-item"><a href="adminPaneel" class="pure-menu-link">adminPaneel</a></li>
+				<li th:if="${session.email != null}" class="pure-menu-item"><a href="adminPaneel" class="pure-menu-link">Admin Paneel</a></li>
 				<!-- Checks whether user is logged in or not. Based on this, either a "login" or a "logout" button will be shown. -->
 				<li th:if="${session.email == null}" class="pure-menu-item"><a href="login" class="pure-menu-link">Inloggen</a></li>
 				<!-- <li th:if="${session.username != null}" class="pure-menu-item"><a class="pure-menu-link" th:text="${session.username}"></a></li> -->
