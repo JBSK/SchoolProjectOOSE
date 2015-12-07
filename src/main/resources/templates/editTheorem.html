@@ -19,15 +19,16 @@
 							<th>Subgewicht 2</th>
 							<th>Subgewicht 3</th>
 						</tr>
-						<tr th:each="i : ${theorems}">
+						<tr th:each="i : ${theorem}">
 							<form action="editTheorem" method="POST">
-								<td><input type="submit" class="pure-button" name="aanpassen" value="Aanpassen"/></td>
+								<!--<td><input type="submit" class="pure-button" name="aanpassen" value="Aanpassen"/></td>
 								<td th:text="${i.text}"></td>
 								<td th:text="${i.weight}"></td>
 								<td th:text="${i.personalityType.name}"></td>
 								<td th:text="${i.subWeight1}"></td>
 								<td th:text="${i.subWeight2}"></td>
-								<td th:text="${i.subWeight3}"></td>
+								<td th:text="${i.subWeight3}"></td>-->
+								<p th:text="${theorem}"></p>
 							</form>
 						</tr>
 					</table>

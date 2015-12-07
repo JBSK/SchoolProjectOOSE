@@ -39,6 +39,9 @@ public class AdminController {
 	@Autowired
 	private LocalResultService localResultService;
 	
+	@Autowired
+	private LocalTheoremService localTheoremService;
+	
 	/**
 	 * Check whether or not the user is an admin.
 	 * 
@@ -79,7 +82,35 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
+			List<Theorem> theorems = localTheoremService.getAll();
+			model.addAttribute("theorems", theorems);
 			return "managetheorems";
+		} else {
+			return "redirect:/";
+		}
+	}
+	
+	@RequestMapping(value="/editTheorem", method=RequestMethod.POST)
+	public String editTheorem(Model model, HttpSession session, HttpServletRequest req) {
+		boolean isAdmin = checkIfAdmin(session);
+		
+		if (isAdmin) {
+			String theoremNumber = req.getParameter("aanpassen");
+			 
+			model.addAttribute("theorem", theoremNumber);
+			return "editTheorem";
+		} else {
+			return "redirect:/";
+		}
+	}
+	
+	@RequestMapping(value="/updateTheorem", method=RequestMethod.POST)
+	public String updateTheorem(Model model, HttpSession session, HttpServletRequest req) {
+		boolean isAdmin = checkIfAdmin(session);
+		
+		if (isAdmin) {
+			
+			return "updateTheorem";
 		} else {
 			return "redirect:/";
 		}
