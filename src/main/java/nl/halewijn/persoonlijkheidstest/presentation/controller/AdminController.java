@@ -46,7 +46,7 @@ public class AdminController {
 	 * If the user is not an admin, or is not logged in, redirect to the previous page.
 	 */
     @RequestMapping(value="/adminPaneel")
-    public String showAdmin(Model model, HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+    public String showAdmin(Model model, HttpSession session) {
     	boolean isAdmin = checkIfAdmin(session);
 		
     	if (isAdmin) {
