@@ -19,8 +19,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalTheoremService implements IObjectService<Theorem> {
 
-	private Logger logger = Logger.getLogger(getClass().getName());
-	
 	@Autowired
 	private TheoremRepository theoremRepository;
 

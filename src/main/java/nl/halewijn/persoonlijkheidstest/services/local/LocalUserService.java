@@ -15,8 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalUserService implements IObjectService<User>  {
 
-	private Logger logger = Logger.getLogger(getClass().getName());
-	
 	@Autowired
 	private UserRepository userRepository;
 

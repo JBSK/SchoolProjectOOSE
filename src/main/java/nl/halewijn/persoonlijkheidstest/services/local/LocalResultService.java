@@ -19,8 +19,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalResultService  {
 
-	private Logger logger = Logger.getLogger(getClass().getName());
-	
 	@Autowired
 	private ResultRepository testResultRepository;
 	
