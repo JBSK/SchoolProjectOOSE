@@ -736,8 +736,8 @@ z-index:90;
 	.content input[type="email"].formError, 
 	.content input[type="password"].formError{
 		  background: #FFF6F6;
-    	  border-color: #E0B4B4;
-		  border: 1px;
+		  border: solid 2px;
+		  border-color: #E0B4B4;
 	}
 	.content input[type="text"].formError:focus,
 	.content input[type="email"].formError:focus,

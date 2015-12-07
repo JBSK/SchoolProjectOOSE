@@ -35,7 +35,8 @@ public class LoginControllerTest {
 	@Test
 	public void loginTest() {
 		Model model = mock(Model.class);
-		assertEquals("login", loginController.login(model));
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		assertEquals("login", loginController.login(model, req));
 	}
 	
 	@Test
