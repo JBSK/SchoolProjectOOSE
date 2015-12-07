@@ -397,7 +397,7 @@ z-index:90;
 	
 /**************test/vragenlijst**********/
 
-		.content .statTest{
+		.content .startTest{
 	  width: 400px;
 	  max-width: 100%;
 	  background: #edeff1;
@@ -410,7 +410,7 @@ z-index:90;
 	  -webkit-border-radius: 10px;
 	}
 
-	.content .statTest input[type="text"]{
+	.content .startTest input[type="text"]{
 	  display: block;
 	  width: 309px;
 	  max-width: 80%;
@@ -427,11 +427,11 @@ z-index:90;
 	  -webkit-border-radius: 5px;
 	}
 
-	.content .statTest input[type="text"]:focus{
+	.content .startTest input[type="text"]:focus{
 	  border: 2px solid #1abc9d
 	}
 
-	.content .statTest input[type="submit"]{
+	.content .startTest input[type="submit"]{
 	  display: block;
 	 /* background: #1abc9d;*/
 	  width: 314px;
@@ -448,11 +448,11 @@ z-index:90;
 	  transition: all 0.3s ease;
 	}
 
-	.content .statTest input[type="submit"]:hover{
+	.content .startTest input[type="submit"]:hover{
 	/*  background: #09cca6*/
 	}
 
-	.content .statTest a{
+	.content .startTest a{
 	  text-align: center;
 	  font-family: Arial;
 	  color: gray;
@@ -463,24 +463,24 @@ z-index:90;
 	  font-size: 12px;
 	}
 
-	.content .statTest a:hover{
+	.content .startTest a:hover{
 	  color: #1abc9d;
 	}
 
 
-	.content .statTest ::-webkit-input-placeholder {
+	.content .startTest ::-webkit-input-placeholder {
 	   color: gray;
 	}
 
-	.content .statTest :-moz-placeholder { /* Firefox 18- */
+	.content .startTest :-moz-placeholder { /* Firefox 18- */
 	   color: gray;  
 	}
 
-	.content .statTest ::-moz-placeholder {  /* Firefox 19+ */
+	.content .startTest ::-moz-placeholder {  /* Firefox 19+ */
 	   color: gray;  
 	}
 
-	.content .statTest :-ms-input-placeholder {  
+	.content .startTest :-ms-input-placeholder {  
 	   color: gray;  
 	}
 
@@ -493,13 +493,13 @@ z-index:90;
 
 	}
 
-	.stellingen{
+	.theorems{
 		text-align:center;
 	}
 
 	/************Div Table****************/
 
-	.tabel{
+	.table{
 		margin-top: auto;
 		margin-bottom: auto;
 	}
@@ -511,20 +511,20 @@ z-index:90;
 		font-weight: bold;
 	}
 
-	.radioButtonSoms{
+	.radioButtonSometimes{
 		text-align:center;
 		margin:0;
 		background-color: #f1f3f9;
 
 	}
 
-	.radioButtonVaak{
+	.radioButtonOften{
 		text-align:center;
 		margin:0;
 		background-color:#e6eaf4;
 
 	}
-	.radioButtonMidden{
+	.radioButtonAverage{
 		text-align:center;
 		margin:0px;
 		background-color: #ffffff;
