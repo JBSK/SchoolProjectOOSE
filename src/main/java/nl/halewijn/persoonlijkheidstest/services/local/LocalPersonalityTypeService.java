@@ -1,16 +1,12 @@
-
 package nl.halewijn.persoonlijkheidstest.services.local;
-
 
 import nl.halewijn.persoonlijkheidstest.datasource.repository.PersonalityTypeRepository;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.services.IObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Component
 public class LocalPersonalityTypeService implements IObjectService<PersonalityType> {

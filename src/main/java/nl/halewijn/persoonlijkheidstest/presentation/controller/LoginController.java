@@ -1,7 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 

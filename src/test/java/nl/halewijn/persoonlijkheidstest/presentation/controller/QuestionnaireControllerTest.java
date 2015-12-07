@@ -12,8 +12,6 @@ import org.springframework.ui.Model;
 import nl.halewijn.persoonlijkheidstest.Application;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
-import nl.halewijn.persoonlijkheidstest.domain.User;
-import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
@@ -24,6 +22,7 @@ import static org.mockito.Mockito.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)

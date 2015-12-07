@@ -7,11 +7,8 @@ import nl.halewijn.persoonlijkheidstest.datasource.repository.ResultTypePercenta
 import nl.halewijn.persoonlijkheidstest.domain.Result;
 import nl.halewijn.persoonlijkheidstest.domain.ResultTypePercentage;
 import nl.halewijn.persoonlijkheidstest.domain.Answer;
-import nl.halewijn.persoonlijkheidstest.domain.Question;
 
 import java.util.List;
-import java.util.logging.Logger;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

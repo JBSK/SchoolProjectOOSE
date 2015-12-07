@@ -2,14 +2,9 @@ package nl.halewijn.persoonlijkheidstest.services.local;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import nl.halewijn.persoonlijkheidstest.Application;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;

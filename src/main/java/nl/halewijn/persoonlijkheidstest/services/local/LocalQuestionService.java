@@ -1,6 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
-
 import nl.halewijn.persoonlijkheidstest.datasource.repository.QuestionRepository;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
