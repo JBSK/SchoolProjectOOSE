@@ -35,7 +35,8 @@ public class LoginControllerTest {
 	@Test
 	public void loginTest() {
 		Model model = mock(Model.class);
-		assertEquals("login", loginController.login(model));
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		assertEquals("login", loginController.login(model, req));
 	}
 	
 	@Test
@@ -64,13 +65,20 @@ public class LoginControllerTest {
 		assertEquals(newUser.getEmailAddress(), httpSession.getAttribute("email"));
 		assertEquals("redirect:/", loginController.loginCheck(model, httpSession, httpServletRequest));
 	}
-	
-	@Test
+
+    /*
+     * We invalidate the session when logging out, so that whatever method is run on the session will throw an error.
+     * This is good, because the session and all it's accompanying data has already been destroyed.
+     * We know this test succeeds, when we receive the appropriate error while retrieving a 'dead' session attribute (which is normal behaviour).
+     */
+    @Test(expected=IllegalStateException.class)
 	public void logOutTest() {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 
 		loginController.logOut(model, httpSession);
-		assertEquals(null, httpSession.getAttribute("email"));
+        when(httpSession.getAttribute("email")).thenThrow(IllegalStateException.class);
+        httpSession.getAttribute("email");
+
 	}
 }

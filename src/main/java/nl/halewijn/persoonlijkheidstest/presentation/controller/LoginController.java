@@ -26,7 +26,10 @@ public class LoginController {
 	 * If the file path relative to the base was "/login", return the "login" web page.
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-    public String login(Model model) {
+    public String login(Model model, HttpServletRequest req) {
+		String attempt;
+		attempt = req.getParameter("attempt");
+		model.addAttribute("attempt", attempt);
        return "login";
     }
 	
@@ -42,16 +45,18 @@ public class LoginController {
 	public String loginCheck(Model model, HttpSession session, HttpServletRequest req) {
 		String email = req.getParameter(Constants.email);
 		User user = localUserService.findByName(email);
-		
+
 		if (user != null) {
 			boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPassword());
 			
 			if(user.getEmailAddress() != null && correctPassword) {
 				session.setAttribute(Constants.email, user.getEmailAddress());
 			} else {
+			
 				return Constants.redirect + "login?attempt=wrong";
 			}
 		} else {
+
 			return Constants.redirect + "login?attempt=empty";
 		}
 		return Constants.redirect;
@@ -62,8 +67,9 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/logOut", method=RequestMethod.GET)
 	public String logOut(Model model, HttpSession session) {
-		session.setAttribute(Constants.email, null);
-		session.removeAttribute(Constants.email);
-		return Constants.redirect;
+        session.invalidate();
+        return Constants.redirect;
 	}
+	
+	
 }

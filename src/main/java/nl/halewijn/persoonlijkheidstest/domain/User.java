@@ -14,6 +14,9 @@ public class User {
     @NotNull
     private String passwordHash;
 
+    @NotNull
+    private boolean isAdmin;
+
 	public User(String emailAddress) {
         this.emailAddress = emailAddress;
 	}
@@ -41,4 +44,11 @@ public class User {
 		this.passwordHash = passwordHash;
 	}
 	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 }
