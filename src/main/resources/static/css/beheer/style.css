@@ -405,7 +405,24 @@ body{
 		.content .resultrow3 .antwoordenLijst{
 		
 		}
+
+/*************sellingbeheren**********/
+
+.content .tableManageTheorems{
+	width:100%;
+}
+.content .tableEditButton{
+	    width: 100%;
+    min-height: 100%;
+}
+.content .saveButton{
+	float:right;
 	
+}		
+
+
+
+		
 
 
 

@@ -75,11 +75,22 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/managetheorems", method=RequestMethod.GET)
-	public String stellingenbeheren(Model model, HttpSession session, HttpServletRequest req) {
+	public String managetheorems(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
 			return "managetheorems";
+		} else {
+			return "redirect:/";
+		}
+	}
+	
+	@RequestMapping(value="/edittheorem", method=RequestMethod.GET)
+	public String editTheorem(Model model, HttpSession session, HttpServletRequest req) {
+		boolean isAdmin = checkIfAdmin(session);
+		
+		if (isAdmin) {
+			return "edittheorem";
 		} else {
 			return "redirect:/";
 		}
