@@ -44,7 +44,7 @@ public class LoginControllerTest {
 		HttpSession httpSession = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 		
-		assertEquals("redirect:/login?=empty", loginController.loginCheck(model, httpSession, httpServletRequest));
+		assertEquals("redirect:/login?attempt=empty", loginController.loginCheck(model, httpSession, httpServletRequest));
 		
 		PasswordHash passwordHash = new PasswordHash();	
 		User newUser = new User("email@mail.com");
@@ -54,7 +54,7 @@ public class LoginControllerTest {
 		when(httpServletRequest.getParameter("password")).thenReturn("test");
 		
 		assertEquals("email@mail.com", httpServletRequest.getParameter("email"));
-		assertEquals("redirect:/login?=wrong", loginController.loginCheck(model, httpSession, httpServletRequest));
+		assertEquals("redirect:/login?attempt=wrong", loginController.loginCheck(model, httpSession, httpServletRequest));
 		
 		newUser.setPassword(passwordHash.hashPassword("test"));
 		localUserService.save(newUser);
