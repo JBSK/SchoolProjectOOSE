@@ -241,8 +241,7 @@ public class AdminController {
 		if (isAdmin) {
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
-			Theorem theorem = localTheoremService.getById(TheoremNumber);
-			
+			Theorem theorem = localTheoremService.getById(TheoremNumber);		
 			//localTheoremService.delete(theorem);
 			
 			return "redirect:/managetheorems";
