@@ -162,16 +162,12 @@ public class AdminController {
 	}
 	
 	public boolean checkIfAdmin(HttpSession session) {
-		//return true;
 		String email = (String) session.getAttribute("email");
-		//werkt wel
-		String admin = email;
-		//werkt niet
-		//String admin = "duncan@email.eu";
+		String admin = "duncan@email.eu";
 		System.out.println(email);
 		System.out.println(admin);
-		if (email == admin) {
-			System.out.println("TEST");
+		if (email.equals(admin)) {
+			System.out.println("ADMIN! :D");
 			return true;
 		} else {
 			System.out.println("FAIL");
