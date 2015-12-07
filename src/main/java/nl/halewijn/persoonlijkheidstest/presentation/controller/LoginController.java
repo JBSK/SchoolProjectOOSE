@@ -62,7 +62,7 @@ public class LoginController {
 	 * If a logged in user presses the logout button, remove the user's email from the session.
 	 */
 	@RequestMapping(value="/logOut", method=RequestMethod.GET)
-	public String loguit(Model model, HttpSession session) {
+	public String logOut(Model model, HttpSession session) {
 		session.setAttribute("email", null);
 		session.removeAttribute("email");
 		return "redirect:/";
