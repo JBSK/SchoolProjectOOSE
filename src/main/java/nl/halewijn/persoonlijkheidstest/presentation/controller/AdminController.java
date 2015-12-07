@@ -46,7 +46,7 @@ public class AdminController {
 	 * If the user is not an admin, or is not logged in, redirect to the previous page.
 	 */
     @RequestMapping(value="/adminPaneel")
-    public String showAdmin(Model model, HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
+    public String showAdmin(Model model, HttpSession session) {
     	boolean isAdmin = checkIfAdmin(session);
 		
     	if (isAdmin) {
@@ -241,8 +241,7 @@ public class AdminController {
 		if (isAdmin) {
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
-			Theorem theorem = localTheoremService.getById(TheoremNumber);
-			
+			Theorem theorem = localTheoremService.getById(TheoremNumber);		
 			//localTheoremService.delete(theorem);
 			
 			return "redirect:/managetheorems";
@@ -301,9 +300,14 @@ public class AdminController {
 	public boolean checkIfAdmin(HttpSession session) {
 		String email = (String) session.getAttribute("email");
 		User user = localUserService.findByName(email);
+		String admin = "duncan@email.eu";
 
-		if (user.isAdmin()) {
-			return true;
+		if (email != null) {
+			if (email.equals(admin)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
