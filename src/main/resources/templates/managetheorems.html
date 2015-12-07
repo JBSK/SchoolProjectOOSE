@@ -8,6 +8,9 @@
 		<div id="main"  class="pure-skin-PT">
 			<div class="content">
 				<h2 class="content-subhead">Stellingen beheren</h2>
+				<form action="addTheorem" method="POST">
+					<button type="submit" class="pure-button pure-button-primary saveButton">Toevoegen</button>
+				</form>
 				<table class="pure-table pure-table-bordered tableManageTheorems">
 					<thead>
 						<tr>
@@ -35,19 +38,6 @@
 								<td><input type="submit" class="pure-button" name="aanpassen" value="Aanpassen"/></td>
 							</form>
 						</tr>
-						<!--<tr th:each="i : ${theorems}">
-							<form action="editTheorem" method="POST">
-								<td th:text="${i.theoremID}"></td>
-								<input type="hidden" name="number" th:value="${i.theoremID}" />
-								<td th:text="${i.text}"></td>
-								<td th:text="${i.weight}"></td>
-								<td th:text="${i.personalityType.name}"></td>
-								<td th:text="${i.subWeight1}"></td>
-								<td th:text="${i.subWeight2}"></td>
-								<td th:text="${i.subWeight3}"></td>
-								<td><input type="submit" class="pure-button" name="aanpassen" value="Aanpassen"/></td>
-							</form>
-						</tr>-->
 					</tbody>
 				</table>
 			</div>

@@ -147,7 +147,7 @@ public class AdminController {
 			theorem.setText(text);
 			theorem.setWeight(weight);
 
-			//localTheoremService.save(theorem);
+			localTheoremService.save(theorem);
 
 			return "redirect:/managetheorems";
 		} else {
@@ -242,6 +242,9 @@ public class AdminController {
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
 			Theorem theorem = localTheoremService.getById(TheoremNumber);
+			
+			//localTheoremService.delete(theorem);
+			
 			return "redirect:/managetheorems";
 		} else {
 			return Constants.redirect;
@@ -299,14 +302,8 @@ public class AdminController {
 		String email = (String) session.getAttribute("email");
 		User user = localUserService.findByName(email);
 
-		String admin = "duncan@email.eu";
-
-		if (email != null) {
-			if (email.equals(admin)) {
-				return true;
-			} else {
-				return false;
-			}
+		if (user.isAdmin()) {
+			return true;
 		} else {
 			return false;
 		}
