@@ -7,8 +7,10 @@
 			<div class="content">
 				<h2 class="content-subhead"></h2>
 				<form class="loginForm" action="loginCheck" method="POST">
-					<input type="email" class="zocial-dribbble" name="email" placeholder="E-mailadres" />
-					<input type="password" name="password" placeholder="Wachtwoord" />
+					<input type="email" class="zocial-dribbble formError" name="email" placeholder="E-mailadres" />
+					<input type="password" class="formError" name="password" placeholder="Wachtwoord" />
+					<p th:if="${attempt == wrong}" class="errormelding"> Gegevens zijn onjuist </p>
+					<p th:if="${attempt == empty}" class="errormelding"> Voer uw gegevens in </p>
 					<input type="submit" class="pure-button" name="login" value="Inloggen" />
 				</form>
 			</div><!-- einde content -->

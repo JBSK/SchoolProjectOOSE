@@ -71,6 +71,7 @@ body{
 	}
 	
 	
+	
 /*******************Content*************/
 .content{
 padding: 10px;
@@ -546,21 +547,28 @@ z-index:90;
 	  -webkit-border-radius: 10px;
 	}
 
-	.content .loginForm input[type="text"]{
-	  display: block;
-	  width: 309px;
-	  max-width: 80%;
-	  height: 35px;
-	  margin: 15px auto;
-	  background: #fff;
-	  border: 0px;
-	  padding: 5px;
-	  font-size: 16px;
-	   border: 2px solid #fff;
-	  transition: all 0.3s ease;
-	  border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  -webkit-border-radius: 5px;
+	.content .loginForm input[type="text"],  
+	.content .loginForm input[type="email"],
+	.content .loginForm input[type="password"]{
+        display: block;
+        width: 309px;
+        max-width: 80%;
+        height: 35px;
+        margin: 15px auto;
+        background: #fff;
+        border: 0px;
+        padding: 5px;
+        font-size: 16px;
+        border: 2px solid #fff;
+        transition: all 0.3s ease;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+	}
+	.content .loginForm input[type="text"]:focus,
+	.content .loginForm input[type="email"]:focus,
+	.content .loginForm input[type="password"]:focus{
+        border: 2px solid #1abc9d
 	}
 
 	.content .loginForm input[type="text"]:focus{
@@ -568,26 +576,24 @@ z-index:90;
 	}
 
 	.content .loginForm input[type="submit"]{
-	  display: block;
-	 /* background: #1abc9d;*/
-	  width: 314px;
-	  max-width: 80%;
-	  padding: 12px;
-	  cursor: pointer;
-	  color: #fff;
-	  border: 0px;
-	  margin: auto;
-	  border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  -webkit-border-radius: 5px;
-	  font-size: 17px;
-	  transition: all 0.3s ease;
+        display: block;
+        /* background: #1abc9d;*/
+        width: 314px;
+        max-width: 80%;
+        padding: 12px;
+        cursor: pointer;
+        color: #fff;
+        border: 0px;
+        margin: auto;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        font-size: 17px;
+        transition: all 0.3s ease;
 	}
-
 	.content .loginForm input[type="submit"]:hover{
 	/*  background: #09cca6*/
 	}
-
 	.content .loginForm a{
 	  text-align: center;
 	  font-family: Arial;
@@ -619,6 +625,7 @@ z-index:90;
 	.content .loginForm :-ms-input-placeholder {  
 	   color: gray;  
 	}
+
 	
 /******************Registreerpagina*********/
 
@@ -635,7 +642,9 @@ z-index:90;
         -webkit-border-radius: 10px;
 	}
 
-	.content .registerForm input[type="text"],input[type="email"],input[type="password"]{
+	.content .registerForm input[type="text"],  
+	.content .registerForm input[type="email"],
+	.content .registerForm input[type="password"]{
         display: block;
         width: 309px;
         max-width: 80%;
@@ -652,7 +661,9 @@ z-index:90;
         -webkit-border-radius: 5px;
 	}
 
-	.content .registerForm input[type="text"]:focus,input[type="email"]:focus,input[type="password"]:focus{
+	.content .registerForm input[type="text"]:focus,
+	.content .registerForm input[type="email"]:focus,
+	.content .registerForm input[type="password"]:focus{
         border: 2px solid #1abc9d
 	}
 
@@ -719,7 +730,21 @@ z-index:90;
 			width:100px;
 		
 		}
+		
+		/********errors*********/
+	.content input[type="text"].formError, 
+	.content input[type="email"].formError, 
+	.content input[type="password"].formError{
+		  background: #FFF6F6;
+    	  border-color: #E0B4B4;
+		  border: 1px;
+	}
+	.content input[type="text"].formError:focus,
+	.content input[type="email"].formError:focus,
+	.content input[type="password"].formError:focus{
+    	   border: 2px solid #ff8080
+	}
+	.content .errormelding{
+		color: #ff8080;
+	}
 /****************resultaten**********/
-
-
-
