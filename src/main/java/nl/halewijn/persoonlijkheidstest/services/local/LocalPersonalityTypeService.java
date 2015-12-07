@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 @Component
 public class LocalPersonalityTypeService implements IObjectService<PersonalityType> {
 
-	private Logger logger = Logger.getLogger(getClass().getName());
-	
 	@Autowired
 	private PersonalityTypeRepository personalityTypeRepository;
 
