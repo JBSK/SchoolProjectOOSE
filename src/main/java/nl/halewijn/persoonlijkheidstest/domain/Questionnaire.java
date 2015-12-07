@@ -23,12 +23,11 @@ public class Questionnaire {
 	private static final double ANSWER_D = ANSWER_B;
 	private static final double ANSWER_E = ANSWER_A;
 
-	/*
-	 * ThymeLeaf requires us to have default constructors, further explanation can be found here:
-	 * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
-	 */
 	public Questionnaire() {
-
+        /*
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
 	}
 	
 	/**
@@ -201,10 +200,10 @@ public class Questionnaire {
 		int numberOfTypes = localPersonalityTypeService.getAll().size();
         String personalityTypes[] = new String[numberOfTypes];
         
-		int type_nr = 0;
+		int typeNumber = 0;
 		for(PersonalityType type : typeList) {
-			personalityTypes[type_nr] = type.getName();
-			type_nr ++;
+			personalityTypes[typeNumber] = type.getName();
+			typeNumber ++;
 		}
 		return personalityTypes;
 	}
