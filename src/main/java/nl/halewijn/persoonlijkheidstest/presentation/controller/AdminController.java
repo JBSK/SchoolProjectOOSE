@@ -300,6 +300,10 @@ public class AdminController {
 	public boolean checkIfAdmin(HttpSession session) {
 		String email = (String) session.getAttribute("email");
 		User user = localUserService.findByName(email);
-		return user.isAdmin();
+		if (user != null) {
+			return user.isAdmin();
+		} else {
+			return false;
+		}
 	}
 }

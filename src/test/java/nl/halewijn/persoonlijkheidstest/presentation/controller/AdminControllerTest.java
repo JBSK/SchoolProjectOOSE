@@ -1,5 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
+import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +14,12 @@ import nl.halewijn.persoonlijkheidstest.Application;
 import nl.halewijn.persoonlijkheidstest.domain.Result;
 import nl.halewijn.persoonlijkheidstest.domain.User;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Transactional
@@ -42,10 +41,20 @@ public class AdminControllerTest {
 	public void showAdminTest() {	
 		Model model = mock(Model.class);
 		HttpSession session = mock(HttpSession.class);
+
+		//when(session.getAttribute("email")).thenReturn("");
 		assertEquals(Constants.redirect, adminController.showAdmin(model, session));
 		
 		User user = new User("duncan@email.eu", true);
-		user.setPassword("x");
+
+        String password = "x"; // Plaintext password
+        long beginTime = System.currentTimeMillis();
+        String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time spent: " + (endTime - beginTime) + "ms");
+        password = null; // Prepare plaintext password for clearing by Java garbage collector.
+		user.setPasswordHash(passwordHash); // Stored hash in user
+
 		localUserService.save(user);
 		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
 		assertEquals("adminDashboard", adminController.showAdmin(model, session));	
@@ -56,6 +65,5 @@ public class AdminControllerTest {
 		assertEquals(2, localResultService.count(), 0);
 		assertEquals(1, localResultService.countUserTests(), 0);
 		assertEquals(1, localResultService.countAnonymousTests(), 0);
-
 	}
 }

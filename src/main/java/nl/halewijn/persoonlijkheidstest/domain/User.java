@@ -15,7 +15,7 @@ public class User {
     private String passwordHash;
 
     @NotNull
-    private boolean isAdmin;
+    private boolean isAdmin = false;
 
 	public User(String emailAddress, boolean isAdmin) {
         this.emailAddress = emailAddress;
@@ -41,7 +41,7 @@ public class User {
 		return passwordHash;
 	}
 	
-	public void setPassword(String passwordHash) {
+	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
 

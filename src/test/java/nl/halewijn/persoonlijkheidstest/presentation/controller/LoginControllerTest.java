@@ -49,7 +49,7 @@ public class LoginControllerTest {
 		
 		PasswordHash passwordHash = new PasswordHash();	
 		User newUser = new User("email@mail.com", false);
-		newUser.setPassword(passwordHash.hashPassword("aa"));
+		newUser.setPasswordHash(passwordHash.hashPassword("aa"));
 		localUserService.save(newUser);
 		when(httpServletRequest.getParameter("email")).thenReturn("email@mail.com");
 		when(httpServletRequest.getParameter("password")).thenReturn("test");
@@ -57,7 +57,7 @@ public class LoginControllerTest {
 		assertEquals("email@mail.com", httpServletRequest.getParameter("email"));
 		assertEquals("redirect:/login?attempt=wrong", loginController.loginCheck(model, httpSession, httpServletRequest));
 		
-		newUser.setPassword(passwordHash.hashPassword("test"));
+		newUser.setPasswordHash(passwordHash.hashPassword("test"));
 		localUserService.save(newUser);
 		
 		loginController.loginCheck(model, httpSession, httpServletRequest);
