@@ -41,5 +41,15 @@ public class LocalResultService  {
 		return testResultRepository.findAll();
 	}
 
+	public Long count() {
+		return testResultRepository.count();
+	}
 
+	public Long countUserTests() {
+		return testResultRepository.countUserTests();
+	}
+
+	public Long countAnonymousTests() {
+		return testResultRepository.countAnonymousTests();
+	}
 }

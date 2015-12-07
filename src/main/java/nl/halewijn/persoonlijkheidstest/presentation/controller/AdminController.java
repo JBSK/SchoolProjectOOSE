@@ -2,6 +2,7 @@ package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.User;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 
 import java.util.List;
@@ -31,6 +32,9 @@ public class AdminController {
 	@Autowired
 	private LocalTheoremService localTheoremService;
 	
+	@Autowired
+	private LocalPersonalityTypeService localPersonalityTypeService;
+	
 	/**
 	 * Check whether or not the user is an admin.
 	 * 
@@ -40,15 +44,17 @@ public class AdminController {
 	 */
     @RequestMapping(value="/adminPaneel")
     public String showAdmin(Model model, HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
-	boolean isAdmin = checkIfAdmin(session);
+    	boolean isAdmin = checkIfAdmin(session);
 		
-		//Statistics:
-		List<User> users = localUserService.getAll();
-		model.addAttribute("users", users.size());
-//		List<Result> tests = localResultService.getAll();
-//		model.addAttribute("tests", tests);
-		
-		if (isAdmin) {
+    	if (isAdmin) {
+    		Long totalTests = localResultService.count();
+    		Long userTests = localResultService.countUserTests();
+    		Long anonymousTests = localResultService.countAnonymousTests();
+    		
+    		model.addAttribute("users", localUserService.count());
+			model.addAttribute("tests", totalTests);
+			model.addAttribute("registered_users_tests", userTests);
+			model.addAttribute("anonymous_tests", anonymousTests);
 			return "adminDashboard";
 		} else {
 			return "redirect:/";
@@ -152,15 +158,12 @@ public class AdminController {
 	
 	public boolean checkIfAdmin(HttpSession session) {
 		String email = (String) session.getAttribute("email");
-		String admin = "duncan@email.eu";
-		System.out.println(email);
-		System.out.println(admin);
-		if (email.equals(admin)) {
-			System.out.println("ADMIN! :D");
+		User user = localUserService.findByName(email);
+
+		if (user.isAdmin()) {
 			return true;
-		} else {
-			System.out.println("FAIL");
-			return false;
 		}
+			
+		return false;
 	}
 }

@@ -43,4 +43,8 @@ public class LocalUserService implements IObjectService<User>  {
 	public User findByName(String userName) {
 		return userRepository.findByEmailAddress(userName);
 	}
+	
+	public Long count() {
+		return userRepository.count();
+	}
 }
