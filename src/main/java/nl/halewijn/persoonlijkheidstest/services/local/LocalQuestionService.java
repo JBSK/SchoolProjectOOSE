@@ -20,8 +20,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalQuestionService implements IQuestionService  {
 
-	private Logger logger = Logger.getLogger(getClass().getName());
-	
 	@Autowired
 	private QuestionRepository questionRepository;
 
