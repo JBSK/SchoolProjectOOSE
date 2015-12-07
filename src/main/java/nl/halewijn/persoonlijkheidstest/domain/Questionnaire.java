@@ -13,6 +13,8 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
+import nl.halewijn.persoonlijkheidstest.services.Constants;
+
 public class Questionnaire {
 	
 	private List<Question> answeredQuestions = new ArrayList<>();
@@ -43,11 +45,11 @@ public class Questionnaire {
 		Question firstQuestion = localQuestionService.getFirstQuestion(this);
 		
 		if(firstQuestion == null) {
-			return "questionnaire";
+			return Constants.questionnaire;
 		}
 		
-		session.setAttribute("questionnaire", this);	
-		model.addAttribute("currentQuestion", firstQuestion);
+		session.setAttribute(Constants.questionnaire, this);
+		model.addAttribute(Constants.currentQuestion, firstQuestion);
 		return "";
 	}
 	
@@ -87,7 +89,7 @@ public class Questionnaire {
         int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
 		Result result;
         
-		String userName = (String) session.getAttribute("email");
+		String userName = (String) session.getAttribute(Constants.email);
 		if(userName != null) {
 			User user = localUserService.findByName(userName);
 			result = new Result(user);
@@ -189,7 +191,7 @@ public class Questionnaire {
         model.addAttribute("subTypeScores", subTypeResultArray);
 
         //session.removeAttribute("questionnaire"); // Disabled for debug. TODO: Remove for production
-        return "result";
+        return Constants.result;
     }
 
 	/**
@@ -230,7 +232,7 @@ public class Questionnaire {
      */
 	public void getCurrentQuestion(Model model) {
 		Question currentQuestion = answeredQuestions.get(answeredQuestions.size()-1);
-		model.addAttribute("currentQuestion", currentQuestion);
+		model.addAttribute(Constants.currentQuestion, currentQuestion);
 	}
 	
 	public void addQuestion(Question question) {
