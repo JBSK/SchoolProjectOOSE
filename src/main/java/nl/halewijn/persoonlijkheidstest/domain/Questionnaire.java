@@ -22,7 +22,11 @@ public class Questionnaire {
 	private static final double ANSWER_C = 1.0;
 	private static final double ANSWER_D = ANSWER_B;
 	private static final double ANSWER_E = ANSWER_A;
-	
+
+	/*
+	 * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+	 * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+	 */
 	public Questionnaire() {
 
 	}
@@ -82,7 +86,7 @@ public class Questionnaire {
 	private void saveResults(HttpSession session, LocalResultService localResultService, LocalUserService localUserService, LocalPersonalityTypeService localPersonalityTypeService) {
 		double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
         int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
-		Result result = null;
+		Result result;
         
 		String userName = (String) session.getAttribute("email");
 		if(userName != null) {
@@ -94,9 +98,9 @@ public class Questionnaire {
 		
 		localResultService.saveResult(result);
 		
-		result.setWeight2_score(subTypeResultArray[0]);
-		result.setWeight3_score(subTypeResultArray[1]);
-		result.setWeight4_score(subTypeResultArray[2]);
+		result.setScoreDenial(subTypeResultArray[0]);
+		result.setScoreRecognition(subTypeResultArray[1]);
+		result.setScoreDevelopment(subTypeResultArray[2]);
 		
 		saveResultTypePercentagesInDb(localResultService, localPersonalityTypeService, pTypeResultArray, result);
 		saveQuestionAnswersInDb(localResultService, result, this);
@@ -226,7 +230,6 @@ public class Questionnaire {
      * Lastly this variable is added to the "model".
      */
 	public void getCurrentQuestion(Model model) {
-		List<Question> answeredQuestions = this.getAnsweredQuestions();
 		Question currentQuestion = answeredQuestions.get(answeredQuestions.size()-1);
 		model.addAttribute("currentQuestion", currentQuestion);
 	}

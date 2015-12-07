@@ -239,12 +239,12 @@ public class QuestionnaireTest {
 		}
 		assertEquals(session.getAttribute("email"), result.getUser());
 		
-		result.setWeight2_score(subTypeResultArray[0]);
-		result.setWeight3_score(subTypeResultArray[1]);
-		result.setWeight4_score(subTypeResultArray[2]);
-		assertEquals(result.getWeight2_score(), subTypeResultArray[0], 0);
-		assertEquals(result.getWeight3_score(), subTypeResultArray[0], 0);
-		assertEquals(result.getWeight4_score(), subTypeResultArray[0], 0);
+		result.setScoreDenial(subTypeResultArray[0]);
+		result.setScoreRecognition(subTypeResultArray[1]);
+		result.setScoreDevelopment(subTypeResultArray[2]);
+		assertEquals(result.getScoreDenial(), subTypeResultArray[0], 0);
+		assertEquals(result.getScoreRecognition(), subTypeResultArray[0], 0);
+		assertEquals(result.getScoreDevelopment(), subTypeResultArray[0], 0);
 		
 		int totalResults = 0;
 		if(localResultService.findAll() != null)

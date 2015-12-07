@@ -1,6 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,9 +27,9 @@ public class Result {
 	
 	private Date date;
 	
-	private double weight2_score;
-	private double weight3_score;
-	private double weight4_score;
+	private double scoreDenial;
+	private double scoreRecognition;
+	private double scoreDevelopment;
 	
 	@ManyToMany
     @JoinTable(
@@ -38,7 +37,7 @@ public class Result {
             joinColumns=@JoinColumn(name="result_id", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="answer_id", referencedColumnName="id")
     )
-	private List<Answer> testResultAnswers = new ArrayList<Answer>();
+	private List<Answer> testResultAnswers = new ArrayList<>();
 
 	public Result(User user) {
 		this.user = user;
@@ -82,27 +81,27 @@ public class Result {
 		this.date = date;
 	}
 
-	public double getWeight2_score() {
-		return weight2_score;
+	public double getScoreDenial() {
+		return scoreDenial;
 	}
 
-	public void setWeight2_score(double weight2_score) {
-		this.weight2_score = weight2_score;
+	public void setScoreDenial(double scoreDenial) {
+		this.scoreDenial = scoreDenial;
 	}
 
-	public double getWeight3_score() {
-		return weight3_score;
+	public double getScoreRecognition() {
+		return scoreRecognition;
 	}
 
-	public void setWeight3_score(double weight3_score) {
-		this.weight3_score = weight3_score;
+	public void setScoreRecognition(double scoreRecognition) {
+		this.scoreRecognition = scoreRecognition;
 	}
 
-	public double getWeight4_score() {
-		return weight4_score;
+	public double getScoreDevelopment() {
+		return scoreDevelopment;
 	}
 
-	public void setWeight4_score(double weight4_score) {
-		this.weight4_score = weight4_score;
+	public void setScoreDevelopment(double scoreDevelopment) {
+		this.scoreDevelopment = scoreDevelopment;
 	}
 }

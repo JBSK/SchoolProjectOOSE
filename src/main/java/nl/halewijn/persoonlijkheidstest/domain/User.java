@@ -19,8 +19,14 @@ public class User {
 	public User(String emailAddress) {
         this.emailAddress = emailAddress;
 	}
-	
-	public User() {  }
+
+	/*
+	 * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+	 * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+	 */
+	public User() {
+
+	}
 
 	public String getEmailAddress() {
 		return emailAddress;
