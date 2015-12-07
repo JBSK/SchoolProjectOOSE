@@ -747,4 +747,7 @@ z-index:90;
 	.content .errormelding{
 		color: #ff8080;
 	}
+	.content .questionError{
+	text-align: center;
+	}	 
 /****************resultaten**********/
