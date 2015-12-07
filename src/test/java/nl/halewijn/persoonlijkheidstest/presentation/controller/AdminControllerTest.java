@@ -48,10 +48,7 @@ public class AdminControllerTest {
 		User user = new User("duncan@email.eu", true);
 
         String password = "x"; // Plaintext password
-        long beginTime = System.currentTimeMillis();
         String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
-        long endTime = System.currentTimeMillis();
-        System.out.println("Time spent: " + (endTime - beginTime) + "ms");
         password = null; // Prepare plaintext password for clearing by Java garbage collector.
 		user.setPasswordHash(passwordHash); // Stored hash in user
 
