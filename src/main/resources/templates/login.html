@@ -12,8 +12,8 @@
 					<input th:if="${attempt != null}" type="email" class="zocial-dribbble formError" name="email" placeholder="E-mailadres" />
 					<input th:if="${attempt != null}" type="password" class="formError" name="password" placeholder="Wachtwoord" />
 					<div th:switch="${attempt}">
-					<p th:case="'wrong'" class="errormelding"> Gegevens zijn onjuist </p>
-					<p th:case="'empty'" class="errormelding"> Voer uw gegevens in </p>
+					<p th:case="'wrong'" class="errorMessage"> Gegevens zijn onjuist </p>
+					<p th:case="'empty'" class="errorMessage"> Voer uw gegevens in </p>
 					<p th:case="'*'" class=""> </p>
 					</div>
 					<input type="submit" class="pure-button" name="login" value="Inloggen" />

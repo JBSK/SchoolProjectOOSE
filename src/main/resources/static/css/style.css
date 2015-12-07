@@ -744,7 +744,7 @@ z-index:90;
 	.content input[type="password"].formError:focus{
     	   border: 2px solid #ff8080
 	}
-	.content .errormelding{
+	.content .errorMessage{
 		color: #ff8080;
 	}
 	.content .questionError{
