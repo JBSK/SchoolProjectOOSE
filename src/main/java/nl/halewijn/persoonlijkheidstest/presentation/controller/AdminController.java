@@ -301,9 +301,14 @@ public class AdminController {
 	public boolean checkIfAdmin(HttpSession session) {
 		String email = (String) session.getAttribute("email");
 		User user = localUserService.findByName(email);
+		String admin = "duncan@email.eu";
 
-		if (user.isAdmin()) {
-			return true;
+		if (email != null) {
+			if (email.equals(admin)) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
