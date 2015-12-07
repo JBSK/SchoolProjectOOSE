@@ -27,91 +27,111 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
 public class QuestionRepositoryTest {
-	
+
+    @Autowired
+    private LocalPersonalityTypeService localPersonalityTypeService;
+
+    @Autowired
+    private LocalTheoremService localTheoremService;
+
 	@Autowired
 	private LocalQuestionService localQuestionService;
-	
-	@Autowired
-	private LocalPersonalityTypeService localPersonalityTypeService;
-	
-	@Autowired
-	private LocalTheoremService localTheoremService;
-	
+
 	@Test
 	public void testSave(){
-		PersonalityType perfectionist = new PersonalityType("Perfectionist", "first", "second");
-		localPersonalityTypeService.save(perfectionist);
+		String exampleTheoremBattleName = "Example theorem battle";
+
+        PersonalityType examplePersonalityType = new PersonalityType("ExampleType", "Example description 1", "Example description 2");
+		localPersonalityTypeService.save(examplePersonalityType);
 		
-		Theorem theorem1 = new Theorem(perfectionist, "Stelling", 1.2, 0, 0, 0);
-		localTheoremService.save(theorem1);
-		Theorem theorem2 = new Theorem(perfectionist, "Stelling2", 1.2, 0, 0, 0);
-		localTheoremService.save(theorem2);
+		Theorem exampleTheorem1 = new Theorem(examplePersonalityType, "Example theorem 1", 1.2, 0, 0, 0);
+		localTheoremService.save(exampleTheorem1);
+
+		Theorem exampleTheorem2 = new Theorem(examplePersonalityType, "Example theorem 2", 0.7, 0, 1, 0);
+		localTheoremService.save(exampleTheorem2);
 		
-		TheoremBattle theoremBattle = new TheoremBattle("TestTheoremBattle", theorem1, theorem2);
-		localQuestionService.save(theoremBattle);
+		TheoremBattle exampleTheoremBattle = new TheoremBattle(exampleTheoremBattleName, exampleTheorem1, exampleTheorem2);
+		localQuestionService.save(exampleTheoremBattle);
 		
-		TheoremBattle insertedTheoremBattle = (TheoremBattle) localQuestionService.getQuestionById(theoremBattle.getID());
-		assertEquals(insertedTheoremBattle.getID(), theoremBattle.getID());
-		assertEquals("TestTheoremBattle", insertedTheoremBattle.getText());
+		TheoremBattle insertedTheoremBattle = (TheoremBattle) localQuestionService.getById(exampleTheoremBattle.getID());
+
+		assertEquals(exampleTheoremBattleName, insertedTheoremBattle.getText());
 	}
 	
 	@Test
 	public void testGetAll(){
-		List<Question> newResults = localQuestionService.getAll();
+		List<Question> questionsBefore = localQuestionService.getAll();
 		
-		OpenQuestion newQuestion = new OpenQuestion("Nieuwe vraag");
-		localQuestionService.save(newQuestion);
-		newResults.add(newQuestion);
+		OpenQuestion exampleQuestion = new OpenQuestion("Example question text");
+		localQuestionService.save(exampleQuestion);
+		questionsBefore.add(exampleQuestion);
 		
-		List<Question> results = localQuestionService.getAll();
-		assertEquals(newResults.size(), results.size());		
+		List<Question> questionsAfter = localQuestionService.getAll();
+
+        assertEquals(questionsBefore, questionsAfter);
 	}
 
 	@Test
 	public void testGetById(){
-		OpenQuestion newQuestion = new OpenQuestion("Nieuwe vraag...");
-		localQuestionService.save(newQuestion);
+        String exampleQuestionText = "Example question text";
+
+		OpenQuestion exampleOpenQuestion = new OpenQuestion(exampleQuestionText);
+		localQuestionService.save(exampleOpenQuestion);
 		
-		Question question = localQuestionService.getQuestionById(2);
-		assertEquals(newQuestion.getText(), question.getText());
+		Question insertedQuestion = localQuestionService.getById(exampleOpenQuestion.getID());
+		assertEquals(exampleQuestionText, insertedQuestion.getText());
 	}
 	
 	@Test
 	public void testGetTypeById(){
-		PersonalityType perfectionist = new PersonalityType("Perfectionist", "first", "second");
-		localPersonalityTypeService.save(perfectionist);
-		
-		Theorem theorem1 = new Theorem(perfectionist, "Stelling", 1.2, 0, 0, 0);
-		localTheoremService.save(theorem1);
-		Theorem theorem2 = new Theorem(perfectionist, "Stelling2", 1.2, 0, 0, 0);
-		localTheoremService.save(theorem2);
-		
-		TheoremBattle theoremBattle = new TheoremBattle("TestTheoremBattle", theorem1, theorem2);
-		localQuestionService.save(theoremBattle);
-		
-		OpenQuestion openQuestion = new OpenQuestion("Een nieuwe open vraag");
-		localQuestionService.save(openQuestion);
-		
-		assertEquals("nl.halewijn.persoonlijkheidstest.domain.TheoremBattle",localQuestionService.getTypeById(theoremBattle.getID()));
-		assertEquals("nl.halewijn.persoonlijkheidstest.domain.OpenQuestion",localQuestionService.getTypeById(openQuestion.getID()));
+        String openQuestionTypeString = "nl.halewijn.persoonlijkheidstest.domain.OpenQuestion";
+        String theoremBattleTypeString = "nl.halewijn.persoonlijkheidstest.domain.TheoremBattle";
+
+        OpenQuestion exampleOpenQuestion = new OpenQuestion("Example question text");
+        localQuestionService.save(exampleOpenQuestion);
+
+        PersonalityType examplePersonalityType = new PersonalityType("ExampleType", "Example description 1", "Example description 2");
+        localPersonalityTypeService.save(examplePersonalityType);
+
+        Theorem exampleTheorem1 = new Theorem(examplePersonalityType, "Example theorem 1", 1.2, 0, 0, 0);
+        localTheoremService.save(exampleTheorem1);
+
+        Theorem exampleTheorem2 = new Theorem(examplePersonalityType, "Example theorem 2", 0.7, 0, 1, 0);
+        localTheoremService.save(exampleTheorem2);
+
+        TheoremBattle exampleTheoremBattle = new TheoremBattle("Example theorem battle", exampleTheorem1, exampleTheorem2);
+        localQuestionService.save(exampleTheoremBattle);
+
+        String insertedOpenQuestionType = localQuestionService.getQuestionTypeById(exampleOpenQuestion.getID());
+        String insertedTheoremBattleType = localQuestionService.getQuestionTypeById(exampleTheoremBattle.getID());
+
+        assertEquals(openQuestionTypeString, insertedOpenQuestionType);
+		assertEquals(theoremBattleTypeString, insertedTheoremBattleType);
 	}
 
 	@Test
 	public void testUpdate(){
-		OpenQuestion openQuestion = new OpenQuestion("Nieuwe vraag");
-		localQuestionService.save(openQuestion);
-		assertEquals("Nieuwe vraag", openQuestion.getText());
+        String exampleQuestionText = "Example question text";
+        String updatedExampleQuestionText = "Updated example question text";
+
+		OpenQuestion exampleOpenQuestion = new OpenQuestion(exampleQuestionText);
+		localQuestionService.save(exampleOpenQuestion);
 		
-		openQuestion.setText("nieuwe tekst");
-		localQuestionService.update(openQuestion);
-		assertEquals("nieuwe tekst", openQuestion.getText());
+		exampleOpenQuestion.setText(updatedExampleQuestionText);
+		localQuestionService.update(exampleOpenQuestion);
+
+        OpenQuestion updatedOpenQuestion = (OpenQuestion) localQuestionService.getById(exampleOpenQuestion.getID());
+		assertEquals(updatedExampleQuestionText, updatedOpenQuestion.getText());
 	}
 	
 	@Test
 	public void testDelete(){
-		Question openQuestion = new OpenQuestion("Nieuwe vraag");
-		localQuestionService.save(openQuestion);	
-		localQuestionService.delete(openQuestion);
-		assertEquals(null, localQuestionService.getQuestionById(openQuestion.getID()));
+		Question exampleQuestion = new OpenQuestion("Example question text");
+		localQuestionService.save(exampleQuestion);
+
+        exampleQuestion = localQuestionService.getById(exampleQuestion.getID());
+        localQuestionService.delete(exampleQuestion);
+
+		assertNull(localQuestionService.getById(exampleQuestion.getID()));
 	}
 }

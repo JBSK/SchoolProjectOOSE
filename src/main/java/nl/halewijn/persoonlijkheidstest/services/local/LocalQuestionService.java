@@ -5,12 +5,10 @@ import nl.halewijn.persoonlijkheidstest.datasource.repository.QuestionRepository
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,11 +32,6 @@ public class LocalQuestionService implements IQuestionService  {
 	}
 	
 	@Override
-	public void saveOpenQuestion(Question openQuestion) {
-		questionRepository.save(openQuestion);	
-	}
-	
-	@Override
 	public void save(Question question) {
 		questionRepository.save(question);
 	}
@@ -54,13 +47,13 @@ public class LocalQuestionService implements IQuestionService  {
 	}
 
 	@Override
-	public Question getQuestionById(int id) {
+	public Question getById(int id) {
 		return questionRepository.findByQuestionID(id);
 	}
 	
 	@Override
-	public String getTypeById(int id) {
-		Question question = getQuestionById(id);
+	public String getQuestionTypeById(int id) {
+		Question question = getById(id);
 		return question.getClassName();
 	}
 	
@@ -83,8 +76,8 @@ public class LocalQuestionService implements IQuestionService  {
 		
 		Question next = null;
 
-        if(getQuestionById(previousQuestion.getID()+1) != null) {
-            next = getQuestionById(previousQuestion.getID() + 1);
+        if(getById(previousQuestion.getID()+1) != null) {
+            next = getById(previousQuestion.getID() + 1);
         }
 
 		return next;
@@ -102,8 +95,8 @@ public class LocalQuestionService implements IQuestionService  {
 	public Question getFirstQuestion(Questionnaire questionnaire) {
 		Question firstQuestion = null;
 
-        if(getQuestionById(1) != null) {
-            firstQuestion = getQuestionById(1);
+        if(getById(1) != null) {
+            firstQuestion = getById(1);
         }
 
 		questionnaire.addQuestion(firstQuestion);

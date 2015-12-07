@@ -4,16 +4,11 @@ import static org.junit.Assert.*;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -28,67 +23,75 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
 public class TheoremRepositoryTest {
-	
+
+    @Autowired
+    private LocalPersonalityTypeService localPersonalityTypeService;
+
 	@Autowired
 	private LocalTheoremService localTheoremService;
-	
-	@Autowired
-	private LocalPersonalityTypeService localPersonalityTypeService;
-	
-	
+
+    // TODO Jelle: refactor to use [AT]Before annotations?
+
 	@Test
 	@Transactional
 	public void testGetAll(){
-		List<Theorem> newResults = localTheoremService.getAll();
-		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
-		localPersonalityTypeService.save(type);
+		List<Theorem> theoremsBefore = localTheoremService.getAll();
+        PersonalityType examplePersonalityType = new PersonalityType("ExampleType", "Example description 1", "Example description 2");
+		localPersonalityTypeService.save(examplePersonalityType);
+
+		Theorem exampleTheorem = new Theorem(examplePersonalityType, "Example theorem", 1.2, 0, 0, 0);
+		localTheoremService.save(exampleTheorem);
+		theoremsBefore.add(exampleTheorem);
 		
-		
-		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
-		localTheoremService.save(newTheorem);
-		newResults.add(newTheorem);
-		
-		List<Theorem> results = localTheoremService.getAll();
-		assertEquals(newResults.size(), results.size());	
+		List<Theorem> theoremsAfter = localTheoremService.getAll();
+		assertEquals(theoremsBefore, theoremsAfter);
 	}
 	
 	@Test
-	@Transactional
 	public void testGetById(){
-		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
-		localPersonalityTypeService.save(type);
-		
-		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
-		localTheoremService.save(newTheorem);
-		
-		assertEquals(newTheorem.getText(), localTheoremService.getById(1).getText());
+        String theoremText = "Example theorem text";
+
+        PersonalityType examplePersonalityType = new PersonalityType("ExampleType", "Example description 1", "Example description 2");
+		localPersonalityTypeService.save(examplePersonalityType);
+
+        Theorem exampleTheorem = new Theorem(examplePersonalityType, theoremText, 1.2, 0, 0, 0);
+        exampleTheorem = localTheoremService.save(exampleTheorem);
+
+        Theorem insertedTheorem = localTheoremService.getById(exampleTheorem.getTheoremID());
+		assertEquals(theoremText, insertedTheorem.getText());
 	}
 	
 	@Test
 	@Transactional
 	public void testUpdate(){
-		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
-		localPersonalityTypeService.save(type);
-		
-		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
-		localTheoremService.save(newTheorem);
-		
-		newTheorem.setText("Andere stelling");
-		localTheoremService.update(newTheorem);
-		
-		assertEquals("Andere stelling", newTheorem.getText());	
+        String originalTheoremName = "ExampleTheorem";
+        String updatedTheoremName = "ExampleTheoremUpdated";
+
+        PersonalityType examplePersonalityType = new PersonalityType("ExampleType", "Example description 1", "Example description 2");
+		localPersonalityTypeService.save(examplePersonalityType);
+
+        Theorem exampleTheorem = new Theorem(examplePersonalityType, originalTheoremName, 1.2, 0, 0, 0);
+		localTheoremService.save(exampleTheorem);
+
+        exampleTheorem.setText(updatedTheoremName);
+		localTheoremService.update(exampleTheorem);
+
+        Theorem updatedTheorem = localTheoremService.getById(exampleTheorem.getTheoremID());
+		assertEquals(updatedTheoremName, updatedTheorem.getText());
 	}
 	
 	@Test
 	@Transactional
 	public void testDelete(){
-		PersonalityType type = new PersonalityType("Winnaar", "1", "2");
-		localPersonalityTypeService.save(type);
-		
-		Theorem newTheorem = new Theorem(type, "Stelling", 1.0, 0, 0, 0);
-		localTheoremService.save(newTheorem);
-		localTheoremService.delete(newTheorem);
-		
-		assertEquals(null, localTheoremService.getById(newTheorem.getTheoremID()));	
+        PersonalityType examplePersonalityType = new PersonalityType("ExampleType", "Example description 1", "Example description 2");
+		localPersonalityTypeService.save(examplePersonalityType);
+
+        Theorem exampleTheorem = new Theorem(examplePersonalityType, "Example theorem", 1.2, 0, 0, 0);
+		localTheoremService.save(exampleTheorem);
+
+        exampleTheorem = localTheoremService.getById(exampleTheorem.getTheoremID());
+		localTheoremService.delete(exampleTheorem);
+
+        assertNull(localTheoremService.getById(exampleTheorem.getTheoremID()));
 	}
 }

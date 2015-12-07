@@ -25,20 +25,30 @@ public class PersonalityTypeRepositoryTest {
 	
 	@Test
 	public void testUpdate(){
-		PersonalityType type = new PersonalityType("Een type", "test", "test");
-		localPersonalityTypeService.save(type);	
-		type.setName("Een andere naam voor het type.");
-		localPersonalityTypeService.update(type);
-		assertEquals("Een andere naam voor het type.", type.getName());
-		
+		String originalTypeName = "ExampleType";
+        String updatedTypeName = "ExampleTypeUpdated";
+
+        PersonalityType examplePersonalityType = new PersonalityType(originalTypeName, "Example description 1", "Example description 2");
+		localPersonalityTypeService.save(examplePersonalityType);
+
+		examplePersonalityType.setName(updatedTypeName);
+		localPersonalityTypeService.update(examplePersonalityType);
+
+        PersonalityType updatedPersonalityType = localPersonalityTypeService.getById(examplePersonalityType.getTypeID());
+        assertEquals(updatedTypeName, updatedPersonalityType.getName());
 	}
 	
 	@Test
 	@Transactional
 	public void testDelete(){
-		PersonalityType type = new PersonalityType("Een type", "test", "test");
-		localPersonalityTypeService.save(type);	
-		localPersonalityTypeService.delete(type);
-		assertEquals(null, localPersonalityTypeService.getById(type.getTypeID()));
+		PersonalityType examplePersonalityType = new PersonalityType("ExampleType", "Example description 1", "Example description 2");
+		localPersonalityTypeService.save(examplePersonalityType);
+
+        examplePersonalityType = localPersonalityTypeService.getById(examplePersonalityType.getTypeID());
+		localPersonalityTypeService.delete(examplePersonalityType);
+
+		assertNull(localPersonalityTypeService.getById(examplePersonalityType.getTypeID()));
 	}
+
+    // TODO Jelle: May be missing a few tests? Checking test coverage with Sonar now...
 }
