@@ -44,4 +44,11 @@ public class User {
 		this.passwordHash = passwordHash;
 	}
 	
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 }
