@@ -14,6 +14,9 @@ public class User {
     @NotNull
     private String passwordHash;
 
+    @NotNull
+    private boolean isAdmin;
+
 	public User(String emailAddress) {
         this.emailAddress = emailAddress;
 	}

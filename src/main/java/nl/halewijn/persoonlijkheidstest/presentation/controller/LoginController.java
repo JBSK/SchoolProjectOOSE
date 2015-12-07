@@ -62,8 +62,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/logOut", method=RequestMethod.GET)
 	public String logOut(Model model, HttpSession session) {
-		session.setAttribute(Constants.email, null);
-		session.removeAttribute(Constants.email);
-		return Constants.redirect;
+        session.invalidate();
+        return Constants.redirect;
 	}
 }
