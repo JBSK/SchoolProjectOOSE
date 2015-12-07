@@ -215,17 +215,6 @@ public class AdminController {
 			String theoremWeight = req.getParameter("weight");
 			double weight = Double.parseDouble(theoremWeight);
 
-			// Println tests
-
-			System.out.println("-----------------------------------");
-			System.out.println("TheoremID: " + theorem.getTheoremID());
-			System.out.println(theorem.getPersonalityType().getName());
-			System.out.println(theorem.getSubWeight1());
-			System.out.println(theorem.getSubWeight2());
-			System.out.println(theorem.getSubWeight3());
-			System.out.println(theorem.getText());
-			System.out.println(theorem.getWeight());
-
 			// Update the theorem
 			theorem.setPersonalityType(personality);
 			theorem.setSubWeight1(sub1);
@@ -234,18 +223,7 @@ public class AdminController {
 			theorem.setText(text);
 			theorem.setWeight(weight);
 
-			// Updated println tests
-
-			System.out.println("-----------------------------------");
-			System.out.println(theorem.getPersonalityType().getName());
-			System.out.println(theorem.getSubWeight1());
-			System.out.println(theorem.getSubWeight2());
-			System.out.println(theorem.getSubWeight3());
-			System.out.println(theorem.getText());
-			System.out.println(theorem.getWeight());
-			System.out.println("-----------------------------------");
-
-			//localTheoremService.update(theorem);
+			localTheoremService.update(theorem);
 
 			return Constants.redirect + "managetheorems";
 		} else {
@@ -264,12 +242,6 @@ public class AdminController {
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
 			Theorem theorem = localTheoremService.getById(TheoremNumber);
-			
-			System.out.println(theorem.getTheoremID());
-			
-			//localTheoremService.delete(theorem);
-			
-			//return "/deleteTheorem";
 			return "redirect:/managetheorems";
 		} else {
 			return Constants.redirect;
