@@ -9,7 +9,13 @@
 				<form class="registerForm">
 					<input type="email" class="zocial-dribbble" name="regEmail"  placeholder="E-mailadres" />
 					<input type="password" name="regPassword" placeholder="Wachtwoord" />
-					<input type="password" name="regPassword2" placeholder="Wachtwoord herhalen" />
+					<input class="formError" type="password" name="regPassword2" placeholder="Wachtwoord herhalen" />
+					<div th:switch="${attempt}">
+					<p th:case="'wrong'" class="errormelding"> Gegevens zijn onjuist </p>
+					<p th:case="'empty'" class="errormelding"> Voer uw gegevens in </p>
+					<p th:case="'*'" class=""> </p>
+					</div>
+					<p class="errormelding"> test </p>
 					<input type="submit" class="pure-button" value="Registreren" />
 				</form>
 			</div><!-- einde content -->
