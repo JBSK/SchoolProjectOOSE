@@ -78,7 +78,7 @@ public class Theorem {
 		return subWeight1;
 	}
 
-	public void setSubWeight1(int subWeight1) {
+	public void setSubWeight1(double subWeight1) {
 		this.subWeight1 = subWeight1;
 	}
 
@@ -86,7 +86,7 @@ public class Theorem {
 		return subWeight2;
 	}
 
-	public void setSubWeight2(int subWeight2) {
+	public void setSubWeight2(double subWeight2) {
 		this.subWeight2 = subWeight2;
 	}
 
@@ -94,7 +94,7 @@ public class Theorem {
 		return subWeight3;
 	}
 
-	public void setSubWeight3(int subWeight3) {
+	public void setSubWeight3(double subWeight3) {
 		this.subWeight3 = subWeight3;
 	}
 }
