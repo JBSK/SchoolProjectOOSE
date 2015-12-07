@@ -302,8 +302,12 @@ public class AdminController {
 		String email = (String) session.getAttribute("email");
 		User user = localUserService.findByName(email);
 
-		if (user.isAdmin()) {
-			return true;
+		if (email != null) {
+			if (user.isAdmin()) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
