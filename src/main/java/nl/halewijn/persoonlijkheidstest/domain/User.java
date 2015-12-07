@@ -1,7 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
-import ch.qos.logback.core.joran.spi.NoAutoStart;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
