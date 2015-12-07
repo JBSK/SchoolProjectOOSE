@@ -11,8 +11,8 @@
 					U bent nu ingelogd in de admintool van de persoonlijkheidstest. <br />
 				
 				<h2 class="content-subhead">Statistieken</h2>
-				<p th:text="${users}">Totaal aantal gebruikers: </p>
-				<!-- <p th:text="${tests}">Totaal aantal keer dat test genomen is: </p> -->
+				<p>Totaal aantal gebruikers: <span th:utext="${users}"></span></p>
+				<p>Totaal aantal keer dat test genomen is: <span th:text="${tests}"></span></p>
 			</div>
 		</div>
 	</div>
