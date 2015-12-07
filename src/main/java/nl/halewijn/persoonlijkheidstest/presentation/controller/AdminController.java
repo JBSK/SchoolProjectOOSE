@@ -3,6 +3,7 @@ package nl.halewijn.persoonlijkheidstest.presentation.controller;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.User;
+import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 
@@ -35,7 +36,7 @@ public class AdminController {
 	
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
-	
+
 	/**
 	 * Check whether or not the user is an admin.
 	 * 
@@ -53,10 +54,10 @@ public class AdminController {
 			model.addAttribute("users", users.size());
 //			List<Result> tests = localResultService.getAll();
 //			model.addAttribute("tests", tests);
-			
+
 			return "adminDashboard";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
     
@@ -67,10 +68,10 @@ public class AdminController {
 		if (isAdmin) {
 			return "managequestions";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
-    
+
     /**
      * Return all the theorems from the database. These will be displayed on a web page.
      */
@@ -83,41 +84,41 @@ public class AdminController {
 			model.addAttribute("theorems", theorems);
 			return "managetheorems";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
-	
+
 	/**
 	 * Make sure that, when adding a new theorem, as little as possible guesswork is needed.
 	 */
 	@RequestMapping(value="/addTheorem", method=RequestMethod.POST)
 	public String addTheorem(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
-		
+
 		if (isAdmin) {
 			List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
 			model.addAttribute("personalityTypes", personalityTypes);
-			
+
 			return "addTheorem";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
-	
+
 	/**
 	 * After the web page fields were filled in correctly, add the new theorem to the database.
 	 */
 	@RequestMapping(value="/addTheoremToDB", method=RequestMethod.POST)
 	public String addTheoremToDB(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
-		
+
 		if (isAdmin) {
 			// Request the personalityType number from the browser, turn it into an 'int',
 			// and request the personalityType from the database.
 			String theoremPers = req.getParameter("personality");
 			int theoremPersNumber = Integer.parseInt(theoremPers);
 			PersonalityType personality = localPersonalityTypeService.getById(theoremPersNumber);
-			
+
 			// Request the subweights from the browser, and convert them to 'double' values.
 			String subweight1number = req.getParameter("sub1");
 			String subweight2number = req.getParameter("sub2");
@@ -125,16 +126,16 @@ public class AdminController {
 			double sub1 = Double.parseDouble(subweight1number);
 			double sub2 = Double.parseDouble(subweight2number);
 			double sub3 = Double.parseDouble(subweight3number);
-			
+
 			// Request the theorem text from the browser.
 			String text = req.getParameter("text");
-			
+
 			// Request the theorem weight from the browser, and convert it to a 'double' value.
 			String theoremWeight = req.getParameter("weight");
 			double weight = Double.parseDouble(theoremWeight);
-			
+
 			Theorem theorem = new Theorem();
-			
+
 			// Add values to the new theorem.
 			theorem.setPersonalityType(personality);
 			theorem.setSubWeight1(sub1);
@@ -142,15 +143,15 @@ public class AdminController {
 			theorem.setSubWeight3(sub3);
 			theorem.setText(text);
 			theorem.setWeight(weight);
-			
+
 			//localTheoremService.save(theorem);
-			
+
 			return "redirect:/managetheorems";
 		} else {
 			return "redirect:/";
 		}
 	}
-	
+
 	/**
 	 * Return one specific theorem, which was selected on the web page /managetheorems.
 	 * It also loads all personality types, which will be displayed in a dropdown box.
@@ -164,13 +165,13 @@ public class AdminController {
 			int TheoremNumber = Integer.parseInt(theoremNumber);
 			Theorem theorem = localTheoremService.getById(TheoremNumber);
 			model.addAttribute("theorem", theorem);
-			
+
 			List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
 			model.addAttribute("personalityTypes", personalityTypes);
-			
+
 			return "editTheorem";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
 	
@@ -184,18 +185,18 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
-			// Request the theorem number from the browser, turn it into an 'int', 
+			// Request the theorem number from the browser, turn it into an 'int',
 			// and request the theorem from the database.
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
 			Theorem theorem = localTheoremService.getById(TheoremNumber);
-			
+
 			// Request the personalityType number from the browser, turn it into an 'int',
 			// and request the personalityType from the database.
 			String theoremPers = req.getParameter("personality");
 			int theoremPersNumber = Integer.parseInt(theoremPers);
 			PersonalityType personality = localPersonalityTypeService.getById(theoremPersNumber);
-			
+
 			// Request the subweights from the browser, and convert them to 'double' values.
 			String subweight1number = req.getParameter("sub1");
 			String subweight2number = req.getParameter("sub2");
@@ -203,16 +204,16 @@ public class AdminController {
 			double sub1 = Double.parseDouble(subweight1number);
 			double sub2 = Double.parseDouble(subweight2number);
 			double sub3 = Double.parseDouble(subweight3number);
-			
+
 			// Request the theorem text from the browser.
 			String text = req.getParameter("text");
-			
+
 			// Request the theorem weight from the browser, and convert it to a 'double' value.
 			String theoremWeight = req.getParameter("weight");
 			double weight = Double.parseDouble(theoremWeight);
-			
+
 			// Println tests
-			
+
 			System.out.println("-----------------------------------");
 			System.out.println("TheoremID: " + theorem.getTheoremID());
 			System.out.println(theorem.getPersonalityType().getName());
@@ -221,7 +222,7 @@ public class AdminController {
 			System.out.println(theorem.getSubWeight3());
 			System.out.println(theorem.getText());
 			System.out.println(theorem.getWeight());
-			
+
 			// Update the theorem
 			theorem.setPersonalityType(personality);
 			theorem.setSubWeight1(sub1);
@@ -229,9 +230,9 @@ public class AdminController {
 			theorem.setSubWeight3(sub3);
 			theorem.setText(text);
 			theorem.setWeight(weight);
-			
+
 			// Updated println tests
-			
+
 			System.out.println("-----------------------------------");
 			System.out.println(theorem.getPersonalityType().getName());
 			System.out.println(theorem.getSubWeight1());
@@ -240,33 +241,33 @@ public class AdminController {
 			System.out.println(theorem.getText());
 			System.out.println(theorem.getWeight());
 			System.out.println("-----------------------------------");
-			
+
 			//localTheoremService.update(theorem);
-			
-			return "redirect:/managetheorems";
+
+			return Constants.redirect + "managetheorems";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
-	
+
 	/**
 	 * Delete a theorem from the database.
 	 */
 	@RequestMapping(value="/deleteTheorem", method=RequestMethod.POST)
 	public String deleteTheorem(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
-		
+
 		if (isAdmin) {
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
 			Theorem theorem = localTheoremService.getById(TheoremNumber);
-			
+
 			//localTheoremService.delete(theorem);
-			
+
 			//return "/deleteTheorem";
 			return "redirect:/managetheorems";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
 	
@@ -277,7 +278,7 @@ public class AdminController {
 		if (isAdmin) {
 			return "sendmessages";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
 	
@@ -288,7 +289,7 @@ public class AdminController {
 		if (isAdmin) {
 			return "useroverview";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
 	
@@ -299,7 +300,7 @@ public class AdminController {
 		if (isAdmin) {
 			return "editresulttexts";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
 	
@@ -310,7 +311,7 @@ public class AdminController {
 		if (isAdmin) {
 			return "editanswervalues";
 		} else {
-			return "redirect:/";
+			return Constants.redirect;
 		}
 	}
 	
@@ -320,7 +321,7 @@ public class AdminController {
 	public boolean checkIfAdmin(HttpSession session) {
 		String email = (String) session.getAttribute("email");
 		String admin = "duncan@email.eu";
-		
+
 		if (email != null) {
 			if (email.equals(admin)) {
 				// You're an admin.

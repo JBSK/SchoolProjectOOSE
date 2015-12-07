@@ -1,6 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
+import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
@@ -40,10 +41,10 @@ public class QuestionnaireController {
 	 */
     @RequestMapping(value="/questionnaire", method=RequestMethod.GET)
     public String questionnaire(Model model, HttpSession session) {
-    	if(session.getAttribute("questionnaire") == null) {
-    		return "questionnaire";
+    	if(session.getAttribute(Constants.questionnaire) == null) {
+    		return Constants.questionnaire;
     	} else {
-    		return "redirect:/showQuestion";
+    		return Constants.redirect + "showQuestion";
     	}
     }
     
@@ -60,16 +61,16 @@ public class QuestionnaireController {
     @RequestMapping(value="/showQuestion", method=RequestMethod.POST)
     public String showQuestionPOST(Model model, HttpSession session, HttpServletRequest httpServletRequest) {
     	Questionnaire questionnaire = null;
-    	if(session.getAttribute("questionnaire") == null) {
+    	if(session.getAttribute(Constants.questionnaire) == null) {
 			questionnaire = new Questionnaire();
 			questionnaire.startNewTest(model, session, localQuestionService);
 		} else {
-			if(session.getAttribute("questionnaire") instanceof Questionnaire) {
-				questionnaire = (Questionnaire) session.getAttribute("questionnaire");
+			if(session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
+				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
 			}
 			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
 		}
-		return "questionnaire";
+		return Constants.questionnaire;
     }
     
     /**
@@ -83,14 +84,14 @@ public class QuestionnaireController {
 	@RequestMapping(value="/showQuestion", method=RequestMethod.GET)
     public String showQuestionGET(Model model, HttpSession session) {
     	Questionnaire questionnaire = null;
-		if(session.getAttribute("questionnaire") == null) {
-			return "questionnaire";
+		if(session.getAttribute(Constants.questionnaire) == null) {
+			return Constants.questionnaire;
 		} else {
-			if(session.getAttribute("questionnaire") instanceof Questionnaire) {
-				questionnaire = (Questionnaire) session.getAttribute("questionnaire");
+			if(session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
+				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
 			}
 			questionnaire.getCurrentQuestion(model);
 		}
-		return "questionnaire";
+		return Constants.questionnaire;
 	}
 }

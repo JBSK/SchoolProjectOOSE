@@ -3,6 +3,7 @@ package nl.halewijn.persoonlijkheidstest.presentation.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import nl.halewijn.persoonlijkheidstest.services.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,21 +40,21 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
 	public String loginCheck(Model model, HttpSession session, HttpServletRequest req) {
-		String email = req.getParameter("email");
+		String email = req.getParameter(Constants.email);
 		User user = localUserService.findByName(email);
 		
 		if (user != null) {
 			boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPassword());
 			
 			if(user.getEmailAddress() != null && correctPassword) {
-				session.setAttribute("email", user.getEmailAddress());
+				session.setAttribute(Constants.email, user.getEmailAddress());
 			} else {
-				return "redirect:/login?attempt=wrong";
+				return Constants.redirect + "login?attempt=wrong";
 			}
 		} else {
-			return "redirect:/login?attempt=empty";
+			return Constants.redirect + "login?attempt=empty";
 		}
-		return "redirect:/";
+		return Constants.redirect;
 	}
 	
 	/**
@@ -61,8 +62,8 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/logOut", method=RequestMethod.GET)
 	public String logOut(Model model, HttpSession session) {
-		session.setAttribute("email", null);
-		session.removeAttribute("email");
-		return "redirect:/";
+		session.setAttribute(Constants.email, null);
+		session.removeAttribute(Constants.email);
+		return Constants.redirect;
 	}
 }
