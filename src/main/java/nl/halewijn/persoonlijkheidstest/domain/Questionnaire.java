@@ -198,7 +198,7 @@ public class Questionnaire {
 	private String[] getPersonalityTypesFromDb(LocalPersonalityTypeService localPersonalityTypeService) {
 		List<PersonalityType> typeList = localPersonalityTypeService.getAll();
 		int numberOfTypes = localPersonalityTypeService.getAll().size();
-        String personalityTypes[] = new String[numberOfTypes];
+        String[] personalityTypes = new String[numberOfTypes];
         
 		int typeNumber = 0;
 		for(PersonalityType type : typeList) {

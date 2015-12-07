@@ -16,11 +16,7 @@ public class OpenQuestion extends Question {
 	public OpenQuestion() {
 		super("");
 	}
-	
-	public String getText() {
-		return super.getText();
-	}
-	
+
 	public String getAnswer() {
 		return answer;
 	}
