@@ -48,7 +48,7 @@ public class LoginControllerTest {
 		assertEquals("redirect:/login?attempt=empty", loginController.loginCheck(model, httpSession, httpServletRequest));
 		
 		PasswordHash passwordHash = new PasswordHash();	
-		User newUser = new User("email@mail.com");
+		User newUser = new User("email@mail.com", false);
 		newUser.setPassword(passwordHash.hashPassword("aa"));
 		localUserService.save(newUser);
 		when(httpServletRequest.getParameter("email")).thenReturn("email@mail.com");

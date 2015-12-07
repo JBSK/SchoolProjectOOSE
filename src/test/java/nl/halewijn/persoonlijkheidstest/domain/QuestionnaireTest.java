@@ -219,7 +219,7 @@ public class QuestionnaireTest {
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
-		User user = new User("User");
+		User user = new User("User", false);
 		localQuestionService.save(theoremBattle);
 		theoremBattle.setAnswer('C');
 		questions.add(theoremBattle);

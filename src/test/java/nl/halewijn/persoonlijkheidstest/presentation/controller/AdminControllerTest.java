@@ -44,7 +44,7 @@ public class AdminControllerTest {
 		HttpSession session = mock(HttpSession.class);
 		assertEquals(Constants.redirect, adminController.showAdmin(model, session));
 		
-		User user = new User("duncan@email.eu");
+		User user = new User("duncan@email.eu", true);
 		user.setPassword("x");
 		localUserService.save(user);
 		when(session.getAttribute("email")).thenReturn("duncan@email.eu");

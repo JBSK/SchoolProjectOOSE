@@ -17,8 +17,9 @@ public class User {
     @NotNull
     private boolean isAdmin;
 
-	public User(String emailAddress) {
+	public User(String emailAddress, boolean isAdmin) {
         this.emailAddress = emailAddress;
+        this.isAdmin = isAdmin;
 	}
 
 	public User() {
@@ -43,10 +44,10 @@ public class User {
 	public void setPassword(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
-	
-	public boolean isAdmin() {
-		return isAdmin;
-	}
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
 
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;

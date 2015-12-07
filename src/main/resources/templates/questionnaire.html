@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head th:replace="fragments/headTag :: headTag"> </head>
 <body>
@@ -75,11 +75,11 @@
 										</label>
 									</div>
 								</div>
-								<p th:text="${error}" class="questionError errorMessage">Onjuist antwoord!</p>
+								<p class="questionError errorMessage" th:text="${error}"></p>
 							</div>
 							<div class="pure-u-1 pure-u-md-5-24 theorems">
 								<!--<div id="stelling2" class="stelling"> -->
-								<p th:text="${currentQuestion.secondTheorem.text}">Steling 2</p>
+								<p th:text="${currentQuestion.secondTheorem.text}">Stelling 2</p>
 								<!--</div> -->
 							</div>
 			

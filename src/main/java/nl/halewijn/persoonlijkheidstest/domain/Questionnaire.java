@@ -1,6 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import nl.halewijn.persoonlijkheidstest.services.Constants;
 public class Questionnaire {
 	
 	private List<Question> answeredQuestions = new ArrayList<>();
+    private ArrayList<String> errors = new ArrayList<>();
 
 	private static final double ANSWER_A = 5.0;
 	private static final double ANSWER_B = 3.0;
@@ -63,7 +65,27 @@ public class Questionnaire {
 	 */
 	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session, LocalResultService localResultService, LocalUserService localUserService) {
 		Question previousQuestion = getPreviousQuestion();
-		
+
+        if (previousQuestion instanceof TheoremBattle) {
+            String answerString = httpServletRequest.getParameter("answer");
+            char answer = answerString.charAt(0);
+            switch (answer) {
+                case 'A':
+                    break;
+                case 'B':
+                    break;
+                case 'C':
+                    break;
+                case 'D':
+                    break;
+                case 'E':
+                    break;
+                default:
+                    errors.add("Het ingevulde antwoord is ongeldig, probeer het alstublieft opnieuw.");
+                    model.addAttribute("error", getErrorsInLines());
+                    return showNextQuestion(model, previousQuestion);
+            }
+        }
 		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
 		
@@ -75,6 +97,20 @@ public class Questionnaire {
 			return showResults(model, session, localPersonalityTypeService);
 		}	
 	}
+
+    /*
+     * Concatenates all the errors that were encountered into one big String,
+     * formatted with HTML break lines so we can easily add this to the model.
+     */
+    private String getErrorsInLines() {
+        String errorString = "";
+
+        for (String error : errors) {
+            errorString += error + System.lineSeparator();
+        }
+
+        return errorString;
+    }
 
 	/**
 	 * Creates a new Result object that contains a list of newly created Answer objects based on
@@ -129,10 +165,10 @@ public class Questionnaire {
 		for(Question question : questions) {			
 			Answer answer = null;
 			if(question instanceof TheoremBattle) {
-				answer = new Answer(question, "" + ((TheoremBattle) question).getAnswer());
+				answer = new Answer(question, String.valueOf(((TheoremBattle) question).getAnswer()));
 			}	
 			else if (question instanceof OpenQuestion) {
-				answer = new Answer(question, "" + ((OpenQuestion) question).getAnswer());
+				answer = new Answer(question, ((OpenQuestion) question).getAnswer());
 			}
 			result.addTestResultAnswer(answer);
 			localResultService.saveAnswer(answer);		
@@ -172,41 +208,38 @@ public class Questionnaire {
 	 */
 	private String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
         double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
-        int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
-        String[] personalityTypes = getPersonalityTypesFromDb(localPersonalityTypeService);
-
-        model.addAttribute("personalityTypes", personalityTypes);
         model.addAttribute("scores", pTypeResultArray);
 
-        double[] resultArrayCopy = this.calculatePersonalityTypeResults(answeredQuestions);
-        int primaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
-        resultArrayCopy[primaryPersonalityTypeID - 1] = 0;
-        int secondaryPersonalityTypeID = getIndexOfHighestNumber(resultArrayCopy) + 1;
-
-        PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
-        PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
-
-        model.addAttribute("primaryPersonalityType", primaryPersonalityType);
-        model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
+        int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
         model.addAttribute("subTypeScores", subTypeResultArray);
 
-        //session.removeAttribute("questionnaire"); // Disabled for debug. TODO: Remove for production
+        String[] personalityTypes = getPersonalityTypesFromDb(localPersonalityTypeService);
+        model.addAttribute("personalityTypes", personalityTypes);
+
+        double[] pTypeResultArrayCopy = Arrays.copyOf(pTypeResultArray, pTypeResultArray.length); //this.calculatePersonalityTypeResults(answeredQuestions);
+        int primaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
+        PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
+        model.addAttribute("primaryPersonalityType", primaryPersonalityType);
+
+        pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
+        int secondaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
+        PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
+        model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
+
         return Constants.result;
     }
 
 	/**
-     * Returns the list of all personality types from the database.
+     * Returns the list of all personality types from the database in a String array.
      */
 	private String[] getPersonalityTypesFromDb(LocalPersonalityTypeService localPersonalityTypeService) {
 		List<PersonalityType> typeList = localPersonalityTypeService.getAll();
-		int numberOfTypes = localPersonalityTypeService.getAll().size();
-        String[] personalityTypes = new String[numberOfTypes];
-        
-		int typeNumber = 0;
-		for(PersonalityType type : typeList) {
-			personalityTypes[typeNumber] = type.getName();
-			typeNumber ++;
-		}
+        String[] personalityTypes = new String[typeList.size()];
+
+        for (int i = 0; i < typeList.size(); i++) {
+            personalityTypes[i] = typeList.get(i).getName();
+        }
+
 		return personalityTypes;
 	}
 
@@ -320,7 +353,7 @@ public class Questionnaire {
      * Calculates the total sum of an array of numbers.
      */
 	public double calculateTotalFromNumbersArray(double[] numbers) {
-		double total = 0;
+		double total = 0.0;
 		for (double number : numbers) {
             total += number;
 		}
@@ -340,7 +373,8 @@ public class Questionnaire {
 	 * The results of this calculation are added to the "resultArray".
 	 */
 	private void calculateQuestionPoints(double[] resultArray, Question question) {
-		
+		String errorMessage = "";
+
 		char questionAnswer = ((TheoremBattle) question).getAnswer();
 		
 		Theorem firstTheorem = ((TheoremBattle) question).getFirstTheorem();
@@ -375,8 +409,7 @@ public class Questionnaire {
 				break;
 				
 			default:
-				// TODO: add warning because apparently the form input data was manipulated
-				firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
+                firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
 				secondTheoremPoints = ANSWER_C * secondTheorem.getWeight();
 				break;
 		}

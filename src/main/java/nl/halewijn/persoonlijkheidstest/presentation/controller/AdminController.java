@@ -241,9 +241,9 @@ public class AdminController {
 		if (isAdmin) {
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
-			Theorem theorem = localTheoremService.getById(TheoremNumber);		
+			Theorem theorem = localTheoremService.getById(TheoremNumber);
 			//localTheoremService.delete(theorem);
-			
+
 			return "redirect:/managetheorems";
 		} else {
 			return Constants.redirect;
@@ -300,16 +300,6 @@ public class AdminController {
 	public boolean checkIfAdmin(HttpSession session) {
 		String email = (String) session.getAttribute("email");
 		User user = localUserService.findByName(email);
-		String admin = "duncan@email.eu";
-
-		if (email != null) {
-			if (email.equals(admin)) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
+		return user.isAdmin();
 	}
 }
