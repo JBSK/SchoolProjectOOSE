@@ -63,7 +63,7 @@ public class AdminController {
 			return Constants.redirect;
 		}
 	}
-    
+    //Requirement buiten de sprint
     @RequestMapping(value="/managequestions", method=RequestMethod.GET)
 	public String vragenbeheren(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
@@ -249,7 +249,10 @@ public class AdminController {
 			return Constants.redirect;
 		}
 	}
-	
+	/**
+	 * Sends message to users
+	 */
+    //Requirement buiten de sprint
 	@RequestMapping(value="/sendmessages", method=RequestMethod.GET)
 	public String berichtversturen(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
@@ -261,6 +264,7 @@ public class AdminController {
 		}
 	}
 	
+    //Requirement buiten de sprint
 	@RequestMapping(value="/useroverview", method=RequestMethod.GET)
 	public String gebruikersoverzicht(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
@@ -272,6 +276,7 @@ public class AdminController {
 		}
 	}
 	
+    //Requirement buiten de sprint	
 	@RequestMapping(value="/editresulttexts", method=RequestMethod.GET)
 	public String resultaattekstenbewerken(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
@@ -283,6 +288,7 @@ public class AdminController {
 		}
 	}
 	
+    //Requirement buiten de sprint
 	@RequestMapping(value="/editanswervalues", method=RequestMethod.GET)
 	public String antwoordwaardenaanpassen(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);

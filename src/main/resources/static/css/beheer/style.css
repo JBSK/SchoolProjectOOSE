@@ -29,8 +29,9 @@ body{
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+50,7db9e8+100 */
 }
 	div.logo {
-	   background:url(./../imgs/logo.jpg);
+	   background:url(./../imgs/admin-logo.png);
 	   background-size:100%;
+	   background-repeat: no-repeat;
 	   margin:0px; /* If you want no margin */
 	   padding:0px; /*if your want to padding */
 	   height:120px;
@@ -395,13 +396,22 @@ body{
 
 /*************sellingbeheren**********/
 
-.content .tableManageTheorems{
-	width:100%;
-}
-.content .tableEditButton{
-	    width: 100%;
-    min-height: 100%;
-}
+	.content .tableManageTheorems{
+		width:100%;
+	}
+		.content .tableManageTheorems th{
+			text-align:center;
+		}
+		.content .tableManageTheorems tr:first-child th:last-child{
+			min-width: 115px;
+		}
+		.content .tableManageTheorems .sub{
+			border-top: 1px solid #e6eaf4;
+		}
+	.content .tableEditButton{
+		    width: 100%;
+	    min-height: 100%;
+	}
 	.content .saveButton{
 		margin:10px !important;
 	}
