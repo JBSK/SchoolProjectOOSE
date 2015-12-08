@@ -37,7 +37,7 @@ public class User {
 		this.emailAddress = emailAddress;
 	}
 	
-	public String getPassword() {
+	public String getPasswordHash() {
 		return passwordHash;
 	}
 	
