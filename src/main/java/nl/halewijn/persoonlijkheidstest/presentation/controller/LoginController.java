@@ -51,6 +51,7 @@ public class LoginController {
 			
 			if(user.getEmailAddress() != null && correctPassword) {
 				session.setAttribute(Constants.email, user.getEmailAddress());
+				session.setAttribute("admin", user.isAdmin());
 			} else {
 			
 				return Constants.redirect + "login?attempt=wrong";
