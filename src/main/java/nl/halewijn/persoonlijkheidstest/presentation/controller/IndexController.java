@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class IndexController implements ErrorController {
+public class IndexController {
 
 	private static final String PATH = "/error";
 
@@ -16,13 +16,4 @@ public class IndexController implements ErrorController {
         return "index";
     }
 	
-	@RequestMapping(value = PATH)
-    public String error() {
-        return "error";
-    }
-
-	@Override
-	public String getErrorPath() {
-		return PATH;
-	}
 }
