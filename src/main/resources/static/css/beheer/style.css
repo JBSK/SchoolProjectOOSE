@@ -399,14 +399,8 @@ body{
 	.content .tableManageTheorems{
 		width:100%;
 	}
-		.content .tableManageTheorems th{
-			text-align:center;
-		}
 		.content .tableManageTheorems tr:first-child th:last-child{
-			min-width: 115px;
-		}
-		.content .tableManageTheorems .sub{
-			border-top: 1px solid #e6eaf4;
+			min-width: 130px;
 		}
 	.content .tableEditButton{
 		    width: 100%;

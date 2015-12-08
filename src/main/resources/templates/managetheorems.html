@@ -12,17 +12,11 @@
 				<table class="pure-table pure-table-bordered tableManageTheorems">
 					<thead>
 						<tr>
-							<th rowspan="2" >id</th>
-							<th rowspan="2">Stelling</th>
-							<th rowspan="2">Gewicht</th>
-							<th rowspan="2">Persoonlijkheidstype</th>
-							<th rowspan="1" colspan="3"> Subgewicht</th>
-							<th rowspan="2"></th>
-						</tr>
-						<tr>
-							<th rowspan="1" class="sub">1</th>
-							<th rowspan="1" class="sub">2</th>
-							<th rowspan="1" class="sub">3</th>
+							<th  >id</th>
+							<th>Stelling</th>
+							<th>Gewicht</th>
+							<th>Persoonlijkheidstype</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,9 +27,6 @@
 								<td th:text="${i.text}"></td>
 								<td th:text="${i.weight}"></td>
 								<td th:text="${i.personalityType.name}"></td>
-								<td th:text="${i.subWeight1}"></td>
-								<td th:text="${i.subWeight2}"></td>
-								<td th:text="${i.subWeight3}"></td>
 								<td><input type="submit" class="pure-button tableEditButton" name="aanpassen" value="Aanpassen"/></td>
 							</form>
 						</tr>
