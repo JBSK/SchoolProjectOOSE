@@ -53,17 +53,19 @@ function RadarChart(id, data, options) {
     var vbWidth = document.getElementById('radarChartBox').offsetWidth;
     var vbHeight = vbWidth;
 
-	//Initiate the radar chart SVG
-	var svg = d3.select(id).append("svg")
-			//.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
-			//.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
+		//Initiate the radar chart SVG
+	var svg = d3.select(id).append("svg:svg")
+	//		.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
+	//		.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
+			.attr("width",  vbWidth)
+			.attr("height", vbHeight)
 			.attr("class", "radar"+id)
 			//.attr("viewBox","0 0 270 270");
 			.attr("viewBox","0 0 " + vbWidth + " " + vbHeight);
 	//Append a g element		
 	var g = svg.append("g")
 			.attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + "," + (cfg.h/2 + cfg.margin.top) + ")");
-	
+
 	/////////////////////////////////////////////////////////
 	////////// Glow filter for some extra pizzazz ///////////
 	/////////////////////////////////////////////////////////
