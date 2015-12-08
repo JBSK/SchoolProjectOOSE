@@ -42,14 +42,13 @@ public class AdminControllerTest {
 		Model model = mock(Model.class);
 		HttpSession session = mock(HttpSession.class);
 
-		//when(session.getAttribute("email")).thenReturn("");
 		assertEquals(Constants.redirect, adminController.showAdmin(model, session));
 		
 		User user = new User("duncan@email.eu", true);
 
         String password = "x"; // Plaintext password
         String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
-        password = null; // Prepare plaintext password for clearing by Java garbage collector.
+        password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
 		user.setPasswordHash(passwordHash); // Stored hash in user
 
 		localUserService.save(user);

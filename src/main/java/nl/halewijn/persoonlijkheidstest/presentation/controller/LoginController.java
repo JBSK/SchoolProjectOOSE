@@ -47,7 +47,7 @@ public class LoginController {
 		User user = localUserService.findByName(email);
 
 		if (user != null) {
-			boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPassword());
+			boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());
 			
 			if(user.getEmailAddress() != null && correctPassword) {
 				session.setAttribute(Constants.email, user.getEmailAddress());
