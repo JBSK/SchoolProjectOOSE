@@ -198,9 +198,8 @@ public class QuestionnaireTest {
         double expectedResult = dividend / divisor;
         expectedResult = expectedResult * 100;
         expectedResult = Math.round(expectedResult);
-        expectedResult = expectedResult / 100;
 
-        assert(actualResult == expectedResult);
+        assertEquals(expectedResult, actualResult, 0);
 	}
 
 	@Test
