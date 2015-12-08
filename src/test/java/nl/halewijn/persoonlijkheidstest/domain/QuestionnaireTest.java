@@ -158,10 +158,18 @@ public class QuestionnaireTest {
 		battle3.setAnswer('E');
 		
 		methodResultArray = questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions());
-		
-		double typeOnePoints = (5*1) + (1*5);
-		double typeTwoPoints = (1*2.2);
-		double typeThreePoints = (1*1.3);
+		double weightTypeOne = 1.0;
+		double weightTypeTwo = 2.2;
+		double weightTypeThree = 1.3;
+
+		double answerA = 5 * weightTypeOne;
+		double answerE = 5 * weightTypeOne;
+		double answerCOne = 1 * weightTypeTwo;
+		double answerCTwo = 1 * weightTypeThree;
+
+		double typeOnePoints =  answerA  + answerE;
+		double typeTwoPoints = answerCOne;
+		double typeThreePoints = answerCTwo;
 		double totalPoints = (typeOnePoints) + (typeTwoPoints) + (typeThreePoints);
 		
 		double typeOnePercentage = (double) Math.round (((typeOnePoints / totalPoints)*100) * 10.0) / 10.0;
