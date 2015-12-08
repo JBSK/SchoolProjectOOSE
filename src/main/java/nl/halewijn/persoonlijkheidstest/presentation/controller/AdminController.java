@@ -94,7 +94,7 @@ public class AdminController {
 	/**
 	 * Make sure that, when adding a new theorem, as little as possible guesswork is needed.
 	 */
-	@RequestMapping(value="/addTheorem", method=RequestMethod.POST)
+	@RequestMapping(value="/addTheorem")
 	public String addTheorem(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
 

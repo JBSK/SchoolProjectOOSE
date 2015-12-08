@@ -120,23 +120,10 @@ body{
 
 	
 	
-/**************test/vragenlijst**********/
-/**************Stellingbattle************/
-	.content #vraag{
-		width:100%;
-		padding-top:0px;
-		margin-top:0px;
-		text-align: center;
-
-	}
-
-	.stellingen{
-		text-align:center;
-	}
 
 	/************Div Table****************/
 
-	.tabel{
+	.table{
 		margin-top: auto;
 		margin-bottom: auto;
 	}
@@ -148,20 +135,20 @@ body{
 		font-weight: bold;
 	}
 
-	.radioButtonSoms{
+	.radioButtonSometimes{
 		text-align:center;
 		margin:0;
 		background-color: #f1f3f9;
 
 	}
 
-	.radioButtonVaak{
+	.radioButtonOften{
 		text-align:center;
 		margin:0;
 		background-color:#e6eaf4;
 
 	}
-	.radioButtonMidden{
+	.radioButtonAverage{
 		text-align:center;
 		margin:0px;
 		background-color: #ffffff;
@@ -368,24 +355,24 @@ body{
 	
 	}
 	/****************grafiekenrij**********/
-		.content .resultrow1 .radarGrafiek{
+		.content .resultrow1 .radarChart{
 
 		}
-		.content .resultrow1 .staafGrafiek{
+		.content .resultrow1 .barChart{
 
 		}
-		.content .resultrow1 .uitkomst{
+		.content .resultrow1 .result{
 			
 
 			
 		}
-			.content .resultrow1 .uitkomst .resultTitle{
+			.content .resultrow1 .result .resultTitle{
 		
 			}
-			.content .resultrow1 .uitkomst .primaryPType{
+			.content .resultrow1 .result .primaryPType{
 			
 			}
-			.content .resultrow1 .uitkomst .secondaryPType{
+			.content .resultrow1 .result .secondaryPType{
 			
 			}
 	/*************begeleidende teksten**********/
@@ -415,12 +402,28 @@ body{
 	    width: 100%;
     min-height: 100%;
 }
-.content .saveButton{
-	float:right;
+	.content .saveButton{
+		margin:10px !important;
+	}
+	.content .delButton{
+		margin:10px !important;
+		border: solid 1px #adadad;
+	    background-color: #ededed;
+	}
+	.content .addButton{
+		float:right;
+		margin:10px !important;
+	}
+	.content .cancelButton{
+		margin:10px !important;	
+	}
+
+	@media screen and (min-width: 530px) and (max-width: 4000px) {
+		.content .rightButtons{
+			float:right;
+		}
+	}
 	
-}		
-
-
 
 		
 
