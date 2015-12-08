@@ -226,7 +226,7 @@ public class QuestionnaireTest {
 		localQuestionService.save(theoremBattle);
 		questionnaire.setAnsweredQuestions(questions);
 		double[] pTypeResultArray = questionnaire.calculatePersonalityTypeResults(questions);
-		int[] subTypeResultArray = questionnaire.calculateSubTypeResults(questions);
+		double[] subTypeResultArray = questionnaire.calculateSubTypeResults(questions);
 		assertEquals(1.0, pTypeResultArray[0], 0);
 		assertEquals(33.0, subTypeResultArray[0], 0);
 		
