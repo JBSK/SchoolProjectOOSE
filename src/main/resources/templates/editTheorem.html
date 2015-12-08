@@ -7,8 +7,8 @@
 	<div th:include="fragments/menu-admin" th:remove="tag"></div>
 		<div id="main"  class="pure-skin-PT">
 			<div class="content">
-				<h2 class="content-subhead">Stellingen beheren</h2>
-				<form action="updateTheorem" method="POST" class="pure-form pure-form-stacked" name="editTheorem">
+				<h2 class="content-subhead">Stellingen beheren</h2><hr />
+				<form action="updateTheorem" method="POST" class="pure-form pure-form-stacked" name="editTheorem" onsubmit="return validate(this);">
 				    <fieldset th:each="i : ${theorem}">
 				    	<input type="hidden" name="number" th:value="${i.theoremID}" />
 				        <div class="pure-g">
@@ -48,6 +48,17 @@
 				        <div class="rightButtons">
 					        <button type="submit" formaction="deleteTheorem" class="pure-button button-error  delButton">Delete</button>
 					        <button type="submit" class="pure-button pure-button-primary saveButton">Opslaan</button>
+					        
+					        <script>
+					        function validate(form) {
+					        	if (confirm("Weet je zeker dat je dit item wil verwijderen?"))
+					        	{
+									return true;
+					        	} else {
+					        		return false;
+					        	}
+					        }
+					        </script>
 					    </div>
 				    </fieldset>
 				</form>
