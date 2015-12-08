@@ -164,11 +164,11 @@ public class QuestionnaireTest {
 		double typeThreePoints = (1*1.3);
 		double totalPoints = (typeOnePoints) + (typeTwoPoints) + (typeThreePoints);
 		
-		double typeOnePercentage = (double) Math.round((typeOnePoints/totalPoints) * 100) / 100;
-		double typeTwoPercentage = (double) Math.round((typeTwoPoints/totalPoints) * 100) / 100;
-		double typeThreePercentage = (double) Math.round((typeThreePoints/totalPoints) * 100) / 100;
+		double typeOnePercentage = (double) Math.round (((typeOnePoints / totalPoints)*100) * 10.0) / 10.0;
+		double typeTwoPercentage = (double) Math.round (((typeTwoPoints / totalPoints)*100) * 10.0) / 10.0;
+		double typeThreePercentage = (double) Math.round (((typeThreePoints / totalPoints)*100) * 10.0) / 10.0;
 		
-		double[] testResultArray = { typeOnePercentage,typeTwoPercentage,typeThreePercentage,0,0,0,0,0,0 };
+		double[] testResultArray = { typeOnePercentage / 100,typeTwoPercentage / 100,typeThreePercentage / 100,0,0,0,0,0,0 };
 		
 		assertArrayEquals(testResultArray, methodResultArray, 0);
 	}
@@ -198,9 +198,8 @@ public class QuestionnaireTest {
         double expectedResult = dividend / divisor;
         expectedResult = expectedResult * 100;
         expectedResult = Math.round(expectedResult);
-        expectedResult = expectedResult / 100;
 
-        assert(actualResult == expectedResult);
+        assertEquals(expectedResult, actualResult, 0);
 	}
 
 	@Test
@@ -211,24 +210,39 @@ public class QuestionnaireTest {
 		System.out.println(localPersonalityTypeService.getAll());
 		Theorem theoremOne = new Theorem(type, "Stelling 1", 1.0, 1.0, 1.0, 1.0);
 		Theorem theoremSecond = new Theorem(type, "Stelling 2", 1.0, 1.0, 1.0, 1.0);
+		
 		localTheoremService.save(theoremOne);
 		localTheoremService.save(theoremSecond);
-		TheoremBattle theoremBattle = new TheoremBattle("Theorom Battle", theoremOne, theoremSecond);
+		
+		TheoremBattle theoremBattleOne = new TheoremBattle("Theorom Battle One", theoremOne, theoremSecond);
+		TheoremBattle theoremBattleTwo = new TheoremBattle("Theorom Battle Two", theoremOne, theoremSecond);
+		TheoremBattle theoremBattleThree = new TheoremBattle("Theorom Battle Three", theoremOne, theoremSecond);
+		
 		List<Question> questions = new ArrayList<>();
 		HttpSession session = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		User user = new User("User", false);
-		localQuestionService.save(theoremBattle);
-		theoremBattle.setAnswer('C');
-		questions.add(theoremBattle);
-		localQuestionService.save(theoremBattle);
+		
+		localQuestionService.save(theoremBattleOne);
+		localQuestionService.save(theoremBattleTwo);
+		localQuestionService.save(theoremBattleThree);
+		theoremBattleOne.setAnswer('C');
+		theoremBattleTwo.setAnswer('B');
+		theoremBattleThree.setAnswer('D');
+		questions.add(theoremBattleOne);
+		questions.add(theoremBattleTwo);
+		questions.add(theoremBattleThree);
+		localQuestionService.save(theoremBattleOne);
+		localQuestionService.save(theoremBattleTwo);
+		localQuestionService.save(theoremBattleThree);
 		questionnaire.setAnsweredQuestions(questions);
+		
 		double[] pTypeResultArray = questionnaire.calculatePersonalityTypeResults(questions);
-		int[] subTypeResultArray = questionnaire.calculateSubTypeResults(questions);
+		double[] subTypeResultArray = questionnaire.calculateSubTypeResults(questions);
 		assertEquals(1.0, pTypeResultArray[0], 0);
-		assertEquals(33.0, subTypeResultArray[0], 0);
+		assertEquals(33.3, subTypeResultArray[0], 0);
 		
 		when(session.getAttribute("email")).thenReturn(null);
 		Result result = new Result(null);

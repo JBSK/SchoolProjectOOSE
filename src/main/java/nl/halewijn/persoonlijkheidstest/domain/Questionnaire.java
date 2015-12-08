@@ -1,5 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -122,7 +124,7 @@ public class Questionnaire {
 	 */
 	private void saveResults(HttpSession session, LocalResultService localResultService, LocalUserService localUserService, LocalPersonalityTypeService localPersonalityTypeService) {
 		double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
-        int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
+		double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
 		Result result;
         
 		String userName = (String) session.getAttribute(Constants.email);
@@ -213,7 +215,7 @@ public class Questionnaire {
         double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
         model.addAttribute("scores", pTypeResultArray);
 
-        int[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
+        double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
         model.addAttribute("subTypeScores", subTypeResultArray);
 
         String[] personalityTypes = getPersonalityTypesFromDb(localPersonalityTypeService);
@@ -311,7 +313,7 @@ public class Questionnaire {
 		// TODO: Maybe extract these two loops or merge them if possible?
         double totalQuestionPoints = calculateTotalFromNumbersArray(pTypePoints);
 		for (int i = 0; i < pTypePoints.length; i++) {
-            pTypePercentages[i] = calculatePercentage(pTypePoints[i], totalQuestionPoints);
+            pTypePercentages[i] = calculatePercentage(pTypePoints[i], totalQuestionPoints) / 100;
         }
 
 		return pTypePercentages;
@@ -326,9 +328,9 @@ public class Questionnaire {
      * 3. Calculates the percentages for each type based on the data from the first two steps.
      * 4. Returns the data that was calculated in step 3.
      */
-	public int[] calculateSubTypeResults(List<Question> answeredQuestions) {
+	public double[] calculateSubTypeResults(List<Question> answeredQuestions) {
 		double[] subTypePoints = new double[3];
-		int[] subTypePercentages = new int[3];
+		double[] subTypePercentages = new double[3];
 
 		for (Question question : answeredQuestions) {
 			if (question instanceof TheoremBattle) {
@@ -338,7 +340,7 @@ public class Questionnaire {
 
 		double totalSubTypePoints = calculateTotalFromNumbersArray(subTypePoints);
 		for (int i = 0; i < subTypePoints.length; i++) {
-			subTypePercentages[i] = (int) (calculatePercentage(subTypePoints[i], totalSubTypePoints) * 100);
+			subTypePercentages[i] = calculatePercentage(subTypePoints[i], totalSubTypePoints);
 		}
 
 		return subTypePercentages;
@@ -349,7 +351,15 @@ public class Questionnaire {
      */
 	public double calculatePercentage(double number, double total) {
         double percentage = number / total;
-        return (double) Math.round(percentage * 100.0) / 100.0;
+        return roundDouble(percentage);
+	}
+	
+	/**
+     * Rounds the given double.
+     */
+	private double roundDouble(double value) {
+		value = value*100;
+		return Math.round (value * 10.0) / 10.0;  
 	}
 
     /**
@@ -458,5 +468,4 @@ public class Questionnaire {
             subWeightArray[2] += secondTheorem.getSubWeight3();
         }
     }
-
 }

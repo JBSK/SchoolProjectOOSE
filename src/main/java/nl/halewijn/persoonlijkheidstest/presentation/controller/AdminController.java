@@ -139,13 +139,7 @@ public class AdminController {
 
 			Theorem theorem = new Theorem();
 
-			// Add values to the new theorem.
-			theorem.setPersonalityType(personality);
-			theorem.setSubWeight1(sub1);
-			theorem.setSubWeight2(sub2);
-			theorem.setSubWeight3(sub3);
-			theorem.setText(text);
-			theorem.setWeight(weight);
+			addToTheorem(theorem, personality, sub1, sub2, sub3, text, weight);
 
 			localTheoremService.save(theorem);
 
@@ -216,12 +210,7 @@ public class AdminController {
 			double weight = Double.parseDouble(theoremWeight);
 
 			// Update the theorem
-			theorem.setPersonalityType(personality);
-			theorem.setSubWeight1(sub1);
-			theorem.setSubWeight2(sub2);
-			theorem.setSubWeight3(sub3);
-			theorem.setText(text);
-			theorem.setWeight(weight);
+			addToTheorem(theorem, personality, sub1, sub2, sub3, text, weight);
 
 			localTheoremService.update(theorem);
 
@@ -229,6 +218,16 @@ public class AdminController {
 		} else {
 			return Constants.redirect;
 		}
+	}
+
+	private void addToTheorem(Theorem theorem, PersonalityType personality, double sub1, double sub2, double sub3,
+			String text, double weight) {
+		theorem.setPersonalityType(personality);
+		theorem.setSubWeight1(sub1);
+		theorem.setSubWeight2(sub2);
+		theorem.setSubWeight3(sub3);
+		theorem.setText(text);
+		theorem.setWeight(weight);
 	}
 
 	/**
