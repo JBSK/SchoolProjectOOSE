@@ -11,15 +11,22 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
+import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Result;
+import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.User;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Transactional
@@ -36,6 +43,12 @@ public class AdminControllerTest {
 	
 	@Autowired
 	private LocalResultService localResultService;
+	
+	@Autowired
+	private LocalTheoremService localTheoremService;
+	
+	@Autowired
+	private LocalPersonalityTypeService localPersonalityTypeService;
 	
 	@Test
 	public void showAdminTest() {	
@@ -62,4 +75,89 @@ public class AdminControllerTest {
 		assertEquals(1, localResultService.countUserTests(), 0);
 		assertEquals(1, localResultService.countAnonymousTests(), 0);
 	}
+	
+	@Test
+	public void manageTheoremsTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.managetheorems(model, session, req));
+		
+		List<Theorem> theorems = localTheoremService.getAll();
+		assertEquals(theorems.size(), 0);
+		
+		Theorem theorem = new Theorem(mock(PersonalityType.class), "text", 1, 1, 1, 1);
+		model.addAttribute("theorems", theorem);
+		//when(model.containsAttribute("theorem")).thenReturn(theorem);
+		//assertEquals(true, model.containsAttribute("theorems"));
+		//when(model.addAttribute("theorems", theorem)).thenReturn(model.containsAttribute("theorems"));
+	}
+	
+	@Test
+	public void addTheoremTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.addTheorem(model, session, req));
+		
+		List<PersonalityType> types = localPersonalityTypeService.getAll();
+		assertEquals(types.size(), 0);
+		
+		Theorem theorem = new Theorem(mock(PersonalityType.class), "text", 1, 1, 1, 1);
+		localTheoremService.save(theorem);
+		
+		assertEquals(1, localTheoremService.getAll().size(), 0);
+	}
+	
+	@Test
+	public void addTheoremToDBTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		
+	}
+	
+//	@Test
+//	public void editTheoremTest() {
+//		Model model = mock(Model.class);
+//		HttpSession session = mock(HttpSession.class);
+//		HttpServletRequest req = mock(HttpServletRequest.class);
+//		
+//		
+//	}
+//	
+//	@Test
+//	public void updateTheoremTest() {
+//		Model model = mock(Model.class);
+//		HttpSession session = mock(HttpSession.class);
+//		HttpServletRequest req = mock(HttpServletRequest.class);
+//		
+//		
+//	}
+//	
+//	@Test
+//	public void deleteTheoremTest() {
+//		Model model = mock(Model.class);
+//		HttpSession session = mock(HttpSession.class);
+//		HttpServletRequest req = mock(HttpServletRequest.class);
+//		
+//		
+//	}
+//	
+//	@Test
+//	public void addToTheoremTest() {
+//		Theorem theorem = mock(Theorem.class);
+//		
+//		
+//	}
+//	
+//	@Test
+//	public void checkIfAdminTest() {
+//		HttpSession session = mock(HttpSession.class);
+//		
+//		
+//	}
 }
