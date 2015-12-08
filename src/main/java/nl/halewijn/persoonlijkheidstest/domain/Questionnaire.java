@@ -98,7 +98,7 @@ public class Questionnaire {
 		}	
 	}
 
-    /*
+    /**
      * Concatenates all the errors that were encountered into one big String,
      * formatted with HTML break lines so we can easily add this to the model.
      */
@@ -143,6 +143,9 @@ public class Questionnaire {
 		saveQuestionAnswersInDb(localResultService, result, this);
 		localResultService.saveResult(result);
 	}
+	/**
+	 * This method saves the result in percentages into the database.
+	 */
 
 	private void saveResultTypePercentagesInDb(LocalResultService localResultService,
 			LocalPersonalityTypeService localPersonalityTypeService, double[] pTypeResultArray, Result result) {
