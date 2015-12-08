@@ -210,20 +210,35 @@ public class QuestionnaireTest {
 		System.out.println(localPersonalityTypeService.getAll());
 		Theorem theoremOne = new Theorem(type, "Stelling 1", 1.0, 1.0, 1.0, 1.0);
 		Theorem theoremSecond = new Theorem(type, "Stelling 2", 1.0, 1.0, 1.0, 1.0);
+		
 		localTheoremService.save(theoremOne);
 		localTheoremService.save(theoremSecond);
-		TheoremBattle theoremBattle = new TheoremBattle("Theorom Battle", theoremOne, theoremSecond);
+		
+		TheoremBattle theoremBattleOne = new TheoremBattle("Theorom Battle One", theoremOne, theoremSecond);
+		TheoremBattle theoremBattleTwo = new TheoremBattle("Theorom Battle Two", theoremOne, theoremSecond);
+		TheoremBattle theoremBattleThree = new TheoremBattle("Theorom Battle Three", theoremOne, theoremSecond);
+		
 		List<Question> questions = new ArrayList<>();
 		HttpSession session = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		User user = new User("User", false);
-		localQuestionService.save(theoremBattle);
-		theoremBattle.setAnswer('C');
-		questions.add(theoremBattle);
-		localQuestionService.save(theoremBattle);
+		
+		localQuestionService.save(theoremBattleOne);
+		localQuestionService.save(theoremBattleTwo);
+		localQuestionService.save(theoremBattleThree);
+		theoremBattleOne.setAnswer('C');
+		theoremBattleTwo.setAnswer('B');
+		theoremBattleThree.setAnswer('D');
+		questions.add(theoremBattleOne);
+		questions.add(theoremBattleTwo);
+		questions.add(theoremBattleThree);
+		localQuestionService.save(theoremBattleOne);
+		localQuestionService.save(theoremBattleTwo);
+		localQuestionService.save(theoremBattleThree);
 		questionnaire.setAnsweredQuestions(questions);
+		
 		double[] pTypeResultArray = questionnaire.calculatePersonalityTypeResults(questions);
 		double[] subTypeResultArray = questionnaire.calculateSubTypeResults(questions);
 		assertEquals(1.0, pTypeResultArray[0], 0);
