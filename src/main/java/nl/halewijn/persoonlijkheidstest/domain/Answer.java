@@ -13,7 +13,7 @@ public class Answer {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private int answerID;
 	
 	@OneToOne
     @JoinColumn(name = "question")
@@ -27,11 +27,11 @@ public class Answer {
 	}
 
 	public int getId() {
-		return id;
+		return answerID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.answerID = id;
 	}
 
 	public Question getQuestion() {

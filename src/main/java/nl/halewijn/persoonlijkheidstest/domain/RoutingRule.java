@@ -8,11 +8,11 @@ import javax.validation.constraints.NotNull;
 public class RoutingRule {
 
 	@Id
+	@GeneratedValue
 	private int routingRuleId;
 
     @NotNull
     private String description;
-
 
 	public RoutingRule(String description) {
         this.description = description;

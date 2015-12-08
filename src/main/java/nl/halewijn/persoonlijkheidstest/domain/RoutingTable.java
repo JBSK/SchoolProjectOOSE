@@ -10,6 +10,9 @@ import javax.validation.constraints.NotNull;
 public class RoutingTable implements Serializable {
 
 	@Id
+	@GeneratedValue
+	private int RouteID;
+	
 	@OneToOne
     @JoinColumn(name = "questionId")
 	private Question question;
