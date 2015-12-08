@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 @Entity
 @Table(name = "RoutingTable")
@@ -17,13 +18,16 @@ public class RoutingTable implements Serializable {
     @JoinColumn(name = "questionId")
 	private Question question;
 
+	@NotNull
 	private char answer;
 
 	@OneToOne
     @JoinColumn(name = "routingRule")
 	private RoutingRule routingRule;
 	
+	@Null
 	private int routingRuleParam;
+    //
 
 	public RoutingTable(Question question, char answer, RoutingRule routingRule) {
         this.question = question;
