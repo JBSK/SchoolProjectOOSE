@@ -27,6 +27,7 @@ public class RoutingTable implements Serializable {
 	
 	@Null
 	private int routingRuleParam;
+    //
 
 	public RoutingTable(Question question, char answer, RoutingRule routingRule) {
         this.question = question;
