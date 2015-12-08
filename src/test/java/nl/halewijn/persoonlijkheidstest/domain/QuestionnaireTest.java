@@ -164,11 +164,11 @@ public class QuestionnaireTest {
 		double typeThreePoints = (1*1.3);
 		double totalPoints = (typeOnePoints) + (typeTwoPoints) + (typeThreePoints);
 		
-		double typeOnePercentage = (double) Math.round((typeOnePoints/totalPoints) * 100) / 100;
-		double typeTwoPercentage = (double) Math.round((typeTwoPoints/totalPoints) * 100) / 100;
-		double typeThreePercentage = (double) Math.round((typeThreePoints/totalPoints) * 100) / 100;
+		double typeOnePercentage = (double) Math.round (((typeOnePoints / totalPoints)*100) * 10.0) / 10.0;
+		double typeTwoPercentage = (double) Math.round (((typeTwoPoints / totalPoints)*100) * 10.0) / 10.0;
+		double typeThreePercentage = (double) Math.round (((typeThreePoints / totalPoints)*100) * 10.0) / 10.0;
 		
-		double[] testResultArray = { typeOnePercentage,typeTwoPercentage,typeThreePercentage,0,0,0,0,0,0 };
+		double[] testResultArray = { typeOnePercentage / 100,typeTwoPercentage / 100,typeThreePercentage / 100,0,0,0,0,0,0 };
 		
 		assertArrayEquals(testResultArray, methodResultArray, 0);
 	}
@@ -228,7 +228,7 @@ public class QuestionnaireTest {
 		double[] pTypeResultArray = questionnaire.calculatePersonalityTypeResults(questions);
 		double[] subTypeResultArray = questionnaire.calculateSubTypeResults(questions);
 		assertEquals(1.0, pTypeResultArray[0], 0);
-		assertEquals(33.0, subTypeResultArray[0], 0);
+		assertEquals(33.3, subTypeResultArray[0], 0);
 		
 		when(session.getAttribute("email")).thenReturn(null);
 		Result result = new Result(null);
