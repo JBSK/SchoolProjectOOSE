@@ -19,7 +19,7 @@ public class Result {
 	
 	@Id
 	@GeneratedValue
-	private int id;
+	private int resultID;
 	
 	@OneToOne
     @JoinColumn(name = "user")
@@ -34,8 +34,8 @@ public class Result {
 	@ManyToMany
     @JoinTable(
             name="Result_Answers",
-            joinColumns=@JoinColumn(name="result_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="answer_id", referencedColumnName="id")
+            joinColumns=@JoinColumn(name="result_id", referencedColumnName="resultID"),
+            inverseJoinColumns=@JoinColumn(name="answer_id", referencedColumnName="answerID")
     )
 	private List<Answer> testResultAnswers = new ArrayList<>();
 
@@ -46,11 +46,11 @@ public class Result {
 	}
 
 	public int getId() {
-		return id;
+		return resultID;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.resultID = id;
 	}
 
 	public User getUser() {

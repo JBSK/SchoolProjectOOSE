@@ -8,11 +8,15 @@ import javax.validation.constraints.NotNull;
 public class RoutingRule {
 
 	@Id
-    @GeneratedValue
+	@GeneratedValue
 	private int routingRuleId;
 
     @NotNull
     private String description;
+
+	public RoutingRule(String description) {
+        this.description = description;
+	}
 
 	public RoutingRule() {
         /*
@@ -20,9 +24,4 @@ public class RoutingRule {
          * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
          */
 	}
-
-	public RoutingRule(String description) {
-        this.description = description;
-	}
-
 }

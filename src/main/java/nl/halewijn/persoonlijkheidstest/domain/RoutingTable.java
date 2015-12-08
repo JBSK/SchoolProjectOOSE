@@ -11,16 +11,20 @@ import javax.validation.constraints.Null;
 public class RoutingTable implements Serializable {
 
 	@Id
+	@GeneratedValue
+	private int RouteID;
+	
 	@OneToOne
     @JoinColumn(name = "questionId")
 	private Question question;
 
+	@NotNull
 	private char answer;
 
 	@OneToOne
     @JoinColumn(name = "routingRule")
 	private RoutingRule routingRule;
-
+	
 	@Null
 	private int routingRuleParam;
 
