@@ -121,7 +121,7 @@ body{
 	
 /**************test/vragenlijst**********/
 /**************Stellingbattle************/
-	.content #vraag{
+	.content #question{
 		width:100%;
 		padding-top:0px;
 		margin-top:0px;
@@ -129,7 +129,7 @@ body{
 
 	}
 
-	.stellingen{
+	.theorems{
 		text-align:center;
 	}
 
@@ -147,20 +147,20 @@ body{
 		font-weight: bold;
 	}
 
-	.radioButtonSoms{
+	.radioButtonSometimes{
 		text-align:center;
 		margin:0;
 		background-color: #f1f3f9;
 
 	}
 
-	.radioButtonVaak{
+	.radioButtonOften{
 		text-align:center;
 		margin:0;
 		background-color:#e6eaf4;
 
 	}
-	.radioButtonMidden{
+	.radioButtonAverage{
 		text-align:center;
 		margin:0px;
 		background-color: #ffffff;
@@ -367,7 +367,7 @@ body{
 	
 	}
 	/****************grafiekenrij**********/
-		.content .resultrow1 #radarGrafiek{
+		.content .resultrow1 #radarChart{
 			background:url(imgs/radar.png);
 			background-size: contain;
 			background-repeat:no-repeat;
@@ -375,26 +375,26 @@ body{
 			padding:0px; /*if your want to padding */
 			
 		}
-		.content .resultrow1 #staafGrafiek{
+		.content .resultrow1 #barChart{
 			background:url(imgs/barchart.png);
 			background-size: contain;
 			background-repeat:no-repeat;
 			margin:0px; /* If you want no margin */
 			padding:0px; /*if your want to padding */
 		}
-		.content .resultrow1 #uitkomst{
+		.content .resultrow1 #result{
 			
 			    border-radius: 35px;
 				background: #FFFFFF;
 			
 		}
-			.content .resultrow1 #uitkomst .resultTitle{
+			.content .resultrow1 #result .resultTitle{
 				padding:10px;
 			}
-			.content .resultrow1 #uitkomst .primaryPType{
+			.content .resultrow1 #result .primaryPType{
 				padding:10px;
 			}
-			.content .resultrow1 #uitkomst .secondaryPType{
+			.content .resultrow1 #result .secondaryPType{
 				padding:10px;
 			}
 	/*************begeleidende teksten**********/
@@ -411,7 +411,7 @@ body{
 	.content .resultrow3{
 	
 	}
-		.content .resultrow3 .antwoordenLijst{
+		.content .resultrow3 .andswerlistList{
 		
 		}
 	

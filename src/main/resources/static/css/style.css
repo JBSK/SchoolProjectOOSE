@@ -71,6 +71,7 @@ body{
 	}
 	
 	
+	
 /*******************Content*************/
 .content{
 padding: 10px;
@@ -108,9 +109,6 @@ height:100%;
 height:70px;
 width:100%;
 }
-
-
-
 
 .custom-menu-wrapper {
 z-index:90;
@@ -399,7 +397,7 @@ z-index:90;
 	
 /**************test/vragenlijst**********/
 
-		.content .statTest{
+		.content .startTest{
 	  width: 400px;
 	  max-width: 100%;
 	  background: #edeff1;
@@ -412,7 +410,7 @@ z-index:90;
 	  -webkit-border-radius: 10px;
 	}
 
-	.content .statTest input[type="text"]{
+	.content .startTest input[type="text"]{
 	  display: block;
 	  width: 309px;
 	  max-width: 80%;
@@ -429,11 +427,11 @@ z-index:90;
 	  -webkit-border-radius: 5px;
 	}
 
-	.content .statTest input[type="text"]:focus{
+	.content .startTest input[type="text"]:focus{
 	  border: 2px solid #1abc9d
 	}
 
-	.content .statTest input[type="submit"]{
+	.content .startTest input[type="submit"]{
 	  display: block;
 	 /* background: #1abc9d;*/
 	  width: 314px;
@@ -450,11 +448,11 @@ z-index:90;
 	  transition: all 0.3s ease;
 	}
 
-	.content .statTest input[type="submit"]:hover{
+	.content .startTest input[type="submit"]:hover{
 	/*  background: #09cca6*/
 	}
 
-	.content .statTest a{
+	.content .startTest a{
 	  text-align: center;
 	  font-family: Arial;
 	  color: gray;
@@ -465,24 +463,24 @@ z-index:90;
 	  font-size: 12px;
 	}
 
-	.content .statTest a:hover{
+	.content .startTest a:hover{
 	  color: #1abc9d;
 	}
 
 
-	.content .statTest ::-webkit-input-placeholder {
+	.content .startTest ::-webkit-input-placeholder {
 	   color: gray;
 	}
 
-	.content .statTest :-moz-placeholder { /* Firefox 18- */
+	.content .startTest :-moz-placeholder { /* Firefox 18- */
 	   color: gray;  
 	}
 
-	.content .statTest ::-moz-placeholder {  /* Firefox 19+ */
+	.content .startTest ::-moz-placeholder {  /* Firefox 19+ */
 	   color: gray;  
 	}
 
-	.content .statTest :-ms-input-placeholder {  
+	.content .startTest :-ms-input-placeholder {  
 	   color: gray;  
 	}
 
@@ -495,13 +493,13 @@ z-index:90;
 
 	}
 
-	.stellingen{
+	.theorems{
 		text-align:center;
 	}
 
 	/************Div Table****************/
 
-	.tabel{
+	.table{
 		margin-top: auto;
 		margin-bottom: auto;
 	}
@@ -513,20 +511,20 @@ z-index:90;
 		font-weight: bold;
 	}
 
-	.radioButtonSoms{
+	.radioButtonSometimes{
 		text-align:center;
 		margin:0;
 		background-color: #f1f3f9;
 
 	}
 
-	.radioButtonVaak{
+	.radioButtonOften{
 		text-align:center;
 		margin:0;
 		background-color:#e6eaf4;
 
 	}
-	.radioButtonMidden{
+	.radioButtonAverage{
 		text-align:center;
 		margin:0px;
 		background-color: #ffffff;
@@ -549,21 +547,28 @@ z-index:90;
 	  -webkit-border-radius: 10px;
 	}
 
-	.content .loginForm input[type="text"]{
-	  display: block;
-	  width: 309px;
-	  max-width: 80%;
-	  height: 35px;
-	  margin: 15px auto;
-	  background: #fff;
-	  border: 0px;
-	  padding: 5px;
-	  font-size: 16px;
-	   border: 2px solid #fff;
-	  transition: all 0.3s ease;
-	  border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  -webkit-border-radius: 5px;
+	.content .loginForm input[type="text"],  
+	.content .loginForm input[type="email"],
+	.content .loginForm input[type="password"]{
+        display: block;
+        width: 309px;
+        max-width: 80%;
+        height: 35px;
+        margin: 15px auto;
+        background: #fff;
+        border: 0px;
+        padding: 5px;
+        font-size: 16px;
+        border: 2px solid #fff;
+        transition: all 0.3s ease;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+	}
+	.content .loginForm input[type="text"]:focus,
+	.content .loginForm input[type="email"]:focus,
+	.content .loginForm input[type="password"]:focus{
+        border: 2px solid #1abc9d
 	}
 
 	.content .loginForm input[type="text"]:focus{
@@ -571,26 +576,24 @@ z-index:90;
 	}
 
 	.content .loginForm input[type="submit"]{
-	  display: block;
-	 /* background: #1abc9d;*/
-	  width: 314px;
-	  max-width: 80%;
-	  padding: 12px;
-	  cursor: pointer;
-	  color: #fff;
-	  border: 0px;
-	  margin: auto;
-	  border-radius: 5px;
-	  -moz-border-radius: 5px;
-	  -webkit-border-radius: 5px;
-	  font-size: 17px;
-	  transition: all 0.3s ease;
+        display: block;
+        /* background: #1abc9d;*/
+        width: 314px;
+        max-width: 80%;
+        padding: 12px;
+        cursor: pointer;
+        color: #fff;
+        border: 0px;
+        margin: auto;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
+        font-size: 17px;
+        transition: all 0.3s ease;
 	}
-
 	.content .loginForm input[type="submit"]:hover{
 	/*  background: #09cca6*/
 	}
-
 	.content .loginForm a{
 	  text-align: center;
 	  font-family: Arial;
@@ -622,6 +625,7 @@ z-index:90;
 	.content .loginForm :-ms-input-placeholder {  
 	   color: gray;  
 	}
+
 	
 /******************Registreerpagina*********/
 
@@ -638,7 +642,9 @@ z-index:90;
         -webkit-border-radius: 10px;
 	}
 
-	.content .registerForm input[type="text"],input[type="email"],input[type="password"]{
+	.content .registerForm input[type="text"],  
+	.content .registerForm input[type="email"],
+	.content .registerForm input[type="password"]{
         display: block;
         width: 309px;
         max-width: 80%;
@@ -655,7 +661,9 @@ z-index:90;
         -webkit-border-radius: 5px;
 	}
 
-	.content .registerForm input[type="text"]:focus,input[type="email"]:focus,input[type="password"]:focus{
+	.content .registerForm input[type="text"]:focus,
+	.content .registerForm input[type="email"]:focus,
+	.content .registerForm input[type="password"]:focus{
         border: 2px solid #1abc9d
 	}
 
@@ -722,12 +730,24 @@ z-index:90;
 			width:100px;
 		
 		}
+		
+		/********errors*********/
+	.content input[type="text"].formError, 
+	.content input[type="email"].formError, 
+	.content input[type="password"].formError{
+		  background: #FFF6F6;
+		  border: solid 2px;
+		  border-color: #E0B4B4;
+	}
+	.content input[type="text"].formError:focus,
+	.content input[type="email"].formError:focus,
+	.content input[type="password"].formError:focus{
+    	   border: 2px solid #ff8080
+	}
+	.content .errorMessage{
+		color: #ff8080;
+	}
+	.content .questionError{
+	text-align: center;
+	}	 
 /****************resultaten**********/
-
-
-
-	
-
-
-
-	

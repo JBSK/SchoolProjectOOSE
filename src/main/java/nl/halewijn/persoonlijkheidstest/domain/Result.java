@@ -1,6 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,13 +27,17 @@ public class Result {
 	
 	private Date date;
 	
+	private double scoreDenial;
+	private double scoreRecognition;
+	private double scoreDevelopment;
+	
 	@ManyToMany
     @JoinTable(
             name="Result_Answers",
             joinColumns=@JoinColumn(name="result_id", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="answer_id", referencedColumnName="id")
     )
-	private List<Answer> testResultAnswers = new ArrayList<Answer>();
+	private List<Answer> testResultAnswers = new ArrayList<>();
 
 	public Result(User user) {
 		this.user = user;
@@ -68,5 +71,37 @@ public class Result {
 	
 	public void addTestResultAnswer(Answer testResultAnswer) {
 		testResultAnswers.add(testResultAnswer);
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public double getScoreDenial() {
+		return scoreDenial;
+	}
+
+	public void setScoreDenial(double scoreDenial) {
+		this.scoreDenial = scoreDenial;
+	}
+
+	public double getScoreRecognition() {
+		return scoreRecognition;
+	}
+
+	public void setScoreRecognition(double scoreRecognition) {
+		this.scoreRecognition = scoreRecognition;
+	}
+
+	public double getScoreDevelopment() {
+		return scoreDevelopment;
+	}
+
+	public void setScoreDevelopment(double scoreDevelopment) {
+		this.scoreDevelopment = scoreDevelopment;
 	}
 }

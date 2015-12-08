@@ -1,16 +1,13 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
-
 import nl.halewijn.persoonlijkheidstest.datasource.repository.QuestionRepository;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,8 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalQuestionService implements IQuestionService  {
 
-	private Logger logger = Logger.getLogger(getClass().getName());
-	
 	@Autowired
 	private QuestionRepository questionRepository;
 
@@ -32,12 +27,7 @@ public class LocalQuestionService implements IQuestionService  {
 	
 	@Override
 	public List<Question> findAllByText(String text) {
-		return questionRepository.findAllbyText(text);
-	}
-	
-	@Override
-	public void saveOpenQuestion(Question openQuestion) {
-		questionRepository.save(openQuestion);	
+		return questionRepository.findByText(text);
 	}
 	
 	@Override
@@ -56,13 +46,13 @@ public class LocalQuestionService implements IQuestionService  {
 	}
 
 	@Override
-	public Question getQuestionById(int id) {
-		return questionRepository.findById(id);
+	public Question getById(int id) {
+		return questionRepository.findByQuestionID(id);
 	}
 	
 	@Override
-	public String getTypeById(int id) {
-		Question question = getQuestionById(id);
+	public String getQuestionTypeById(int id) {
+		Question question = getById(id);
 		return question.getClassName();
 	}
 	
@@ -85,8 +75,8 @@ public class LocalQuestionService implements IQuestionService  {
 		
 		Question next = null;
 
-        if(getQuestionById(previousQuestion.getID()+1) != null) {
-            next = getQuestionById(previousQuestion.getID() + 1);
+        if(getById(previousQuestion.getID()+1) != null) {
+            next = getById(previousQuestion.getID() + 1);
         }
 
 		return next;
@@ -104,8 +94,8 @@ public class LocalQuestionService implements IQuestionService  {
 	public Question getFirstQuestion(Questionnaire questionnaire) {
 		Question firstQuestion = null;
 
-        if(getQuestionById(1) != null) {
-            firstQuestion = getQuestionById(1);
+        if(getById(1) != null) {
+            firstQuestion = getById(1);
         }
 
 		questionnaire.addQuestion(firstQuestion);

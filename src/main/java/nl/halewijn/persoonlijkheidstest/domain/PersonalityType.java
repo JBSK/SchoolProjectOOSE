@@ -30,6 +30,10 @@ public class PersonalityType {
 	}
 
 	public PersonalityType() {
+        /*
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
 	}
 
 	public int getTypeID() {

@@ -24,7 +24,6 @@ public class TheoremBattle extends Question {
 	
 	public TheoremBattle() {
 		super("");
-
 	}
 
 	public Theorem getFirstTheorem() {

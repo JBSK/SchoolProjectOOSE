@@ -1,11 +1,9 @@
 package nl.halewijn.persoonlijkheidstest.services;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.Assert.*;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -22,14 +20,14 @@ public class PasswordHashTest {
     @Test
     public void hashPasswordTest(){
         String hash = ph.hashPassword(PASSWORD);
-        Assert.assertEquals(PASSWORD_HASH_CORRECT, hash); // Impossible test, thanks to built-in random salts. :)
+        assertEquals(PASSWORD_HASH_CORRECT, hash); // Impossible test, thanks to built-in random salts in Bcrypt. :)
     }
     */
 
     @Test
     public void verifyPasswordTest(){
-        Assert.assertTrue(ph.verifyPassword(PASSWORD, PASSWORD_HASH_CORRECT));
-        Assert.assertFalse(ph.verifyPassword(PASSWORD, PASSWORD_HASH_BROKEN));
+        assertTrue(ph.verifyPassword(PASSWORD, PASSWORD_HASH_CORRECT));
+        assertFalse(ph.verifyPassword(PASSWORD, PASSWORD_HASH_BROKEN));
     }
 
 }

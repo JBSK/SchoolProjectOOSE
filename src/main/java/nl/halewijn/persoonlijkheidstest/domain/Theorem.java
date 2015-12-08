@@ -38,8 +38,12 @@ public class Theorem {
 		this.subWeight2 = subWeight2;
 		this.subWeight3 = subWeight3;
 	}
-	
+
 	public Theorem() {
+        /*
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
 	}
 
 	public int getTheoremID() {
@@ -74,7 +78,7 @@ public class Theorem {
 		return subWeight1;
 	}
 
-	public void setSubWeight1(int subWeight1) {
+	public void setSubWeight1(double subWeight1) {
 		this.subWeight1 = subWeight1;
 	}
 
@@ -82,7 +86,7 @@ public class Theorem {
 		return subWeight2;
 	}
 
-	public void setSubWeight2(int subWeight2) {
+	public void setSubWeight2(double subWeight2) {
 		this.subWeight2 = subWeight2;
 	}
 
@@ -90,7 +94,7 @@ public class Theorem {
 		return subWeight3;
 	}
 
-	public void setSubWeight3(int subWeight3) {
+	public void setSubWeight3(double subWeight3) {
 		this.subWeight3 = subWeight3;
 	}
 }

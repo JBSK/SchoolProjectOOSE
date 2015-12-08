@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="fragments/headTag-Admin :: headTag"> </head>
+<body>
+	<div th:include="fragments/header-admin" th:remove="tag"></div>
+	<div id="layout">
+	<div th:include="fragments/menu-admin" th:remove="tag"></div>
+		<div id="main"  class="pure-skin-PT">
+			<div class="content">
+				<p><h2 class="content-subhead">Welkom beheerder!</h2>
+					U bent nu ingelogd op het beheerderspaneel van de persoonlijkheidstest.
+				</p> <hr />
+				<p>
+				<table class="pure-table">
+				<thead>
+					<th>Statistieken</th>
+					<th> </th>
+				</thead>
+				<tbody>
+					<tr><td>Geregistreerde gebruikers:</td> <td><strong><span th:text="${users}">0</span></strong></td></tr>
+					<tr><td>Afgenomen tests:</td> <td><strong><span th:text="${tests}">0</span></strong></td></tr>
+					<tr><td>Tests door geregistreerde gebruikers:</td> <td><strong><span th:text="${registered_users_tests}">0</span></strong></td></tr>
+					<tr><td>Tests door anonieme gebruikers:</td> <td><strong><span th:text="${anonymous_tests}">0</span></strong></td></tr>
+				</tbody>
+				</table>
+				</p>
+			</div>
+		</div>
+	</div>
+<div th:include="fragments/footer-admin" th:remove="tag"></div>
+</body>
+</html>

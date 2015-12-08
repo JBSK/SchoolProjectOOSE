@@ -7,6 +7,13 @@
 			padding:0px; /*if your want to padding */
 			
 		}
+		    @media all and (-ms-high-contrast:none)
+     {
+	     #radarGrafiek { height:300px;} /* IE10 */
+	     *::-ms-backdrop, #radarGrafiek { height:300px; } /* IE11 */
+	     _:-ms-lang(x), #radargrafiek { height:300px; }
+     }	
+     	.content .resultrow1 #radarGrafiek .radarChart { height:100%;}
 		.content .resultrow1 #radarGrafiek .legend {
 				font-family: 'Raleway', sans-serif;
 				fill: #333333;

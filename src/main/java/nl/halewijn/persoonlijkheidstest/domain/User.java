@@ -1,7 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
-import ch.qos.logback.core.joran.spi.NoAutoStart;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -16,11 +14,20 @@ public class User {
     @NotNull
     private String passwordHash;
 
-	public User(String emailAddress) {
+    @NotNull
+    private boolean isAdmin = false;
+
+	public User(String emailAddress, boolean isAdmin) {
         this.emailAddress = emailAddress;
+        this.isAdmin = isAdmin;
 	}
-	
-	public User() {  }
+
+	public User() {
+        /*
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
+	}
 
 	public String getEmailAddress() {
 		return emailAddress;
@@ -28,5 +35,21 @@ public class User {
 
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+	
+	public String getPassword() {
+		return passwordHash;
+	}
+	
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 }

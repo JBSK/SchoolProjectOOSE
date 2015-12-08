@@ -20,7 +20,7 @@ public class Answer {
 	private Question question;
 	
 	private String answer;
-
+	
 	public Answer(Question question, String answer) {
 		this.question = question;
 		this.answer = answer;
@@ -49,5 +49,4 @@ public class Answer {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	
 }

@@ -1,13 +1,10 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
-
 import nl.halewijn.persoonlijkheidstest.datasource.repository.UserRepository;
 import nl.halewijn.persoonlijkheidstest.domain.User;
 import nl.halewijn.persoonlijkheidstest.services.IObjectService;
 
 import java.util.List;
-import java.util.logging.Logger;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,14 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalUserService implements IObjectService<User>  {
 
-	private Logger logger = Logger.getLogger(getClass().getName());
-	
 	@Autowired
 	private UserRepository userRepository;
 
 	@Override
-	public void save(User o) {
-		userRepository.save(o);
+	public User save(User o) {
+		return userRepository.save(o);
 	}
 
 	@Override
@@ -46,6 +41,10 @@ public class LocalUserService implements IObjectService<User>  {
 	}
 
 	public User findByName(String userName) {
-		return userRepository.findByName(userName);
+		return userRepository.findByEmailAddress(userName);
+	}
+	
+	public Long count() {
+		return userRepository.count();
 	}
 }

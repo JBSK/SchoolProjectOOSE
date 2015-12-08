@@ -1,8 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
@@ -18,11 +16,7 @@ public class OpenQuestion extends Question {
 	public OpenQuestion() {
 		super("");
 	}
-	
-	public String getText() {
-		return super.getText();
-	}
-	
+
 	public String getAnswer() {
 		return answer;
 	}
