@@ -1,5 +1,5 @@
 body{
-	/* background-image: url("imgs/bg.png"); */
+	/* background-image: url(/./../imgs/bg.png"); */
     background-color: #BDCDF5;
 	background-repeat: no-repeat;
 
@@ -29,7 +29,7 @@ body{
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+50,7db9e8+100 */
 }
 	div.logo {
-	   background:url(./../imgs/admin-logo.png);
+	   background:url(/./../imgs/admin-logo.png);
 	   background-size:100%;
 	   background-repeat: no-repeat;
 	   margin:0px; /* If you want no margin */
