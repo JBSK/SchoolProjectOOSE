@@ -55,7 +55,7 @@ public class AdminControllerTest {
 		Model model = mock(Model.class);
 		HttpSession session = mock(HttpSession.class);
 
-		assertEquals(Constants.redirect, adminController.showAdmin(model, session));
+		assertEquals(Constants.redirect, adminController.adminDashboard(model, session));
 		
 		User user = new User("duncan@email.eu", true);
 
@@ -66,7 +66,7 @@ public class AdminControllerTest {
 
 		localUserService.save(user);
 		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
-		assertEquals("adminDashboard", adminController.showAdmin(model, session));	
+		assertEquals("adminDashboard", adminController.adminDashboard(model, session));	
 		Result result = new Result(user);
 		localResultService.saveResult(result);	
 		Result result2 = new Result(null);
@@ -161,12 +161,12 @@ public class AdminControllerTest {
 		
 		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
 		when(req.getParameter("personality")).thenReturn("1");
-		when(req.getParameter("sub1")).thenReturn("1.5");
-		when(req.getParameter("sub2")).thenReturn("1.3");
-		when(req.getParameter("sub3")).thenReturn("0.1");
+		when(req.getParameter("denial")).thenReturn("1.5");
+		when(req.getParameter("recognition")).thenReturn("1.3");
+		when(req.getParameter("development")).thenReturn("0.1");
 		when(req.getParameter("text")).thenReturn("TheoremText");
 		when(req.getParameter("weight")).thenReturn("1.2");
-		assertEquals("redirect:/managetheorems", adminController.addTheoremToDB(model, session, req));
+		assertEquals("redirect:/manageTheorems", adminController.addTheoremToDB(model, session, req));
 		assertEquals(localTheoremService.getAll().size(), 1, 0);
 	}
 	
@@ -238,13 +238,13 @@ public class AdminControllerTest {
 		assertEquals(1, localTheoremService.getAll().size(), 0);
 		
 		when(req.getParameter("personality")).thenReturn(typeIDstring);
-		when(req.getParameter("sub1")).thenReturn("1.5");
-		when(req.getParameter("sub2")).thenReturn("1.3");
-		when(req.getParameter("sub3")).thenReturn("0.1");
+		when(req.getParameter("denial")).thenReturn("1.5");
+		when(req.getParameter("recognition")).thenReturn("1.3");
+		when(req.getParameter("development")).thenReturn("0.1");
 		when(req.getParameter("text")).thenReturn("TheoremText");
 		when(req.getParameter("weight")).thenReturn("1.2");
 		
-		assertEquals("redirect:/managetheorems", adminController.updateTheorem(model, session, req));
+		assertEquals("redirect:/manageTheorems", adminController.updateTheorem(model, session, req));
 		assertEquals(false, model.containsAttribute("theorem"));
 	}
 	
@@ -254,7 +254,33 @@ public class AdminControllerTest {
 //		HttpSession session = mock(HttpSession.class);
 //		HttpServletRequest req = mock(HttpServletRequest.class);
 //		
+//		assertEquals(Constants.redirect, adminController.deleteTheorem(model, session, req));
 //		
+//		User user = new User("duncan@email.eu", true);
+//
+//        String password = "x"; // Plaintext password
+//        String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
+//        password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
+//		user.setPasswordHash(passwordHash); // Stored hash in user
+//		
+//		localUserService.save(user);
+//		
+//		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+//		
+//		PersonalityType type = new PersonalityType("TestType", "Descr1", "Descr2");
+//		localPersonalityTypeService.save(type);
+//		assertEquals(localPersonalityTypeService.getAll().size(), 1, 0);
+//		int typeID = type.getTypeID();
+//		String typeIDstring = Integer.toString(typeID);
+//		assertEquals(localPersonalityTypeService.getById(typeID).getName(), "TestType");
+//		
+//		Theorem theorem = new Theorem(type, "text", 1, 1, 1, 1);
+//		localTheoremService.save(theorem);
+//		assertEquals(localTheoremService.getAll().size(), 1, 0);
+//		
+//		when(req.getParameter("number")).thenReturn(Integer.toString(theorem.getTheoremID()));
+//		
+//		assertEquals("redirect:/managetheorems", adminController.updateTheorem(model, session, req));
 //	}
 //	
 //	@Test
