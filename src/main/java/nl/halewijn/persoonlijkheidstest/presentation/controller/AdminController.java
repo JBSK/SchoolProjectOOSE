@@ -207,12 +207,12 @@ public class AdminController {
 		}
 	}
 
-	private void addToTheorem(Theorem theorem, PersonalityType personality, double sub1, double sub2, double sub3,
+	private void addToTheorem(Theorem theorem, PersonalityType personality, double denial, double recognition, double development,
 			String text, double weight) {
 		theorem.setPersonalityType(personality);
-		theorem.setSubWeight1(sub1);
-		theorem.setSubWeight2(sub2);
-		theorem.setSubWeight3(sub3);
+		theorem.setDenial(denial);
+		theorem.setRecognition(recognition);
+		theorem.setDevelopment(development);
 		theorem.setText(text);
 		theorem.setWeight(weight);
 	}
