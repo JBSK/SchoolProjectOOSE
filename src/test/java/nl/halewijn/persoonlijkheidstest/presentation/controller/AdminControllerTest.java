@@ -82,7 +82,7 @@ public class AdminControllerTest {
 		HttpSession session = mock(HttpSession.class);
 		HttpServletRequest req = mock(HttpServletRequest.class);
 		
-		assertEquals(Constants.redirect, adminController.managetheorems(model, session, req));
+		assertEquals(Constants.redirect, adminController.manageTheorems(model, session, req));
 		
 		List<Theorem> theorems = localTheoremService.getAll();
 		assertEquals(theorems.size(), 0);

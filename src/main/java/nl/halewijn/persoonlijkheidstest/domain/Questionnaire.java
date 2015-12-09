@@ -153,7 +153,7 @@ public class Questionnaire {
 			LocalPersonalityTypeService localPersonalityTypeService, double[] pTypeResultArray, Result result) {
 		for(int i = 0; i < pTypeResultArray.length; i++) {		
 			PersonalityType type = localPersonalityTypeService.getById(i+1);
-			ResultTypePercentage resultTypePercentage = new ResultTypePercentage(result, type, Math.round(pTypeResultArray[i]*100));
+			ResultTypePercentage resultTypePercentage = new ResultTypePercentage(result, type, pTypeResultArray[i]);
 			localResultService.saveResultTypePercentage(resultTypePercentage);
 		}
 	}
@@ -216,6 +216,9 @@ public class Questionnaire {
         model.addAttribute("scores", pTypeResultArray);
 
         double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
+        for (int i = 0; i < subTypeResultArray.length; i++) {
+            subTypeResultArray[i] = subTypeResultArray[i] / 100;
+        }
         model.addAttribute("subTypeScores", subTypeResultArray);
 
         String[] personalityTypes = getPersonalityTypesFromDb(localPersonalityTypeService);
@@ -313,7 +316,7 @@ public class Questionnaire {
 		// TODO: Maybe extract these two loops or merge them if possible?
         double totalQuestionPoints = calculateTotalFromNumbersArray(pTypePoints);
 		for (int i = 0; i < pTypePoints.length; i++) {
-            pTypePercentages[i] = calculatePercentage(pTypePoints[i], totalQuestionPoints) / 100;
+            pTypePercentages[i] = calculatePercentage(pTypePoints[i], totalQuestionPoints);
         }
 
 		return pTypePercentages;
@@ -350,17 +353,18 @@ public class Questionnaire {
      * Calculates a percentage by dividing the divident by the divisor and returning the quotient after rounding.
      */
 	public double calculatePercentage(double number, double total) {
-        double percentage = number / total;
+        double percentage = (number / total) * 100.0;
         return roundDouble(percentage);
 	}
 	
 	/**
      * Rounds the given double.
      */
-	private double roundDouble(double value) {
-		value = value*100;
-		return Math.round (value * 10.0) / 10.0;  
-	}
+    private double roundDouble(double value) {
+        int intValue = (int) (value * 10.0);
+        intValue = Math.round(intValue);
+        return intValue / 10.0;
+    }
 
     /**
      * Calculates the total sum of an array of numbers.

@@ -1,4 +1,9 @@
-<script src="js/radarChart.js" xmlns:th="http://www.w3.org/1999/xhtml"></script>
+<!-- D3.js radar chart code -->
+<script type="text/javascript" src="js/radarChart.js"></script>
+
+<!-- CanvasJS bar chart code -->
+<script type="text/javascript" src="js/canvasjs.min.js"></script>
+
 <script th:inline="javascript">
     /*<![CDATA[*/
     //    	window.onresize = function(){ location.reload();} //backup methode(niet gebruiken tenzij de oude techniek niet werkt, en de pagina kan refreshen.)
@@ -9,7 +14,7 @@
     //////////////////////////////////////////////////////////////
     //////////////////////// Set-Up //////////////////////////////
     //////////////////////////////////////////////////////////////
-	var DivBr = document.getElementById("radarGrafiek").offsetWidth;
+	var DivBr = document.getElementById("radarChartContainer").offsetWidth;
 
     var default_margin = 50;
 
@@ -62,6 +67,54 @@
     };
     //Call function to draw the Radar chart
     RadarChart(".radarChart", data, radarChartOptions);
+
+    // END RADAR CHART CODE
+    //-------------------------------------------------------------------------------------
+    // BEGIN BAR CHART CODE
+
+    var subTypes = [ "Ontkenning", "Erkenning", "Ontwikkeling" ];
+    var subScores = /*[[${subTypeScores}]]*/ [ 0.5, 0.3, 0.2 ];
+
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("barChartContainer",
+                {
+                    backgroundColor: null, //"#F5DEB3",
+                    title:{
+                        text: "Subtypen"
+                    },
+                    axisY:{
+                        title: "in percentages" //"percent"
+                    },
+                    animationEnabled: true,
+                    toolTip:{
+                        shared: true,
+                        content: "{name}: <strong>#percent%</strong>"
+                    },
+                    data:[
+                        {
+                            type: "stackedBar100",
+                            showInLegend: true,
+                            name: "Wel",
+                            dataPoints: [
+                                {y: subScores[0], label: subTypes[0] },
+                                {y: subScores[1], label: subTypes[1] },
+                                {y: subScores[2], label: subTypes[2] }
+                            ]
+                        },
+                        {
+                            type: "stackedBar100",
+                            showInLegend: true,
+                            name: "Niet",
+                            dataPoints: [
+                                {y: (1 - subScores[0]), label: subTypes[0] },
+                                {y: (1 - subScores[1]), label: subTypes[1] },
+                                {y: (1 - subScores[2]), label: subTypes[2] }
+                            ]
+                        }
+                    ]
+                });
+        chart.render();
+    };
 
     /*]]>*/
 </script>
