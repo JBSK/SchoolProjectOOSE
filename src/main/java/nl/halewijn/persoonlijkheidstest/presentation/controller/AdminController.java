@@ -143,7 +143,7 @@ public class AdminController {
 
 			localTheoremService.save(theorem);
 
-			return "redirect:/managetheorems";
+			return Constants.redirect + "manageTheorems";
 		} else {
 			return "redirect:/";
 		}
@@ -214,7 +214,7 @@ public class AdminController {
 
 			localTheoremService.update(theorem);
 
-			return Constants.redirect + "managetheorems";
+			return Constants.redirect + "manageTheorems";
 		} else {
 			return Constants.redirect;
 		}
@@ -243,7 +243,7 @@ public class AdminController {
 			Theorem theorem = localTheoremService.getById(TheoremNumber);
 			localTheoremService.delete(theorem);
 
-			return "redirect:/managetheorems";
+			return Constants.redirect + "manageTheorems";
 		} else {
 			return Constants.redirect;
 		}
