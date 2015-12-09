@@ -8,6 +8,18 @@
 		<div id="main"  class="pure-skin-PT">
 			<div class="content">
 				<h2 class="content-subhead">Gebruikersoverzicht</h2>
+				<table class="pure-table pure-table-bordered tableManageTheorems">
+					<thead>
+						<tr>
+							<th>Email</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="i : ${users}">
+							<td th:text="${i.emailAddress}"></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

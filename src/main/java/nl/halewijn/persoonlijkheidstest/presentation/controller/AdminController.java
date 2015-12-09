@@ -256,6 +256,8 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
+			List<User> users = localUserService.getAll();
+			model.addAttribute("users", users);
 			return "useroverview";
 		} else {
 			return Constants.redirect;

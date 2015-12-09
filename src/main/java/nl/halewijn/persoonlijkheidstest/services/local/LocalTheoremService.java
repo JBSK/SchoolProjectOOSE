@@ -6,6 +6,7 @@ import nl.halewijn.persoonlijkheidstest.datasource.repository.TheoremRepository;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.services.IObjectService;
+import nl.halewijn.persoonlijkheidstest.services.ITheoremService;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocalTheoremService implements IObjectService<Theorem> {
+public class LocalTheoremService implements IObjectService<Theorem>, ITheoremService {
 
 	@Autowired
 	private TheoremRepository theoremRepository;
@@ -43,7 +44,7 @@ public class LocalTheoremService implements IObjectService<Theorem> {
 	}
 
 	@Override
-	public void update(Theorem theorem) {
-		theoremRepository.save(theorem);
+	public Theorem update(Theorem theorem) {
+		return theoremRepository.save(theorem);
 	}
 }
