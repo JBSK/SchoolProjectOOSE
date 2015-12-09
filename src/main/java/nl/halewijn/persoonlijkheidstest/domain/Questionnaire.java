@@ -67,9 +67,9 @@ public class Questionnaire {
 	 */
 	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session, LocalResultService localResultService, LocalUserService localUserService) {
 		Question previousQuestion = getPreviousQuestion();
-
+        String answerString = httpServletRequest.getParameter("answer");
         if (previousQuestion instanceof TheoremBattle) {
-            String answerString = httpServletRequest.getParameter("answer");
+
             char answer = answerString.charAt(0);
             switch (answer) {
                 case 'A':
@@ -89,7 +89,7 @@ public class Questionnaire {
             }
         }
 		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
-		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
+		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
 		
 		if(nextQuestion != null) {
 			return showNextQuestion(model, nextQuestion);

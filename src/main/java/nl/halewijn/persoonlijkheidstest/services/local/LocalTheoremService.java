@@ -3,6 +3,7 @@ package nl.halewijn.persoonlijkheidstest.services.local;
 
 
 import nl.halewijn.persoonlijkheidstest.datasource.repository.TheoremRepository;
+import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.services.IObjectService;
 
@@ -31,7 +32,11 @@ public class LocalTheoremService implements IObjectService<Theorem> {
 	public List<Theorem> getAll() {
 		return theoremRepository.findAll();
 	}
-
+	
+	public List<Theorem> getAllByPersonalityType(PersonalityType type) {
+		return theoremRepository.findByPersonalityType(type);
+	}
+	
 	@Override
 	public Theorem getById(int id) {
 		return theoremRepository.findByTheoremID(id);

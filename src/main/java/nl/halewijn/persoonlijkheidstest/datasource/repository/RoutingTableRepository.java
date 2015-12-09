@@ -1,6 +1,10 @@
 package nl.halewijn.persoonlijkheidstest.datasource.repository;
 
+import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.RoutingRule;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +17,7 @@ public interface RoutingTableRepository extends JpaSpecificationExecutor<Routing
 
     RoutingTable findByRouteId(int routeId);
 
-    RoutingTable findByQuestionId(int questionId);
+    List<RoutingTable> findByQuestion(Question question);
+
 
 }

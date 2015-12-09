@@ -1,12 +1,18 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 import nl.halewijn.persoonlijkheidstest.datasource.repository.QuestionRepository;
+import nl.halewijn.persoonlijkheidstest.datasource.repository.RoutingTableRepository;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
+import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
+import nl.halewijn.persoonlijkheidstest.domain.RoutingRule;
+import nl.halewijn.persoonlijkheidstest.domain.RoutingTable;
+import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +25,16 @@ public class LocalQuestionService implements IQuestionService  {
 
 	@Autowired
 	private QuestionRepository questionRepository;
-
+	
+	@Autowired
+	private LocalRoutingService localRoutingService;
+	
+	@Autowired
+	private LocalTheoremService localTheoremService;
+	
+	@Autowired
+	private LocalPersonalityTypeService localPersonalityTypeService;
+	
 	@Override
 	public List<Question> findAll() {
 		return questionRepository.findAll();
@@ -27,9 +42,28 @@ public class LocalQuestionService implements IQuestionService  {
 	
 	@Override
 	public List<Question> findAllByText(String text) {
-		return questionRepository.findByText(text);
+		return questionRepository.findAllByText(text);
 	}
 	
+	@Override
+	public List<Question> findAllByPersonalityTypeId(int typeId) {
+		PersonalityType type = localPersonalityTypeService.getById(typeId);
+
+		List<Theorem> theorems = localTheoremService.getAllByPersonalityType(type);
+		List<Question> questionsWithTheoremsWithRelevantType = new ArrayList<>();
+		
+		for (Theorem theorem : theorems) {
+			List<TheoremBattle> questions = getAllByTheorem(theorem);
+			questionsWithTheoremsWithRelevantType.addAll(questions); // TODO Handle duplicates
+		}
+		
+		return questionsWithTheoremsWithRelevantType;
+	}
+	
+	public List<TheoremBattle> getAllByTheorem(Theorem theorem) {
+		return questionRepository.findAllByFirstTheorem(theorem);
+	}
+
 	@Override
 	public void save(Question question) {
 		questionRepository.save(question);
@@ -46,13 +80,13 @@ public class LocalQuestionService implements IQuestionService  {
 	}
 
 	@Override
-	public Question getById(int id) {
-		return questionRepository.findByQuestionID(id);
+	public Question getByQuestionId(int questionId) {
+		return questionRepository.findByQuestionID(questionId);
 	}
 	
 	@Override
-	public String getQuestionTypeById(int id) {
-		Question question = getById(id);
+	public String getQuestionTypeById(int questionId) {
+		Question question = getByQuestionId(questionId);
 		return question.getClassName();
 	}
 	
@@ -67,18 +101,66 @@ public class LocalQuestionService implements IQuestionService  {
 	 * If a next question exists, this question is requested from the database, and then returned.
 	 * 
 	 * If no next question exists, a null value is returned.
+	 * @param answer 
 	 */
 	
 	@Override
-	public Question getNextQuestion(Question previousQuestion) {
-		// TODO Routing rules invoeren.
-		
+	public Question getNextQuestion(Question previousQuestion, String answer) {
 		Question next = null;
+		List<RoutingTable> tables = localRoutingService.getRoutingRulesByQuestion(previousQuestion);
+		System.out.println(tables);
+		if(tables.size() > 0){
+			for(RoutingTable table : tables){ 
+				if(table.getAnswer() == answer.charAt(0)){  
+					RoutingRule rule = table.getRoutingRule();
+					int ruleId = rule.getRoutingRuleId();
+					int ruleParam = table.getRoutingRuleParam();
+					switch(ruleId){
+						case 1:
+							if (ruleParam > previousQuestion.getQuestionId()) {
+								next = getByQuestionId(ruleParam);
+							} else {
+								next = getNextChronologicalQuestion(previousQuestion);
+							}
+							break;
+						case 2:
+							List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
+							if(relevantQuestions.size() > 0){
+								Question firstQuestionInTheList = relevantQuestions.get(0);
+								while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
+									try { 
+										relevantQuestions.remove(0);
+										firstQuestionInTheList = relevantQuestions.get(0);
+									} catch (Exception e) {
+										firstQuestionInTheList = null;
+										break;
+									}
+								}
+								if (firstQuestionInTheList != null) {
+									next = firstQuestionInTheList; 
+								} else {
+									next = getNextChronologicalQuestion(previousQuestion);
+								}
+								break;
+							}
+							next = getNextChronologicalQuestion(previousQuestion);
+					}				
+				} else {
+			        next = getNextChronologicalQuestion(previousQuestion);
+				}
+			}
+		} else {
+	        next = getNextChronologicalQuestion(previousQuestion);
+		}
+		return next;
+		
+	}
 
-        if(getById(previousQuestion.getID()+1) != null) {
-            next = getById(previousQuestion.getID() + 1);
-        }
-
+	private Question getNextChronologicalQuestion(Question previousQuestion) {
+		Question next = null;
+		if(getByQuestionId(previousQuestion.getQuestionId()+1) != null) {
+		    next = getByQuestionId(previousQuestion.getQuestionId() + 1);
+		}
 		return next;
 	}
 	
@@ -94,8 +176,8 @@ public class LocalQuestionService implements IQuestionService  {
 	public Question getFirstQuestion(Questionnaire questionnaire) {
 		Question firstQuestion = null;
 
-        if(getById(1) != null) {
-            firstQuestion = getById(1);
+        if(getByQuestionId(1) != null) {
+            firstQuestion = getByQuestionId(1);
         }
 
 		questionnaire.addQuestion(firstQuestion);

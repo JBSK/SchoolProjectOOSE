@@ -13,12 +13,13 @@ public interface IQuestionService {
 	void delete(Question question);
 	List<Question> getAll();
 	void update(Question question);
-	Question getById(int id);
+	Question getByQuestionId(int id);
 	String getQuestionTypeById(int id);
-	Question getNextQuestion(Question previousQuestion);
+	Question getNextQuestion(Question previousQuestion, String answer);
 	Question getFirstQuestion(Questionnaire questionnaire);
 	void setQuestionAnswer(HttpServletRequest req, Question previousQuestion);
 	List<Question> findAll();
 	List<Question> findAllByText(String text);
-
+	List<Question> findAllByPersonalityTypeId(int typeId);
+ 
 }

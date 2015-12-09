@@ -12,7 +12,7 @@ public class RoutingTable implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private int RouteID;
+	private int routeId;
 	
 	@OneToOne
     @JoinColumn(name = "questionId")
@@ -65,4 +65,13 @@ public class RoutingTable implements Serializable {
 	public void setRoutingRule(RoutingRule routingRule) {
 		this.routingRule = routingRule;
 	}
+
+	public int getRoutingRuleParam() {
+		return routingRuleParam;
+	}
+
+	public void setRoutingRuleParam(int routingRuleParam) {
+		this.routingRuleParam = routingRuleParam;
+	}
+	
 }
