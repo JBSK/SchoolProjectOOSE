@@ -106,54 +106,51 @@ public class LocalQuestionService implements IQuestionService  {
 	
 	@Override
 	public Question getNextQuestion(Question previousQuestion, String answer) {
-		Question next = null;
 		List<RoutingTable> tables = localRoutingService.getRoutingRulesByQuestion(previousQuestion);
-		System.out.println(tables);
-		if(tables.size() > 0){
+		if(tables.isEmpty() == false) {
 			for(RoutingTable table : tables){ 
 				if(table.getAnswer() == answer.charAt(0)){  
 					RoutingRule rule = table.getRoutingRule();
 					int ruleId = rule.getRoutingRuleId();
 					int ruleParam = table.getRoutingRuleParam();
-					switch(ruleId){
-						case 1:
-							if (ruleParam > previousQuestion.getQuestionId()) {
-								next = getByQuestionId(ruleParam);
-							} else {
-								next = getNextChronologicalQuestion(previousQuestion);
-							}
-							break;
-						case 2:
-							List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
-							if(relevantQuestions.size() > 0){
-								Question firstQuestionInTheList = relevantQuestions.get(0);
-								while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
-									try { 
-										relevantQuestions.remove(0);
-										firstQuestionInTheList = relevantQuestions.get(0);
-									} catch (Exception e) {
-										firstQuestionInTheList = null;
-										break;
-									}
-								}
-								if (firstQuestionInTheList != null) {
-									next = firstQuestionInTheList; 
-								} else {
-									next = getNextChronologicalQuestion(previousQuestion);
-								}
-								break;
-							}
-							next = getNextChronologicalQuestion(previousQuestion);
-					}				
-				} else {
-			        next = getNextChronologicalQuestion(previousQuestion);
+					return determineFollowUpQuestion(previousQuestion, ruleId, ruleParam);	
 				}
 			}
-		} else {
-	        next = getNextChronologicalQuestion(previousQuestion);
 		}
-		return next;
-		
+		return getNextChronologicalQuestion(previousQuestion);		
+	}
+
+	private Question determineFollowUpQuestion(Question previousQuestion, int ruleId, int ruleParam) {
+		switch(ruleId){
+			case 1:
+				if (ruleParam > previousQuestion.getQuestionId()) {
+					return getByQuestionId(ruleParam);
+				}
+			case 2:
+				return processPersonalityTypeRoutingRule(previousQuestion, ruleParam);
+			default:
+				return getNextChronologicalQuestion(previousQuestion);
+		}
+	}
+
+	private Question  processPersonalityTypeRoutingRule(Question previousQuestion, int ruleParam) {
+		List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
+		if(relevantQuestions.isEmpty() == false){
+			Question firstQuestionInTheList = relevantQuestions.get(0);
+			while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
+				try { 
+					relevantQuestions.remove(0);
+					firstQuestionInTheList = relevantQuestions.get(0);
+				} catch (Exception e) {
+					firstQuestionInTheList = null;
+					break;
+				}
+			}
+			if (firstQuestionInTheList != null) {
+				return firstQuestionInTheList; 
+			}
+		}
+		return null;
 	}
 
 	private Question getNextChronologicalQuestion(Question previousQuestion) {
