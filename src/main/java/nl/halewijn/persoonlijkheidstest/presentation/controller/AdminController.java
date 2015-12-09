@@ -45,7 +45,7 @@ public class AdminController {
 	 * 
 	 * If the user is not an admin, or is not logged in, redirect to the previous page.
 	 */
-    @RequestMapping(value="/adminPaneel")
+    @RequestMapping(value="/adminPanel")
     public String showAdmin(Model model, HttpSession session) {
     	boolean isAdmin = checkIfAdmin(session);
 		
@@ -64,8 +64,8 @@ public class AdminController {
 		}
 	}
     //Requirement buiten de sprint
-    @RequestMapping(value="/managequestions", method=RequestMethod.GET)
-	public String vragenbeheren(Model model, HttpSession session, HttpServletRequest req) {
+    @RequestMapping(value="/manageQuestions", method=RequestMethod.GET)
+	public String manageQuestions(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
@@ -78,8 +78,8 @@ public class AdminController {
     /**
      * Return all the theorems from the database. These will be displayed on a web page.
      */
-	@RequestMapping(value="/managetheorems", method=RequestMethod.GET)
-	public String managetheorems(Model model, HttpSession session, HttpServletRequest req) {
+	@RequestMapping(value="/manageTheorems", method=RequestMethod.GET)
+	public String manageTheorems(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
@@ -252,8 +252,8 @@ public class AdminController {
 	 * Sends message to users
 	 */
     //Requirement buiten de sprint
-	@RequestMapping(value="/sendmessages", method=RequestMethod.GET)
-	public String berichtversturen(Model model, HttpSession session, HttpServletRequest req) {
+	@RequestMapping(value="/sendMessages", method=RequestMethod.GET)
+	public String sendMessages(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
@@ -264,8 +264,8 @@ public class AdminController {
 	}
 	
     //Requirement buiten de sprint
-	@RequestMapping(value="/useroverview", method=RequestMethod.GET)
-	public String gebruikersoverzicht(Model model, HttpSession session, HttpServletRequest req) {
+	@RequestMapping(value="/userOverview", method=RequestMethod.GET)
+	public String userOverview(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
@@ -276,8 +276,8 @@ public class AdminController {
 	}
 	
     //Requirement buiten de sprint	
-	@RequestMapping(value="/editresulttexts", method=RequestMethod.GET)
-	public String resultaattekstenbewerken(Model model, HttpSession session, HttpServletRequest req) {
+	@RequestMapping(value="/editResultTexts", method=RequestMethod.GET)
+	public String editResultTexts(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
@@ -288,8 +288,8 @@ public class AdminController {
 	}
 	
     //Requirement buiten de sprint
-	@RequestMapping(value="/editanswervalues", method=RequestMethod.GET)
-	public String antwoordwaardenaanpassen(Model model, HttpSession session, HttpServletRequest req) {
+	@RequestMapping(value="/editAnswerValues", method=RequestMethod.GET)
+	public String editAnswerValues(Model model, HttpSession session, HttpServletRequest req) {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {

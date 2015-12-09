@@ -15,9 +15,6 @@ import nl.halewijn.persoonlijkheidstest.domain.RoutingTable;
 @Repository
 public interface RoutingTableRepository extends JpaSpecificationExecutor<RoutingTable>, JpaRepository<RoutingTable, Long> {
 
-    RoutingTable findByRouteId(int routeId);
-
+    RoutingTable findByRouteID(int RouteID);
     List<RoutingTable> findByQuestion(Question question);
-
-
 }

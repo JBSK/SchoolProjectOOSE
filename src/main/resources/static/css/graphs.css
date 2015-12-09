@@ -1,5 +1,5 @@
-/****************radargrafiek**********/
-		.content .resultrow1 #radarGrafiek{
+/****************radarChart**********/
+		.content .resultrow1 #radarChartContainer{
 			
 			background-size: contain;
 			background-repeat:no-repeat;
@@ -10,20 +10,20 @@
 		    @media all and (-ms-high-contrast:none)
      {
 	     #radarGrafiek { height:300px;} /* IE10 */
-	     *::-ms-backdrop, #radarGrafiek { height:300px; } /* IE11 */
-	     _:-ms-lang(x), #radargrafiek { height:300px; }
+	     *::-ms-backdrop, #radarChartContainer { height:300px; } /* IE11 */
+	     _:-ms-lang(x), #radarChartContainer { height:300px; }
      }	
-     	.content .resultrow1 #radarGrafiek .radarChart { height:100%;}
-		.content .resultrow1 #radarGrafiek .legend {
+     	.content .resultrow1 #radarChartContainer .radarChart { height:100%;}
+		.content .resultrow1 #radarChartContainer .legend {
 				font-family: 'Raleway', sans-serif;
 				fill: #333333;
 			}
 			
-		.content .resultrow1 .radarGrafiek.tooltip {
+		.content .resultrow1 .radarChartContainer .tooltip {
 				fill: #333333;
 			}
 			
-		.content .resultrow1 #radarGrafiek svg {
+		.content .resultrow1 #radarChartContainer svg {
 				background:url(imgs/star.png);
 				background-size: contain;
 				background-repeat:no-repeat;
