@@ -84,14 +84,29 @@ public class AdminControllerTest {
 		
 		assertEquals(Constants.redirect, adminController.manageTheorems(model, session, req));
 		
+		User user = new User("duncan@email.eu", true);
+
+        String password = "x"; // Plaintext password
+        String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
+        password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
+		user.setPasswordHash(passwordHash); // Stored hash in user
+		
+		localUserService.save(user);
+		
 		List<Theorem> theorems = localTheoremService.getAll();
 		assertEquals(theorems.size(), 0);
 		
-		Theorem theorem = new Theorem(mock(PersonalityType.class), "text", 1, 1, 1, 1);
-		model.addAttribute("theorems", theorem);
-		//when(model.containsAttribute("theorem")).thenReturn(theorem);
-		//assertEquals(true, model.containsAttribute("theorems"));
-		//when(model.addAttribute("theorems", theorem)).thenReturn(model.containsAttribute("theorems"));
+		PersonalityType type = new PersonalityType("TestType", "Descr1", "Descr2");
+		localPersonalityTypeService.save(type);
+		
+		Theorem theorem = new Theorem(type, "text", 1, 1, 1, 1);
+		localTheoremService.save(theorem);
+		assertEquals(1, localTheoremService.getAll().size(), 0);
+		
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		assertEquals("managetheorems", adminController.manageTheorems(model, session, req));
+		
+		assertEquals(false, model.containsAttribute("theorems"));
 	}
 	
 	@Test
@@ -102,10 +117,23 @@ public class AdminControllerTest {
 		
 		assertEquals(Constants.redirect, adminController.addTheorem(model, session, req));
 		
+		User user = new User("duncan@email.eu", true);
+
+        String password = "x"; // Plaintext password
+        String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
+        password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
+		user.setPasswordHash(passwordHash); // Stored hash in user
+		
+		localUserService.save(user);
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		assertEquals("addTheorem", adminController.addTheorem(model, session, req));
+		
 		List<PersonalityType> types = localPersonalityTypeService.getAll();
 		assertEquals(types.size(), 0);
 		
-		Theorem theorem = new Theorem(mock(PersonalityType.class), "text", 1, 1, 1, 1);
+		PersonalityType type = new PersonalityType("TestType", "Descr1", "Descr2");
+		localPersonalityTypeService.save(type);
+		Theorem theorem = new Theorem(type, "text", 1, 1, 1, 1);
 		localTheoremService.save(theorem);
 		
 		assertEquals(1, localTheoremService.getAll().size(), 0);
@@ -117,27 +145,111 @@ public class AdminControllerTest {
 		HttpSession session = mock(HttpSession.class);
 		HttpServletRequest req = mock(HttpServletRequest.class);
 		
+		assertEquals(Constants.redirect, adminController.addTheoremToDB(model, session, req));
 		
+		User user = new User("duncan@email.eu", true);
+
+        String password = "x"; // Plaintext password
+        String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
+        password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
+		user.setPasswordHash(passwordHash); // Stored hash in user
+		
+		localUserService.save(user);
+		
+		PersonalityType type = new PersonalityType("TestType", "Descr1", "Descr2");
+		localPersonalityTypeService.save(type);
+		
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		when(req.getParameter("personality")).thenReturn("1");
+		when(req.getParameter("sub1")).thenReturn("1.5");
+		when(req.getParameter("sub2")).thenReturn("1.3");
+		when(req.getParameter("sub3")).thenReturn("0.1");
+		when(req.getParameter("text")).thenReturn("TheoremText");
+		when(req.getParameter("weight")).thenReturn("1.2");
+		assertEquals("redirect:/managetheorems", adminController.addTheoremToDB(model, session, req));
+		assertEquals(localTheoremService.getAll().size(), 1, 0);
 	}
 	
-//	@Test
-//	public void editTheoremTest() {
-//		Model model = mock(Model.class);
-//		HttpSession session = mock(HttpSession.class);
-//		HttpServletRequest req = mock(HttpServletRequest.class);
-//		
-//		
-//	}
-//	
-//	@Test
-//	public void updateTheoremTest() {
-//		Model model = mock(Model.class);
-//		HttpSession session = mock(HttpSession.class);
-//		HttpServletRequest req = mock(HttpServletRequest.class);
-//		
-//		
-//	}
-//	
+	@Test
+	public void editTheoremTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.editTheorem(model, session, req));
+		
+		User user = new User("duncan@email.eu", true);
+
+        String password = "x"; // Plaintext password
+        String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
+        password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
+		user.setPasswordHash(passwordHash); // Stored hash in user
+		
+		localUserService.save(user);
+		
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		
+		PersonalityType type = new PersonalityType("TestType", "Descr1", "Descr2");
+		localPersonalityTypeService.save(type);
+		
+		Theorem theorem = new Theorem(type, "text", 1, 1, 1, 1);
+		localTheoremService.save(theorem);
+		
+		when(req.getParameter("number")).thenReturn("1");
+		
+		assertEquals("editTheorem", adminController.editTheorem(model, session, req));
+		assertEquals(false, model.containsAttribute("theorem"));
+	}
+	
+	@Test
+	public void updateTheoremTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.updateTheorem(model, session, req));
+		
+		User user = new User("duncan@email.eu", true);
+
+        String password = "x"; // Plaintext password
+        String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
+        password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
+		user.setPasswordHash(passwordHash); // Stored hash in user
+		
+		localUserService.save(user);
+		
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		
+		List<Theorem> theorems = localTheoremService.getAll();
+		assertEquals(theorems.size(), 0);
+		
+		PersonalityType type = new PersonalityType("TestType", "Descr1", "Descr2");
+		localPersonalityTypeService.save(type);
+		assertEquals(localPersonalityTypeService.getAll().size(), 1, 0);
+		int typeID = type.getTypeID();
+		String typeIDstring = Integer.toString(typeID);
+		assertEquals(localPersonalityTypeService.getById(typeID).getName(), "TestType");
+		
+		Theorem theorem = new Theorem(type, "text", 1, 1, 1, 1);
+		localTheoremService.save(theorem);
+		assertEquals(localTheoremService.getAll().size(), 1, 0);
+		
+		when(req.getParameter("number")).thenReturn(Integer.toString(theorem.getTheoremID()));
+		assertEquals(1, localTheoremService.getAll().size(), 0);
+		
+		when(req.getParameter("personality")).thenReturn(typeIDstring);
+		System.out.println(typeID);
+		System.out.println(typeIDstring);
+		when(req.getParameter("sub1")).thenReturn("1.5");
+		when(req.getParameter("sub2")).thenReturn("1.3");
+		when(req.getParameter("sub3")).thenReturn("0.1");
+		when(req.getParameter("text")).thenReturn("TheoremText");
+		when(req.getParameter("weight")).thenReturn("1.2");
+		
+		assertEquals("redirect:/managetheorems", adminController.updateTheorem(model, session, req));
+		assertEquals(false, model.containsAttribute("theorem"));
+	}
+	
 //	@Test
 //	public void deleteTheoremTest() {
 //		Model model = mock(Model.class);
