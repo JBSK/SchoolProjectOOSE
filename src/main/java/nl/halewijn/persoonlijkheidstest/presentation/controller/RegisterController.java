@@ -39,10 +39,13 @@ public class RegisterController {
 		
 		User doesUserExist = localUserService.findByName(regEmail);
 		
-		if (doesUserExist != null && regPassword.equals(regPassword2)) {
+		if (doesUserExist == null && regPassword.equals(regPassword2)) {
 			User user = new User(regEmail, false);
 			final PasswordHash passwordHash = new PasswordHash();
 			user.setPasswordHash(passwordHash.hashPassword(regPassword));
+			System.out.println(user.getEmailAddress());
+			System.out.println(user.getPasswordHash());
+			System.out.println(user.isAdmin());
 			localUserService.save(user);
 		}
 		
