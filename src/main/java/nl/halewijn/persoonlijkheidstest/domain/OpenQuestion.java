@@ -24,9 +24,4 @@ public class OpenQuestion extends Question {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-
-	public String getType() {
-		return "OpenQuestion";	
-	}
-
 }

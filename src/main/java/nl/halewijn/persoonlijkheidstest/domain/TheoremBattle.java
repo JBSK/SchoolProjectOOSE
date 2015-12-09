@@ -50,8 +50,4 @@ public class TheoremBattle extends Question {
 	public void setAnswer(char answer) {
 		this.answer = answer;
 	}
-
-	public String getType() {
-		return "TheoremBattle";	
-	}
 }

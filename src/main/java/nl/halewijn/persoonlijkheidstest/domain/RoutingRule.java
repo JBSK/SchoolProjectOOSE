@@ -10,7 +10,6 @@ public class RoutingRule {
 	@Id
 	@GeneratedValue
 	private int routingRuleId;
-    //
 
     @NotNull
     private String description;
