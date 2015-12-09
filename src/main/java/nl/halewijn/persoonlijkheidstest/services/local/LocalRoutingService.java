@@ -21,7 +21,7 @@ public class LocalRoutingService {
 	private RoutingTableRepository routingTableRepository;
 
     public RoutingTable findById(int tableId) {
-        return routingTableRepository.findByRouteID(tableId);
+        return routingTableRepository.findByRouteId(tableId);
     }
 
     public List<RoutingTable> getRoutingRulesByQuestion(Question question) {
