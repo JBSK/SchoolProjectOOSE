@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class LocalPersonalityTypeService implements IObjectService<PersonalityType>, IPersonalityTypeService {
+public class LocalPersonalityTypeService implements IObjectService<PersonalityType>,  IPersonalityTypeService {
 
 	@Autowired
 	private PersonalityTypeRepository personalityTypeRepository;
