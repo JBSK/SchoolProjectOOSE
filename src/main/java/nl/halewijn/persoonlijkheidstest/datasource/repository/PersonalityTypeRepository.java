@@ -8,6 +8,6 @@ import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 @Repository
 public interface PersonalityTypeRepository extends JpaSpecificationExecutor<PersonalityType>, JpaRepository<PersonalityType, Long> {
 
-	PersonalityType findByTypeID(int id);
+	PersonalityType findByTypeId(int id);
 
 }

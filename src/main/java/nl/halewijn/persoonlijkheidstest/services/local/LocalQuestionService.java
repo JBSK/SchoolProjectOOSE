@@ -81,7 +81,7 @@ public class LocalQuestionService implements IQuestionService  {
 
 	@Override
 	public Question getByQuestionId(int questionId) {
-		return questionRepository.findByQuestionID(questionId);
+		return questionRepository.findByQuestionId(questionId);
 	}
 	
 	@Override

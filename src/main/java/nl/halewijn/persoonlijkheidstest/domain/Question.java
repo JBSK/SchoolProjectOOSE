@@ -16,7 +16,7 @@ public abstract class Question {
 
 	@Id
 	@GeneratedValue
-	private int questionID;
+	private int questionId;
 
     @NotNull
     @Column(name="text", columnDefinition="varchar(255) default 'Kies de stelling die het meest voor u van toepassing is'")
@@ -27,7 +27,7 @@ public abstract class Question {
 	}
 
 	public int getQuestionId() {
-		return questionID;
+		return questionId;
 	}
 
 	public String getText() {

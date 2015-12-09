@@ -9,7 +9,7 @@ public class Theorem {
 
 	@Id
 	@GeneratedValue
-	private int theoremID;
+	private int theoremId;
 
     @OneToOne
     @JoinColumn(name = "personalityType")
@@ -47,7 +47,7 @@ public class Theorem {
 	}
 
 	public int getTheoremID() {
-		return theoremID;
+		return theoremId;
 	}
 
     public PersonalityType getPersonalityType() {

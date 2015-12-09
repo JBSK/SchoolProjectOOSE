@@ -15,7 +15,7 @@ public class ResultTypePercentage implements Serializable {
 	
 	@Id
 	@GeneratedValue
-	private int resultTypePercentageID;
+	private int resultTypePercentageId;
 	
 	@OneToOne
     @JoinColumn(name = "result")

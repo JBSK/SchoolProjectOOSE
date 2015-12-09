@@ -12,7 +12,7 @@ public class PersonalityType {
 
 	@Id
 	@GeneratedValue
-	private int typeID;
+	private int typeId;
 
 	@NotNull
 	private String name;
@@ -37,11 +37,11 @@ public class PersonalityType {
 	}
 
 	public int getTypeID() {
-		return typeID;
+		return typeId;
 	}
 
 	public void setTypeID(int typeID) {
-		this.typeID = typeID;
+		this.typeId = typeID;
 	}
 
 	public String getName() {
