@@ -31,4 +31,18 @@
 				margin:0px; /* If you want no margin */
 				padding:0px; /*if your want to padding */
 				width:100%;
-			}
+		}
+		
+		.content .resultrow1 #radarChartContainer svg {
+			background:url("/imgs/star.png");
+			background-size: contain;
+			background-repeat:no-repeat;
+			background-position: center; 
+			margin:0px; /* If you want no margin */
+			padding:0px; /*if your want to padding */
+			width:100%;
+		}
+		.content .resultrow1 #barChartCont .barChart{
+			margin: 0 10px;
+		
+		}
