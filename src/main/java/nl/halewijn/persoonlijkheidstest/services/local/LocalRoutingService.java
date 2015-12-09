@@ -20,7 +20,7 @@ public class LocalRoutingService {
 	private RoutingTableRepository routingTableRepository;
 
     public RoutingTable findById(int tableId) {
-        return routingTableRepository.findByRouteId(tableId);
+        return routingTableRepository.findByRouteID(tableId);
     }
 
     public RoutingTable findByQuestionId(int questionId) {

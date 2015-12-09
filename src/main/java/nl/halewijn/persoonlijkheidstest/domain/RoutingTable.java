@@ -12,7 +12,7 @@ public class RoutingTable implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private int RouteID;
+	private int routeID;
 	
 	@OneToOne
     @JoinColumn(name = "questionId")
