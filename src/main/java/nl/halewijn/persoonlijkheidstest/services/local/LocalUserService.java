@@ -16,13 +16,13 @@ public class LocalUserService implements IObjectService<User>  {
 	private UserRepository userRepository;
 
 	@Override
-	public User save(User o) {
-		return userRepository.save(o);
+	public User save(User user) {
+		return userRepository.save(user);
 	}
 
 	@Override
-	public void delete(User o) {
-		userRepository.delete(o);
+	public void delete(User user) {
+		userRepository.delete(user);
 	}
 
 	@Override
@@ -36,8 +36,8 @@ public class LocalUserService implements IObjectService<User>  {
 	}
 
 	@Override
-	public void update(User o) {
-		userRepository.save(o);
+	public void update(User user) {
+		userRepository.save(user);
 	}
 
 	public User findByName(String userName) {
