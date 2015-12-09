@@ -43,9 +43,6 @@ public class RegisterController {
 			User user = new User(regEmail, false);
 			final PasswordHash passwordHash = new PasswordHash();
 			user.setPasswordHash(passwordHash.hashPassword(regPassword));
-			System.out.println(user.getEmailAddress());
-			System.out.println(user.getPasswordHash());
-			System.out.println(user.isAdmin());
 			localUserService.save(user);
 		}
 		
