@@ -238,8 +238,6 @@ public class AdminControllerTest {
 		assertEquals(1, localTheoremService.getAll().size(), 0);
 		
 		when(req.getParameter("personality")).thenReturn(typeIDstring);
-		System.out.println(typeID);
-		System.out.println(typeIDstring);
 		when(req.getParameter("sub1")).thenReturn("1.5");
 		when(req.getParameter("sub2")).thenReturn("1.3");
 		when(req.getParameter("sub3")).thenReturn("0.1");
