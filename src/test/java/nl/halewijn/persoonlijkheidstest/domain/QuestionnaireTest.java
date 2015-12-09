@@ -107,13 +107,14 @@ public class QuestionnaireTest {
 		localPersonalityTypeService.save(typeOne);
 		
 		Question nextQuestion;
-		nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
+		nextQuestion = localQuestionService.getNextQuestion(previousQuestion, "A");
 		assertEquals(null, nextQuestion);
 		assertEquals("result", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
 		
 		Question question2 = new OpenQuestion("Een volgende vraag");
 		localQuestionService.save(question2);
-		nextQuestion = localQuestionService.getNextQuestion(previousQuestion);
+		previousQuestion = (OpenQuestion) questionnaire.getPreviousQuestion(); // Added by Jelle
+		nextQuestion = localQuestionService.getNextQuestion(previousQuestion, "A");
 		assertEquals(question2.getText(), nextQuestion.getText());
 		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
 	}

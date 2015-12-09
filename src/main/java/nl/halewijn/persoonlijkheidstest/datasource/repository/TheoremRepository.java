@@ -1,8 +1,12 @@
 package nl.halewijn.persoonlijkheidstest.datasource.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
+
+import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 
 @Repository
@@ -12,5 +16,7 @@ public interface TheoremRepository extends JpaSpecificationExecutor<Theorem>, Jp
 	// methodname correctly.
 	
 	Theorem findByTheoremID(int id);
+	
+	List<Theorem> findByPersonalityType(PersonalityType type);
 
 }

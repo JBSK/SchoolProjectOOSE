@@ -26,7 +26,7 @@ public abstract class Question {
         this.text = questionText;
 	}
 
-	public int getID() {
+	public int getQuestionId() {
 		return questionID;
 	}
 

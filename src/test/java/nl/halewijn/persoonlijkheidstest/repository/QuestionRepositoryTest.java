@@ -53,7 +53,7 @@ public class QuestionRepositoryTest {
 		TheoremBattle exampleTheoremBattle = new TheoremBattle(exampleTheoremBattleName, exampleTheorem1, exampleTheorem2);
 		localQuestionService.save(exampleTheoremBattle);
 		
-		TheoremBattle insertedTheoremBattle = (TheoremBattle) localQuestionService.getById(exampleTheoremBattle.getID());
+		TheoremBattle insertedTheoremBattle = (TheoremBattle) localQuestionService.getByQuestionId(exampleTheoremBattle.getQuestionId());
 
 		assertEquals(exampleTheoremBattleName, insertedTheoremBattle.getText());
 	}
@@ -78,7 +78,7 @@ public class QuestionRepositoryTest {
 		OpenQuestion exampleOpenQuestion = new OpenQuestion(exampleQuestionText);
 		localQuestionService.save(exampleOpenQuestion);
 		
-		Question insertedQuestion = localQuestionService.getById(exampleOpenQuestion.getID());
+		Question insertedQuestion = localQuestionService.getByQuestionId(exampleOpenQuestion.getQuestionId());
 		assertEquals(exampleQuestionText, insertedQuestion.getText());
 	}
 	
@@ -102,8 +102,8 @@ public class QuestionRepositoryTest {
         TheoremBattle exampleTheoremBattle = new TheoremBattle("Example theorem battle", exampleTheorem1, exampleTheorem2);
         localQuestionService.save(exampleTheoremBattle);
 
-        String insertedOpenQuestionType = localQuestionService.getQuestionTypeById(exampleOpenQuestion.getID());
-        String insertedTheoremBattleType = localQuestionService.getQuestionTypeById(exampleTheoremBattle.getID());
+        String insertedOpenQuestionType = localQuestionService.getQuestionTypeById(exampleOpenQuestion.getQuestionId());
+        String insertedTheoremBattleType = localQuestionService.getQuestionTypeById(exampleTheoremBattle.getQuestionId());
 
         assertEquals(openQuestionTypeString, insertedOpenQuestionType);
 		assertEquals(theoremBattleTypeString, insertedTheoremBattleType);
@@ -120,7 +120,7 @@ public class QuestionRepositoryTest {
 		exampleOpenQuestion.setText(updatedExampleQuestionText);
 		localQuestionService.update(exampleOpenQuestion);
 
-        OpenQuestion updatedOpenQuestion = (OpenQuestion) localQuestionService.getById(exampleOpenQuestion.getID());
+        OpenQuestion updatedOpenQuestion = (OpenQuestion) localQuestionService.getByQuestionId(exampleOpenQuestion.getQuestionId());
 		assertEquals(updatedExampleQuestionText, updatedOpenQuestion.getText());
 	}
 	
@@ -129,9 +129,9 @@ public class QuestionRepositoryTest {
 		Question exampleQuestion = new OpenQuestion("Example question text");
 		localQuestionService.save(exampleQuestion);
 
-        exampleQuestion = localQuestionService.getById(exampleQuestion.getID());
+        exampleQuestion = localQuestionService.getByQuestionId(exampleQuestion.getQuestionId());
         localQuestionService.delete(exampleQuestion);
 
-		assertNull(localQuestionService.getById(exampleQuestion.getID()));
+		assertNull(localQuestionService.getByQuestionId(exampleQuestion.getQuestionId()));
 	}
 }

@@ -25,4 +25,19 @@ public class RoutingRule {
          * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
          */
 	}
+
+	public int getRoutingRuleId() {
+		return routingRuleId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
+	
 }
