@@ -455,21 +455,21 @@ public class Questionnaire {
         Theorem secondTheorem = ((TheoremBattle) question).getSecondTheorem();
 
         if (questionAnswer == 'C') {
-            subWeightArray[0] += firstTheorem.getSubWeight1();
-            subWeightArray[1] += firstTheorem.getSubWeight2();
-            subWeightArray[2] += firstTheorem.getSubWeight3();
+            subWeightArray[0] += firstTheorem.getDenial();
+            subWeightArray[1] += firstTheorem.getRecognition();
+            subWeightArray[2] += firstTheorem.getDevelopment();
 
-            subWeightArray[0] += secondTheorem.getSubWeight1();
-            subWeightArray[1] += secondTheorem.getSubWeight2();
-            subWeightArray[2] += secondTheorem.getSubWeight3();
+            subWeightArray[0] += secondTheorem.getDenial();
+            subWeightArray[1] += secondTheorem.getRecognition();
+            subWeightArray[2] += secondTheorem.getDevelopment();
         } else if (questionAnswer == 'A' || questionAnswer == 'B') {
-            subWeightArray[0] += firstTheorem.getSubWeight1();
-            subWeightArray[1] += firstTheorem.getSubWeight2();
-            subWeightArray[2] += firstTheorem.getSubWeight3();
+            subWeightArray[0] += firstTheorem.getDenial();
+            subWeightArray[1] += firstTheorem.getRecognition();
+            subWeightArray[2] += firstTheorem.getDevelopment();
         } else if (questionAnswer == 'D' || questionAnswer == 'E') {
-            subWeightArray[0] += secondTheorem.getSubWeight1();
-            subWeightArray[1] += secondTheorem.getSubWeight2();
-            subWeightArray[2] += secondTheorem.getSubWeight3();
+            subWeightArray[0] += secondTheorem.getDenial();
+            subWeightArray[1] += secondTheorem.getRecognition();
+            subWeightArray[2] += secondTheorem.getDevelopment();
         }
     }
 }

@@ -31,17 +31,17 @@
 				
 				            <div class="pure-u-1 pure-u-md-1-2">
 				                <label for="weightDenial">Weging ontkenning</label>
-				                <input th:value="${i.subWeight1}" name="sub1" id="weightDenial" class="pure-u-23-24" type="number" min="0" max="30" step="0.1" />
+				                <input name="denial" th:value="${i.subWeight1}" id="weightDenial" class="pure-u-23-24" type="number" min="0" max="30" step="0.1" />
 				            </div>
 				            
 				            <div class="pure-u-1 pure-u-md-1-2">
 				                <label for="weightRecognition">Weging herkenning</label>
-				                <input name="sub2" th:value="${i.subWeight2}" id="weightRecognition" class="pure-u-23-24" type="number" min="0" max="30" step="0.1" />
+				                <input name="recognition" th:value="${i.subWeight2}" id="weightRecognition" class="pure-u-23-24" type="number" min="0" max="30" step="0.1" />
 				            </div>
 				            	
 				            <div class="pure-u-1 pure-u-md-1-2">
 				                <label for="weightDevelopment">Weging ontwikkeling</label>
-				                <input name="sub3" th:value="${i.subWeight3}" id="weightDevelopment" class="pure-u-23-24" type="number" min="0" max="30" step="0.1" />
+				                <input name="development" th:value="${i.subWeight3}" id="weightDevelopment" class="pure-u-23-24" type="number" min="0" max="30" step="0.1" />
 				            </div>			
 				        </div>
 				        <a class="pure-button pure-button cancelButton" href="managetheorems">Annuleer</a>

@@ -46,7 +46,7 @@ public class AdminController {
 	 * If the user is not an admin, or is not logged in, redirect to the previous page.
 	 */
     @RequestMapping(value="/adminPanel")
-    public String showAdmin(Model model, HttpSession session) {
+    public String adminDashboard(Model model, HttpSession session) {
     	boolean isAdmin = checkIfAdmin(session);
 		
     	if (isAdmin) {
@@ -116,30 +116,25 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 
 		if (isAdmin) {
-			// Request the personalityType number from the browser, turn it into an 'int',
-			// and request the personalityType from the database.
 			String theoremPers = req.getParameter("personality");
 			int theoremPersNumber = Integer.parseInt(theoremPers);
 			PersonalityType personality = localPersonalityTypeService.getById(theoremPersNumber);
-
-			// Request the subweights from the browser, and convert them to 'double' values.
-			String subweight1number = req.getParameter("sub1");
-			String subweight2number = req.getParameter("sub2");
-			String subweight3number = req.getParameter("sub3");
-			double sub1 = Double.parseDouble(subweight1number);
-			double sub2 = Double.parseDouble(subweight2number);
-			double sub3 = Double.parseDouble(subweight3number);
-
-			// Request the theorem text from the browser.
+			
+			String denialValue = req.getParameter("denial");
+			String recognitionValue = req.getParameter("recognition");
+			String developmentValue = req.getParameter("development");
+			double denial = Double.parseDouble(denialValue);
+			double recognition = Double.parseDouble(recognitionValue);
+			double development = Double.parseDouble(developmentValue);
+			
 			String text = req.getParameter("text");
-
-			// Request the theorem weight from the browser, and convert it to a 'double' value.
+			
 			String theoremWeight = req.getParameter("weight");
 			double weight = Double.parseDouble(theoremWeight);
 
 			Theorem theorem = new Theorem();
 
-			addToTheorem(theorem, personality, sub1, sub2, sub3, text, weight);
+			addToTheorem(theorem, personality, denial, recognition, development, text, weight);
 
 			localTheoremService.save(theorem);
 
@@ -182,35 +177,27 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
-			// Request the theorem number from the browser, turn it into an 'int',
-			// and request the theorem from the database.
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
 			Theorem theorem = localTheoremService.getById(TheoremNumber);
-
-			// Request the personalityType number from the browser, turn it into an 'int',
-			// and request the personalityType from the database.
+			
 			String theoremPers = req.getParameter("personality");
 			int theoremPersNumber = Integer.parseInt(theoremPers);
 			PersonalityType personality = localPersonalityTypeService.getById(theoremPersNumber);
-
-			// Request the subweights from the browser, and convert them to 'double' values.
-			String subweight1number = req.getParameter("sub1");
-			String subweight2number = req.getParameter("sub2");
-			String subweight3number = req.getParameter("sub3");
-			double sub1 = Double.parseDouble(subweight1number);
-			double sub2 = Double.parseDouble(subweight2number);
-			double sub3 = Double.parseDouble(subweight3number);
-
-			// Request the theorem text from the browser.
+			
+			String denialValue = req.getParameter("denial");
+			String recognitionValue = req.getParameter("recognition");
+			String developmentValue = req.getParameter("development");
+			double denial = Double.parseDouble(denialValue);
+			double recognition = Double.parseDouble(recognitionValue);
+			double development = Double.parseDouble(developmentValue);
+			
 			String text = req.getParameter("text");
-
-			// Request the theorem weight from the browser, and convert it to a 'double' value.
+			
 			String theoremWeight = req.getParameter("weight");
 			double weight = Double.parseDouble(theoremWeight);
-
-			// Update the theorem
-			addToTheorem(theorem, personality, sub1, sub2, sub3, text, weight);
+			
+			addToTheorem(theorem, personality, denial, recognition, development, text, weight);
 
 			localTheoremService.update(theorem);
 
@@ -220,12 +207,12 @@ public class AdminController {
 		}
 	}
 
-	private void addToTheorem(Theorem theorem, PersonalityType personality, double sub1, double sub2, double sub3,
+	private void addToTheorem(Theorem theorem, PersonalityType personality, double denial, double recognition, double development,
 			String text, double weight) {
 		theorem.setPersonalityType(personality);
-		theorem.setSubWeight1(sub1);
-		theorem.setSubWeight2(sub2);
-		theorem.setSubWeight3(sub3);
+		theorem.setDenial(denial);
+		theorem.setRecognition(recognition);
+		theorem.setDevelopment(development);
 		theorem.setText(text);
 		theorem.setWeight(weight);
 	}
