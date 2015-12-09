@@ -8,6 +8,8 @@ import nl.halewijn.persoonlijkheidstest.domain.RoutingRule;
 import nl.halewijn.persoonlijkheidstest.domain.RoutingTable;
 import nl.halewijn.persoonlijkheidstest.domain.User;
 import nl.halewijn.persoonlijkheidstest.services.IObjectService;
+import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
+import nl.halewijn.persoonlijkheidstest.services.IRoutingService;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LocalRoutingService {
+public class LocalRoutingService implements IObjectService<RoutingTable>, IRoutingService {
 
 	@Autowired
 	private RoutingTableRepository routingTableRepository;
@@ -24,8 +26,34 @@ public class LocalRoutingService {
         return routingTableRepository.findByRouteId(tableId);
     }
 
+	@Override
     public List<RoutingTable> getRoutingRulesByQuestion(Question question) {
         return routingTableRepository.findByQuestion(question);
     }
+
+	@Override
+	public RoutingTable save(RoutingTable routingTable) {
+		return routingTableRepository.save(routingTable);
+	}
+
+	@Override
+	public void delete(RoutingTable routingTable) {
+		routingTableRepository.delete(routingTable);
+	}
+
+	@Override
+	public List<RoutingTable> getAll() {
+		return routingTableRepository.findAll();
+	}
+
+	@Override
+	public RoutingTable getById(int id) {
+		return routingTableRepository.findByRouteId(id);
+	}
+
+	@Override
+	public RoutingTable update(RoutingTable routingTable) {
+		return routingTableRepository.save(routingTable);
+	}
 
 }
