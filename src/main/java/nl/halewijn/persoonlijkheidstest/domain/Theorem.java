@@ -22,21 +22,21 @@ public class Theorem {
 	private double weight;
 
 	@NotNull
-	private double subWeight1;
+	private double denial;
 
 	@NotNull
-	private double subWeight2;
+	private double recognition;
 
 	@NotNull
-	private double subWeight3;
+	private double development;
 	
-	public Theorem(PersonalityType personalityType, String text, double weight, double subWeight1, double subWeight2, double subWeight3) {
+	public Theorem(PersonalityType personalityType, String text, double weight, double denial, double recognition, double development) {
 		this.personalityType = personalityType;
         this.text = text;
 		this.weight = weight;
-		this.subWeight1 = subWeight1;
-		this.subWeight2 = subWeight2;
-		this.subWeight3 = subWeight3;
+		this.denial = denial;
+		this.recognition = recognition;
+		this.development = development;
 	}
 
 	public Theorem() {
@@ -74,27 +74,27 @@ public class Theorem {
 		this.weight = weight;
 	}
 
-	public double getSubWeight1() {
-		return subWeight1;
+	public double getDenial() {
+		return denial;
 	}
 
-	public void setSubWeight1(double subWeight1) {
-		this.subWeight1 = subWeight1;
+	public void setDenial(double denial) {
+		this.denial = denial;
 	}
 
-	public double getSubWeight2() {
-		return subWeight2;
+	public double getRecognition() {
+		return recognition;
 	}
 
-	public void setSubWeight2(double subWeight2) {
-		this.subWeight2 = subWeight2;
+	public void setRecognition(double recognition) {
+		this.recognition = recognition;
 	}
 
-	public double getSubWeight3() {
-		return subWeight3;
+	public double getDevelopment() {
+		return development;
 	}
 
-	public void setSubWeight3(double subWeight3) {
-		this.subWeight3 = subWeight3;
+	public void setDevelopment(double development) {
+		this.development = development;
 	}
 }
