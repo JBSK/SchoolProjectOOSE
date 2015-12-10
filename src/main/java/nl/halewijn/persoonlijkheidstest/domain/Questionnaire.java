@@ -69,23 +69,11 @@ public class Questionnaire {
 		Question previousQuestion = getPreviousQuestion();
         String answerString = httpServletRequest.getParameter("answer");
         if (previousQuestion instanceof TheoremBattle) {
-
+        	List<Character> validAnswers = Arrays.asList('A', 'B', 'C', 'D', 'E');
+        	
             char answer = answerString.charAt(0);
-            switch (answer) {
-                case 'A':
-                    break;
-                case 'B':
-                    break;
-                case 'C':
-                    break;
-                case 'D':
-                    break;
-                case 'E':
-                    break;
-                default:
-                    errors.add("Het ingevulde antwoord is ongeldig, probeer het alstublieft opnieuw.");
-                    model.addAttribute("error", getErrorsInLines());
-                    return showNextQuestion(model, previousQuestion);
+            if(!validAnswers.contains(answer)) {
+                return showInvalidAnswerError(model, previousQuestion);
             }
         }
 		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
@@ -98,6 +86,15 @@ public class Questionnaire {
 			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
 			return showResults(model, session, localPersonalityTypeService);
 		}	
+	}
+
+	/**
+     * Reloads the question page with an error message saying that the submitted answer is invalid.
+     */
+	private String showInvalidAnswerError(Model model, Question previousQuestion) {
+		errors.add("Het ingevulde antwoord is ongeldig, probeer het alstublieft opnieuw.");
+		model.addAttribute("error", getErrorsInLines());
+		return showNextQuestion(model, previousQuestion);
 	}
 
     /**
