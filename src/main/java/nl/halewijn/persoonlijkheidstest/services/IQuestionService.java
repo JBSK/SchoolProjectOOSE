@@ -9,7 +9,7 @@ import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 
 public interface IQuestionService {
 
-	void save(Question question);
+	Question save(Question question);
 	void delete(Question question);
 	List<Question> getAll();
 	void update(Question question);

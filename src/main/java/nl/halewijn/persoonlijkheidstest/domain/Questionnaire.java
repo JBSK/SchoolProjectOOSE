@@ -230,6 +230,12 @@ public class Questionnaire {
         int secondaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
         PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
+
+        /*
+		String tweetText = "Mijn persoonlijkheidstype is " + primaryPersonalityType.getName() + "! Test jezelf hier!";
+		model.addAttribute("tweetText", tweetText); // TODO: add other social media/refactor
+        */
+
         return Constants.result;
     }
 

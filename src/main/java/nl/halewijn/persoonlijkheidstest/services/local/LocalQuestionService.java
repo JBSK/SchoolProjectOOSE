@@ -1,7 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 import nl.halewijn.persoonlijkheidstest.datasource.repository.QuestionRepository;
-import nl.halewijn.persoonlijkheidstest.datasource.repository.RoutingTableRepository;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
@@ -45,11 +44,10 @@ public class LocalQuestionService implements IQuestionService  {
 		return questionRepository.findAllByText(text);
 	}
 
-	/**
+	/*
 	 * Firstly, requests the related personality type from the database.
 	 * Secondly, requests all theorems, which have this type, from the database.
 	 * Thirdly, requests all questions, which contain one of these theorems, from the database.
-	 *
 	 */
 	@Override
 	public List<Question> findAllByPersonalityTypeId(int typeId) {
@@ -70,15 +68,15 @@ public class LocalQuestionService implements IQuestionService  {
      * Returns a list of all theorem battles which contain only a specific theorem. Does not account for duplicates.
      */
 	public List<TheoremBattle> getAllByTheorem(Theorem theorem) {
-        List<TheoremBattle> allRelevantTheoremBattles = questionRepository.findAllByFirstTheorem(theorem); // Already store the first half of all relevant theorem battles.
-        List<TheoremBattle> secondHalfOfTheoremBattles = questionRepository.findAllBySecondTheorem(theorem);
+        List<TheoremBattle> allRelevantTheoremBattles = questionRepository.findByFirstTheorem(theorem); // Already store the first half of all relevant theorem battles.
+        List<TheoremBattle> secondHalfOfTheoremBattles = questionRepository.findBySecondTheorem(theorem);
         allRelevantTheoremBattles.addAll(secondHalfOfTheoremBattles);
 		return allRelevantTheoremBattles;
 	}
 
 	@Override
-	public void save(Question question) {
-		questionRepository.save(question);
+	public Question save(Question question) {
+		return questionRepository.save(question);
 	}
 	
 	@Override
@@ -168,23 +166,8 @@ public class LocalQuestionService implements IQuestionService  {
 	private Question  processPersonalityTypeRoutingRule(Question previousQuestion, int ruleParam) {
 		List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
 		if(!relevantQuestions.isEmpty()) {
-            // Sort all questions ascending on question ID.
-            Collections.sort(relevantQuestions, new Comparator<Question>() {
-                @Override
-                public int compare(Question q1, Question q2) {
-                    int q1Id = q1.getQuestionId();
-                    int q2Id = q2.getQuestionId();
+            sortQuestionsArray(relevantQuestions);
 
-                    if (q1Id < q2Id) {
-                        return -1;
-                    } else if (q1Id == q2Id) {
-                        return 0;
-                    } else {
-                        return 1;
-                    }
-                }
-            });
-            
 			Question firstQuestionInTheList = relevantQuestions.get(0);
 			while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
 				try { 
@@ -201,6 +184,27 @@ public class LocalQuestionService implements IQuestionService  {
 		}
 		return null;
 	}
+
+    /*
+     * Sort an list of Questions by their ascending question IDs.
+     */
+    private void sortQuestionsArray(List<Question> arrayToSort) {
+        Collections.sort(arrayToSort, new Comparator<Question>() {
+            @Override
+            public int compare(Question q1, Question q2) {
+                int q1Id = q1.getQuestionId();
+                int q2Id = q2.getQuestionId();
+
+                if (q1Id < q2Id) {
+                    return -1;
+                } else if (q1Id == q2Id) {
+                    return 0;
+                } else {
+                    return 1;
+                }
+            }
+        });
+    }
 
 	/**
 	 * Returns the next question based on the previous question.

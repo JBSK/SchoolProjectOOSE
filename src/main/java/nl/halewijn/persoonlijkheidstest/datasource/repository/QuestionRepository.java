@@ -16,8 +16,8 @@ public interface QuestionRepository extends JpaSpecificationExecutor<Question>, 
 
 	Question findByQuestionId(int questionId);
 
-	List<TheoremBattle> findAllByFirstTheorem(Theorem firstTheorem);
+	List<TheoremBattle> findByFirstTheorem(Theorem firstTheorem);
 
-	List<TheoremBattle> findAllBySecondTheorem(Theorem secondTheorem);
+	List<TheoremBattle> findBySecondTheorem(Theorem secondTheorem);
 
 }
