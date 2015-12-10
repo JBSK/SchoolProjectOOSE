@@ -11,9 +11,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +24,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 @Controller
 public class AdminController {
-	
+
 	@Autowired
 	private LocalUserService localUserService;
 	
@@ -38,6 +36,8 @@ public class AdminController {
 	
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
+
+	String manageTheorems = "manageTheorems";
 
 	/**
 	 * Check whether or not the user is an admin.
@@ -120,10 +120,9 @@ public class AdminController {
 			Theorem theorem = new Theorem();
 
 			getTheoremValues(req, theorem);
-
 			localTheoremService.save(theorem);
 
-			return Constants.redirect + "manageTheorems";
+			return Constants.redirect + manageTheorems;
 		} else {
 			return "redirect:/";
 		}
@@ -158,9 +157,9 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
-			String theoremNumber = req.getParameter("number");
-			int TheoremNumber = Integer.parseInt(theoremNumber);
-			Theorem theorem = localTheoremService.getById(TheoremNumber);
+			String theoremNumberString = req.getParameter("number");
+			int theoremNumber = Integer.parseInt(theoremNumberString);
+			Theorem theorem = localTheoremService.getById(theoremNumber);
 			model.addAttribute("theorem", theorem);
 
 			List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
@@ -182,15 +181,15 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
-			String theoremNumber = req.getParameter("number");
-			int TheoremNumber = Integer.parseInt(theoremNumber);
-			Theorem theorem = localTheoremService.getById(TheoremNumber);
+			String theoremNumberString = req.getParameter("number");
+			int theoremNumber = Integer.parseInt(theoremNumberString);
+			Theorem theorem = localTheoremService.getById(theoremNumber);
 
 			getTheoremValues(req, theorem);
 
 			localTheoremService.update(theorem);
 
-			return Constants.redirect + "manageTheorems";
+			return Constants.redirect + manageTheorems;
 		} else {
 			return Constants.redirect;
 		}
@@ -214,12 +213,12 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 
 		if (isAdmin) {
-			String theoremNumber = req.getParameter("number");
-			int TheoremNumber = Integer.parseInt(theoremNumber);
-			Theorem theorem = localTheoremService.getById(TheoremNumber);
+			String theoremNumberString = req.getParameter("number");
+			int theoremNumber = Integer.parseInt(theoremNumberString);
+			Theorem theorem = localTheoremService.getById(theoremNumber);
 			localTheoremService.delete(theorem);
 
-			return Constants.redirect + "manageTheorems";
+			return Constants.redirect + manageTheorems;
 		} else {
 			return Constants.redirect;
 		}
@@ -281,9 +280,9 @@ public class AdminController {
 	 * Check whether someone is an admin, a regular user, or not logged in at all.
 	 */
 	public boolean checkIfAdmin(HttpSession session) {
-		try {
+		if(session.getAttribute(Constants.admin) != null) {
 			return (boolean) session.getAttribute(Constants.admin);
-		} catch (NullPointerException e) {
+		} else {
 			String email = (String) session.getAttribute(Constants.email);
 			User user = localUserService.findByName(email);
 			if (user != null) {
