@@ -12,8 +12,7 @@ import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,12 +43,12 @@ public class LocalQuestionService implements IQuestionService  {
 	public List<Question> findAllByText(String text) {
 		return questionRepository.findAllByText(text);
 	}
-	
+
 	/**
 	 * Firstly, requests the related personality type from the database.
 	 * Secondly, requests all theorems, which have this type, from the database.
 	 * Thirdly, requests all questions, which contain one of these theorems, from the database.
-	 * 
+	 *
 	 */
 	@Override
 	public List<Question> findAllByPersonalityTypeId(int typeId) {
@@ -65,9 +64,15 @@ public class LocalQuestionService implements IQuestionService  {
 		
 		return questionsWithTheoremsWithRelevantType;
 	}
-	
+
+    /*
+     * Returns a list of all theorem battles which contain only a specific theorem. Does not account for duplicates.
+     */
 	public List<TheoremBattle> getAllByTheorem(Theorem theorem) {
-		return questionRepository.findAllByFirstTheorem(theorem);
+        List<TheoremBattle> allRelevantTheoremBattles = questionRepository.findAllByFirstTheorem(theorem); // Already store the first half of all relevant theorem battles.
+        List<TheoremBattle> secondHalfOfTheoremBattles = questionRepository.findAllBySecondTheorem(theorem);
+        allRelevantTheoremBattles.addAll(secondHalfOfTheoremBattles);
+		return allRelevantTheoremBattles;
 	}
 
 	@Override
@@ -106,16 +111,15 @@ public class LocalQuestionService implements IQuestionService  {
 	 * 
 	 * If a next question exists, this question is requested from the database, and then returned.
 	 * If the previous question was part of a routing rule, the next question of this routing rule is returned.
-	 * 
+	 *
 	 * If the previous question wasn't part of a routing rule, the next question will be requested based on question id.
-	 * 
+	 *
 	 * If no next question exists, a null value is returned.
 	 */
-	
 	@Override
 	public Question getNextQuestion(Question previousQuestion, String answer) {
 		List<RoutingTable> tables = localRoutingService.getRoutingRulesByQuestion(previousQuestion);
-		if(tables.isEmpty() == false) {
+		if(!tables.isEmpty()) {
 			for(RoutingTable table : tables){ 
 				if(table.getAnswer() == answer.charAt(0)){  
 					RoutingRule rule = table.getRoutingRule();
@@ -127,32 +131,34 @@ public class LocalQuestionService implements IQuestionService  {
 		}
 		return getNextChronologicalQuestion(previousQuestion);		
 	}
-	
+
 	/**
 	 * Determines what the next question should be.
 	 * This is based on the previous question, and the routing rules.
-	 * 
+	 *
 	 * If routing rule type one applies, the next question is called based on its id.
 	 * If routing rule type two applies, the next question is called based on its personality type.
 	 * If neither applies, the next question is the previous question's id is incremented by one.
 	 */
 	private Question determineFollowUpQuestion(Question previousQuestion, int ruleId, int ruleParam) {
 		switch(ruleId){
-			case 1:
+            case 1:
 				if (ruleParam > previousQuestion.getQuestionId()) {
 					return getByQuestionId(ruleParam);
-				}
+				} else {
+                    return null; // We've already answered the specified question.
+                }
 			case 2:
 				return processPersonalityTypeRoutingRule(previousQuestion, ruleParam);
 			default:
 				return getNextChronologicalQuestion(previousQuestion);
 		}
 	}
-	
+
 	/**
 	 * Requests all questions with a specific personality type, based on the routing rules
 	 * If there are none, a null value is returned.
-	 * 
+	 *
 	 * If there are questions returned, check whether they are eligible to be the next question.
 	 * If it isn't, skip the question until an eligible one is found.
 	 * If no eligible question is found, return a null value.
@@ -160,7 +166,25 @@ public class LocalQuestionService implements IQuestionService  {
 	 */
 	private Question  processPersonalityTypeRoutingRule(Question previousQuestion, int ruleParam) {
 		List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
-		if(relevantQuestions.isEmpty() == false){
+
+		if(!relevantQuestions.isEmpty()) {
+            // Sort all questions ascending on question ID.
+            Collections.sort(relevantQuestions, new Comparator<Question>() {
+                @Override
+                public int compare(Question q1, Question q2) {
+                    int q1Id = q1.getQuestionId();
+                    int q2Id = q2.getQuestionId();
+
+                    if (q1Id < q2Id) {
+                        return -1;
+                    } else if (q1Id == q2Id) {
+                        return 0;
+                    } else {
+                        return 1;
+                    }
+                }
+            });
+
 			Question firstQuestionInTheList = relevantQuestions.get(0);
 			while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
 				try { 
@@ -177,12 +201,12 @@ public class LocalQuestionService implements IQuestionService  {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns the next question based on the previous question.
 	 * If there is no next question, a null value is returned.
 	 * This ,presumably, marks the end of the questionnaire.
-	 * 
+	 *
 	 * There must always be a previous question.
 	 * It is presumed that, when this is not the case, this function can never be called.
 	 */
@@ -201,19 +225,18 @@ public class LocalQuestionService implements IQuestionService  {
 	 * 
 	 * If it doesn't exist, a null value is returned.
 	 */
-	
 	@Override
 	public Question getFirstQuestion(Questionnaire questionnaire) {
-		Question firstQuestion = null;
+        Question firstQuestion = null;
 
-        if(getByQuestionId(1) != null) {
+        if (getByQuestionId(1) != null) {
             firstQuestion = getByQuestionId(1);
         }
 
-		questionnaire.addQuestion(firstQuestion);
-		return firstQuestion;
-	}
-	
+        questionnaire.addQuestion(firstQuestion);
+        return firstQuestion;
+    }
+
 	/**
 	 * This sets the answer for question X at Y.
 	 * 
@@ -222,7 +245,6 @@ public class LocalQuestionService implements IQuestionService  {
 	 * If the question was an open question, the answer is requested from the browser session.
 	 * The requested text will be set as the answer.
 	 */
-	
 	@Override
 	public void setQuestionAnswer(HttpServletRequest req, Question previousQuestion) {
 		String answer = req.getParameter("answer");
