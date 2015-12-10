@@ -250,7 +250,86 @@ public class AdminControllerTest {
 		assertEquals("redirect:/manageTheorems", adminController.deleteTheorem(model, session, req));
 		assertEquals(0, localTheoremService.getAll().size(), 0);
 	}
-
+	
+	@Test
+	public void manageQuestionsTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.manageQuestions(model, session, req));
+		
+		User user = new User("duncan@email.eu", true);
+		setUserPassword(user);
+		localUserService.save(user);
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		
+		assertEquals("managequestions", adminController.manageQuestions(model, session, req));
+	}
+	
+	@Test
+	public void sendMessagesTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.sendMessages(model, session, req));
+		
+		User user = new User("duncan@email.eu", true);
+		setUserPassword(user);
+		localUserService.save(user);
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		
+		assertEquals("sendmessages", adminController.sendMessages(model, session, req));
+	}
+	
+	@Test
+	public void userOverviewTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.userOverview(model, session, req));
+		
+		User user = new User("duncan@email.eu", true);
+		setUserPassword(user);
+		localUserService.save(user);
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		
+		assertEquals("useroverview", adminController.userOverview(model, session, req));
+	}
+	
+	@Test
+	public void editResultTextsTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.editResultTexts(model, session, req));
+		
+		User user = new User("duncan@email.eu", true);
+		setUserPassword(user);
+		localUserService.save(user);
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		
+		assertEquals("editresulttexts", adminController.editResultTexts(model, session, req));
+	}
+	
+	@Test
+	public void editAnswerValuesTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		
+		assertEquals(Constants.redirect, adminController.editAnswerValues(model, session, req));
+		
+		User user = new User("duncan@email.eu", true);
+		setUserPassword(user);
+		localUserService.save(user);
+		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
+		
+		assertEquals("editanswervalues", adminController.editAnswerValues(model, session, req));
+	}
 
 	@Test
 	public void checkIfAdminTest() {
@@ -261,8 +340,9 @@ public class AdminControllerTest {
 		
 		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
 		assertEquals("duncan@email.eu", session.getAttribute("email"));
-		session.setAttribute("email", "duncan@email.eu");
+		when(session.getAttribute("admin")).thenReturn(true);
 		assertEquals(null, localUserService.findByName((String) session.getAttribute("email")));
+		assertEquals(true, adminController.checkIfAdmin(session));
 	}
 
 	private void getParameters(HttpServletRequest req, String typeIDstring) {
