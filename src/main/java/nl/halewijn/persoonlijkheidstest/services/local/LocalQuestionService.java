@@ -107,7 +107,7 @@ public class LocalQuestionService implements IQuestionService  {
 	@Override
 	public Question getNextQuestion(Question previousQuestion, String answer) {
 		List<RoutingTable> tables = localRoutingService.getRoutingRulesByQuestion(previousQuestion);
-		if(tables.isEmpty() == false) {
+		if(!tables.isEmpty()) {
 			for(RoutingTable table : tables){ 
 				if(table.getAnswer() == answer.charAt(0)){  
 					RoutingRule rule = table.getRoutingRule();
@@ -135,7 +135,7 @@ public class LocalQuestionService implements IQuestionService  {
 
 	private Question  processPersonalityTypeRoutingRule(Question previousQuestion, int ruleParam) {
 		List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
-		if(relevantQuestions.isEmpty() == false){
+		if(!relevantQuestions.isEmpty()){
 			Question firstQuestionInTheList = relevantQuestions.get(0);
 			while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
 				try { 
