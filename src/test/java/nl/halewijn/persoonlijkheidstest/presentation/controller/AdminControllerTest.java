@@ -209,7 +209,7 @@ public class AdminControllerTest {
 		localTheoremService.save(theorem);
 		assertEquals(localTheoremService.getAll().size(), 1, 0);
 		
-		when(req.getParameter("number")).thenReturn(typeIDstring);
+		when(req.getParameter("number")).thenReturn(Integer.toString(theorem.getTheoremID()));
 		assertEquals(1, localTheoremService.getAll().size(), 0);
 
 		getParameters(req, typeIDstring);
@@ -237,7 +237,6 @@ public class AdminControllerTest {
 		localPersonalityTypeService.save(type);
 		assertEquals(1, localPersonalityTypeService.getAll().size(), 0);
 		int typeID = type.getTypeID();
-		String typeIDstring = Integer.toString(typeID);
 
 		assertEquals(localPersonalityTypeService.getById(typeID).getName(), "TestType");
 		
@@ -245,7 +244,7 @@ public class AdminControllerTest {
 		localTheoremService.save(theorem);
 		assertEquals(localTheoremService.getAll().size(), 1, 0);
 
-		when(req.getParameter("number")).thenReturn(typeIDstring);
+		when(req.getParameter("number")).thenReturn(Integer.toString(theorem.getTheoremID()));
 		
 		assertEquals("redirect:/manageTheorems", adminController.deleteTheorem(model, session, req));
 		assertEquals(0, localTheoremService.getAll().size(), 0);
