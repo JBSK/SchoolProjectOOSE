@@ -70,7 +70,6 @@ public class Questionnaire {
         String answerString = httpServletRequest.getParameter("answer");
         if (previousQuestion instanceof TheoremBattle) {
         	List<Character> validAnswers = Arrays.asList('A', 'B', 'C', 'D', 'E');
-        	
             char answer = answerString.charAt(0);
             if(!validAnswers.contains(answer)) {
                 return showInvalidAnswerError(model, previousQuestion);
@@ -78,7 +77,6 @@ public class Questionnaire {
         }
 		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
-		
 		if(nextQuestion != null) {
 			return showNextQuestion(model, nextQuestion);
 		}
@@ -107,9 +105,9 @@ public class Questionnaire {
         for (String error : errors) {
             errorString += error + System.lineSeparator();
         }
-
         return errorString;
     }
+
 
 	/**
 	 * Creates a new Result object that contains a list of newly created Answer objects based on
@@ -123,7 +121,6 @@ public class Questionnaire {
 		double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
 		double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
 		Result result;
-        
 		String userName = (String) session.getAttribute(Constants.email);
 		if(userName != null) {
 			User user = localUserService.findByName(userName);
@@ -131,17 +128,22 @@ public class Questionnaire {
 		} else {
 			result = new Result(null);
 		}
-		
 		localResultService.saveResult(result);
-		
-		result.setScoreDenial(subTypeResultArray[0]);
-		result.setScoreRecognition(subTypeResultArray[1]);
-		result.setScoreDevelopment(subTypeResultArray[2]);
-		
+		setSubScores(subTypeResultArray, result);
 		saveResultTypePercentagesInDb(localResultService, localPersonalityTypeService, pTypeResultArray, result);
 		saveQuestionAnswersInDb(localResultService, result, this);
 		localResultService.saveResult(result);
 	}
+
+	/**
+	 * Sets the scores for the subtypes Denial, Recognition and Development
+	  */
+	private void setSubScores(double[] subTypeResultArray, Result result) {
+		result.setScoreDenial(subTypeResultArray[0]);
+		result.setScoreRecognition(subTypeResultArray[1]);
+		result.setScoreDevelopment(subTypeResultArray[2]);
+	}
+
 	/**
 	 * This method saves the result in percentages into the database.
 	 */
@@ -211,17 +213,15 @@ public class Questionnaire {
 	private String showResults(Model model, HttpSession session, LocalPersonalityTypeService localPersonalityTypeService) {
         double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
         model.addAttribute("scores", pTypeResultArray);
-
         double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
         for (int i = 0; i < subTypeResultArray.length; i++) {
             subTypeResultArray[i] = subTypeResultArray[i] / 100;
         }
         model.addAttribute("subTypeScores", subTypeResultArray);
-
         String[] personalityTypes = getPersonalityTypesFromDb(localPersonalityTypeService);
         model.addAttribute("personalityTypes", personalityTypes);
 
-        double[] pTypeResultArrayCopy = Arrays.copyOf(pTypeResultArray, pTypeResultArray.length); //this.calculatePersonalityTypeResults(answeredQuestions);
+        double[] pTypeResultArrayCopy = Arrays.copyOf(pTypeResultArray, pTypeResultArray.length);
         int primaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
         PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
         model.addAttribute("primaryPersonalityType", primaryPersonalityType);
@@ -230,7 +230,6 @@ public class Questionnaire {
         int secondaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
         PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
-
         return Constants.result;
     }
 
