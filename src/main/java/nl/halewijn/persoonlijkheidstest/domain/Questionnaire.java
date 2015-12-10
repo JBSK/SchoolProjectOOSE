@@ -443,17 +443,14 @@ public class Questionnaire {
      * The results of this calculation are added to the "subWeightArray".
      */
     private void calculateSubWeightPoints(double[] subWeightArray, Question question) {
-
         char questionAnswer = ((TheoremBattle) question).getAnswer();
-
         Theorem firstTheorem = ((TheoremBattle) question).getFirstTheorem();
         Theorem secondTheorem = ((TheoremBattle) question).getSecondTheorem();
-
+        
         if (questionAnswer == 'C') {
             subWeightArray[0] += firstTheorem.getDenial();
             subWeightArray[1] += firstTheorem.getRecognition();
             subWeightArray[2] += firstTheorem.getDevelopment();
-
             subWeightArray[0] += secondTheorem.getDenial();
             subWeightArray[1] += secondTheorem.getRecognition();
             subWeightArray[2] += secondTheorem.getDevelopment();
