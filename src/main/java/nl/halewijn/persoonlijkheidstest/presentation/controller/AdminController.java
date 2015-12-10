@@ -25,6 +25,9 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 @Controller
 public class AdminController {
 
+	public static final String number = "number";
+	public static final String manageTheorems = "manageTheorems";
+
 	@Autowired
 	private LocalUserService localUserService;
 	
@@ -37,7 +40,6 @@ public class AdminController {
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
 
-	String manageTheorems = "manageTheorems";
 
 	/**
 	 * Check whether or not the user is an admin.
@@ -157,7 +159,7 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
-			String theoremNumberString = req.getParameter("number");
+			String theoremNumberString = req.getParameter(number);
 			int theoremNumber = Integer.parseInt(theoremNumberString);
 			Theorem theorem = localTheoremService.getById(theoremNumber);
 			model.addAttribute("theorem", theorem);
@@ -181,7 +183,7 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 		
 		if (isAdmin) {
-			String theoremNumberString = req.getParameter("number");
+			String theoremNumberString = req.getParameter(number);
 			int theoremNumber = Integer.parseInt(theoremNumberString);
 			Theorem theorem = localTheoremService.getById(theoremNumber);
 
@@ -213,7 +215,7 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 
 		if (isAdmin) {
-			String theoremNumberString = req.getParameter("number");
+			String theoremNumberString = req.getParameter(number);
 			int theoremNumber = Integer.parseInt(theoremNumberString);
 			Theorem theorem = localTheoremService.getById(theoremNumber);
 			localTheoremService.delete(theorem);
