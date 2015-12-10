@@ -2,7 +2,7 @@ package nl.halewijn.persoonlijkheidstest.services;
 
 import nl.halewijn.persoonlijkheidstest.domain.User;
 
-public interface IUserRepository {
+public interface IUserService {
 
 	User findByName(String userName);
 

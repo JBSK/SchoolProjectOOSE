@@ -49,17 +49,16 @@ public class LoginController {
 		if (user != null) {
 			boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());
 			
-			if(user.getEmailAddress() != null && correctPassword) {
+			if(correctPassword) {
 				session.setAttribute(Constants.email, user.getEmailAddress());
 				session.setAttribute("admin", user.isAdmin());
-			} else {			
+				return Constants.redirect;
+			} else {
 				return Constants.redirect + "login?attempt=wrong";
 			}
 		} else {
-
-			return Constants.redirect + "login?attempt=empty";
+			return Constants.redirect + "login?attempt=wrong";
 		}
-		return Constants.redirect;
 	}
 	
 	/**

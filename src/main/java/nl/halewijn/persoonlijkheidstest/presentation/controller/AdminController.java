@@ -13,6 +13,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -292,12 +293,17 @@ public class AdminController {
 	 * Check whether someone is an admin, a regular user, or not logged in at all.
 	 */
 	public boolean checkIfAdmin(HttpSession session) {
-		String email = (String) session.getAttribute("email");
-		User user = localUserService.findByName(email);
-		if (user != null) {
-			return user.isAdmin();
-		} else {
-			return false;
+		try {
+			return (boolean) session.getAttribute(Constants.admin);
+		} catch (NullPointerException e) {
+			String email = (String) session.getAttribute(Constants.email);
+			User user = localUserService.findByName(email);
+			if (user != null) {
+				session.setAttribute(Constants.admin, user.isAdmin());
+				return user.isAdmin();
+			} else {
+                return false;
+            }
 		}
 	}
 }
