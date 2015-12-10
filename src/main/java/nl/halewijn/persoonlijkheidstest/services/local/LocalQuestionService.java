@@ -45,6 +45,12 @@ public class LocalQuestionService implements IQuestionService  {
 		return questionRepository.findAllByText(text);
 	}
 	
+	/**
+	 * Firstly, requests the related personality type from the database.
+	 * Secondly, requests all theorems, which have this type, from the database.
+	 * Thirdly, requests all questions, which contain one of these theorems, from the database.
+	 * 
+	 */
 	@Override
 	public List<Question> findAllByPersonalityTypeId(int typeId) {
 		PersonalityType type = localPersonalityTypeService.getById(typeId);
@@ -99,9 +105,11 @@ public class LocalQuestionService implements IQuestionService  {
 	 * Checks whether a next question exists or not.
 	 * 
 	 * If a next question exists, this question is requested from the database, and then returned.
+	 * If the previous question was part of a routing rule, the next question of this routing rule is returned.
+	 * 
+	 * If the previous question wasn't part of a routing rule, the next question will be requested based on question id.
 	 * 
 	 * If no next question exists, a null value is returned.
-	 * @param answer 
 	 */
 	
 	@Override
@@ -119,7 +127,15 @@ public class LocalQuestionService implements IQuestionService  {
 		}
 		return getNextChronologicalQuestion(previousQuestion);		
 	}
-
+	
+	/**
+	 * Determines what the next question should be.
+	 * This is based on the previous question, and the routing rules.
+	 * 
+	 * If routing rule type one applies, the next question is called based on its id.
+	 * If routing rule type two applies, the next question is called based on its personality type.
+	 * If neither applies, the next question is the previous question's id is incremented by one.
+	 */
 	private Question determineFollowUpQuestion(Question previousQuestion, int ruleId, int ruleParam) {
 		switch(ruleId){
 			case 1:
@@ -132,7 +148,16 @@ public class LocalQuestionService implements IQuestionService  {
 				return getNextChronologicalQuestion(previousQuestion);
 		}
 	}
-
+	
+	/**
+	 * Requests all questions with a specific personality type, based on the routing rules
+	 * If there are none, a null value is returned.
+	 * 
+	 * If there are questions returned, check whether they are eligible to be the next question.
+	 * If it isn't, skip the question until an eligible one is found.
+	 * If no eligible question is found, return a null value.
+	 * If there is an eligible question, return it.
+	 */
 	private Question  processPersonalityTypeRoutingRule(Question previousQuestion, int ruleParam) {
 		List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
 		if(relevantQuestions.isEmpty() == false){
@@ -152,7 +177,15 @@ public class LocalQuestionService implements IQuestionService  {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Returns the next question based on the previous question.
+	 * If there is no next question, a null value is returned.
+	 * This ,presumably, marks the end of the questionnaire.
+	 * 
+	 * There must always be a previous question.
+	 * It is presumed that, when this is not the case, this function can never be called.
+	 */
 	private Question getNextChronologicalQuestion(Question previousQuestion) {
 		Question next = null;
 		if(getByQuestionId(previousQuestion.getQuestionId()+1) != null) {
