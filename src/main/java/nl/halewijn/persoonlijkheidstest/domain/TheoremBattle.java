@@ -5,12 +5,12 @@ import javax.persistence.*;
 @Entity
 public class TheoremBattle extends Question {
 	
-	@ManyToOne
-	@JoinColumn(name = "firstTheorem", referencedColumnName = "theoremId", insertable = false, updatable = false)
+	@OneToOne
+    @JoinColumn(name = "firstTheorem")
 	private Theorem firstTheorem;
 	
-	@ManyToOne
-	@JoinColumn(name = "secondTheorem", referencedColumnName = "theoremId", insertable = false, updatable = false)
+	@OneToOne
+    @JoinColumn(name = "secondTheorem")
 	private Theorem secondTheorem;
 	
 	@Transient
