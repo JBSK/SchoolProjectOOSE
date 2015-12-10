@@ -390,8 +390,6 @@ public class Questionnaire {
 	 * The results of this calculation are added to the "resultArray".
 	 */
 	private void calculateQuestionPoints(double[] resultArray, Question question) {
-		String errorMessage = "";
-
 		char questionAnswer = ((TheoremBattle) question).getAnswer();
 		
 		Theorem firstTheorem = ((TheoremBattle) question).getFirstTheorem();

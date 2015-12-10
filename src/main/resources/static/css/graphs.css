@@ -64,10 +64,10 @@
 		     *::-ms-backdrop, #barChartContainer { 
 		     	height:300px; 
 		     } /* IE11 */
-		     _:-ms-lang(x), #barChartContainer { 
-		     	height:300px; 
+		     _:-ms-lang(x), #barChartContainer {
+				 height: 300px;
+			 }
 		}
-		.content .resultrow1 #barChartCont .canvasjs-chart-credit{
-				visibility: hidden !important;}
-	     }	
+		.content .resultrow1 #barChartCont .canvasjs-chart-credit {
+				visibility: hidden !important;
 		}
