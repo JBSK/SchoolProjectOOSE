@@ -130,6 +130,9 @@ public class AdminController {
 		}
 	}
 
+	/**
+	 * Get the theorems values from the browser and convert fom strings to doubles
+     */
 	private void getTheoremValues(HttpServletRequest req, Theorem theorem) {
 		String theoremPers = req.getParameter("personality");
 		int theoremPersNumber = Integer.parseInt(theoremPers);
@@ -197,6 +200,9 @@ public class AdminController {
 		}
 	}
 
+	/**
+	 * Set all the parameters to the chosen theorem
+     */
 	private void addToTheorem(Theorem theorem, PersonalityType personality, double denial, double recognition, double development,
 			String text, double weight) {
 		theorem.setPersonalityType(personality);
