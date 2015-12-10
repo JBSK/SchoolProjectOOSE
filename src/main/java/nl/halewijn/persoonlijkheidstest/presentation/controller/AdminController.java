@@ -117,25 +117,9 @@ public class AdminController {
 		boolean isAdmin = checkIfAdmin(session);
 
 		if (isAdmin) {
-			String theoremPers = req.getParameter("personality");
-			int theoremPersNumber = Integer.parseInt(theoremPers);
-			PersonalityType personality = localPersonalityTypeService.getById(theoremPersNumber);
-			
-			String denialValue = req.getParameter("denial");
-			String recognitionValue = req.getParameter("recognition");
-			String developmentValue = req.getParameter("development");
-			double denial = Double.parseDouble(denialValue);
-			double recognition = Double.parseDouble(recognitionValue);
-			double development = Double.parseDouble(developmentValue);
-			
-			String text = req.getParameter("text");
-			
-			String theoremWeight = req.getParameter("weight");
-			double weight = Double.parseDouble(theoremWeight);
-
 			Theorem theorem = new Theorem();
 
-			addToTheorem(theorem, personality, denial, recognition, development, text, weight);
+			getTheoremValues(req, theorem);
 
 			localTheoremService.save(theorem);
 
@@ -143,6 +127,26 @@ public class AdminController {
 		} else {
 			return "redirect:/";
 		}
+	}
+
+	private void getTheoremValues(HttpServletRequest req, Theorem theorem) {
+		String theoremPers = req.getParameter("personality");
+		int theoremPersNumber = Integer.parseInt(theoremPers);
+		PersonalityType personality = localPersonalityTypeService.getById(theoremPersNumber);
+
+		String denialValue = req.getParameter("denial");
+		String recognitionValue = req.getParameter("recognition");
+		String developmentValue = req.getParameter("development");
+		double denial = Double.parseDouble(denialValue);
+		double recognition = Double.parseDouble(recognitionValue);
+		double development = Double.parseDouble(developmentValue);
+
+		String text = req.getParameter("text");
+
+		String theoremWeight = req.getParameter("weight");
+		double weight = Double.parseDouble(theoremWeight);
+
+		addToTheorem(theorem, personality, denial, recognition, development, text, weight);
 	}
 
 	/**
@@ -181,24 +185,8 @@ public class AdminController {
 			String theoremNumber = req.getParameter("number");
 			int TheoremNumber = Integer.parseInt(theoremNumber);
 			Theorem theorem = localTheoremService.getById(TheoremNumber);
-			
-			String theoremPers = req.getParameter("personality");
-			int theoremPersNumber = Integer.parseInt(theoremPers);
-			PersonalityType personality = localPersonalityTypeService.getById(theoremPersNumber);
-			
-			String denialValue = req.getParameter("denial");
-			String recognitionValue = req.getParameter("recognition");
-			String developmentValue = req.getParameter("development");
-			double denial = Double.parseDouble(denialValue);
-			double recognition = Double.parseDouble(recognitionValue);
-			double development = Double.parseDouble(developmentValue);
-			
-			String text = req.getParameter("text");
-			
-			String theoremWeight = req.getParameter("weight");
-			double weight = Double.parseDouble(theoremWeight);
-			
-			addToTheorem(theorem, personality, denial, recognition, development, text, weight);
+
+			getTheoremValues(req, theorem);
 
 			localTheoremService.update(theorem);
 
