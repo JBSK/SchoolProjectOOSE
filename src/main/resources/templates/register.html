@@ -7,9 +7,9 @@
 			<div class="content">
 				<h2 class="content-subhead"></h2>
 				<form class="registerForm" action="registerDB" method="POST">
-					<input type="email" class="zocial-dribbble" name="regEmail"  placeholder="E-mailadres" />
-					<input type="password" name="regPassword" placeholder="Wachtwoord" />
-					<input class="formError" type="password" name="regPassword2" placeholder="Wachtwoord herhalen" />
+					<input type="email" class="zocial-dribbble" name="regEmail"  placeholder="E-mailadres" required="required" />
+					<input type="password" name="regPassword" placeholder="Wachtwoord" required="required" />
+					<input class="formError" type="password" name="regPassword2" placeholder="Wachtwoord herhalen" required="required" />
 					<div th:switch="${attempt}">
 					<p th:case="'wrong'" class="errorMessage"> Gegevens zijn onjuist </p>
 					<p th:case="'empty'" class="errorMessage"> Voer uw gegevens in </p>

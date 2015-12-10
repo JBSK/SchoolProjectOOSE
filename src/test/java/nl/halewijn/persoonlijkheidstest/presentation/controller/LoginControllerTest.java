@@ -45,7 +45,7 @@ public class LoginControllerTest {
 		HttpSession httpSession = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 		
-		assertEquals("redirect:/login?attempt=empty", loginController.loginCheck(model, httpSession, httpServletRequest));
+		assertEquals("redirect:/login?attempt=wrong", loginController.loginCheck(model, httpSession, httpServletRequest));
 		
 		PasswordHash passwordHash = new PasswordHash();	
 		User newUser = new User("email@mail.com", false);
