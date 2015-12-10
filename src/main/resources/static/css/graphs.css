@@ -7,21 +7,29 @@
 			padding:0px; /*if your want to padding */
 			
 		}
-		    @media all and (-ms-high-contrast:none)
-     {
-	     #radarGrafiek { height:300px;} /* IE10 */
-	     *::-ms-backdrop, #radarChartContainer { height:300px; } /* IE11 */
-	     _:-ms-lang(x), #radarChartContainer { height:300px; }
-     }	
-     	.content .resultrow1 #radarChartContainer .radarChart { height:100%;}
+		 @media all and (-ms-high-contrast:none)
+	     {
+		     #radarGrafiek { 
+		     	height:300px;
+		     } /* IE10 */
+		     *::-ms-backdrop, #radarChartContainer { 
+		     	height:300px; 
+		     } /* IE11 */
+		     _:-ms-lang(x), #radarChartContainer { 
+		     	height:300px; 
+		     }
+	     }	
+     	.content .resultrow1 #radarChartContainer .radarChart { 
+     		height:100%;
+     	}
 		.content .resultrow1 #radarChartContainer .legend {
 				font-family: 'Raleway', sans-serif;
 				fill: #333333;
-			}
+		}
 			
 		.content .resultrow1 .radarChartContainer .tooltip {
 				fill: #333333;
-			}
+		}
 			
 		.content .resultrow1 #radarChartContainer svg {
 				background:url("/imgs/star.png");
@@ -32,7 +40,6 @@
 				padding:0px; /*if your want to padding */
 				width:100%;
 		}
-		
 		.content .resultrow1 #radarChartContainer svg {
 			background:url("/imgs/star.png");
 			background-size: contain;
@@ -44,5 +51,23 @@
 		}
 		.content .resultrow1 #barChartCont .barChart{
 			margin: 0 10px;
-		
+		}
+		.content .resultrow1 #barChartContainer{
+			height: 350px;
+			width:90%;
+		}
+		@media all and (-ms-high-contrast:none)
+	    {
+		     #barChartContainer { 
+		     	height:300px;
+		     } /* IE10 */
+		     *::-ms-backdrop, #barChartContainer { 
+		     	height:300px; 
+		     } /* IE11 */
+		     _:-ms-lang(x), #barChartContainer { 
+		     	height:300px; 
+		}
+		.content .resultrow1 #barChartCont .canvasjs-chart-credit{
+				visibility: hidden !important;}
+	     }	
 		}
