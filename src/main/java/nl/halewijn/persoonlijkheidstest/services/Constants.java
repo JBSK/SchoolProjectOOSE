@@ -2,6 +2,7 @@ package nl.halewijn.persoonlijkheidstest.services;
 
 public class Constants {
 
+	private Constants() { }
     /*
      * Serves to resolve some 'major' issues in Sonar.
      */
