@@ -124,9 +124,11 @@ public class LocalQuestionServiceTest {
          TheoremBattle battle1 = new TheoremBattle("Battle 1", theorem1, theorem2);
          TheoremBattle battle2 = new TheoremBattle("Battle 2", theorem1, theorem2);
          TheoremBattle battle3 = new TheoremBattle("Battle 3", theorem1, theorem3);
+         TheoremBattle battle4 = new TheoremBattle("Battle 4", theorem3, theorem3);
          battle1 = (TheoremBattle) localQuestionService.save(battle1);
          battle2 = (TheoremBattle) localQuestionService.save(battle2);
          battle3 = (TheoremBattle) localQuestionService.save(battle3);
+         battle4 = (TheoremBattle) localQuestionService.save(battle4);
          
          assertEquals(battle2.getQuestionId(), localQuestionService.getNextQuestion(battle1, "A").getQuestionId());
          
@@ -170,6 +172,12 @@ public class LocalQuestionServiceTest {
          routeRule4 = localRoutingService.save(routeRule4);
          
          assertEquals(battle3, localQuestionService.getNextQuestion(battle2, "E"));  
+         
+         RoutingTable routeRule5 = new RoutingTable(battle4, 'A', ruleTwo);
+         routeRule5.setRoutingRuleParam(typePerfectionist.getTypeID());
+         routeRule5 = localRoutingService.save(routeRule5);
+         
+         assertEquals(null, localQuestionService.getNextQuestion(battle4, "A"));  
     }
     
     @Test
