@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class LocalQuestionService implements IQuestionService  {
@@ -64,7 +63,7 @@ public class LocalQuestionService implements IQuestionService  {
 		return questionsWithTheoremsWithRelevantType;
 	}
 
-    /*
+    /**
      * Returns a list of all theorem battles which contain only a specific theorem. Does not account for duplicates.
      */
 	public List<TheoremBattle> getAllByTheorem(Theorem theorem) {
@@ -167,7 +166,6 @@ public class LocalQuestionService implements IQuestionService  {
 		List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
 		if(!relevantQuestions.isEmpty()) {
             sortQuestionsArray(relevantQuestions);
-
 			Question firstQuestionInTheList = relevantQuestions.get(0);
 			while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
 				try { 
@@ -185,7 +183,7 @@ public class LocalQuestionService implements IQuestionService  {
 		return null;
 	}
 
-    /*
+    /**
      * Sort an list of Questions by their ascending question IDs.
      */
     public void sortQuestionsArray(List<Question> arrayToSort) {
