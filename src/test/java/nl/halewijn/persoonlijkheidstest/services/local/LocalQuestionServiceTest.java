@@ -166,10 +166,10 @@ public class LocalQuestionServiceTest {
          assertEquals(null, localQuestionService.getNextQuestion(battle1, "C"));
          
          RoutingTable routeRule4 = new RoutingTable(battle2, 'E', ruleTwo);
-         routeRule2.setRoutingRuleParam(typePerfectionist.getTypeID());
-         routeRule2 = localRoutingService.save(routeRule2);
+         routeRule4.setRoutingRuleParam(typePerfectionist.getTypeID());
+         routeRule4 = localRoutingService.save(routeRule4);
          
-         assertEquals(battle3, localQuestionService.getNextQuestion(battle2, "E"));   
+         assertEquals(battle3, localQuestionService.getNextQuestion(battle2, "E"));  
     }
     
     @Test
@@ -195,6 +195,7 @@ public class LocalQuestionServiceTest {
     	assertEquals(newQuestion2, questionListSorted.get(0));
     }
     
+    @Test
     public void findAllTest() {
     	OpenQuestion questionOne = new OpenQuestion("1");
     	OpenQuestion questionTwo = new OpenQuestion("2");
@@ -204,6 +205,7 @@ public class LocalQuestionServiceTest {
     	assertEquals(questionsAmount+2, localQuestionService.findAll().size());
     }
     
+    @Test
     public void findAllByTextTest() {
     	OpenQuestion questionOne = new OpenQuestion("Specific text");
     	OpenQuestion questionTwo = new OpenQuestion("Specific text");
