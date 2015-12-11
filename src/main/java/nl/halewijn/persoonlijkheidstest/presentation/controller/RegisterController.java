@@ -1,7 +1,9 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import nl.halewijn.persoonlijkheidstest.services.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,20 +34,29 @@ public class RegisterController {
 	 * Else, display an error message.
 	 */
 	@RequestMapping(value="/registerDB", method=RequestMethod.POST)
-    public String registerDB(Model model, HttpServletRequest req) {
+    public String registerDB(Model model, HttpSession session, HttpServletRequest req) {
 		String regEmail = req.getParameter("regEmail");
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
 		
 		User doesUserExist = localUserService.findByName(regEmail);
 		
-		if (doesUserExist == null && regPassword.equals(regPassword2)) {
-			User user = new User(regEmail, false);
-			final PasswordHash passwordHash = new PasswordHash();
-			user.setPasswordHash(passwordHash.hashPassword(regPassword));
-			localUserService.save(user);
-		}
-		
-		return "redirect:/";
+		if (doesUserExist == null) {
+			if (regPassword.equals(regPassword2)) {
+				User user = new User(regEmail, false);
+				final PasswordHash passwordHash = new PasswordHash();
+				user.setPasswordHash(passwordHash.hashPassword(regPassword));
+				user = localUserService.save(user);
+				session.setAttribute(Constants.email, user.getEmailAddress());
+				session.setAttribute("admin", user.isAdmin());
+                return Constants.redirect;
+			} else {
+				// TODO: Show error about mismatching passwords
+                return Constants.redirect + "register?attempt=mismatch";
+			}
+		} else {
+            // TODO: Show error about username already taken? (Maybe not a good idea)
+            return Constants.redirect + "register?attempt=mismatch";
+        }
     }
 }
