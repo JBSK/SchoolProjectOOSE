@@ -44,4 +44,8 @@ public abstract class Question {
 		
 	}
 
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
+
 }
