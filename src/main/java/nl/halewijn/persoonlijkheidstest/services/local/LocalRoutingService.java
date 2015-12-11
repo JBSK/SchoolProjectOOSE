@@ -21,6 +21,9 @@ public class LocalRoutingService implements IObjectService<RoutingTable>, IRouti
 
 	@Autowired
 	private RoutingTableRepository routingTableRepository;
+	
+	@Autowired
+	private RoutingRuleRepository routingRuleRepository;
 
     public RoutingTable findById(int tableId) {
         return routingTableRepository.findByRouteId(tableId);
@@ -54,6 +57,10 @@ public class LocalRoutingService implements IObjectService<RoutingTable>, IRouti
 	@Override
 	public RoutingTable update(RoutingTable routingTable) {
 		return routingTableRepository.save(routingTable);
+	}
+	
+	public RoutingRule save(RoutingRule routingRule) {
+		return routingRuleRepository.save(routingRule);
 	}
 
 }

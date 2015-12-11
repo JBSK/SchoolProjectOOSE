@@ -25,9 +25,7 @@ public class RoutingTable implements Serializable {
     @JoinColumn(name = "routingRule")
 	private RoutingRule routingRule;
 	
-	@Null
 	private int routingRuleParam;
-    //
 
 	public RoutingTable(Question question, char answer, RoutingRule routingRule) {
         this.question = question;
