@@ -1,7 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -100,12 +98,11 @@ public class Questionnaire {
      * formatted with HTML break lines so we can easily add this to the model.
      */
     private String getErrorsInLines() {
-        String errorString = "";
-
+        StringBuilder stringBuilder = new StringBuilder();
         for (String error : errors) {
-            errorString += error + System.lineSeparator();
+        	stringBuilder.append(error);
         }
-        return errorString;
+        return stringBuilder.toString();
     }
 
 
@@ -220,24 +217,31 @@ public class Questionnaire {
         model.addAttribute("subTypeScores", subTypeResultArray);
         String[] personalityTypes = getPersonalityTypesFromDb(localPersonalityTypeService);
         model.addAttribute("personalityTypes", personalityTypes);
-
         double[] pTypeResultArrayCopy = Arrays.copyOf(pTypeResultArray, pTypeResultArray.length);
-        int primaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
-        PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
-        model.addAttribute("primaryPersonalityType", primaryPersonalityType);
-
+        int primaryPersonalityTypeID = addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
         pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
-        int secondaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
-        PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
-        model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
-
+        addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
         /*
 		String tweetText = "Mijn persoonlijkheidstype is " + primaryPersonalityType.getName() + "! Test jezelf hier!";
 		model.addAttribute("tweetText", tweetText); // TODO: add other social media/refactor
         */
-
         return Constants.result;
     }
+
+	private void addSecondaryPersonalityTypeToModel(Model model,
+			LocalPersonalityTypeService localPersonalityTypeService, double[] pTypeResultArrayCopy) {
+		int secondaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
+        PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
+        model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
+	}
+
+	private int addPrimaryPersonalityTypeToModel(Model model, LocalPersonalityTypeService localPersonalityTypeService,
+			double[] pTypeResultArrayCopy) {
+		int primaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
+        PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
+        model.addAttribute("primaryPersonalityType", primaryPersonalityType);
+		return primaryPersonalityTypeID;
+	}
 
 	/**
      * Returns the list of all personality types from the database in a String array.
@@ -399,36 +403,16 @@ public class Questionnaire {
 		
 		int firstTheoremPersonalityTypeID = firstTheorem.getPersonalityType().getTypeID();
 		int secondTheoremPersonalityTypeID = secondTheorem.getPersonalityType().getTypeID();				
-		
-		double firstTheoremPoints = 0;
-		double secondTheoremPoints = 0;
-
+		double firstTheoremPoints = 0, secondTheoremPoints = 0;
 		switch(questionAnswer) {
-			case 'A': 
-				firstTheoremPoints = ANSWER_A * firstTheorem.getWeight();
-				break;
-				
-			case 'B': 
-				firstTheoremPoints = ANSWER_B * firstTheorem.getWeight();
-				break;
-				
-			case 'C': 
-				firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();					
-				secondTheoremPoints = ANSWER_C * secondTheorem.getWeight();
-				break;
-				
-			case 'D': 
-				secondTheoremPoints = ANSWER_D * secondTheorem.getWeight();
-				break;
-				
-			case 'E': 
-				secondTheoremPoints = ANSWER_E * secondTheorem.getWeight();
-				break;
-				
-			default:
-                firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
-				secondTheoremPoints = ANSWER_C * secondTheorem.getWeight();
-				break;
+			case 'A': firstTheoremPoints = ANSWER_A * firstTheorem.getWeight(); break;
+			case 'B': firstTheoremPoints = ANSWER_B * firstTheorem.getWeight(); break;
+			case 'C': firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();					
+					  secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
+			case 'D': secondTheoremPoints = ANSWER_D * secondTheorem.getWeight(); break;
+			case 'E': secondTheoremPoints = ANSWER_E * secondTheorem.getWeight(); break;
+			default: firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
+					 secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
 		}
 		
 		resultArray[firstTheoremPersonalityTypeID - 1] += firstTheoremPoints;
@@ -436,14 +420,14 @@ public class Questionnaire {
 	}
 
     /**
-     * Calculates the total points for a subweight that were scored on a specific question.
+     * Calculates the total points for a sub weight that were scored on a specific question.
      *
      * First requests the answer that was given, the first and second theorem,
      * and the respective theorem personality types.
      *
      * Based on the answer that was given the points are calculated as follows:
      * 1. Get the default points which are allocated. These are requested from the database.
-     * 2. Multiply the value from step 1 with the theorem-specific subweight. This subweight is also requested from the database.
+     * 2. Multiply the value from step 1 with the theorem-specific sub weight. This sub weight is also requested from the database.
      *
      * The results of this calculation are added to the "subWeightArray".
      */
@@ -453,20 +437,18 @@ public class Questionnaire {
         Theorem secondTheorem = ((TheoremBattle) question).getSecondTheorem();
         
         if (questionAnswer == 'C') {
-            subWeightArray[0] += firstTheorem.getDenial();
-            subWeightArray[1] += firstTheorem.getRecognition();
-            subWeightArray[2] += firstTheorem.getDevelopment();
-            subWeightArray[0] += secondTheorem.getDenial();
-            subWeightArray[1] += secondTheorem.getRecognition();
-            subWeightArray[2] += secondTheorem.getDevelopment();
+            addSubweightsToArray(subWeightArray, firstTheorem);
+            addSubweightsToArray(subWeightArray, secondTheorem);
         } else if (questionAnswer == 'A' || questionAnswer == 'B') {
-            subWeightArray[0] += firstTheorem.getDenial();
-            subWeightArray[1] += firstTheorem.getRecognition();
-            subWeightArray[2] += firstTheorem.getDevelopment();
+            addSubweightsToArray(subWeightArray, firstTheorem);
         } else if (questionAnswer == 'D' || questionAnswer == 'E') {
-            subWeightArray[0] += secondTheorem.getDenial();
-            subWeightArray[1] += secondTheorem.getRecognition();
-            subWeightArray[2] += secondTheorem.getDevelopment();
+            addSubweightsToArray(subWeightArray, secondTheorem);
         }
     }
+
+	private void addSubweightsToArray(double[] subWeightArray, Theorem theorem) {
+		subWeightArray[0] += theorem.getDenial();
+		subWeightArray[1] += theorem.getRecognition();
+		subWeightArray[2] += theorem.getDevelopment();
+	}
 }
