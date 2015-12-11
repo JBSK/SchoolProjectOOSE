@@ -38,18 +38,12 @@ public class RegisterController {
 		String regEmail = req.getParameter("regEmail");
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
-		
+
 		User doesUserExist = localUserService.findByName(regEmail);
-		
+
 		if (doesUserExist == null) {
 			if (regPassword.equals(regPassword2)) {
-				User user = new User(regEmail, false);
-				final PasswordHash passwordHash = new PasswordHash();
-				user.setPasswordHash(passwordHash.hashPassword(regPassword));
-				user = localUserService.save(user);
-				session.setAttribute(Constants.email, user.getEmailAddress());
-				session.setAttribute("admin", user.isAdmin());
-                return Constants.redirect;
+				return getUserInfo(session, regEmail, regPassword);
 			} else {
 				// TODO: Show error about mismatching passwords
                 return Constants.redirect + "register?attempt=mismatch";
@@ -59,4 +53,17 @@ public class RegisterController {
             return Constants.redirect + "register?attempt=mismatch";
         }
     }
+
+	/**
+	 * Gets the user information and adds it to the session
+     */
+	private String getUserInfo(HttpSession session, String regEmail, String regPassword) {
+		User user = new User(regEmail, false);
+		final PasswordHash passwordHash = new PasswordHash();
+		user.setPasswordHash(passwordHash.hashPassword(regPassword));
+		user = localUserService.save(user);
+		session.setAttribute(Constants.email, user.getEmailAddress());
+		session.setAttribute("admin", user.isAdmin());
+		return Constants.redirect;
+	}
 }
