@@ -169,9 +169,26 @@ public class LocalQuestionServiceTest {
          routeRule2.setRoutingRuleParam(typePerfectionist.getTypeID());
          routeRule2 = localRoutingService.save(routeRule2);
          
-         assertEquals(battle3, localQuestionService.getNextQuestion(battle2, "E"));
-         
-         
+         assertEquals(battle3, localQuestionService.getNextQuestion(battle2, "E"));   
     }
-
+    
+    @Test
+    public void sortQuestionsArrayTest() {
+    	List<Question> questionList = new ArrayList<Question>();
+    	OpenQuestion newQuestion = new OpenQuestion("Open Question");
+    	localQuestionService.save(newQuestion);
+    	OpenQuestion newQuestion2 = new OpenQuestion("Open Question 2");
+    	questionList.add(newQuestion);
+    	questionList.add(newQuestion2);
+    	
+    	List<Question> questionListSorted = null;
+    	questionListSorted = new ArrayList<Question>(questionList);
+    	localQuestionService.sortQuestionsArray(questionListSorted);
+    	assertEquals(newQuestion2, questionListSorted.get(0));
+    	
+    	localQuestionService.sortQuestionsArray(questionListSorted);
+    	assertEquals(newQuestion2, questionListSorted.get(0));
+    	
+    }
+    
 }

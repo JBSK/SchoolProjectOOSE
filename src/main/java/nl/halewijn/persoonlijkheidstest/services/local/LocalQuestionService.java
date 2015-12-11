@@ -145,7 +145,7 @@ public class LocalQuestionService implements IQuestionService  {
 				if (ruleParam > previousQuestion.getQuestionId()) {
 					return getByQuestionId(ruleParam);
 				} else {
-                    return null; // We've already answered the specified question.
+                    return null;
                 }
 			case 2:
 				return processPersonalityTypeRoutingRule(previousQuestion, ruleParam);
@@ -188,7 +188,7 @@ public class LocalQuestionService implements IQuestionService  {
     /*
      * Sort an list of Questions by their ascending question IDs.
      */
-    private void sortQuestionsArray(List<Question> arrayToSort) {
+    public void sortQuestionsArray(List<Question> arrayToSort) {
         Collections.sort(arrayToSort, new Comparator<Question>() {
             @Override
             public int compare(Question q1, Question q2) {
