@@ -108,9 +108,11 @@ public class LocalQuestionServiceTest {
     @Test
     public void getNextQuestion() {
     	 PersonalityType typePerfectionist = new PersonalityType("Perfectionist", "primary tekst", "secondary tekst");
-         localPersonalityTypeService.save(typePerfectionist);
+    	 typePerfectionist = localPersonalityTypeService.save(typePerfectionist);
          PersonalityType typeWinnaar = new PersonalityType("Winnaar", "primary tekst", "secondary tekst");
-         localPersonalityTypeService.save(typeWinnaar);
+         typeWinnaar = localPersonalityTypeService.save(typeWinnaar);
+         PersonalityType typeVerliezer = new PersonalityType("Verliezer", "primary tekst", "secondary tekst");
+         typeVerliezer = localPersonalityTypeService.save(typeVerliezer);
 
          Theorem theorem1 = new Theorem(typePerfectionist, "Dit is een perfectionistische stelling met een weging van 1.0 .", 1.0, 0, 0, 0);
          Theorem theorem2 = new Theorem(typePerfectionist, "Dit is een perfectionistische stelling met een weging van 2.2 .", 2.2, 0, 0, 0);
@@ -132,16 +134,43 @@ public class LocalQuestionServiceTest {
          ruleOne = localRoutingService.save(ruleOne);
          RoutingRule ruleTwo = new RoutingRule("To next question with specified Type");
          ruleTwo = localRoutingService.save(ruleTwo);
+         RoutingRule ruleThree = new RoutingRule("Non existing type that should end up in the default switch.");
+         ruleThree = localRoutingService.save(ruleThree);
          
          RoutingTable routeRule = new RoutingTable(battle1, 'B', ruleOne);
          routeRule.setRoutingRuleParam(battle3.getQuestionId());
          routeRule = localRoutingService.save(routeRule);
          
-         RoutingTable routeRule2 = new RoutingTable(battle1, 'C', ruleTwo);
-         routeRule2.setRoutingRuleParam(typeWinnaar.getTypeID());
+         assertEquals(battle3.getQuestionId(), localQuestionService.getNextQuestion(battle1, "B").getQuestionId());
+         
+         routeRule.setRoutingRuleParam(0);
+         routeRule = localRoutingService.save(routeRule);
+         
+         assertEquals(null, localQuestionService.getNextQuestion(battle1, "B"));
+         
+         RoutingTable routeRule2 = new RoutingTable(battle1, 'D', ruleThree);
+         routeRule2.setRoutingRuleParam(battle3.getQuestionId());
          routeRule2 = localRoutingService.save(routeRule2);
+         
+         assertEquals(battle2.getQuestionId(), localQuestionService.getNextQuestion(battle1, "D").getQuestionId());
+         
+         RoutingTable routeRule3 = new RoutingTable(battle1, 'C', ruleTwo);
+         routeRule3.setRoutingRuleParam(typeWinnaar.getTypeID());
+         routeRule3 = localRoutingService.save(routeRule3);
            
          assertEquals(battle3.getQuestionId(), localQuestionService.getNextQuestion(battle1, "C").getQuestionId());
+         
+         routeRule3.setRoutingRuleParam(typeVerliezer.getTypeID());
+         routeRule3 = localRoutingService.save(routeRule3);
+         
+         assertEquals(null, localQuestionService.getNextQuestion(battle1, "C"));
+         
+         RoutingTable routeRule4 = new RoutingTable(battle2, 'E', ruleTwo);
+         routeRule2.setRoutingRuleParam(typePerfectionist.getTypeID());
+         routeRule2 = localRoutingService.save(routeRule2);
+         
+         assertEquals(battle3, localQuestionService.getNextQuestion(battle2, "E"));
+         
          
     }
 
