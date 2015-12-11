@@ -2,6 +2,7 @@ package nl.halewijn.persoonlijkheidstest.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "User")
@@ -15,10 +16,17 @@ public class User {
     private String passwordHash;
 
     @NotNull
+    private Date dateRegisteredOn;
+
+    @NotNull
     private boolean isAdmin = false;
+
+    @NotNull
+    private boolean isBanned = false;
 
 	public User(String emailAddress, boolean isAdmin) {
         this.emailAddress = emailAddress;
+		this.dateRegisteredOn = new Date();
         this.isAdmin = isAdmin;
 	}
 
@@ -45,6 +53,10 @@ public class User {
 		this.passwordHash = passwordHash;
 	}
 
+    public Date getDateRegisteredOn() {
+        return dateRegisteredOn;
+    }
+
     public boolean isAdmin() {
         return isAdmin;
     }
@@ -52,4 +64,13 @@ public class User {
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        isBanned = banned;
+    }
+
 }
