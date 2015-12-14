@@ -12,6 +12,7 @@ import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -187,7 +188,7 @@ public class LocalQuestionService implements IQuestionService  {
 				relevantQuestions.remove(0);
 				firstQuestionInTheList = relevantQuestions.get(0);
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 				firstQuestionInTheList = null;
 				break;
 			}
