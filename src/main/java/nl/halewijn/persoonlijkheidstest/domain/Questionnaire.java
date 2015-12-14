@@ -408,7 +408,7 @@ public class Questionnaire {
 		double firstTheoremPoints = 0, secondTheoremPoints = 0;
 		
 		List<Double> theoremPoints;
-		theoremPoints = testinginginginging(questionAnswer, firstTheorem, secondTheorem, firstTheoremPoints, secondTheoremPoints);
+		theoremPoints = determinePointsScoredPerTheorem(questionAnswer, firstTheorem, secondTheorem, firstTheoremPoints, secondTheoremPoints);
 		firstTheoremPoints = theoremPoints.get(0);
 		secondTheoremPoints = theoremPoints.get(1);
 		
@@ -416,7 +416,7 @@ public class Questionnaire {
 		resultArray[secondTheoremPersonalityTypeID - 1] += secondTheoremPoints;
 	}
 	
-	private List<Double> testinginginginging(char questionAnswer, Theorem firstTheorem, Theorem secondTheorem, double firstTheoremPoints, double secondTheoremPoints) {
+	private List<Double> determinePointsScoredPerTheorem(char questionAnswer, Theorem firstTheorem, Theorem secondTheorem, double firstTheoremPoints, double secondTheoremPoints) {
 		List<Double> theoremPoints = new ArrayList<>();
 		switch(questionAnswer) {
             case 'A': firstTheoremPoints = ANSWER_A * firstTheorem.getWeight(); break;
