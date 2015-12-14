@@ -47,22 +47,27 @@ public class RegisterControllerTest {
 		HttpSession httpSession = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 		
-		when(httpServletRequest.getParameter("regEmail")).thenReturn("testMail@mail.nl");
+		when(httpServletRequest.getParameter("regEmail")).thenReturn("testMail1@mail1.nl");
 		when(httpServletRequest.getParameter("regPassword")).thenReturn("password");
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password");
 		
-		assertNull(localUserService.findByName("testMail@mail.nl"));
+		assertNull(localUserService.findByName("testMail@mail1.nl"));
 		assertEquals(Constants.redirect, registerController.registerDB(model, httpSession, httpServletRequest));
 		
+		when(httpServletRequest.getParameter("regEmail")).thenReturn("testMail2@mail.nl");
+		when(httpServletRequest.getParameter("regPassword")).thenReturn("password");
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password2");
 		assertEquals(Constants.redirect + "register?attempt=mismatch", registerController.registerDB(model, httpSession, httpServletRequest));
 		
-		User user = new User("testMail@mail.nl", false);
+		User user = new User("testMail3@mail.nl", false);
 		PasswordHash passwordHash = new PasswordHash();
 		user.setPasswordHash(passwordHash.hashPassword("password"));
 		localUserService.save(user);
 		//when(localUserService.findByName("testMail@mail.nl")).thenReturn(User doesUserExist);
-		assertEquals(Constants.redirect + "register?attempt=mismatch", registerController.registerDB(model,  httpSession, httpServletRequest));
+		when(httpServletRequest.getParameter("regEmail")).thenReturn("testMail3@mail.nl");
+		when(httpServletRequest.getParameter("regPassword")).thenReturn("password");
+		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password");
+		assertEquals(Constants.redirect + "register?attempt=fail", registerController.registerDB(model,  httpSession, httpServletRequest));
 		
 	}
 }
