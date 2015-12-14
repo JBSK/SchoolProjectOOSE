@@ -167,10 +167,10 @@ public class Questionnaire {
 		for(Question question : questions) {			
 			Answer answer = null;
 			if(question instanceof TheoremBattle) {
-				answer = new Answer(question, String.valueOf(((TheoremBattle) question).getAnswer()));
+				answer = new Answer(question, String.valueOf(((TheoremBattle) question).getAnswer()), question.getDateAnswered());
 			}	
 			else if (question instanceof OpenQuestion) {
-				answer = new Answer(question, ((OpenQuestion) question).getAnswer());
+				answer = new Answer(question, ((OpenQuestion) question).getAnswer(), question.getDateAnswered());
 			}
 			result.addTestResultAnswer(answer);
 			localResultService.saveAnswer(answer);		

@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "Answer")
@@ -20,10 +21,13 @@ public class Answer {
 	private Question question;
 	
 	private String answer;
+
+	private Date dateAnswered;
 	
-	public Answer(Question question, String answer) {
+	public Answer(Question question, String answer, Date dateAnswered) {
 		this.question = question;
 		this.answer = answer;
+        this.dateAnswered = dateAnswered;
 	}
 
 	public int getId() {
@@ -49,4 +53,8 @@ public class Answer {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
+
+    public Date getDateAnswered() {
+        return dateAnswered;
+    }
 }

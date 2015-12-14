@@ -1,13 +1,8 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "Question")
@@ -21,9 +16,17 @@ public class Question {
     @NotNull
     @Column(name="text", columnDefinition="varchar(255) default 'Kies de stelling die het meest voor u van toepassing is'")
     private String text;
+
+	@Transient
+	private Date dateAnswered;
 	
 	public Question(String questionText) {
         this.text = questionText;
+		this.dateAnswered = new Date();
+	}
+
+	public Date getDateAnswered() {
+		return dateAnswered;
 	}
 
 	public int getQuestionId() {
