@@ -45,6 +45,10 @@ public class Result {
 
 	}
 
+	public Result() {
+
+	}
+
 	public int getId() {
 		return resultId;
 	}

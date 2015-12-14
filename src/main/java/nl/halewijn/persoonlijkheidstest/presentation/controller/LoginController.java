@@ -27,19 +27,19 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.GET)
     public String login(Model model, HttpServletRequest req) {
-		String attempt;
-		attempt = req.getParameter("attempt");
+		String attempt = req.getParameter("attempt");
 		model.addAttribute("attempt", attempt);
-       return "login";
+        return "login";
     }
 	
 	/**
 	 * If someone presses the login button, check in the database whether this user exists.
 	 * 
 	 * If the user exists, check whether or not the password is correct.
-	 * If the password is correct, add the user's email to the session, and redirect to the home page.
+	 * If the password is correct, check whether or not the user is banned from the website.
+	 * If the user isn't banned, add the user's email to the session, and redirect to the home page.
 	 * 
-	 * If the user doesn't exist, or the password is incorrect, return to the login page.
+	 * If the user doesn't exist, or the password is incorrect, or the user is banned, then return to the login page and show an error message.
 	 */
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
 	public String loginCheck(Model model, HttpSession session, HttpServletRequest req) {
@@ -50,9 +50,13 @@ public class LoginController {
 			boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());
 			
 			if(correctPassword) {
-				session.setAttribute(Constants.email, user.getEmailAddress());
-				session.setAttribute("admin", user.isAdmin());
-				return Constants.redirect;
+				if (!user.isBanned()) {
+					session.setAttribute(Constants.email, user.getEmailAddress());
+					session.setAttribute("admin", user.isAdmin());
+					return Constants.redirect;
+				} else {
+					return Constants.redirect + "login?attempt=banned";
+				}
 			} else {
 				return Constants.redirect + "login?attempt=wrong";
 			}

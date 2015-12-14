@@ -3,7 +3,9 @@ package nl.halewijn.persoonlijkheidstest.presentation.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import nl.halewijn.persoonlijkheidstest.domain.Result;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +21,17 @@ public class RegisterController {
 	
 	@Autowired
 	private LocalUserService localUserService;
+
+    @Autowired
+    private LocalResultService localResultService;
 	
 	/**
 	 * If the file path relative to the base was "/register", return the "register" web page.
 	 */
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String register(Model model, HttpServletRequest req) {
+		String attempt = req.getParameter("attempt");
+		model.addAttribute("attempt", attempt);
 		return "register";
 	}
 	
@@ -35,7 +42,7 @@ public class RegisterController {
 	 */
 	@RequestMapping(value="/registerDB", method=RequestMethod.POST)
     public String registerDB(Model model, HttpSession session, HttpServletRequest req) {
-		String regEmail = req.getParameter("regEmail");
+        String regEmail = req.getParameter("regEmail");
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
 
@@ -50,7 +57,7 @@ public class RegisterController {
 			}
 		} else {
             // TODO: Show error about username already taken? (Maybe not a good idea)
-            return Constants.redirect + "register?attempt=mismatch";
+            return Constants.redirect + "register?attempt=fail";
         }
     }
 
@@ -64,6 +71,25 @@ public class RegisterController {
 		user = localUserService.save(user);
 		session.setAttribute(Constants.email, user.getEmailAddress());
 		session.setAttribute("admin", user.isAdmin());
+        linkTestResultInSessionToUser(session, user);
 		return Constants.redirect;
 	}
+
+    /*
+     * Check if we have just finished a test, if yes;
+     * - Retrieve the result ID,
+     * - Lookup the corresponding Result,
+     * - Change the user value to the currently logged-in user,
+     * - Update the result in the database,
+     * - And clear the stored result ID in the session.
+     */
+    private void linkTestResultInSessionToUser(HttpSession session, User user) {
+         if (session.getAttribute(Constants.resultId) != null) {
+             int resultId = (int) session.getAttribute(Constants.resultId);
+             Result result = localResultService.getByResultId(resultId);
+             result.setUser(user);
+             localResultService.saveResult(result);
+             session.setAttribute(Constants.resultId, null);
+         }
+    }
 }

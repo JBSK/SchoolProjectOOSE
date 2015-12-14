@@ -51,6 +51,10 @@ public class LocalResultService implements IResultService  {
 		return testResultRepository.count();
 	}
 
+	public Result getByResultId(int id) {
+		return testResultRepository.getByResultId(id);
+	}
+
 	@Override
 	public Long countUserTests() {
 		return testResultRepository.countUserTests();

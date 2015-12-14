@@ -25,7 +25,7 @@ public class User {
     private boolean isBanned = false;
 
 	public User(String emailAddress, boolean isAdmin) {
-        this.emailAddress = emailAddress;
+        this.emailAddress = emailAddress.toLowerCase();
 		this.dateRegisteredOn = new Date();
         this.isAdmin = isAdmin;
 	}
@@ -38,11 +38,11 @@ public class User {
 	}
 
 	public String getEmailAddress() {
-		return emailAddress;
+		return emailAddress.toLowerCase();
 	}
 
 	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
+		this.emailAddress = emailAddress.toLowerCase();
 	}
 	
 	public String getPasswordHash() {

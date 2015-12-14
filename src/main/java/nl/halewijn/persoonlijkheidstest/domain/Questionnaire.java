@@ -125,11 +125,12 @@ public class Questionnaire {
 		} else {
 			result = new Result(null);
 		}
-		localResultService.saveResult(result);
+		result = localResultService.saveResult(result);
 		setSubScores(subTypeResultArray, result);
 		saveResultTypePercentagesInDb(localResultService, localPersonalityTypeService, pTypeResultArray, result);
 		saveQuestionAnswersInDb(localResultService, result, this);
-		localResultService.saveResult(result);
+		result = localResultService.saveResult(result);
+		session.setAttribute(Constants.resultId, result.getId());
 	}
 
 	/**
@@ -406,7 +407,7 @@ public class Questionnaire {
 		
 		double firstTheoremPoints = 0, secondTheoremPoints = 0;
 		
-		List<Double> theoremPoints = new ArrayList<Double>();
+		List<Double> theoremPoints;
 		theoremPoints = testinginginginging(questionAnswer, firstTheorem, secondTheorem, firstTheoremPoints, secondTheoremPoints);
 		firstTheoremPoints = theoremPoints.get(0);
 		secondTheoremPoints = theoremPoints.get(1);
@@ -416,16 +417,16 @@ public class Questionnaire {
 	}
 	
 	private List<Double> testinginginginging(char questionAnswer, Theorem firstTheorem, Theorem secondTheorem, double firstTheoremPoints, double secondTheoremPoints) {
-		List<Double> theoremPoints = new ArrayList<Double>();
+		List<Double> theoremPoints = new ArrayList<>();
 		switch(questionAnswer) {
-		case 'A': firstTheoremPoints = ANSWER_A * firstTheorem.getWeight(); break;
-		case 'B': firstTheoremPoints = ANSWER_B * firstTheorem.getWeight(); break;
-		case 'C': firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();					
-				  secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
-		case 'D': secondTheoremPoints = ANSWER_D * secondTheorem.getWeight(); break;
-		case 'E': secondTheoremPoints = ANSWER_E * secondTheorem.getWeight(); break;
-		default: firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
-				 secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
+            case 'A': firstTheoremPoints = ANSWER_A * firstTheorem.getWeight(); break;
+            case 'B': firstTheoremPoints = ANSWER_B * firstTheorem.getWeight(); break;
+            case 'C': firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
+                      secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
+            case 'D': secondTheoremPoints = ANSWER_D * secondTheorem.getWeight(); break;
+            case 'E': secondTheoremPoints = ANSWER_E * secondTheorem.getWeight(); break;
+            default: firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
+                     secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
 		}
 		theoremPoints.add(firstTheoremPoints);
 		theoremPoints.add(secondTheoremPoints);

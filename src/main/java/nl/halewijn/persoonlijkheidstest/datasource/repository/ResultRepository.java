@@ -15,4 +15,6 @@ public interface ResultRepository extends JpaSpecificationExecutor<Result>, JpaR
 	@Query("select count(*) from Result r where r.user IS NULL")
 	Long countAnonymousTests();
 
+	Result getByResultId(int id);
+
 }
