@@ -20,14 +20,6 @@ public class Questionnaire {
 
     LocalScoreConstantService localScoreConstantService;
 
-    /*
-	private static final double ANSWER_A = 5.0;
-	private static final double ANSWER_B = 3.0;
-	private static final double ANSWER_C = 1.0;
-	private static final double ANSWER_D = ANSWER_B;
-	private static final double ANSWER_E = ANSWER_A; // TODO: Retrieve from database
-    */
-
 	public Questionnaire() {
         /*
          * ThymeLeaf requires us to have default constructors, further explanation can be found here:
