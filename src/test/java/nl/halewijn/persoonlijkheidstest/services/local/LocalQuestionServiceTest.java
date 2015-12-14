@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.*;
@@ -64,6 +65,12 @@ public class LocalQuestionServiceTest {
 
 		assertEquals(questionOne.getAnswer(), charAnswer);
 		assertEquals(questionTwo.getAnswer(), stringAnswer);
+		
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		when(req.getParameter("answer")).thenReturn("Asd");
+		
+		localQuestionService.setQuestionAnswer(req, questionTwo);
+		assertEquals("Asd", questionTwo.getAnswer());
 	}
 
 
