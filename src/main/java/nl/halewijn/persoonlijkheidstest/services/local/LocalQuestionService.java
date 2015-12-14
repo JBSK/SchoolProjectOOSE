@@ -57,7 +57,8 @@ public class LocalQuestionService implements IQuestionService  {
 		
 		for (Theorem theorem : theorems) {
 			List<TheoremBattle> questions = getAllByTheorem(theorem);
-			questionsWithTheoremsWithRelevantType.addAll(questions); // TODO Handle duplicates
+			questionsWithTheoremsWithRelevantType.addAll(questions);
+			// TODO Handle duplicates
 		}
 		
 		return questionsWithTheoremsWithRelevantType;
@@ -67,7 +68,7 @@ public class LocalQuestionService implements IQuestionService  {
      * Returns a list of all theorem battles which contain only a specific theorem. Does not account for duplicates.
      */
 	public List<TheoremBattle> getAllByTheorem(Theorem theorem) {
-        List<TheoremBattle> allRelevantTheoremBattles = questionRepository.findByFirstTheorem(theorem); // Already store the first half of all relevant theorem battles.
+        List<TheoremBattle> allRelevantTheoremBattles = questionRepository.findByFirstTheorem(theorem);
         List<TheoremBattle> secondHalfOfTheoremBattles = questionRepository.findBySecondTheorem(theorem);
         allRelevantTheoremBattles.addAll(secondHalfOfTheoremBattles);
 		return allRelevantTheoremBattles;
@@ -162,24 +163,36 @@ public class LocalQuestionService implements IQuestionService  {
 	 * If no eligible question is found, return a null value.
 	 * If there is an eligible question, return it.
 	 */
-	private Question  processPersonalityTypeRoutingRule(Question previousQuestion, int ruleParam) {
+	private Question processPersonalityTypeRoutingRule(Question previousQuestion, int ruleParam) {
 		List<Question> relevantQuestions = findAllByPersonalityTypeId(ruleParam);
 		if(!relevantQuestions.isEmpty()) {
             sortQuestionsArray(relevantQuestions);
 			Question firstQuestionInTheList = relevantQuestions.get(0);
-			while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
-				try { 
-					relevantQuestions.remove(0);
-					firstQuestionInTheList = relevantQuestions.get(0);
-				} catch (Exception e) {
-					firstQuestionInTheList = null; break;
-				}
-			}
+			firstQuestionInTheList = determineNextRelevantQuestion(previousQuestion, relevantQuestions, firstQuestionInTheList);
 			if (firstQuestionInTheList != null) {
 				return firstQuestionInTheList; 
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * Check whether or not a question is eligible to be the next question.
+	 * If it is, return it.
+	 * If there are none, return null.
+	 */
+	private Question determineNextRelevantQuestion(Question previousQuestion, List<Question> relevantQuestions, Question firstQuestionInTheList) {
+		while (firstQuestionInTheList.getQuestionId() <= previousQuestion.getQuestionId()) {
+			try { 
+				relevantQuestions.remove(0);
+				firstQuestionInTheList = relevantQuestions.get(0);
+			} catch (Exception e) {
+				System.out.println(e);
+				firstQuestionInTheList = null;
+				break;
+			}
+		}
+		return firstQuestionInTheList;
 	}
 
     /**
