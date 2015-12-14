@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class LocalResultServiceTest {
 
     @Autowired
-	private LocalRoutingService localRoutingService;
+	private LocalRoutingService localResultService;
 	
 	@Test
 	public void findById() {
-		assertEquals(null, localRoutingService.getById(5));
+		assertEquals(null, localResultService.getById(5));
 	}  
 }
