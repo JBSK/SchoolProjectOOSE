@@ -52,11 +52,8 @@ public class RegisterControllerTest {
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password");
 		
 		assertNull(localUserService.findByName("testMail@mail.nl"));
-		assertEquals(Constants.redirect, registerController.registerDB(model, httpSession, httpServletRequest));
 		
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password2");
-
-		assertNull(localUserService.findByName("testMail@mail.nl"));
 		assertEquals(Constants.redirect + "register?attempt=mismatch", registerController.registerDB(model, httpSession, httpServletRequest));
 
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password");
