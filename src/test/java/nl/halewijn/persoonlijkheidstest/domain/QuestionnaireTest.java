@@ -85,8 +85,6 @@ public class QuestionnaireTest {
 		HttpSession httpSession = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 		
-		PersonalityType typePerfectionist = null;
-		
 		for(int i = 0; i < 9; i++) {
 			PersonalityType newType = new PersonalityType("Perfectionist", "primary tekst", "secondary tekst");
 			localPersonalityTypeService.save(newType);
