@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import nl.halewijn.persoonlijkheidstest.services.local.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.services.Constants;
@@ -63,9 +64,7 @@ public class Questionnaire {
 	 * If a next question exists, this question is shown.
 	 * If no next question exists, the results of the questionnaire are shown.
 	 */
-	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session, LocalResultService localResultService, LocalUserService localUserService, LocalScoreConstantService localScoreConstantService) {
-		this.localScoreConstantService = localScoreConstantService;
-
+	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session, LocalResultService localResultService, LocalUserService localUserService) {
         Question previousQuestion = getPreviousQuestion();
         String answerString = httpServletRequest.getParameter("answer");
         if (previousQuestion instanceof TheoremBattle) {
@@ -420,17 +419,30 @@ public class Questionnaire {
 	
 	private List<Double> determinePointsScoredPerTheorem(char questionAnswer, Theorem firstTheorem, Theorem secondTheorem, double firstTheoremPoints, double secondTheoremPoints) {
 		List<Double> theoremPoints = new ArrayList<>();
-        ScoreConstant score = this.localScoreConstantService.findByAnswer(questionAnswer);
+/*
+        // Check if the answer is not null (in char equivalent)
+        // Thanks: http://stackoverflow.com/questions/9909333/whats-the-default-value-of-char
+        if (questionAnswer == '\u0000') {
+            questionAnswer = 'C';
+        }*/
+
+        ScoreConstant scoreConstant;
+        try {
+            scoreConstant = this.localScoreConstantService.findByAnswer(questionAnswer);
+        } catch (NullPointerException npe) {
+            scoreConstant = this.localScoreConstantService.findByAnswer('C');
+        }
 
 		switch(questionAnswer) {
-            case 'A': firstTheoremPoints = score.getScore() * firstTheorem.getWeight(); break;
-            case 'B': firstTheoremPoints = score.getScore() * firstTheorem.getWeight(); break;
-            case 'C': firstTheoremPoints = score.getScore() * firstTheorem.getWeight();
-                      secondTheoremPoints = score.getScore() * secondTheorem.getWeight(); break;
-            case 'D': secondTheoremPoints = score.getScore() * secondTheorem.getWeight(); break;
-            case 'E': secondTheoremPoints = score.getScore() * secondTheorem.getWeight(); break;
-            default: firstTheoremPoints = score.getScore() * firstTheorem.getWeight();
-                     secondTheoremPoints = score.getScore() * secondTheorem.getWeight(); break;
+            case 'A': firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight(); break;
+            case 'B': firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight(); break;
+            case 'C': firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+                      secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight(); break;
+            case 'D': secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight(); break;
+            case 'E': secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight(); break;
+            default:  scoreConstant = this.localScoreConstantService.findByAnswer('C');
+                      firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+                      secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight(); break;
 		}
 		theoremPoints.add(firstTheoremPoints);
 		theoremPoints.add(secondTheoremPoints);
@@ -469,4 +481,8 @@ public class Questionnaire {
 		subWeightArray[1] += theorem.getRecognition();
 		subWeightArray[2] += theorem.getDevelopment();
 	}
+
+    public void setLocalScoreConstantService(LocalScoreConstantService localScoreConstantService) {
+        this.localScoreConstantService = localScoreConstantService;
+    }
 }

@@ -27,7 +27,7 @@ public class LocalScoreConstantService implements IScoreConstantService {
 	}
 
 	public ScoreConstant findByAnswer(char answer) {
-		return scoreConstantRepository.findByAnswer(answer);
+		return scoreConstantRepository.findByAnswer(String.valueOf(answer));
 	}
 
 	public ScoreConstant update(ScoreConstant scoreConstant) {
