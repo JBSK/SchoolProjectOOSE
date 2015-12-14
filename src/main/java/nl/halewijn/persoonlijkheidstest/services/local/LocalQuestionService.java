@@ -12,10 +12,10 @@ import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +33,9 @@ public class LocalQuestionService implements IQuestionService  {
 	
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
+	
+	@Autowired
+	private Logger logger;
 	
 	@Override
 	public List<Question> findAll() {
@@ -188,7 +191,7 @@ public class LocalQuestionService implements IQuestionService  {
 				relevantQuestions.remove(0);
 				firstQuestionInTheList = relevantQuestions.get(0);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("Error in determining the next relevant question.", e);
 				firstQuestionInTheList = null;
 				break;
 			}
