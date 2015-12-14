@@ -215,10 +215,10 @@ public class Questionnaire {
         int primaryPersonalityTypeID = addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
         pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
         addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
-        /*
-		String tweetText = "Mijn persoonlijkheidstype is " + primaryPersonalityType.getName() + "! Test jezelf hier!";
-		model.addAttribute("tweetText", tweetText); // TODO: add other social media/refactor
-        */
+
+		String tweetText = "Mijn persoonlijkheidstype is " + personalityTypes[0] + "! Test jezelf hier!";
+		model.addAttribute("tweetText", tweetText);
+
         return Constants.result;
     }
 
