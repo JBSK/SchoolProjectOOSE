@@ -91,5 +91,5 @@ public class RegisterController {
              localResultService.saveResult(result);
              session.setAttribute(Constants.resultId, null);
          }
-    }
+    } // TODO: write a jUnit test
 }
