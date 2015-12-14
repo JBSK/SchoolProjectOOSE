@@ -6,16 +6,21 @@ import nl.halewijn.persoonlijkheidstest.Application;
 import nl.halewijn.persoonlijkheidstest.datasource.repository.QuestionRepository;
 import nl.halewijn.persoonlijkheidstest.domain.*;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import static org.mockito.Mockito.*;
 
@@ -113,22 +118,28 @@ public class LocalQuestionServiceTest {
          typeWinnaar = localPersonalityTypeService.save(typeWinnaar);
          PersonalityType typeVerliezer = new PersonalityType("Verliezer", "primary tekst", "secondary tekst");
          typeVerliezer = localPersonalityTypeService.save(typeVerliezer);
+         PersonalityType typeBaas = new PersonalityType("Baas", "primary tekst", "secondary tekst");
+         typeBaas = localPersonalityTypeService.save(typeBaas);
 
          Theorem theorem1 = new Theorem(typePerfectionist, "Dit is een perfectionistische stelling met een weging van 1.0 .", 1.0, 0, 0, 0);
          Theorem theorem2 = new Theorem(typePerfectionist, "Dit is een perfectionistische stelling met een weging van 2.2 .", 2.2, 0, 0, 0);
          Theorem theorem3 = new Theorem(typeWinnaar, "Dit is een perfectionistische stelling met een weging van 0.7 .", 0.7, 0, 0, 0);
+         Theorem theorem4 = new Theorem(typeBaas, "Dit is baas stelling met een weging van 0.7 .", 0.7, 0, 0, 0);
          theorem1 = localTheoremService.save(theorem1);
          theorem2 = localTheoremService.save(theorem2);
          theorem3 = localTheoremService.save(theorem3);
+         theorem4 = localTheoremService.save(theorem3);
 
          TheoremBattle battle1 = new TheoremBattle("Battle 1", theorem1, theorem2);
          TheoremBattle battle2 = new TheoremBattle("Battle 2", theorem1, theorem2);
          TheoremBattle battle3 = new TheoremBattle("Battle 3", theorem1, theorem3);
          TheoremBattle battle4 = new TheoremBattle("Battle 4", theorem3, theorem3);
+         TheoremBattle battle5 = new TheoremBattle("Battle 5", theorem4, theorem4);
          battle1 = (TheoremBattle) localQuestionService.save(battle1);
          battle2 = (TheoremBattle) localQuestionService.save(battle2);
          battle3 = (TheoremBattle) localQuestionService.save(battle3);
          battle4 = (TheoremBattle) localQuestionService.save(battle4);
+         battle5 = (TheoremBattle) localQuestionService.save(battle5);
          
          assertEquals(battle2.getQuestionId(), localQuestionService.getNextQuestion(battle1, "A").getQuestionId());
          
@@ -177,7 +188,13 @@ public class LocalQuestionServiceTest {
          routeRule5.setRoutingRuleParam(typePerfectionist.getTypeID());
          routeRule5 = localRoutingService.save(routeRule5);
          
-         assertEquals(null, localQuestionService.getNextQuestion(battle4, "A"));  
+         assertEquals(null, localQuestionService.getNextQuestion(battle4, "A"));
+         
+         RoutingTable routeRule6 = new RoutingTable(battle5, 'A', ruleTwo);
+         routeRule6.setRoutingRuleParam(typeWinnaar.getTypeID());
+         routeRule6 = localRoutingService.save(routeRule6);
+         
+         assertEquals(null, localQuestionService.getNextQuestion(battle5, "A"));
     }
     
     @Test
