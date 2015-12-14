@@ -172,8 +172,7 @@ public class LocalQuestionService implements IQuestionService  {
 					relevantQuestions.remove(0);
 					firstQuestionInTheList = relevantQuestions.get(0);
 				} catch (Exception e) {
-					firstQuestionInTheList = null;
-					break;
+					firstQuestionInTheList = null; break;
 				}
 			}
 			if (firstQuestionInTheList != null) {
