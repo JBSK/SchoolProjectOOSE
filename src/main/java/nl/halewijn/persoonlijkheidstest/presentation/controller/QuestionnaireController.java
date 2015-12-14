@@ -68,7 +68,8 @@ public class QuestionnaireController {
 			if(session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
 				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
 			}
-			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService, localScoreConstantService);
+			questionnaire.setLocalScoreConstantService(localScoreConstantService);
+			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
 		}
 		return Constants.questionnaire;
     }

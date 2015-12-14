@@ -54,7 +54,8 @@ public class QuestionnaireTest {
     
 	@Before
     public void setUp() {
-		questionnaire = new Questionnaire();	
+		questionnaire = new Questionnaire();
+        questionnaire.setLocalScoreConstantService(localScoreConstantService);
     }
 	
 	@Test
@@ -107,14 +108,14 @@ public class QuestionnaireTest {
 		Question nextQuestion;
 		nextQuestion = localQuestionService.getNextQuestion(previousQuestion, "A");
 		assertEquals(null, nextQuestion);
-		assertEquals("result", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService, localScoreConstantService));
+		assertEquals("result", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
 		
 		Question question2 = new OpenQuestion("Een volgende vraag");
 		localQuestionService.save(question2);
 		previousQuestion = (OpenQuestion) questionnaire.getPreviousQuestion(); // Added by Jelle
 		nextQuestion = localQuestionService.getNextQuestion(previousQuestion, "A");
 		assertEquals(question2.getText(), nextQuestion.getText());
-		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService, localScoreConstantService));
+		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
 	
 		Theorem theorem1 = new Theorem(typeOne, "Dit is een perfectionistische stelling met een weging van 1.0 .", 1.0, 0, 0, 0);
         Theorem theorem2 = new Theorem(typeOne, "Dit is een perfectionistische stelling met een weging van 2.2 .", 2.2, 0, 0, 0);
@@ -128,7 +129,7 @@ public class QuestionnaireTest {
 		localQuestionService.setQuestionAnswer(httpServletRequest, battle1);
 		
 		when(httpServletRequest.getParameter("answer")).thenReturn("G");
-		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService, localScoreConstantService));
+		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
 	}
 	
 	@Test
@@ -167,6 +168,17 @@ public class QuestionnaireTest {
 		battle1.setAnswer('A');
 		battle2.setAnswer('C');
 		battle3.setAnswer('E');
+
+        ScoreConstant scoreConstantA = new ScoreConstant('A', 5.0);
+        ScoreConstant scoreConstantB = new ScoreConstant('B', 3.0);
+        ScoreConstant scoreConstantC = new ScoreConstant('C', 1.0);
+        ScoreConstant scoreConstantD = new ScoreConstant('D', 3.0);
+        ScoreConstant scoreConstantE = new ScoreConstant('E', 5.0);
+        localScoreConstantService.save(scoreConstantA);
+        localScoreConstantService.save(scoreConstantB);
+        localScoreConstantService.save(scoreConstantC);
+        localScoreConstantService.save(scoreConstantD);
+        localScoreConstantService.save(scoreConstantE);
 
 		double[] methodResultArray = questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions());
 		double weightTypeOne = 1.0;
@@ -282,7 +294,18 @@ public class QuestionnaireTest {
 		localQuestionService.save(theoremBattleFive);
 		localQuestionService.save(theoremBattleSix);
 		questionnaire.setAnsweredQuestions(questions);
-		
+
+        ScoreConstant scoreConstantA = new ScoreConstant('A', 5.0);
+        ScoreConstant scoreConstantB = new ScoreConstant('B', 3.0);
+        ScoreConstant scoreConstantC = new ScoreConstant('C', 1.0);
+        ScoreConstant scoreConstantD = new ScoreConstant('D', 3.0);
+        ScoreConstant scoreConstantE = new ScoreConstant('E', 5.0);
+        localScoreConstantService.save(scoreConstantA);
+        localScoreConstantService.save(scoreConstantB);
+        localScoreConstantService.save(scoreConstantC);
+        localScoreConstantService.save(scoreConstantD);
+        localScoreConstantService.save(scoreConstantE);
+
 		double[] pTypeResultArray = questionnaire.calculatePersonalityTypeResults(questions);
 		double[] subTypeResultArray = questionnaire.calculateSubTypeResults(questions);
 		assertEquals(100.0, pTypeResultArray[0], 0);
@@ -309,11 +332,11 @@ public class QuestionnaireTest {
 			totalResults = localResultService.findAll().size();
 		
 		when(httpServletRequest.getParameter("answer")).thenReturn("C");
-		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService, localScoreConstantService);
+		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService);
 		assertEquals(totalResults+1, localResultService.findAll().size());
 		
 		when(httpSession.getAttribute(Constants.email)).thenReturn("User");
-		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService, localScoreConstantService);
+		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService);
 	
 		theoremBattleSix.setAnswer('G');
 		assertEquals(9, questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions()).length);

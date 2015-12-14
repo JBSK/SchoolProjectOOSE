@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ScoreConstantRepository extends JpaSpecificationExecutor<ScoreConstant>, JpaRepository<ScoreConstant, Long> {
 
-	ScoreConstant findByAnswer(char answer);
+	ScoreConstant findByAnswer(String answer);
 
 }

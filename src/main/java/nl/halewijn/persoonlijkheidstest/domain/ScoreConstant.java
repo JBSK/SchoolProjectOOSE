@@ -9,13 +9,13 @@ import javax.validation.constraints.NotNull;
 public class ScoreConstant {
 
     @Id
-    private char answer;
+    private String answer;
 
     @NotNull
     private double score;
 
     public ScoreConstant(char answer, double score) {
-        this.answer = answer;
+        this.answer = String.valueOf(answer);
         this.score = score;
     }
 
@@ -24,7 +24,7 @@ public class ScoreConstant {
     }
 
     public char getAnswer() {
-        return answer;
+        return answer.charAt(0);
     }
 
     public double getScore() {
