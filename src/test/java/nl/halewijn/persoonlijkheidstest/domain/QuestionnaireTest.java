@@ -246,6 +246,8 @@ public class QuestionnaireTest {
 		TheoremBattle theoremBattleOne = new TheoremBattle("Theorom Battle One", theoremOne, theoremSecond);
 		TheoremBattle theoremBattleTwo = new TheoremBattle("Theorom Battle Two", theoremOne, theoremSecond);
 		TheoremBattle theoremBattleThree = new TheoremBattle("Theorom Battle Three", theoremOne, theoremSecond);
+		TheoremBattle theoremBattleFour = new TheoremBattle("Theorom Battle Four", theoremOne, theoremSecond);
+		TheoremBattle theoremBattleFive = new TheoremBattle("Theorom Battle Five", theoremOne, theoremSecond);
 		
 		List<Question> questions = new ArrayList<>();
 		HttpSession session = mock(HttpSession.class);
@@ -259,15 +261,23 @@ public class QuestionnaireTest {
 		localQuestionService.save(theoremBattleOne);
 		localQuestionService.save(theoremBattleTwo);
 		localQuestionService.save(theoremBattleThree);
+		localQuestionService.save(theoremBattleFour);
+		localQuestionService.save(theoremBattleFive);
 		theoremBattleOne.setAnswer('C');
 		theoremBattleTwo.setAnswer('B');
 		theoremBattleThree.setAnswer('D');
+		theoremBattleFour.setAnswer('A');
+		theoremBattleFive.setAnswer('E');
 		questions.add(theoremBattleOne);
 		questions.add(theoremBattleTwo);
 		questions.add(theoremBattleThree);
+		questions.add(theoremBattleFour);
+		questions.add(theoremBattleFive);
 		localQuestionService.save(theoremBattleOne);
 		localQuestionService.save(theoremBattleTwo);
 		localQuestionService.save(theoremBattleThree);
+		localQuestionService.save(theoremBattleFour);
+		localQuestionService.save(theoremBattleFive);
 		questionnaire.setAnsweredQuestions(questions);
 		
 		double[] pTypeResultArray = questionnaire.calculatePersonalityTypeResults(questions);
@@ -301,5 +311,8 @@ public class QuestionnaireTest {
 		
 		when(httpSession.getAttribute(Constants.email)).thenReturn("User");
 		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService);
+	
+		theoremBattleFive.setAnswer('G');
+		assertEquals(9, questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions()).length);
 	}
 }
