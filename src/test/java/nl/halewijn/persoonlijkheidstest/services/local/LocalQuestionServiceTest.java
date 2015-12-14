@@ -71,12 +71,16 @@ public class LocalQuestionServiceTest {
 		
 		localQuestionService.setQuestionAnswer(req, questionTwo);
 		assertEquals("Asd", questionTwo.getAnswer());
+		
+		when(req.getParameter("answer")).thenReturn("B");
+		
+		localQuestionService.setQuestionAnswer(req, questionOne);
+		assertEquals('B', questionOne.getAnswer());
 	}
 
 
 	@Test
     public void getNextChronologicalQuestionTest() {
-        //import static org.mockito.Mockito.*;
         Question openQuestion = new OpenQuestion("Waarom vind je dat?");
         openQuestion = localQuestionService.save(openQuestion);
 
