@@ -2,10 +2,7 @@ package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
+import nl.halewijn.persoonlijkheidstest.services.local.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,6 +25,9 @@ public class QuestionnaireController {
     
     @Autowired
     private LocalResultService localResultService;
+
+	@Autowired
+	private LocalScoreConstantService localScoreConstantService;
     
     @Autowired
     private LocalUserService localUserService;
@@ -68,7 +68,7 @@ public class QuestionnaireController {
 			if(session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
 				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
 			}
-			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
+			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService, localScoreConstantService);
 		}
 		return Constants.questionnaire;
     }

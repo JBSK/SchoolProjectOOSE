@@ -1,9 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -18,9 +15,11 @@ public class PersonalityType {
 	private String name;
 
 	@NotNull
+	@Column(columnDefinition = "VARCHAR(1500)")
 	private String primaryDescription;
 
 	@NotNull
+	@Column(columnDefinition = "VARCHAR(1500)")
 	private String secondaryDescription;
 
 	public PersonalityType(String name, String primaryDescription, String secondaryDescription) {
