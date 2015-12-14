@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
+import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
@@ -116,6 +117,19 @@ public class QuestionnaireTest {
 		previousQuestion = (OpenQuestion) questionnaire.getPreviousQuestion(); // Added by Jelle
 		nextQuestion = localQuestionService.getNextQuestion(previousQuestion, "A");
 		assertEquals(question2.getText(), nextQuestion.getText());
+		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
+	
+		Theorem theorem1 = new Theorem(typeOne, "Dit is een perfectionistische stelling met een weging van 1.0 .", 1.0, 0, 0, 0);
+        Theorem theorem2 = new Theorem(typeOne, "Dit is een perfectionistische stelling met een weging van 2.2 .", 2.2, 0, 0, 0);
+        theorem1 = localTheoremService.save(theorem1);
+        theorem2 = localTheoremService.save(theorem2);
+
+        TheoremBattle battle1 = new TheoremBattle("Battle 1", theorem1, theorem2);
+        battle1 = (TheoremBattle) localQuestionService.save(battle1);
+
+		localQuestionService.setQuestionAnswer(httpServletRequest, battle1);
+		
+		when(httpServletRequest.getParameter("answer")).thenReturn("G");
 		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
 	}
 	
@@ -239,6 +253,8 @@ public class QuestionnaireTest {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		User user = new User("User", false);
+		user.setPasswordHash("abc");
+		localUserService.save(user);
 		
 		localQuestionService.save(theoremBattleOne);
 		localQuestionService.save(theoremBattleTwo);
@@ -282,5 +298,8 @@ public class QuestionnaireTest {
 		when(httpServletRequest.getParameter("answer")).thenReturn("C");
 		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService);
 		assertEquals(totalResults+1, localResultService.findAll().size());
+		
+		when(httpSession.getAttribute(Constants.email)).thenReturn("User");
+		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService);
 	}
 }
