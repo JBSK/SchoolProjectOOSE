@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "Question")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Question {
+public class Question {
 
 	@Id
 	@GeneratedValue
