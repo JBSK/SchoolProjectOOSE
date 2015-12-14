@@ -6,8 +6,6 @@ import nl.halewijn.persoonlijkheidstest.datasource.repository.ResultRepository;
 import nl.halewijn.persoonlijkheidstest.datasource.repository.ResultTypePercentageRepository;
 import nl.halewijn.persoonlijkheidstest.domain.Result;
 import nl.halewijn.persoonlijkheidstest.domain.ResultTypePercentage;
-import nl.halewijn.persoonlijkheidstest.services.IObjectService;
-import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 import nl.halewijn.persoonlijkheidstest.services.IResultService;
 import nl.halewijn.persoonlijkheidstest.domain.Answer;
 
