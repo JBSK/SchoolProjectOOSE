@@ -402,23 +402,36 @@ public class Questionnaire {
 		Theorem secondTheorem = ((TheoremBattle) question).getSecondTheorem();
 		
 		int firstTheoremPersonalityTypeID = firstTheorem.getPersonalityType().getTypeID();
-		int secondTheoremPersonalityTypeID = secondTheorem.getPersonalityType().getTypeID();				
+		int secondTheoremPersonalityTypeID = secondTheorem.getPersonalityType().getTypeID();
+		
 		double firstTheoremPoints = 0, secondTheoremPoints = 0;
-		switch(questionAnswer) {
-			case 'A': firstTheoremPoints = ANSWER_A * firstTheorem.getWeight(); break;
-			case 'B': firstTheoremPoints = ANSWER_B * firstTheorem.getWeight(); break;
-			case 'C': firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();					
-					  secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
-			case 'D': secondTheoremPoints = ANSWER_D * secondTheorem.getWeight(); break;
-			case 'E': secondTheoremPoints = ANSWER_E * secondTheorem.getWeight(); break;
-			default: firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
-					 secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
-		}
+		
+		List<Double> theoremPoints = new ArrayList<Double>();
+		theoremPoints = testinginginginging(questionAnswer, firstTheorem, secondTheorem, firstTheoremPoints, secondTheoremPoints);
+		firstTheoremPoints = theoremPoints.get(0);
+		secondTheoremPoints = theoremPoints.get(1);
 		
 		resultArray[firstTheoremPersonalityTypeID - 1] += firstTheoremPoints;
 		resultArray[secondTheoremPersonalityTypeID - 1] += secondTheoremPoints;
 	}
-
+	
+	private List<Double> testinginginginging(char questionAnswer, Theorem firstTheorem, Theorem secondTheorem, double firstTheoremPoints, double secondTheoremPoints) {
+		List<Double> theoremPoints = new ArrayList<Double>();
+		switch(questionAnswer) {
+		case 'A': firstTheoremPoints = ANSWER_A * firstTheorem.getWeight(); break;
+		case 'B': firstTheoremPoints = ANSWER_B * firstTheorem.getWeight(); break;
+		case 'C': firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();					
+				  secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
+		case 'D': secondTheoremPoints = ANSWER_D * secondTheorem.getWeight(); break;
+		case 'E': secondTheoremPoints = ANSWER_E * secondTheorem.getWeight(); break;
+		default: firstTheoremPoints = ANSWER_C * firstTheorem.getWeight();
+				 secondTheoremPoints = ANSWER_C * secondTheorem.getWeight(); break;
+		}
+		theoremPoints.add(firstTheoremPoints);
+		theoremPoints.add(secondTheoremPoints);
+		return theoremPoints;
+	}
+	
     /**
      * Calculates the total points for a sub weight that were scored on a specific question.
      *
