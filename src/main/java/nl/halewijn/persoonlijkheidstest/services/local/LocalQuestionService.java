@@ -34,7 +34,6 @@ public class LocalQuestionService implements IQuestionService  {
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
 	
-	@Autowired
 	private Logger logger;
 	
 	@Override
