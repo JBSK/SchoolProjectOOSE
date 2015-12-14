@@ -126,6 +126,7 @@ public class QuestionnaireTest {
 
         TheoremBattle battle1 = new TheoremBattle("Battle 1", theorem1, theorem2);
         battle1 = (TheoremBattle) localQuestionService.save(battle1);
+        questionnaire.addQuestion(battle1);
 
 		localQuestionService.setQuestionAnswer(httpServletRequest, battle1);
 		
@@ -248,6 +249,7 @@ public class QuestionnaireTest {
 		TheoremBattle theoremBattleThree = new TheoremBattle("Theorom Battle Three", theoremOne, theoremSecond);
 		TheoremBattle theoremBattleFour = new TheoremBattle("Theorom Battle Four", theoremOne, theoremSecond);
 		TheoremBattle theoremBattleFive = new TheoremBattle("Theorom Battle Five", theoremOne, theoremSecond);
+		TheoremBattle theoremBattleSix = new TheoremBattle("Theorom Battle Six", theoremOne, theoremSecond);
 		
 		List<Question> questions = new ArrayList<>();
 		HttpSession session = mock(HttpSession.class);
@@ -263,21 +265,25 @@ public class QuestionnaireTest {
 		localQuestionService.save(theoremBattleThree);
 		localQuestionService.save(theoremBattleFour);
 		localQuestionService.save(theoremBattleFive);
+		localQuestionService.save(theoremBattleSix);
 		theoremBattleOne.setAnswer('C');
 		theoremBattleTwo.setAnswer('B');
 		theoremBattleThree.setAnswer('D');
 		theoremBattleFour.setAnswer('A');
 		theoremBattleFive.setAnswer('E');
+		theoremBattleSix.setAnswer('G');
 		questions.add(theoremBattleOne);
 		questions.add(theoremBattleTwo);
 		questions.add(theoremBattleThree);
 		questions.add(theoremBattleFour);
 		questions.add(theoremBattleFive);
+		questions.add(theoremBattleSix);
 		localQuestionService.save(theoremBattleOne);
 		localQuestionService.save(theoremBattleTwo);
 		localQuestionService.save(theoremBattleThree);
 		localQuestionService.save(theoremBattleFour);
 		localQuestionService.save(theoremBattleFive);
+		localQuestionService.save(theoremBattleSix);
 		questionnaire.setAnsweredQuestions(questions);
 		
 		double[] pTypeResultArray = questionnaire.calculatePersonalityTypeResults(questions);
@@ -312,7 +318,7 @@ public class QuestionnaireTest {
 		when(httpSession.getAttribute(Constants.email)).thenReturn("User");
 		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService);
 	
-		theoremBattleFive.setAnswer('G');
+		theoremBattleSix.setAnswer('G');
 		assertEquals(9, questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions()).length);
 	}
 }
