@@ -17,8 +17,25 @@
 						<p th:case="'fail'" class="errorMessage"> Registeren is momenteel niet mogelijk, probeer het later opnieuw. </p>
 						<p th:case="'*'" class=""> </p>
                     </div>
-                    <div class="g-recaptcha" data-sitekey="6LfACBMTAAAAADVuV-mujqSaorvkPFRk6Crx1iG_"></div>
-                    <input type="submit" class="pure-button" value="Registreren" />
+                    <div class="g-recaptcha" style="padding: 20px 0px 20px 47px;"  data-callback="recaptchaCallback" data-sitekey="6LfACBMTAAAAADVuV-mujqSaorvkPFRk6Crx1iG_"></div>
+                    <input id="registerSubmit" type="submit" class="pure-button" value="Registreren" disabled="disabled" onClick="return checkCAPTCHA();"/>
+                    
+                    <script>
+                    function recaptchaCallback() {
+                    	var registerSubmit = document.getElementById('registerSubmit');
+                    	registerSubmit.disabled = false;
+                    };
+                    
+                    function checkCAPTCHA() {
+                    	if(grecaptcha.getResponse() == "") {
+                    	    alert("Vul de CAPTCHA in om verder te gaan!");
+                    		return false;
+                    	}
+                    	else {
+                    	    return true;
+                    	}
+                    }
+                    </script>
 				</form>
 			</div><!-- einde content -->
 			<div th:include="fragments/footer" th:remove="tag"></div>
