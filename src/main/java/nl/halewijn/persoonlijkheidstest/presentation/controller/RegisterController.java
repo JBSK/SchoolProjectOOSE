@@ -81,8 +81,7 @@ public class RegisterController {
      * - Update the result in the database,
      * - And clear the stored result ID in the session.
      */
-    private void linkTestResultInSessionToUser(HttpSession session, User user) {
-         // TODO: write a jUnit test
+    public void linkTestResultInSessionToUser(HttpSession session, User user) {
          if (session.getAttribute(Constants.resultId) != null) {
              int resultId = (int) session.getAttribute(Constants.resultId);
              Result result = localResultService.getByResultId(resultId);

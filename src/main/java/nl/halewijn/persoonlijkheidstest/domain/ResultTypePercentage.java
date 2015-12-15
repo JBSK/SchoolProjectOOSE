@@ -43,23 +43,11 @@ public class ResultTypePercentage implements Serializable {
 		return result;
 	}
 
-	public void setResult(Result result) {
-		this.result = result;
-	}
-
 	public PersonalityType getPersonalityType() {
 		return personalityType;
 	}
 
-	public void setPersonalityType(PersonalityType personalityType) {
-		this.personalityType = personalityType;
-	}
-
 	public double getPercentage() {
 		return percentage;
-	}
-
-	public void setPercentage(double percentage) {
-		this.percentage = percentage;
 	}
 }
