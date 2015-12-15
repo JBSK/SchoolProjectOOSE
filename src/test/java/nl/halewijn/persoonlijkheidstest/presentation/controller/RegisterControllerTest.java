@@ -68,24 +68,15 @@ public class RegisterControllerTest {
 		PasswordHash passwordHash = new PasswordHash();
 		user.setPasswordHash(passwordHash.hashPassword("password"));
 		localUserService.save(user);
-		//when(localUserService.findFirstByEmailAddress("testMail@mail.nl")).thenReturn(User doesUserExist);
 		assertEquals(Constants.redirect + "register?attempt=fail", registerController.registerDB(model,  httpSession, httpServletRequest));
 	}	
 	
 	@Test
 	public void getUserInfoTest() {
         HttpSession httpSession = mock(HttpSession.class);
-        String testmail = "testmail@mail.com";
-        User testUser = new User(testmail,false);
-        final PasswordHash passwordHash = new PasswordHash();
-        String regPassword = "testPassword";
-        
-		testUser.setPasswordHash(passwordHash.hashPassword(regPassword ));
-        testUser = localUserService.save(testUser);
-        httpSession.setAttribute(Constants.email, testUser.getEmailAddress());
-		when(httpSession.getAttribute(Constants.email)).thenReturn(testmail);
-		assertEquals(testUser.getEmailAddress(), httpSession.getAttribute(Constants.email));
-        
+        String testMail = "testmail@mail.com";
+        String testPassword = "test";
+		assertEquals(Constants.redirect, registerController.getUserInfo(httpSession, testMail, testPassword));
 	}
 
 	@Test

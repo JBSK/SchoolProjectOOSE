@@ -62,7 +62,7 @@ public class RegisterController {
 	/**
 	 * Gets the user information and adds it to the session
      */
-	private String getUserInfo(HttpSession session, String regEmail, String regPassword) {
+	public String getUserInfo(HttpSession session, String regEmail, String regPassword) {
 		User user = new User(regEmail, false);
 		final PasswordHash passwordHash = new PasswordHash();
 		user.setPasswordHash(passwordHash.hashPassword(regPassword));
