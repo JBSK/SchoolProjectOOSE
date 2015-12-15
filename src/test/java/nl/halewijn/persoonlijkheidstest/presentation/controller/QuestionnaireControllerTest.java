@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
 import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
+import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
@@ -70,6 +71,11 @@ public class QuestionnaireControllerTest {
 		localQuestionService.save(question);
 		questionnaire.addQuestion(question);
 		when(httpSession.getAttribute("questionnaire")).thenReturn(questionnaire);
+		
+		for(int i = 0; i < 9; i++) {
+			PersonalityType type = new PersonalityType("Type", "primary", "secondary");
+			localPersonalityTypeService.save(type);
+		}
 		
 		assertEquals("result", questionnaireController.showQuestionPOST(model, httpSession, httpServletRequest));
 	}
