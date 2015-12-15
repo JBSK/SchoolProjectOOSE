@@ -39,15 +39,4 @@ public class ResultTypePercentage implements Serializable {
 		 */
 	}
 
-	public Result getResult() {
-		return result;
-	}
-
-	public PersonalityType getPersonalityType() {
-		return personalityType;
-	}
-
-	public double getPercentage() {
-		return percentage;
-	}
 }

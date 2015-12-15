@@ -42,18 +42,8 @@ public class LocalResultService implements IResultService  {
 	}
 	
 	@Override
-	public List<Answer> findAllAnswers() {
-		return testResultAnswerRepository.findAll();
-	}
-	
-	@Override
 	public List<Result> findAll() {
 		return testResultRepository.findAll();
-	}
-	
-	@Override
-	public List<ResultTypePercentage> findAllResultTypePercentages() {
-		return resultTypePercentageRepository.findAll();
 	}
 	
 	@Override

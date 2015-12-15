@@ -2,7 +2,6 @@ package nl.halewijn.persoonlijkheidstest.services;
 
 public class Constants {
 
-	private Constants() { }
     /*
      * Serves to resolve some 'major' issues in Sonar.
      */
@@ -15,5 +14,9 @@ public class Constants {
     public static final String redirect = "redirect:/";
     public static final String result = "result";
     public static final String resultId = "result_id";
+
+	private Constants() {
+
+    }
 
 }

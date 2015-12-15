@@ -39,31 +39,4 @@ public class Answer {
 		 */
 	}
 
-	public int getId() {
-		return answerId;
-	}
-
-	public void setId(int id) {
-		this.answerId = id;
-	}
-
-	public Question getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-
-    public Date getDateAnswered() {
-        return dateAnswered;
-    }
 }

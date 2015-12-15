@@ -34,16 +34,8 @@ public class TheoremBattle extends Question {
 		return firstTheorem;
 	}
 
-	public void setFirstTheorem(Theorem firstTheorem) {
-		this.firstTheorem = firstTheorem;
-	}
-
 	public Theorem getSecondTheorem() {
 		return secondTheorem;
-	}
-
-	public void setSecondTheorem(Theorem secondTheorem) {
-		this.secondTheorem = secondTheorem;
 	}
 	
 	public char getAnswer() {

@@ -63,14 +63,6 @@ public class Result {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public List<Answer> getTestResultAnswers() {
-		return testResultAnswers;
-	}
-
-	public void setTestResultAnswers(List<Answer> testResultAnswers) {
-		this.testResultAnswers = testResultAnswers;
-	}
 	
 	public void addTestResultAnswer(Answer testResultAnswer) {
 		testResultAnswers.add(testResultAnswer);
