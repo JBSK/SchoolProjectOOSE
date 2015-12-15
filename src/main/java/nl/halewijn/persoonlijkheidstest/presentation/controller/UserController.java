@@ -50,10 +50,6 @@ public class UserController {
 		String email;
 		if (session.getAttribute("email") != null) {
 			email = session.getAttribute("email").toString();
-//		}
-//		
-//		if (email != null) {
-			//List<Result> userResults = localResultService.findAll();
 			int id = localUserService.findByEmailAddress(email).getId();
 			List<Result> userResults = localResultService.getByUserId(id);
 			model.addAttribute("userResults", userResults);
@@ -66,7 +62,7 @@ public class UserController {
 	/**
 	 * Currently makes use of the same result page that is shown right after finishing a questionnaire.
 	 * 
-	 * Loads the result percentages, etcetera, from the database, based on the ID of the result that was selected.
+	 * Loads the result percentages et cetera, from the database, based on the ID of the result that was selected.
 	 * These values are then displayed on a web page.
 	 */
 	@RequestMapping(value="/showResult", method=RequestMethod.POST)
@@ -74,22 +70,8 @@ public class UserController {
 		List<Question> answeredQuestions = new ArrayList<>();
 		List<Answer> answers = new ArrayList<>();
 		Result result = localResultService.getByResultId(Integer.parseInt(request.getParameter("number")));
-		for (int i = 0; i < 12; i ++) {
-			answers.add(result.getTestResultAnswers().get(i));
-		}
-		
-		for (int i = 0; i < answers.size(); i ++) {
-			if (result.getId() == 1) {
-				for (int j = answers.get(0).getId(); j < answers.get(0).getId() + answers.size(); j ++) {
-					Answer answer = localResultService.findAnswer(j);
-					if (answers.get(i).getId() == answer.getId()) {
-						answeredQuestions.add(i, answer.getQuestion());
-						System.out.println("IT WORKS!");
-					}
-					System.out.println("TEST2");
-				}
-			}
-		}
+		List<Answer> testAnswers = result.getTestResultAnswers();
+        answers.addAll(testAnswers);
 		
 		double[] pTypeResultArray = new double[9];
 		for (int i = 0; i < pTypeResultArray.length; i ++) {
@@ -101,9 +83,10 @@ public class UserController {
 		model.addAttribute("scores", pTypeResultArray);
 		
 		double[] subTypeResultArray = new double[3];
-		subTypeResultArray[0] = localResultService.getByResultId(result.getId()).getScoreDenial();
-		subTypeResultArray[2] = localResultService.getByResultId(result.getId()).getScoreDevelopment();
-		subTypeResultArray[1] = localResultService.getByResultId(result.getId()).getScoreRecognition();
+        subTypeResultArray[0] = localResultService.getByResultId(result.getId()).getScoreDenial();
+        subTypeResultArray[1] = localResultService.getByResultId(result.getId()).getScoreRecognition();
+        subTypeResultArray[2] = localResultService.getByResultId(result.getId()).getScoreDevelopment();
+
         for (int i = 0; i < subTypeResultArray.length; i++) {
             subTypeResultArray[i] = subTypeResultArray[i] / 100;
         }
