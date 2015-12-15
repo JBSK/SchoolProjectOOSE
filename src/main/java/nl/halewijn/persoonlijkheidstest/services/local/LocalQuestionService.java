@@ -10,12 +10,8 @@ import nl.halewijn.persoonlijkheidstest.domain.RoutingTable;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
-
-import java.sql.SQLException;
 import java.util.*;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -130,16 +126,20 @@ public class LocalQuestionService implements IQuestionService  {
 			}
 		}
 		if (nextQuestion == null) {
-			nextQuestion = getNextChronologicalQuestion(previousQuestion); // No routing rules found for this answer, just the next question in the list.
+			nextQuestion = getNextChronologicalQuestion(previousQuestion);
 		}
 		return checkIfQuestionActive(nextQuestion);
 	}
 
+    /*
+     * Check if a question hasn't been disabled by the administrator,
+     * if it is, lookup the next one and check it recursively.
+     */
 	private Question checkIfQuestionActive(Question question) {
         if (question != null) {
-            if (question.isActive()) { // Check if this question hasn't been disabled by the administrator.
+            if (question.isActive()) {
                 return question;
-            } else { // Otherwise, get the next question, and check that one recursively.
+            } else {
                 Question backup = getNextChronologicalQuestion(question);
                 return checkIfQuestionActive(backup);
             }
