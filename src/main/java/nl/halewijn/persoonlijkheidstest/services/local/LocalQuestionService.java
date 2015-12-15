@@ -58,7 +58,6 @@ public class LocalQuestionService implements IQuestionService  {
 		for (Theorem theorem : theorems) {
 			List<TheoremBattle> questions = getAllByTheorem(theorem);
 			questionsWithTheoremsWithRelevantType.addAll(questions);
-			// TODO Handle duplicates
 		}
 		
 		return questionsWithTheoremsWithRelevantType;

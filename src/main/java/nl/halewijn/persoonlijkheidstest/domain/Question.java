@@ -21,7 +21,7 @@ public class Question {
 	private Date dateAnswered;
 
 	@Transient
-	protected String type; // TODO: Improved test coverage...
+	protected String type;
 	
 	public Question(String questionText) {
         this.text = questionText;

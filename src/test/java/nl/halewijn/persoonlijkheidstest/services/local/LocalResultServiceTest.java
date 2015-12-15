@@ -25,7 +25,7 @@ public class LocalResultServiceTest {
 	
 	@Test
 	public void getByResultIdTest() {
-		Date now = new Date(); // TODO: Improving test coverage
+		Date now = new Date();
         Result result = new Result();
         result.setDate(now);
         localResultService.saveResult(result);

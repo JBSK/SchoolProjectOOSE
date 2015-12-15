@@ -312,7 +312,6 @@ public class Questionnaire {
 			}
 		}
 
-		// TODO: Maybe extract these two loops or merge them if possible?
         double totalQuestionPoints = calculateTotalFromNumbersArray(pTypePoints);
 		for (int i = 0; i < pTypePoints.length; i++) {
             pTypePercentages[i] = calculatePercentage(pTypePoints[i], totalQuestionPoints);
