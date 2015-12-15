@@ -28,7 +28,8 @@ public class LocalResultServiceTest {
 		Date now = new Date(); // TODO: Improving test coverage
         Result result = new Result();
         result.setDate(now);
-        result = localResultService.saveResult(result);
-		assertEquals(now, result.getDate());
+        localResultService.saveResult(result);
+        result = localResultService.getByResultId(result.getId());
+        assertEquals(now, result.getDate());
 	}  
 }

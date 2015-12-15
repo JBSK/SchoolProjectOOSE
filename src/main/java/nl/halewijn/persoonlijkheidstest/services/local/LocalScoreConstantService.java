@@ -30,7 +30,4 @@ public class LocalScoreConstantService implements IScoreConstantService {
 		return scoreConstantRepository.findByAnswer(String.valueOf(answer));
 	}
 
-	public ScoreConstant update(ScoreConstant scoreConstant) {
-		return scoreConstantRepository.save(scoreConstant);
-	}
 }

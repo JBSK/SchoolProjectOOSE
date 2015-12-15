@@ -37,6 +37,9 @@ public class LocalRoutingServiceTest {
 	public void routingTableCR() {
 		RoutingRule rule = new RoutingRule("Rule één");
 		rule = localRoutingService.save(rule);
+		rule.setDescription("Rule one");
+		rule = localRoutingService.save(rule);
+		assertEquals("Rule one", rule.getDescription());
 
 		RoutingTable table = new RoutingTable(null, 'A', rule);
 		localRoutingService.save(table);

@@ -19,6 +19,9 @@ public class Question {
 
 	@Transient
 	private Date dateAnswered;
+
+	@Transient
+	protected String type; // TODO: Improved test coverage...
 	
 	public Question(String questionText) {
         this.text = questionText;
@@ -42,7 +45,6 @@ public class Question {
 	
 	public String getClassName() {
 		return getClass().getName();
-		
 	}
 
 	public void setQuestionId(int questionId) {
@@ -51,6 +53,10 @@ public class Question {
 
 	public void setDateAnswered(Date dateAnswered) {
 		this.dateAnswered = dateAnswered;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 }
