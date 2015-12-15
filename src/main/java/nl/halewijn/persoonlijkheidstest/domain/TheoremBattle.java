@@ -1,5 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -49,6 +51,7 @@ public class TheoremBattle extends Question {
 
 	public void setAnswer(char answer) {
 		this.answer = answer;
+		super.setDateAnswered(new Date());
 	}
 
 	public String getType() {

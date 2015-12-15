@@ -22,7 +22,6 @@ public class Question {
 	
 	public Question(String questionText) {
         this.text = questionText;
-		this.dateAnswered = new Date();
 	}
 
 	public Date getDateAnswered() {
@@ -48,6 +47,10 @@ public class Question {
 
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
+	}
+
+	public void setDateAnswered(Date dateAnswered) {
+		this.dateAnswered = dateAnswered;
 	}
 
 }
