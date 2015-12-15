@@ -19,10 +19,14 @@ public class Question {
 
 	@Transient
 	private Date dateAnswered;
-	
+
+	@Transient
+	protected String type;
+
+	private boolean active = true;
+
 	public Question(String questionText) {
         this.text = questionText;
-		this.dateAnswered = new Date();
 	}
 
 	public Date getDateAnswered() {
@@ -43,11 +47,26 @@ public class Question {
 	
 	public String getClassName() {
 		return getClass().getName();
-		
 	}
 
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
+
+	public void setDateAnswered(Date dateAnswered) {
+		this.dateAnswered = dateAnswered;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
 }

@@ -10,11 +10,8 @@ import nl.halewijn.persoonlijkheidstest.domain.RoutingTable;
 import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
-
 import java.util.*;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +55,6 @@ public class LocalQuestionService implements IQuestionService  {
 		for (Theorem theorem : theorems) {
 			List<TheoremBattle> questions = getAllByTheorem(theorem);
 			questionsWithTheoremsWithRelevantType.addAll(questions);
-			// TODO Handle duplicates
 		}
 		
 		return questionsWithTheoremsWithRelevantType;
@@ -117,6 +113,7 @@ public class LocalQuestionService implements IQuestionService  {
 	 */
 	@Override
 	public Question getNextQuestion(Question previousQuestion, String answer) {
+		Question nextQuestion = null;
 		List<RoutingTable> tables = localRoutingService.getRoutingRulesByQuestion(previousQuestion);
 		if(!tables.isEmpty()) {
 			for(RoutingTable table : tables){ 
@@ -124,11 +121,31 @@ public class LocalQuestionService implements IQuestionService  {
 					RoutingRule rule = table.getRoutingRule();
 					int ruleId = rule.getRoutingRuleId();
 					int ruleParam = table.getRoutingRuleParam();
-					return determineFollowUpQuestion(previousQuestion, ruleId, ruleParam);	
+					nextQuestion = determineFollowUpQuestion(previousQuestion, ruleId, ruleParam);
 				}
 			}
 		}
-		return getNextChronologicalQuestion(previousQuestion);		
+		if (nextQuestion == null) {
+			nextQuestion = getNextChronologicalQuestion(previousQuestion);
+		}
+		return checkIfQuestionActive(nextQuestion);
+	}
+
+    /*
+     * Check if a question hasn't been disabled by the administrator,
+     * if it is, lookup the next one and check it recursively.
+     */
+	private Question checkIfQuestionActive(Question question) {
+        if (question != null) {
+            if (question.isActive()) {
+                return question;
+            } else {
+                Question backup = getNextChronologicalQuestion(question);
+                return checkIfQuestionActive(backup);
+            }
+        } else {
+            return null;
+        }
 	}
 
 	/**
@@ -240,11 +257,13 @@ public class LocalQuestionService implements IQuestionService  {
 	 */
 	@Override
 	public Question getFirstQuestion(Questionnaire questionnaire) {
-        Question firstQuestion = null;
+        Question firstQuestion = getByQuestionId(1);
 
-        if (getByQuestionId(1) != null) {
-            firstQuestion = getByQuestionId(1);
+        if (firstQuestion == null) {
+            System.out.println("There is no question in the database with question ID 1! Please make a new question first, before running the personality test.");
         }
+
+        firstQuestion = checkIfQuestionActive(firstQuestion);
 
         questionnaire.addQuestion(firstQuestion);
         return firstQuestion;

@@ -6,12 +6,13 @@ import org.springframework.data.annotation.PersistenceConstructor;
 
 @SpringBootApplication
 public class Application {
-	@PersistenceConstructor
+
+    @PersistenceConstructor
 	public Application() {
 		/*
-		 * This is a comment.
-		 * It stands here proudly.
-		 * Warding off the errors from Sonar.
+		 * This is a comment,
+		 * it stands here proudly,
+		 * warding off errors from Sonar.
 		 */
 	}
 	

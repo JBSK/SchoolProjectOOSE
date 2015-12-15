@@ -42,12 +42,12 @@ public class LocalUserService implements IObjectService<User>, IUserService  {
 	}
 
 	@Override
-	public User findByName(String userName) {
+	public User findByEmailAddress(String emailAddress) {
 		User user;
 
-		try {
-			user = userRepository.findByEmailAddress(userName.toLowerCase());
-		} catch (NullPointerException npe) {
+		if (emailAddress != null) {
+			user = userRepository.findFirstByEmailAddress(emailAddress.toLowerCase());
+		} else {
 			user = null;
 		}
 

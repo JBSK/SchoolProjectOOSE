@@ -1,5 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
@@ -11,10 +13,12 @@ public class OpenQuestion extends Question {
 	
 	public OpenQuestion(String questionText) {
 		super(questionText);
+		super.type = "OpenQuestion";
 	}
 	
 	public OpenQuestion() {
 		super("");
+		super.type = "OpenQuestion";
 	}
 
 	public String getAnswer() {
@@ -23,10 +27,7 @@ public class OpenQuestion extends Question {
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
-	}
-
-	public String getType() {
-		return "OpenQuestion";	
+		super.setDateAnswered(new Date());
 	}
 
 }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import nl.halewijn.persoonlijkheidstest.services.local.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.services.Constants;
@@ -70,8 +69,7 @@ public class Questionnaire {
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
 		if(nextQuestion != null) {
 			return showNextQuestion(model, nextQuestion);
-		}
-		else {
+		} else {
 			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
 			return showResults(model, session, localPersonalityTypeService);
 		}	
@@ -113,7 +111,7 @@ public class Questionnaire {
 		Result result;
 		String userName = (String) session.getAttribute(Constants.email);
 		if(userName != null) {
-			User user = localUserService.findByName(userName);
+			User user = localUserService.findByEmailAddress(userName);
 			result = new Result(user);
 		} else {
 			result = new Result(null);
@@ -215,21 +213,21 @@ public class Questionnaire {
         int primaryPersonalityTypeID = addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
         pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
         addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
-        /*
-		String tweetText = "Mijn persoonlijkheidstype is " + primaryPersonalityType.getName() + "! Test jezelf hier!";
-		model.addAttribute("tweetText", tweetText); // TODO: add other social media/refactor
-        */
+
+		String tweetText = "Mijn persoonlijkheidstype is " + personalityTypes[0] + "! Test jezelf hier!";
+		model.addAttribute("tweetText", tweetText);
+
         return Constants.result;
     }
 
-	private void addSecondaryPersonalityTypeToModel(Model model,
+	public void addSecondaryPersonalityTypeToModel(Model model,
 			LocalPersonalityTypeService localPersonalityTypeService, double[] pTypeResultArrayCopy) {
 		int secondaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
         PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
 	}
 
-	private int addPrimaryPersonalityTypeToModel(Model model, LocalPersonalityTypeService localPersonalityTypeService,
+	public int addPrimaryPersonalityTypeToModel(Model model, LocalPersonalityTypeService localPersonalityTypeService,
 			double[] pTypeResultArrayCopy) {
 		int primaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
         PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
@@ -240,7 +238,7 @@ public class Questionnaire {
 	/**
      * Returns the list of all personality types from the database in a String array.
      */
-	private String[] getPersonalityTypesFromDb(LocalPersonalityTypeService localPersonalityTypeService) {
+	public String[] getPersonalityTypesFromDb(LocalPersonalityTypeService localPersonalityTypeService) {
 		List<PersonalityType> typeList = localPersonalityTypeService.getAll();
         String[] personalityTypes = new String[typeList.size()];
 
@@ -313,7 +311,6 @@ public class Questionnaire {
 			}
 		}
 
-		// TODO: Maybe extract these two loops or merge them if possible?
         double totalQuestionPoints = calculateTotalFromNumbersArray(pTypePoints);
 		for (int i = 0; i < pTypePoints.length; i++) {
             pTypePercentages[i] = calculatePercentage(pTypePoints[i], totalQuestionPoints);
@@ -411,12 +408,6 @@ public class Questionnaire {
 	
 	private List<Double> determinePointsScoredPerTheorem(char questionAnswer, Theorem firstTheorem, Theorem secondTheorem, double firstTheoremPoints, double secondTheoremPoints) {
 		List<Double> theoremPoints = new ArrayList<>();
-/*
-        // Check if the answer is not null (in char equivalent)
-        // Thanks: http://stackoverflow.com/questions/9909333/whats-the-default-value-of-char
-        if (questionAnswer == '\u0000') {
-            questionAnswer = 'C';
-        }*/
 
         ScoreConstant scoreConstant;
         try {
@@ -426,15 +417,27 @@ public class Questionnaire {
         }
 
 		switch(questionAnswer) {
-            case 'A': firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight(); break;
-            case 'B': firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight(); break;
-            case 'C': firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
-                      secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight(); break;
-            case 'D': secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight(); break;
-            case 'E': secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight(); break;
-            default:  scoreConstant = this.localScoreConstantService.findByAnswer('C');
-                      firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
-                      secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight(); break;
+            case 'A':
+				firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+				break;
+            case 'B':
+				firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+				break;
+            case 'C':
+				firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+				secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
+				break;
+            case 'D':
+				secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
+				break;
+            case 'E':
+				secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
+				break;
+            default:
+				scoreConstant = this.localScoreConstantService.findByAnswer('C');
+				firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+				secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
+				break;
 		}
 		theoremPoints.add(firstTheoremPoints);
 		theoremPoints.add(secondTheoremPoints);

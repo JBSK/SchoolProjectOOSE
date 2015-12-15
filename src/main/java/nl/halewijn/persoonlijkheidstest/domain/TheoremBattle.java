@@ -1,5 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
+import java.util.Date;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,30 +20,23 @@ public class TheoremBattle extends Question {
 	
 	public TheoremBattle(String questionText, Theorem firstTheorem, Theorem secondTheorem) {
 		super(questionText);
+		super.type = "TheoremBattle";
 		this.firstTheorem = firstTheorem;
 		this.secondTheorem = secondTheorem;
 	}
 	
 	public TheoremBattle() {
 		super("");
+		super.type = "TheoremBattle";
 	}
 
 	public Theorem getFirstTheorem() {
 		return firstTheorem;
 	}
 
-	public void setFirstTheorem(Theorem firstTheorem) {
-		this.firstTheorem = firstTheorem;
-	}
-
 	public Theorem getSecondTheorem() {
 		return secondTheorem;
 	}
-
-	public void setSecondTheorem(Theorem secondTheorem) {
-		this.secondTheorem = secondTheorem;
-	}
-	
 	
 	public char getAnswer() {
 		return answer;
@@ -49,9 +44,7 @@ public class TheoremBattle extends Question {
 
 	public void setAnswer(char answer) {
 		this.answer = answer;
+		super.setDateAnswered(new Date());
 	}
 
-	public String getType() {
-		return "TheoremBattle";	
-	}
 }

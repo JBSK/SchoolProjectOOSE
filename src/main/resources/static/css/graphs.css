@@ -3,8 +3,8 @@
 			
 			background-size: contain;
 			background-repeat:no-repeat;
-			margin:0px; /* If you want no margin */
-			padding:0px; /*if your want to padding */
+			margin:0; /* If you want no margin */
+			padding:0; /*if your want to padding */
 			
 		}
 		 @media all and (-ms-high-contrast:none)
@@ -47,8 +47,8 @@
 				background-size: contain;
 				background-repeat:no-repeat;
 				background-position: center; 
-				margin:0px; /* If you want no margin */
-				padding:0px; /*if your want to padding */
+				margin:0; /* If you want no margin */
+				padding:0; /*if your want to padding */
 				width:100%;
 		}
 		.content .resultrow1 #radarChartContainer svg {
@@ -56,8 +56,8 @@
 			background-size: contain;
 			background-repeat:no-repeat;
 			background-position: center; 
-			margin:0px; /* If you want no margin */
-			padding:0px; /*if your want to padding */
+			margin:0; /* If you want no margin */
+			padding:0; /*if your want to padding */
 			width:100%;
 		}
 		.content .resultrow1 #barChartCont .barChart{

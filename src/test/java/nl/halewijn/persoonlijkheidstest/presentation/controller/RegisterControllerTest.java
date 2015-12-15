@@ -1,5 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
+import nl.halewijn.persoonlijkheidstest.domain.Result;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class RegisterControllerTest {
 	
 	@Autowired
 	private LocalUserService localUserService;
+
+    @Autowired
+    private LocalResultService localResultService;
 	
 	@Test
 	public void registerTest() {
@@ -51,7 +56,7 @@ public class RegisterControllerTest {
 		when(httpServletRequest.getParameter("regPassword")).thenReturn("password");
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password");
 		
-		assertNull(localUserService.findByName("testMail@mail.nl"));
+		assertNull(localUserService.findByEmailAddress("testMail@mail.nl"));
 		
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password2");
 		assertEquals(Constants.redirect + "register?attempt=mismatch", registerController.registerDB(model, httpSession, httpServletRequest));
@@ -63,8 +68,42 @@ public class RegisterControllerTest {
 		PasswordHash passwordHash = new PasswordHash();
 		user.setPasswordHash(passwordHash.hashPassword("password"));
 		localUserService.save(user);
-		//when(localUserService.findByName("testMail@mail.nl")).thenReturn(User doesUserExist);
+		//when(localUserService.findFirstByEmailAddress("testMail@mail.nl")).thenReturn(User doesUserExist);
 		assertEquals(Constants.redirect + "register?attempt=fail", registerController.registerDB(model,  httpSession, httpServletRequest));
-		
+	}	
+	
+	@Test
+	public void getUserInfoTest() {
+        HttpSession httpSession = mock(HttpSession.class);
+        String testmail = "testmail@mail.com";
+        User testUser = new User(testmail,false);
+        final PasswordHash passwordHash = new PasswordHash();
+        String regPassword = "testPassword";
+        
+		testUser.setPasswordHash(passwordHash.hashPassword(regPassword ));
+        testUser = localUserService.save(testUser);
+        httpSession.setAttribute(Constants.email, testUser.getEmailAddress());
+		when(httpSession.getAttribute(Constants.email)).thenReturn(testmail);
+		assertEquals(testUser.getEmailAddress(), httpSession.getAttribute(Constants.email));
+        
 	}
+
+	@Test
+	public void linkTestResultInSessionToUserTest() {
+        HttpSession httpSession = mock(HttpSession.class);
+
+        Result result1 = new Result();
+        result1 = localResultService.saveResult(result1);
+        assertNull(result1.getUser());
+
+        User user = new User("test@test.com", false);
+        user.setPasswordHash("test");
+        localUserService.save(user);
+
+        when(httpSession.getAttribute(Constants.resultId)).thenReturn(result1.getId());
+        registerController.linkTestResultInSessionToUser(httpSession, user);
+        result1 = localResultService.getByResultId(result1.getId());
+        assertEquals(user, result1.getUser());
+	}
+
 }

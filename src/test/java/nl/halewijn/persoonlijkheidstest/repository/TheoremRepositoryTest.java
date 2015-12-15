@@ -30,8 +30,6 @@ public class TheoremRepositoryTest {
 	@Autowired
 	private LocalTheoremService localTheoremService;
 
-    // TODO Jelle: refactor to use [AT]Before annotations?
-
 	@Test
 	@Transactional
 	public void testGetAll(){

@@ -292,7 +292,7 @@ public class AdminController {
 			return (boolean) session.getAttribute(Constants.admin);
 		} else {
 			String email = (String) session.getAttribute(Constants.email);
-			User user = localUserService.findByName(email);
+			User user = localUserService.findByEmailAddress(email);
 			if (user != null) {
 				session.setAttribute(Constants.admin, user.isAdmin());
 				return user.isAdmin();
