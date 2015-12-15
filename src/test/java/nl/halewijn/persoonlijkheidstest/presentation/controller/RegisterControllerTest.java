@@ -51,7 +51,7 @@ public class RegisterControllerTest {
 		when(httpServletRequest.getParameter("regPassword")).thenReturn("password");
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password");
 		
-		assertNull(localUserService.findByName("testMail@mail.nl"));
+		assertNull(localUserService.findByEmailAddress("testMail@mail.nl"));
 		
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password2");
 		assertEquals(Constants.redirect + "register?attempt=mismatch", registerController.registerDB(model, httpSession, httpServletRequest));
@@ -63,7 +63,7 @@ public class RegisterControllerTest {
 		PasswordHash passwordHash = new PasswordHash();
 		user.setPasswordHash(passwordHash.hashPassword("password"));
 		localUserService.save(user);
-		//when(localUserService.findByName("testMail@mail.nl")).thenReturn(User doesUserExist);
+		//when(localUserService.findFirstByEmailAddress("testMail@mail.nl")).thenReturn(User doesUserExist);
 		assertEquals(Constants.redirect + "register?attempt=fail", registerController.registerDB(model,  httpSession, httpServletRequest));
 		
 	}

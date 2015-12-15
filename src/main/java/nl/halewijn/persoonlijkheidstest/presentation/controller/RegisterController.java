@@ -46,7 +46,7 @@ public class RegisterController {
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
 
-		User doesUserExist = localUserService.findByName(regEmail);
+		User doesUserExist = localUserService.findByEmailAddress(regEmail);
 
 		if (doesUserExist == null) {
 			if (regPassword.equals(regPassword2)) {

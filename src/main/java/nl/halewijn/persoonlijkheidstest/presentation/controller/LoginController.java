@@ -44,7 +44,7 @@ public class LoginController {
 	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
 	public String loginCheck(Model model, HttpSession session, HttpServletRequest req) {
 		String email = req.getParameter(Constants.email);
-		User user = localUserService.findByName(email);
+		User user = localUserService.findByEmailAddress(email);
 
 		if (user != null) {
 			boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());

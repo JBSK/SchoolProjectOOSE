@@ -13,10 +13,12 @@ public class OpenQuestion extends Question {
 	
 	public OpenQuestion(String questionText) {
 		super(questionText);
+		super.type = "OpenQuestion";
 	}
 	
 	public OpenQuestion() {
 		super("");
+		super.type = "OpenQuestion";
 	}
 
 	public String getAnswer() {
@@ -26,10 +28,6 @@ public class OpenQuestion extends Question {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 		super.setDateAnswered(new Date());
-	}
-
-	public String getType() {
-		return "OpenQuestion";	
 	}
 
 }

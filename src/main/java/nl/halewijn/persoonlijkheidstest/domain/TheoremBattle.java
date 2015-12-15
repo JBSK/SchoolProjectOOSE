@@ -20,12 +20,14 @@ public class TheoremBattle extends Question {
 	
 	public TheoremBattle(String questionText, Theorem firstTheorem, Theorem secondTheorem) {
 		super(questionText);
+		super.type = "TheoremBattle";
 		this.firstTheorem = firstTheorem;
 		this.secondTheorem = secondTheorem;
 	}
 	
 	public TheoremBattle() {
 		super("");
+		super.type = "TheoremBattle";
 	}
 
 	public Theorem getFirstTheorem() {
@@ -44,7 +46,6 @@ public class TheoremBattle extends Question {
 		this.secondTheorem = secondTheorem;
 	}
 	
-	
 	public char getAnswer() {
 		return answer;
 	}
@@ -54,7 +55,4 @@ public class TheoremBattle extends Question {
 		super.setDateAnswered(new Date());
 	}
 
-	public String getType() {
-		return "TheoremBattle";	
-	}
 }

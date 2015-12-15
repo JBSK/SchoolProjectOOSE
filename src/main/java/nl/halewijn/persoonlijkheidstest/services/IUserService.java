@@ -4,7 +4,7 @@ import nl.halewijn.persoonlijkheidstest.domain.User;
 
 public interface IUserService {
 
-	User findByName(String userName);
+	User findByEmailAddress(String userName);
 
 	Long count();
 
