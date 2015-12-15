@@ -29,6 +29,15 @@ public class Answer {
 		this.answer = answer;
         this.dateAnswered = dateAnswered;
 	}
+	
+	public Answer() {
+		/*
+		 * Standing here proudly, to ward off an error.
+		 * Not even from Sonar, imagine the terror!
+		 * 
+		 * UserController calls an Answer ArrayList, which apparently requires an empty constructor.
+		 */
+	}
 
 	public int getId() {
 		return answerId;
