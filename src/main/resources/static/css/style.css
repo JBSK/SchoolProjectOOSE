@@ -86,8 +86,8 @@ padding: 10px;
     margin: 20px auto;
     border-radius: 12px;
     max-width: 60%;
-    font-size: 20px;
-
+    font-size: 18px;
+box-shadow: 0px 0px 90px 16px #f1d17d;
 }
 
 @media /*screen and (min-width: 600px) and (max-width: 4000px) {*/ (max-width: 62em) {
@@ -748,9 +748,15 @@ z-index:90;
 		color: #ff8080;
 	}
 	.content .questionError{
-	text-align: center;
+		text-align: center;
 	}	 
 /****************resultaten**********/
-.socialmediabar {
-	line-height: 13px;
-}
+	.textResultRow{
+		margin:20px;
+		font-size: 17px;
+	}
+	
+	
+	.socialmediabar {
+		line-height: 13px;
+	}

@@ -55,18 +55,26 @@
                 </div><!-- end resultRow1-->
 
                 <div class="pure-g resultrow2">
-                    <div class="tekstResult1 pure-u-1">
+                    <div class="textResultRow pure-u-2-3">
                         <h3 th:text="${primaryPersonalityType.name}"></h3>
                         <p th:text="${primaryPersonalityType.primaryDescription}"></p>
                     </div>
-                    <div class="tekstResult2 pure-u-1">
+                    <div class="pure-u-1-4 linkList textResultRow">
+                    	<h3>Linkjes</h3>
+                    	<p class="links ">
+                    	link link link link
+                    	</p>
+					</div>
+				</div>
+				<div class="pure-g resultrow2">
+                    <div class="textResultRow pure-u-1">
                         <h3 th:text="${secondaryPersonalityType.name}"></h3>
                         <p th:text="${secondaryPersonalityType.secondaryDescription}"></p>
                     </div>
                 </div><!-- end resultRow2-->
 
                 <div class="pure-g resultrow3">
-                    <div class="pure-u-1 antwoordenLijst">
+                    <div class="pure-u-1">
                         <span style="size: 7px; font-weight: bold" >Social media</span>
                         <div class="socialmediabar">
                             <!-- Facebook -->
