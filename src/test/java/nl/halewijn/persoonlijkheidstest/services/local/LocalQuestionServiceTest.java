@@ -55,6 +55,9 @@ public class LocalQuestionServiceTest {
 		TheoremBattle questionOne = new TheoremBattle("Kies de stelling die het meest voor u van toepassing is", theorem1, theorem2);
 		OpenQuestion questionTwo = new OpenQuestion("Waarom denk jij dat?");
 
+        assertEquals("TheoremBattle", questionOne.getType());
+        assertEquals("OpenQuestion", questionTwo.getType());
+
 		questionOne.setAnswer(charAnswer);
 		questionTwo.setAnswer(stringAnswer);
 
@@ -205,15 +208,14 @@ public class LocalQuestionServiceTest {
     
     @Test
     public void sortQuestionsArrayTest() {
-    	List<Question> questionList = new ArrayList<Question>();
+    	List<Question> questionList = new ArrayList<>();
     	OpenQuestion newQuestion = new OpenQuestion("Open Question");
     	localQuestionService.save(newQuestion);
     	OpenQuestion newQuestion2 = new OpenQuestion("Open Question 2");
     	questionList.add(newQuestion);
     	questionList.add(newQuestion2);
     	
-    	List<Question> questionListSorted = null;
-    	questionListSorted = new ArrayList<Question>(questionList);
+    	List<Question> questionListSorted = new ArrayList<>(questionList);
     	localQuestionService.sortQuestionsArray(questionListSorted);
     	assertEquals(newQuestion2, questionListSorted.get(0));
     	

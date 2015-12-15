@@ -83,7 +83,7 @@ public class LoginControllerTest {
 		HttpSession httpSession = mock(HttpSession.class);
 
 		loginController.logOut(model, httpSession);
-        when(httpSession.getAttribute("email")).thenThrow(IllegalStateException.class);
+		when(httpSession.getAttribute("email")).thenThrow(IllegalStateException.class);
         httpSession.getAttribute("email");
 
 	}

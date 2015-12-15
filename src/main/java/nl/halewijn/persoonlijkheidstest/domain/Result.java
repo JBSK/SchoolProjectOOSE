@@ -53,10 +53,6 @@ public class Result {
 		return resultId;
 	}
 
-	public void setId(int id) {
-		this.resultId = id;
-	}
-
 	public User getUser() {
 		return user;
 	}
