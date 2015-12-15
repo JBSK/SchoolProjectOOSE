@@ -69,8 +69,7 @@ public class Questionnaire {
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
 		if(nextQuestion != null) {
 			return showNextQuestion(model, nextQuestion);
-		}
-		else {
+		} else {
 			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
 			return showResults(model, session, localPersonalityTypeService);
 		}	

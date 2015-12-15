@@ -11,6 +11,7 @@ import nl.halewijn.persoonlijkheidstest.domain.Theorem;
 import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 
+import java.sql.SQLException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -116,6 +117,7 @@ public class LocalQuestionService implements IQuestionService  {
 	 */
 	@Override
 	public Question getNextQuestion(Question previousQuestion, String answer) {
+		Question nextQuestion = null;
 		List<RoutingTable> tables = localRoutingService.getRoutingRulesByQuestion(previousQuestion);
 		if(!tables.isEmpty()) {
 			for(RoutingTable table : tables){ 
@@ -123,11 +125,27 @@ public class LocalQuestionService implements IQuestionService  {
 					RoutingRule rule = table.getRoutingRule();
 					int ruleId = rule.getRoutingRuleId();
 					int ruleParam = table.getRoutingRuleParam();
-					return determineFollowUpQuestion(previousQuestion, ruleId, ruleParam);	
+					nextQuestion = determineFollowUpQuestion(previousQuestion, ruleId, ruleParam);
 				}
 			}
 		}
-		return getNextChronologicalQuestion(previousQuestion);		
+		if (nextQuestion == null) {
+			nextQuestion = getNextChronologicalQuestion(previousQuestion); // No routing rules found for this answer, just the next question in the list.
+		}
+		return checkIfQuestionActive(nextQuestion);
+	}
+
+	private Question checkIfQuestionActive(Question question) {
+        if (question != null) {
+            if (question.isActive()) { // Check if this question hasn't been disabled by the administrator.
+                return question;
+            } else { // Otherwise, get the next question, and check that one recursively.
+                Question backup = getNextChronologicalQuestion(question);
+                return checkIfQuestionActive(backup);
+            }
+        } else {
+            return null;
+        }
 	}
 
 	/**
@@ -239,11 +257,13 @@ public class LocalQuestionService implements IQuestionService  {
 	 */
 	@Override
 	public Question getFirstQuestion(Questionnaire questionnaire) {
-        Question firstQuestion = null;
+        Question firstQuestion = getByQuestionId(1);
 
-        if (getByQuestionId(1) != null) {
-            firstQuestion = getByQuestionId(1);
+        if (firstQuestion == null) {
+            System.out.println("There is no question in the database with question ID 1! Please make a new question first, before running the personality test.");
         }
+
+        firstQuestion = checkIfQuestionActive(firstQuestion);
 
         questionnaire.addQuestion(firstQuestion);
         return firstQuestion;
