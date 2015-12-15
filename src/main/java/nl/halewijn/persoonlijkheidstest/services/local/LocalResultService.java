@@ -42,8 +42,28 @@ public class LocalResultService implements IResultService  {
 	}
 	
 	@Override
+	public List<Answer> findAllAnswers() {
+		return testResultAnswerRepository.findAll();
+	}
+	
+	@Override
 	public List<Result> findAll() {
 		return testResultRepository.findAll();
+	}
+	
+	@Override
+	public List<ResultTypePercentage> findAllResultTypePercentages() {
+		return resultTypePercentageRepository.findAll();
+	}
+	
+	@Override
+	public Answer findAnswer(int id) {
+		return testResultAnswerRepository.getByAnswerId(id);
+	}
+	
+	@Override
+	public List<ResultTypePercentage> findResultTypePercentageByResult(Result result) {
+		return resultTypePercentageRepository.findByResult(result);
 	}
 	
 	@Override
@@ -53,6 +73,14 @@ public class LocalResultService implements IResultService  {
 
 	public Result getByResultId(int id) {
 		return testResultRepository.getByResultId(id);
+	}
+	
+	public List<Result> getByUserId(int id) {
+		return testResultRepository.getByUserId(id);
+	}
+	
+	public List<Answer> getAnswersByResultId(int id) {
+		return testResultRepository.getAnswersByResultId(id);
 	}
 
 	@Override

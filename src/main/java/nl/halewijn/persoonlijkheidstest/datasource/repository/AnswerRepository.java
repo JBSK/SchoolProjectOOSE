@@ -7,6 +7,5 @@ import nl.halewijn.persoonlijkheidstest.domain.Answer;
 
 @Repository
 public interface AnswerRepository extends JpaSpecificationExecutor<Answer>, JpaRepository<Answer, Long> {
-
-
+	Answer getByAnswerId(int id);
 }

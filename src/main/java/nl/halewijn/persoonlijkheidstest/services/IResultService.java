@@ -22,4 +22,11 @@ public interface IResultService {
 
 	Answer saveAnswer(Answer testResultAnswer);
 
+	List<Answer> findAllAnswers();
+
+	List<ResultTypePercentage> findAllResultTypePercentages();
+
+	Answer findAnswer(int id);
+
+	List<ResultTypePercentage> findResultTypePercentageByResult(Result result);
 }

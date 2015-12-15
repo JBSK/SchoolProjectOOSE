@@ -38,5 +38,12 @@ public class ResultTypePercentage implements Serializable {
 		 * UserController calls an Answer ArrayList, which apparently requires an empty constructor.
 		 */
 	}
-
+	
+	public Result getResult() {
+		return result;
+	}
+	
+	public double getPercentage() {
+		return percentage;
+	}
 }

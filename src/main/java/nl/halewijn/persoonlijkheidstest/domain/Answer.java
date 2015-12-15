@@ -38,5 +38,12 @@ public class Answer {
 		 * UserController calls an Answer ArrayList, which apparently requires an empty constructor.
 		 */
 	}
-
+	
+	public int getId() {
+		return answerId;
+	}
+	
+	public Question getQuestion() {
+		return question;
+	}
 }
