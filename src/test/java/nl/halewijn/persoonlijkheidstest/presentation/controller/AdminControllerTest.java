@@ -334,13 +334,13 @@ public class AdminControllerTest {
 	public void checkIfAdminTest() {
 		HttpSession session = mock(HttpSession.class);
 		
-		assertEquals(null, localUserService.findByName((String) session.getAttribute("email")));
+		assertEquals(null, localUserService.findByEmailAddress((String) session.getAttribute("email")));
 		assertEquals(false, adminController.checkIfAdmin(session));
 		
 		when(session.getAttribute("email")).thenReturn("duncan@email.eu");
 		assertEquals("duncan@email.eu", session.getAttribute("email"));
 		when(session.getAttribute("admin")).thenReturn(true);
-		assertEquals(null, localUserService.findByName((String) session.getAttribute("email")));
+		assertEquals(null, localUserService.findByEmailAddress((String) session.getAttribute("email")));
 		assertEquals(true, adminController.checkIfAdmin(session));
 	}
 

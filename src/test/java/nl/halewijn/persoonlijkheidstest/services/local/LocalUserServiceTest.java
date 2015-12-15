@@ -8,12 +8,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,9 +39,9 @@ public class LocalUserServiceTest {
 		
 		user.setAdmin(true);
 		user = localUserService.update(user);
-		assertEquals(true, localUserService.findByName("Name").isAdmin());
+		assertEquals(true, localUserService.findByEmailAddress("Name").isAdmin());
 		
 		localUserService.delete(user);
-		assertEquals(null, localUserService.findByName("Name"));
+		assertEquals(null, localUserService.findByEmailAddress("Name"));
 	}  
 }

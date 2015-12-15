@@ -112,7 +112,7 @@ public class Questionnaire {
 		Result result;
 		String userName = (String) session.getAttribute(Constants.email);
 		if(userName != null) {
-			User user = localUserService.findByName(userName);
+			User user = localUserService.findByEmailAddress(userName);
 			result = new Result(user);
 		} else {
 			result = new Result(null);
