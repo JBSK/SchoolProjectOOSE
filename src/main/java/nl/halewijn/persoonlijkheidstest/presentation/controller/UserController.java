@@ -74,27 +74,15 @@ public class UserController {
 		List<Question> answeredQuestions = new ArrayList<>();
 		List<Answer> answers = new ArrayList<>();
 		Result result = localResultService.getByResultId(Integer.parseInt(request.getParameter("number")));
-//		answers = localResultService.findAllAnswers();
-//		answers = localResultService.getAnswersByResultId(result.getId());
 		for (int i = 0; i < 12; i ++) {
 			answers.add(result.getTestResultAnswers().get(i));
 		}
-		System.out.println("Result id: " + result.getId());
-		System.out.println("Totaal aantal answers: " + answers.size());
 		
-		// TODO fix the second for-loop
 		for (int i = 0; i < answers.size(); i ++) {
-			System.out.println(answers.get(i).getId());
-//			if (result.getId() == answers.get(i).getId()) {
-			System.out.println("BNA" + result.getTestResultAnswers().get(0).getId());
-//			if (result.getId() == result.getTestResultAnswers().get(i).getId()) {
 			if (result.getId() == 1) {
-				System.out.println("TEST: " + result.getTestResultAnswers().get(i).getId());
-				System.out.println(answers.get(0).getId() + answers.size());
 				for (int j = answers.get(0).getId(); j < answers.get(0).getId() + answers.size(); j ++) {
 					Answer answer = localResultService.findAnswer(j);
 					if (answers.get(i).getId() == answer.getId()) {
-//						answeredQuestions.add(i, answers.get(j).getQuestion());
 						answeredQuestions.add(i, answer.getQuestion());
 						System.out.println("IT WORKS!");
 					}
@@ -102,21 +90,13 @@ public class UserController {
 				}
 			}
 		}
-		System.out.println(answeredQuestions.size());
-		// TODO fix the result type percentages - right now the wrong ones show 
+		
 		double[] pTypeResultArray = new double[9];
 		for (int i = 0; i < pTypeResultArray.length; i ++) {
-//			for (int j = 0; j < localResultService.findAll().size(); j ++) {
-//			List<ResultTypePercentage> findAllResultTypePercentages = new ArrayList<>();
 			List<ResultTypePercentage> findAllResultTypePercentages = localResultService.findResultTypePercentageByResult(result);
-			for (int j = 0; j < 9; j ++) {
-//				findAllResultTypePercentages.add(j, localResultService.findResultTypePercentageByResult(result));
+			if (result.getId() == findAllResultTypePercentages.get(i).getResult().getId()) {
+				pTypeResultArray[i] = findAllResultTypePercentages.get(i).getPercentage();
 			}
-//				if (result.getId() == findAllResultTypePercentages.get(i).getResult().getId()) {
-				if (result.getId() == findAllResultTypePercentages.get(i).getResult().getId()) {
-					pTypeResultArray[i] = findAllResultTypePercentages.get(i).getPercentage();
-				}
-//			}
 		}
 		model.addAttribute("scores", pTypeResultArray);
 		
