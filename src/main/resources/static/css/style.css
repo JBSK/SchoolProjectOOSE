@@ -88,6 +88,12 @@ padding: 10px;
     max-width: 60%;
     font-size: 18px;
 box-shadow: 0px 0px 90px 16px #f1d17d;
+	transition: 1s ease-in-out;
+}
+.content:hover{
+	box-shadow: 0px 0px 8px -2px #000000;
+		transition: 1s ease-in-out;
+	
 }
 
 @media /*screen and (min-width: 600px) and (max-width: 4000px) {*/ (max-width: 62em) {
