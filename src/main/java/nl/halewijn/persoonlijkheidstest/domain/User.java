@@ -9,7 +9,12 @@ import java.util.Date;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class User {
 
-	@Id
+    @Id
+    @GeneratedValue
+    private int id;
+
+	@NotNull
+    // TODO: @UniqueConstraint()
 	private String emailAddress;
 
     @NotNull
@@ -37,7 +42,11 @@ public class User {
          */
 	}
 
-	public String getEmailAddress() {
+    public int getId() {
+        return id;
+    }
+
+    public String getEmailAddress() {
 		return emailAddress.toLowerCase();
 	}
 

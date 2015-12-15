@@ -23,8 +23,17 @@ public class LocalUserServiceTest {
 
 	@Autowired
 	private LocalUserService localUserService;
-	
-	
+
+	@Test
+	public void getByIdTest() { // TODO: Improving test coverage
+		String emailAddress = "test@test.com";
+		User user = new User(emailAddress, true);
+        user.setPasswordHash("test");
+        user = localUserService.save(user);
+		user = localUserService.getById(user.getId());
+		assertEquals(emailAddress, user.getEmailAddress());
+	}
+
 	@Test
 	public void userCRUD() {
 		User user = new User("Name", false);
@@ -37,6 +46,5 @@ public class LocalUserServiceTest {
 		
 		localUserService.delete(user);
 		assertEquals(null, localUserService.findByName("Name"));
-		
 	}  
 }

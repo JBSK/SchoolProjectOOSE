@@ -52,11 +52,9 @@ public class RegisterController {
 			if (regPassword.equals(regPassword2)) {
 				return getUserInfo(session, regEmail, regPassword);
 			} else {
-				// TODO: Show error about mismatching passwords
                 return Constants.redirect + "register?attempt=mismatch";
 			}
 		} else {
-            // TODO: Show error about username already taken? (Maybe not a good idea)
             return Constants.redirect + "register?attempt=fail";
         }
     }
@@ -76,7 +74,7 @@ public class RegisterController {
 	}
 
     /*
-     * Check if we have just finished a test, if yes;
+     * Check if we have just finished a test, if yes:
      * - Retrieve the result ID,
      * - Lookup the corresponding Result,
      * - Change the user value to the currently logged-in user,
@@ -84,6 +82,7 @@ public class RegisterController {
      * - And clear the stored result ID in the session.
      */
     private void linkTestResultInSessionToUser(HttpSession session, User user) {
+         // TODO: write a jUnit test
          if (session.getAttribute(Constants.resultId) != null) {
              int resultId = (int) session.getAttribute(Constants.resultId);
              Result result = localResultService.getByResultId(resultId);
@@ -91,5 +90,5 @@ public class RegisterController {
              localResultService.saveResult(result);
              session.setAttribute(Constants.resultId, null);
          }
-    } // TODO: write a jUnit test
+    }
 }

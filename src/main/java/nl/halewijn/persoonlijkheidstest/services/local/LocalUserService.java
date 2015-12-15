@@ -45,9 +45,9 @@ public class LocalUserService implements IObjectService<User>, IUserService  {
 	public User findByName(String userName) {
 		User user;
 
-		try {
+		if (userName != null) {
 			user = userRepository.findByEmailAddress(userName.toLowerCase());
-		} catch (NullPointerException npe) {
+		} else {
 			user = null;
 		}
 

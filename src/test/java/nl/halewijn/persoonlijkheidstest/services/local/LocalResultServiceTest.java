@@ -3,6 +3,7 @@ package nl.halewijn.persoonlijkheidstest.services.local;
 import static org.junit.Assert.*;
 
 import nl.halewijn.persoonlijkheidstest.Application;
+import nl.halewijn.persoonlijkheidstest.domain.Result;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 @Transactional
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
@@ -18,10 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class LocalResultServiceTest {
 
     @Autowired
-	private LocalRoutingService localResultService;
+	private LocalResultService localResultService;
 	
 	@Test
-	public void findById() {
-		assertEquals(null, localResultService.getById(5));
+	public void getByResultIdTest() {
+		Date now = new Date(); // TODO: Improving test coverage
+        Result result = new Result();
+        result.setDate(now);
+        result = localResultService.saveResult(result);
+		assertEquals(now, result.getDate());
 	}  
 }
