@@ -24,7 +24,7 @@ public class LocalUserServiceTest {
 	private LocalUserService localUserService;
 
 	@Test
-	public void getByIdTest() { // TODO: Improving test coverage
+	public void getByIdTest() {
 		String emailAddress = "test@test.com";
 		User user = new User(emailAddress, true);
         user.setPasswordHash("test");

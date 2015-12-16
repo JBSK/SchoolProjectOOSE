@@ -21,8 +21,10 @@ public class Question {
 	private Date dateAnswered;
 
 	@Transient
-	protected String type; // TODO: Improved test coverage...
-	
+	protected String type;
+
+	private boolean active = true;
+
 	public Question(String questionText) {
         this.text = questionText;
 	}
@@ -58,5 +60,13 @@ public class Question {
 	public String getType() {
 		return type;
 	}
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
 }

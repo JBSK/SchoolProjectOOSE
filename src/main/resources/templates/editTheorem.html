@@ -20,7 +20,7 @@
 				
 				            <div class="pure-u-1 pure-u-md-2-3">
 				                <label for="Theorem">Stelling</label>
-				                <textarea name="text" id="Theorem" class="pure-u-23-24" type="text" th:text="${i.text}"></textarea>
+				                <textarea name="text" id="Theorem" class="pure-u-23-24" th:text="${i.text}"></textarea>
 				            </div>
 				
 				            <div class="pure-u-1 pure-u-md-1-2">
@@ -50,11 +50,7 @@
 					        
 					        <script>
 					        function validate() {
-					        	if (confirm("Weet je zeker dat je dit item wil verwijderen?")) {
-									return true;
-					        	} else {
-					        		return false;
-					        	}
+					        	return confirm("Weet je zeker dat je dit item wil verwijderen?");
 					        }
 					        </script>
 					    </div>

@@ -32,28 +32,18 @@ public class ResultTypePercentage implements Serializable {
 		this.personalityType = personalityType;
 		this.percentage = percentage;
 	}
-
+	
+	public ResultTypePercentage() {
+		/*
+		 * UserController calls an Answer ArrayList, which apparently requires an empty constructor.
+		 */
+	}
+	
 	public Result getResult() {
 		return result;
 	}
-
-	public void setResult(Result result) {
-		this.result = result;
-	}
-
-	public PersonalityType getPersonalityType() {
-		return personalityType;
-	}
-
-	public void setPersonalityType(PersonalityType personalityType) {
-		this.personalityType = personalityType;
-	}
-
+	
 	public double getPercentage() {
 		return percentage;
-	}
-
-	public void setPercentage(double percentage) {
-		this.percentage = percentage;
 	}
 }

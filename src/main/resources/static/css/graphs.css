@@ -3,8 +3,8 @@
 			
 			background-size: contain;
 			background-repeat:no-repeat;
-			margin:0px; /* If you want no margin */
-			padding:0px; /*if your want to padding */
+			margin:0; /* If you want no margin */
+			padding:0; /*if your want to padding */
 			
 		}
 		 @media all and (-ms-high-contrast:none)
@@ -23,30 +23,41 @@
      		height:100%;
      	}
 		.content .resultrow1 #radarChartContainer .legend {
-				font-family: 'Raleway', sans-serif;
-				fill: #333333;
+			font-family: 'Raleway', sans-serif;
+			font-weight: bold;
+		}
+		.label-8, .label-9, .label-1 {
+			fill: red !important;
+		}
+
+		.label-2, .label-3, .label-4 {
+			fill: green !important;
+		}
+
+		.label-5, .label-6, .label-7{
+			fill: blue !important;
 		}
 			
 		.content .resultrow1 .radarChartContainer .tooltip {
-				fill: #333333;
+			fill: #333333;
 		}
 			
 		.content .resultrow1 #radarChartContainer svg {
-				background:url("/imgs/star.png");
-				background-size: contain;
-				background-repeat:no-repeat;
-				background-position: center; 
-				margin:0px; /* If you want no margin */
-				padding:0px; /*if your want to padding */
-				width:100%;
+			background:url("/imgs/star.png");
+			background-size: contain;
+			background-repeat:no-repeat;
+			background-position: center;
+			margin:0; /* If you want no margin */
+			padding:0; /*if your want no padding */
+			width:100%;
 		}
 		.content .resultrow1 #radarChartContainer svg {
 			background:url("/imgs/star.png");
 			background-size: contain;
 			background-repeat:no-repeat;
 			background-position: center; 
-			margin:0px; /* If you want no margin */
-			padding:0px; /*if your want to padding */
+			margin:0; /* If you want no margin */
+			padding:0; /*if your want to padding */
 			width:100%;
 		}
 		.content .resultrow1 #barChartCont .barChart{

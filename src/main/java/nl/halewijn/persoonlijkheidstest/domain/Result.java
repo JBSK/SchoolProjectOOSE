@@ -46,15 +46,14 @@ public class Result {
 	}
 
 	public Result() {
-
+		/*
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
 	}
 
 	public int getId() {
 		return resultId;
-	}
-
-	public void setId(int id) {
-		this.resultId = id;
 	}
 
 	public User getUser() {
@@ -64,7 +63,7 @@ public class Result {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+	
 	public List<Answer> getTestResultAnswers() {
 		return testResultAnswers;
 	}

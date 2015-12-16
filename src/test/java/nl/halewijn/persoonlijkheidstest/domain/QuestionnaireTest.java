@@ -260,7 +260,7 @@ public class QuestionnaireTest {
 		TheoremBattle theoremBattleFive = new TheoremBattle("Theorom Battle Five", theoremOne, theoremSecond);
 		TheoremBattle theoremBattleSix = new TheoremBattle("Theorom Battle Six", theoremOne, theoremSecond);
 
-		OpenQuestion openQuestionOne = new OpenQuestion("Open Question One"); // TODO: Improving test coverage
+		OpenQuestion openQuestionOne = new OpenQuestion("Open Question One");
 		
 		List<Question> questions = new ArrayList<>();
 		HttpSession session = mock(HttpSession.class);
@@ -277,7 +277,7 @@ public class QuestionnaireTest {
 		localQuestionService.save(theoremBattleFour);
 		localQuestionService.save(theoremBattleFive);
 		localQuestionService.save(theoremBattleSix);
-		localQuestionService.save(openQuestionOne); // TODO: Improving test coverage
+		localQuestionService.save(openQuestionOne);
 		theoremBattleOne.setAnswer('C');
 		theoremBattleTwo.setAnswer('B');
 		theoremBattleThree.setAnswer('D');
@@ -290,14 +290,14 @@ public class QuestionnaireTest {
 		questions.add(theoremBattleFour);
 		questions.add(theoremBattleFive);
 		questions.add(theoremBattleSix);
-		questions.add(openQuestionOne); // TODO: Improving test coverage
+		questions.add(openQuestionOne);
 		localQuestionService.save(theoremBattleOne);
 		localQuestionService.save(theoremBattleTwo);
 		localQuestionService.save(theoremBattleThree);
 		localQuestionService.save(theoremBattleFour);
 		localQuestionService.save(theoremBattleFive);
 		localQuestionService.save(theoremBattleSix);
-		localQuestionService.save(openQuestionOne); // TODO: Improving test coverage
+		localQuestionService.save(openQuestionOne);
 		questionnaire.setAnsweredQuestions(questions);
 
         ScoreConstant scoreConstantA = new ScoreConstant('A', 5.0);
@@ -344,7 +344,7 @@ public class QuestionnaireTest {
 		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService);
 	
 		theoremBattleSix.setAnswer('G');
-		openQuestionOne.setAnswer("Example answer"); // TODO: Improving test coverage
+		openQuestionOne.setAnswer("Example answer");
 		assertEquals(9, questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions()).length);
 	}
 }

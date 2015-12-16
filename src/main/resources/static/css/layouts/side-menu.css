@@ -82,7 +82,7 @@ appears on the left side of the page.
     margin-left: -150px; /* "#menu" width */
     width: 150px;
     position: fixed;
-    top: 0px; /* was 120px */
+    top: 0; /* was 120px */
 
     left: 0;
     bottom: 0;
@@ -124,7 +124,7 @@ appears on the left side of the page.
     */
     #menu .pure-menu ul,
     #menu .pure-menu .menu-item-divided {
-        border-top: 0px solid #333; /* standard op 1px*/
+        border-top: 0 solid #333; /* standard op 1px*/
     }
         /*
         Change color of the anchor links on hover/focus.

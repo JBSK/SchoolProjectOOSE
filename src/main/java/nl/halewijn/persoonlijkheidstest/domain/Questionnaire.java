@@ -69,8 +69,7 @@ public class Questionnaire {
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
 		if(nextQuestion != null) {
 			return showNextQuestion(model, nextQuestion);
-		}
-		else {
+		} else {
 			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
 			return showResults(model, session, localPersonalityTypeService);
 		}	
@@ -221,14 +220,14 @@ public class Questionnaire {
         return Constants.result;
     }
 
-	private void addSecondaryPersonalityTypeToModel(Model model,
+	public void addSecondaryPersonalityTypeToModel(Model model,
 			LocalPersonalityTypeService localPersonalityTypeService, double[] pTypeResultArrayCopy) {
 		int secondaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
         PersonalityType secondaryPersonalityType = localPersonalityTypeService.getById(secondaryPersonalityTypeID);
         model.addAttribute("secondaryPersonalityType", secondaryPersonalityType);
 	}
 
-	private int addPrimaryPersonalityTypeToModel(Model model, LocalPersonalityTypeService localPersonalityTypeService,
+	public int addPrimaryPersonalityTypeToModel(Model model, LocalPersonalityTypeService localPersonalityTypeService,
 			double[] pTypeResultArrayCopy) {
 		int primaryPersonalityTypeID = getIndexOfHighestNumber(pTypeResultArrayCopy) + 1;
         PersonalityType primaryPersonalityType = localPersonalityTypeService.getById(primaryPersonalityTypeID);
@@ -239,7 +238,7 @@ public class Questionnaire {
 	/**
      * Returns the list of all personality types from the database in a String array.
      */
-	private String[] getPersonalityTypesFromDb(LocalPersonalityTypeService localPersonalityTypeService) {
+	public String[] getPersonalityTypesFromDb(LocalPersonalityTypeService localPersonalityTypeService) {
 		List<PersonalityType> typeList = localPersonalityTypeService.getAll();
         String[] personalityTypes = new String[typeList.size()];
 
@@ -312,7 +311,6 @@ public class Questionnaire {
 			}
 		}
 
-		// TODO: Maybe extract these two loops or merge them if possible?
         double totalQuestionPoints = calculateTotalFromNumbersArray(pTypePoints);
 		for (int i = 0; i < pTypePoints.length; i++) {
             pTypePercentages[i] = calculatePercentage(pTypePoints[i], totalQuestionPoints);

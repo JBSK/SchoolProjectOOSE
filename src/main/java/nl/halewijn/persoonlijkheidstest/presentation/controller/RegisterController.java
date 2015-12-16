@@ -62,7 +62,7 @@ public class RegisterController {
 	/**
 	 * Gets the user information and adds it to the session
      */
-	private String getUserInfo(HttpSession session, String regEmail, String regPassword) {
+	public String getUserInfo(HttpSession session, String regEmail, String regPassword) {
 		User user = new User(regEmail, false);
 		final PasswordHash passwordHash = new PasswordHash();
 		user.setPasswordHash(passwordHash.hashPassword(regPassword));
@@ -81,8 +81,7 @@ public class RegisterController {
      * - Update the result in the database,
      * - And clear the stored result ID in the session.
      */
-    private void linkTestResultInSessionToUser(HttpSession session, User user) {
-         // TODO: write a jUnit test
+    public void linkTestResultInSessionToUser(HttpSession session, User user) {
          if (session.getAttribute(Constants.resultId) != null) {
              int resultId = (int) session.getAttribute(Constants.resultId);
              Result result = localResultService.getByResultId(resultId);

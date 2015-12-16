@@ -39,28 +39,12 @@ public class RoutingTable implements Serializable {
          */
 	}
 
-	public Question getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(Question question) {
-		this.question = question;
-	}
-
 	public char getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(char answer) {
-		this.answer = answer;
-	}
-
 	public RoutingRule getRoutingRule() {
 		return routingRule;
-	}
-
-	public void setRoutingRule(RoutingRule routingRule) {
-		this.routingRule = routingRule;
 	}
 
 	public int getRoutingRuleParam() {

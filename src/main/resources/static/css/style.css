@@ -35,8 +35,8 @@ body{
 		background-repeat: no-repeat;
 		background-position: center center;
 		background-size: 100% auto;
-	   margin:0px 0px 0px 5px; /* If you want no margin */
-	   padding:0px; /*if your want to padding */
+	   margin:0 0 0 5px; /* If you want no margin */
+	   padding:0; /*if your want to padding */
 	   height: 78px;
        width: 100px;
        top: -8px;
@@ -53,7 +53,7 @@ body{
 		display: block;
 	}
 	#header .login{
-		right:0px;
+		right:0;
 		margin:10px;
 		height:95px;
 	
@@ -86,8 +86,8 @@ padding: 10px;
     margin: 20px auto;
     border-radius: 12px;
     max-width: 60%;
-    font-size: 20px;
-
+    font-size: 18px;
+box-shadow: 0px 0px 90px 16px #f1d17d;
 }
 
 @media /*screen and (min-width: 600px) and (max-width: 4000px) {*/ (max-width: 62em) {
@@ -98,7 +98,7 @@ padding: 10px;
 /********************** Test Menu *****************/
 .menu{
 
-	border: 0px;
+	border: 0;
 }
 .menulist{
 
@@ -266,7 +266,7 @@ z-index:90;
         transform: translateX(-140px);
         opacity: 0;
         opacity: 1\9;
-		padding:0px;
+		padding:0;
     }
 
     .pure-menu-horizontal.custom-menu-tucked {
@@ -401,7 +401,7 @@ z-index:90;
 	  width: 400px;
 	  max-width: 100%;
 	  background: #edeff1;
-      margin: 0px auto 0px auto;
+      margin: 0 auto 0 auto;
 	  padding-top: 20px;
 	  padding-bottom: 20px;
 	  border-radius: 10px;
@@ -417,7 +417,7 @@ z-index:90;
 	  height: 35px;
 	  margin: 15px auto;
 	  background: #fff;
-	  border: 0px;
+	  border: 0;
 	  padding: 5px;
 	  font-size: 16px;
 	   border: 2px solid #fff;
@@ -439,7 +439,7 @@ z-index:90;
 	  padding: 12px;
 	  cursor: pointer;
 	  color: #fff;
-	  border: 0px;
+	  border: 0;
 	  margin: auto;
 	  border-radius: 5px;
 	  -moz-border-radius: 5px;
@@ -487,8 +487,8 @@ z-index:90;
 /**************Stellingbattle************/
 	.content #vraag{
 		width:100%;
-		padding-top:0px;
-		margin-top:0px;
+		padding-top:0;
+		margin-top:0;
 		text-align: center;
 
 	}
@@ -526,7 +526,7 @@ z-index:90;
 	}
 	.radioButtonAverage{
 		text-align:center;
-		margin:0px;
+		margin:0;
 		background-color: #ffffff;
 
 	}
@@ -538,7 +538,7 @@ z-index:90;
 	  width: 400px;
 	  max-width: 100%;
 	  background: #edeff1;
-      margin: 0px auto 30px auto;
+      margin: 0 auto 30px auto;
 	  padding-top: 20px;
 	  padding-bottom: 20px;
 	  border-radius: 10px;
@@ -556,7 +556,7 @@ z-index:90;
         height: 35px;
         margin: 15px auto;
         background: #fff;
-        border: 0px;
+        border: 0;
         padding: 5px;
         font-size: 16px;
         border: 2px solid #fff;
@@ -583,7 +583,7 @@ z-index:90;
         padding: 12px;
         cursor: pointer;
         color: #fff;
-        border: 0px;
+        border: 0;
         margin: auto;
         border-radius: 5px;
         -moz-border-radius: 5px;
@@ -633,7 +633,7 @@ z-index:90;
         width: 400px;
         max-width: 100%;
         background: #edeff1;
-        margin: 0px auto 30px auto;
+        margin: 0 auto 30px auto;
         padding-top: 20px;
         padding-bottom: 20px;
         text-align:center;
@@ -651,7 +651,7 @@ z-index:90;
         height: 35px;
         margin: 15px auto;
         background: #fff;
-        border: 0px;
+        border: 0;
         padding: 5px;
         font-size: 16px;
         border: 2px solid #fff;
@@ -675,7 +675,7 @@ z-index:90;
         padding: 12px;
         cursor: pointer;
         color: #fff;
-        border: 0px;
+        border: 0;
         margin: auto;
         border-radius: 5px;
         -moz-border-radius: 5px;
@@ -748,9 +748,15 @@ z-index:90;
 		color: #ff8080;
 	}
 	.content .questionError{
-	text-align: center;
+		text-align: center;
 	}	 
 /****************resultaten**********/
-.socialmediabar {
-	line-height: 13px;
-}
+	.textResultRow{
+		margin:20px;
+		font-size: 17px;
+	}
+	
+	
+	.socialmediabar {
+		line-height: 13px;
+	}

@@ -50,5 +50,4 @@ public class PersonalityTypeRepositoryTest {
 		assertNull(localPersonalityTypeService.getById(examplePersonalityType.getTypeID()));
 	}
 
-    // TODO Jelle: May be missing a few tests? Checking test coverage with Sonar now...
 }

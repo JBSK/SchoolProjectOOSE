@@ -55,19 +55,8 @@ public class PersonalityType {
 		return primaryDescription;
 	}
 
-	public void setPrimaryDescription(String primaryDescription) {
-		this.primaryDescription = primaryDescription;
-	}
-
 	public String getSecondaryDescription() {
 		return secondaryDescription;
 	}
 
-	public void setSecondaryDescription(String secondaryDescription) {
-		this.secondaryDescription = secondaryDescription;
-	}
-	
-	
-	
-	
 }
