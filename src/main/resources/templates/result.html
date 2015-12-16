@@ -2,10 +2,9 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 	<head th:replace="fragments/headTag-resultpage :: headTag"></head>
 	<body>
-        <!-- Facebook share button SDK code begin -->
         <div id="fb-root"></div>
         <script>
-        	//Facebook share
+        	//Facebook share begin
 	        window.fbAsyncInit = function() {
 	            FB.init({
 	                xfbml      : true,
@@ -20,6 +19,7 @@
 	            js.src = "https://connect.facebook.net/en_US/sdk.js";
 	            fjs.parentNode.insertBefore(js, fjs);
 	        }(document, 'script', 'facebook-jssdk'));
+			//Facebook share end
         
             // Using jsPDF to save the page as PDF.
 		    function PDFFromHTML() {	    	
@@ -53,7 +53,6 @@
 		        }, margins);
 		    }
         </script>
-        <!-- Facebook share button SDK code end -->
 
 		<div th:include="fragments/menu" th:remove="tag"></div>
 		<div id="main" class="pure-skin-PT">
@@ -119,7 +118,7 @@
                 </div><!-- end resultRow2-->
                 <div class="pure-g resultrow3">
                 	<div class="pure-u-1">
-                        <a href="linkPage" class="readMore pure-button">Lees meer..</a>
+                        <a href="linkpage" class="readMore pure-button">Lees meer..</a>
                     </div>
                 </div><!-- end resultRow2-->
             </div><!-- end content -->

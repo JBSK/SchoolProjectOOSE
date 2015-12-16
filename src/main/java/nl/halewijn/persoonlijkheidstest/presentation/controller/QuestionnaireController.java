@@ -1,5 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
+import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
+import nl.halewijn.persoonlijkheidstest.domain.PersonalityTypeLink;
 import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 @Controller
 public class QuestionnaireController {
@@ -32,6 +36,9 @@ public class QuestionnaireController {
     
     @Autowired
     private LocalUserService localUserService;
+
+    @Autowired
+    private LocalPersonalityTypeLinkService localPersonalityTypeLinkService;
 	
 	/**
 	 * If the file path relative to the base was "/questionnaire", return the relevant web page.
@@ -103,4 +110,15 @@ public class QuestionnaireController {
 		}
 		return Constants.questionnaire;
 	}
+
+    @RequestMapping(value="/showLinks", method=RequestMethod.GET)
+    public String showLinks(Model model, HttpSession session) {
+        List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
+        for (PersonalityType type : personalityTypes) {
+            List<PersonalityTypeLink> typeLinks = localPersonalityTypeLinkService.getAllByPersonalityType(type);
+
+        }
+        return Constants.questionnaire;
+    }
+
 }
