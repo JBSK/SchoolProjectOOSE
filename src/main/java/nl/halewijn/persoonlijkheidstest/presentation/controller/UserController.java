@@ -17,6 +17,7 @@ import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
 
 @Controller
 public class UserController {
@@ -29,6 +30,9 @@ public class UserController {
 	
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
+	
+	@Autowired
+    private LocalWebsiteContentTextService localWebsiteContentTextService;
 
 	/**
 	 * Check whether there is an email address in the browser session.
@@ -102,6 +106,9 @@ public class UserController {
                         int primaryPersonalityTypeID = questionnaire.addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
                         pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
                         questionnaire.addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
+                        
+                        WebsiteContentText text5 = localWebsiteContentTextService.getByContentId(5);
+                		model.addAttribute("FifthContentBox", text5);
 
                         return Constants.result;
                     } else {

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import nl.halewijn.persoonlijkheidstest.services.local.*;
+
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.services.Constants;
@@ -19,6 +20,8 @@ public class Questionnaire {
 	private boolean testFinished = false;
 
     LocalScoreConstantService localScoreConstantService;
+    
+   LocalWebsiteContentTextService localWebsiteContentTextService;
 
 	public Questionnaire() {
         /*
@@ -222,6 +225,9 @@ public class Questionnaire {
 
 		String tweetText = "Mijn persoonlijkheidstype is " + personalityTypes[0] + "! Test jezelf hier!";
 		model.addAttribute("tweetText", tweetText);
+		
+		WebsiteContentText text5 = localWebsiteContentTextService.getByContentId(5);
+		model.addAttribute("FifthContentBox", text5);
 
         return Constants.result;
     }
@@ -485,5 +491,8 @@ public class Questionnaire {
 
     public void setLocalScoreConstantService(LocalScoreConstantService localScoreConstantService) {
         this.localScoreConstantService = localScoreConstantService;
+    }
+    public void setLocalWebsiteContentTextService(LocalWebsiteContentTextService localWebsiteContentTextService) {
+        this.localWebsiteContentTextService = localWebsiteContentTextService;
     }
 }

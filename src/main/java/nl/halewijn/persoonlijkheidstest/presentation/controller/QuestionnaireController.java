@@ -29,6 +29,9 @@ public class QuestionnaireController {
 
 	@Autowired
 	private LocalScoreConstantService localScoreConstantService;
+	
+	@Autowired
+	private LocalWebsiteContentTextService localWebsiteContentTextService;
     
     @Autowired
     private LocalUserService localUserService;
@@ -77,6 +80,7 @@ public class QuestionnaireController {
 				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
 			}
 			questionnaire.setLocalScoreConstantService(localScoreConstantService);
+			questionnaire.setLocalWebsiteContentTextService(localWebsiteContentTextService);
 			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
 		}
 		return Constants.questionnaire;

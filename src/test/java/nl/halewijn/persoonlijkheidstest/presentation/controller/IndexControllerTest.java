@@ -1,6 +1,7 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
 
@@ -23,6 +25,7 @@ public class IndexControllerTest {
 	
 	@Test
 	public void indexTest() {
-		assertEquals("index", indexController.index());
+		Model model = mock(Model.class);
+		assertEquals("index", indexController.index(model));
 	}
 }

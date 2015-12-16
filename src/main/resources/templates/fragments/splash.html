@@ -4,10 +4,10 @@
 	<div class="splashbg"></div>
 
 	<div class="splash">
-		<h1 class="shoutTitle">Persoonlijkheidstest</h1>
-			<p class="shoutOut">
-				Test afnemen! <a href="questionnaire"><input type="submit" name="teststarter" class="startTest pure-button-selected pure-button pure-button " value="Start!" /></a>
-			</p>
+		<h1 class="shoutTitle" th:text="${FourthContentBox.contentTitle}"></h1>
+			<p class="shoutOut" th:text="${FourthContentBox.contentText}"></p>
+				<a href="questionnaire"><input type="submit" name="teststarter" class="startTest pure-button-selected pure-button pure-button " value="Start!" /></a>
+			
 		
 	</div>
 	<div class="splashfader">
