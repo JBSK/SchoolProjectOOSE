@@ -103,59 +103,23 @@
 	                        <p class="gegevenResult"></p>
 	                    </div>
 	                </div><!-- end resultRow1-->
-	
-	                <div class="pure-g resultrow2">
-	                    <div class="tekstResult1 pure-u-1">
-	                        <h3 th:text="${primaryPersonalityType.name}"></h3>
-	                        <p th:text="${primaryPersonalityType.primaryDescription}"></p>
-	                    </div>
-	                    <div class="tekstResult2 pure-u-1">
-	                        <h3 th:text="${secondaryPersonalityType.name}"></h3>
-	                        <p th:text="${secondaryPersonalityType.secondaryDescription}"></p>
-	                    </div>
-	                </div><!-- end resultRow2-->
 				</div>
-                <div class="pure-g resultrow3">
-                    <div class="pure-u-1 antwoordenLijst">
-                        <span style="size: 7px; font-weight: bold" >Social media</span>
-                        <div class="socialmediabar">
-                            <!-- Facebook -->
-                            <div class="fb-share-button" data-href="http://halewyn.oose.icaprojecten.nl" data-layout="button"></div>
-
-                            <!-- LinkedIn -->
-                            <script src="//platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
-                            <script type="IN/Share" data-url="http://halewyn.oose.icaprojecten.nl"></script>
-
-                            <!-- Twitter -->
-                            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://halewyn.oose.icaprojecten.nl" th:attr="data-text=${tweetText}" data-hashtags="persoonlijkheidstest,zelfkennis" data-dnt="true">Tweet</a>
-                            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-
-                            <!-- Google+ -->
-                            <script src="https://apis.google.com/js/platform.js" async="true" defer="true"></script>
-                            <div class="g-plus" data-action="share"> </div>
-                        </div>
-                    </div>
-                </div><!-- end resultRow1-->
+					<!-- end resultRow1-->
                 <div class="pure-g resultrow2">
-                	<div class="pure-u-md-2-3">
-	                    <div class="textResultRow">
-	                        <h3 th:text="${primaryPersonalityType.name}"></h3>
-	                        <p th:text="${primaryPersonalityType.primaryDescription}"></p>
-	                    </div>
-	                </div>
-		            <div class="pure-u-md-1-3">
-	                    <div class="pure-u-md-1-3 linkList textResultRow">
-	                    	<h3>Linkjes</h3>
-	                    	<p class="links">
-	                    	link link link link
-	                    	</p>
-						</div>
-					</div>
+                    <div class="textResultRow  pure-u-1">
+                        <h3 th:text="${primaryPersonalityType.name}"></h3>
+                        <p th:text="${primaryPersonalityType.primaryDescription}"></p>
+                    </div>
 				</div>
 				<div class="pure-g resultrow2">
                     <div class="textResultRow pure-u-1">
                         <h3 th:text="${secondaryPersonalityType.name}"></h3>
                         <p th:text="${secondaryPersonalityType.secondaryDescription}"></p>
+                    </div>
+                </div><!-- end resultRow2-->
+                <div class="pure-g resultrow3">
+                	<div class="pure-u-1">
+                        <a href="linkPage" class="readMore pure-button">Lees meer..</a>
                     </div>
                 </div><!-- end resultRow2-->
             </div><!-- end content -->

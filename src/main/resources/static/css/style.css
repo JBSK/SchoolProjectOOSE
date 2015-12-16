@@ -387,7 +387,7 @@ z-index:90;
 
 #naviButtons{
 }
-	#naviButtons input[type="submit"]{
+	#naviButtons input[type="submit"], #naviButtons a{
 				margin: 5px 10px;
 	}
 
@@ -403,8 +403,10 @@ z-index:90;
 			float:right;
 		}
 }
+.readMore{
+	float:right;	
+}
 /*******************Index*************/
-
 
 	
 /**************test/vragenlijst**********/
