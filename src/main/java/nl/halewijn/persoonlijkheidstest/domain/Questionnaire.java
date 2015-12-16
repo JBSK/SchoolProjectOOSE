@@ -80,8 +80,8 @@ public class Questionnaire {
             addProgressToModel(model, progress);
 			return showNextQuestion(model, nextQuestion);
 		} else {
-			this.testFinished = true;
 			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
+            this.testFinished = true;
 			return showResults(model, session, localPersonalityTypeService);
 		}	
 	}
@@ -134,22 +134,24 @@ public class Questionnaire {
 	 * column will remain null.
 	 */
 	private void saveResults(HttpSession session, LocalResultService localResultService, LocalUserService localUserService, LocalPersonalityTypeService localPersonalityTypeService) {
-		double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
-		double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
-		Result result;
-		String userName = (String) session.getAttribute(Constants.email);
-		if(userName != null) {
-			User user = localUserService.findByEmailAddress(userName);
-			result = new Result(user);
-		} else {
-			result = new Result(null);
-		}
-		result = localResultService.saveResult(result);
-		setSubScores(subTypeResultArray, result);
-		saveResultTypePercentagesInDb(localResultService, localPersonalityTypeService, pTypeResultArray, result);
-		saveQuestionAnswersInDb(localResultService, result, this);
-		result = localResultService.saveResult(result);
-		session.setAttribute(Constants.resultId, result.getId());
+		if (!testFinished) { // Prevent duplicate result entries in the database if you refresh the result page.
+            double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
+            double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
+            Result result;
+            String userName = (String) session.getAttribute(Constants.email);
+            if (userName != null) {
+                User user = localUserService.findByEmailAddress(userName);
+                result = new Result(user);
+            } else {
+                result = new Result(null);
+            }
+            result = localResultService.saveResult(result);
+            setSubScores(subTypeResultArray, result);
+            saveResultTypePercentagesInDb(localResultService, localPersonalityTypeService, pTypeResultArray, result);
+            saveQuestionAnswersInDb(localResultService, result, this);
+            result = localResultService.saveResult(result);
+            session.setAttribute(Constants.resultId, result.getId());
+        }
 	}
 
 	/**
