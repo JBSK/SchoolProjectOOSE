@@ -24,7 +24,9 @@ public class RegisterController {
 
     @Autowired
     private LocalResultService localResultService;
-	
+
+	private static final int minimumPasswordLength = 7;
+
 	/**
 	 * If the file path relative to the base was "/register", return the "register" web page.
 	 */
@@ -32,6 +34,7 @@ public class RegisterController {
 	public String register(Model model, HttpServletRequest req) {
 		String attempt = req.getParameter("attempt");
 		model.addAttribute("attempt", attempt);
+		model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
 		return "register";
 	}
 	
@@ -48,15 +51,19 @@ public class RegisterController {
 
 		User doesUserExist = localUserService.findByEmailAddress(regEmail);
 
-		if (doesUserExist == null) {
-			if (regPassword.equals(regPassword2)) {
-				return getUserInfo(session, regEmail, regPassword);
+		if (regPassword.equals(regPassword2)) {
+			if (regPassword.length() >= minimumPasswordLength) {
+				if (doesUserExist == null) {
+					return getUserInfo(session, regEmail, regPassword);
+				} else {
+					return Constants.redirect + "register?attempt=fail";
+				}
 			} else {
-                return Constants.redirect + "register?attempt=mismatch";
+				return Constants.redirect + "register?attempt=length";
 			}
 		} else {
-            return Constants.redirect + "register?attempt=fail";
-        }
+			return Constants.redirect + "register?attempt=mismatch";
+		}
     }
 
 	/**

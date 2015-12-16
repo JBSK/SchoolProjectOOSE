@@ -10,6 +10,7 @@ public class Constants {
     public static final String email = "email";
     public static final String linkpage = "linkpage";
     public static final String login = "login";
+    public static final String minimumPasswordLength = "minimumPasswordLength";
     public static final String myresults = "myresults";
     public static final String password = "password";
     public static final String questionnaire = "questionnaire";
