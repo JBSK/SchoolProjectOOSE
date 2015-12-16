@@ -285,13 +285,30 @@ z-index:90;
 	position: absolute;
     top: 50px;
 	background-color:#0C1F7E;
-	transition: background-image 0.5s ease-in-out;
+
 }
-	.splash-container:hover .splashbg{
+	/*.splash-container:hover .splashbg{
 		background-image: url('/imgs/splash2.png');
 		transition: background-image 1s ease-in-out;
 		
-	}
+	}*/
+	.splashfader{
+	height:100%;
+	width:100%;
+    background-image: url('/imgs/splash2.png');
+    background-repeat: no-repeat;
+    background-position: center; 
+	background-size:100%;
+	position: absolute;
+    top: 50px;
+	background-color:#0C1F7E;
+  opacity: 0;
+  -webkit-transition: opacity 0.25s linear;
+  -moz-transition: opacity 0.25s linear;
+  transition: opacity 0.25s linear;
+}
+.splash-container:hover .splashfader{ background-position: center; opacity: 1; }
+	
 
 .splash {
     /* absolute center .splash within .splash-container */
@@ -302,6 +319,7 @@ z-index:90;
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
     text-align: center;
+    z-index:2;
 }
 
 /* This is the main heading that appears on the blue section */
