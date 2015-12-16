@@ -65,6 +65,9 @@ public class UserControllerTest {
 		
 		assertEquals(Constants.redirect, userController.myResults(model, session, req));
 		
+		when(session.getAttribute("email")).thenReturn("");
+		assertEquals(Constants.redirect, userController.myResults(model, session, req));
+		
 		when(session.getAttribute("email")).thenReturn("email@mail.com");
 		User user = new User("email@mail.com", false);
 		user.setPasswordHash(passwordHash.hashPassword("aa"));
@@ -87,14 +90,30 @@ public class UserControllerTest {
 		HttpSession session = mock(HttpSession.class);
 		HttpServletRequest req = mock(HttpServletRequest.class);
 		
-		User user = new User("duncan@email.eu", true);
-		setUserPassword(user);
-		localUserService.save(user);
-		when(session.getAttribute("email")).thenReturn(user.getEmailAddress());
-		Result result = new Result(user);
-		result.setScoreDenial(1);
-		result.setScoreRecognition(2);
-		result.setScoreDevelopment(3);
+		when(req.getParameter("number")).thenReturn(Integer.toString(0));
+		assertEquals(Constants.redirect, userController.showResult(model, session, req));
+		
+		Result result1 = new Result(null);
+		localResultService.saveResult(result1);
+		when(req.getParameter("number")).thenReturn(Integer.toString(result1.getId()));
+		assertEquals(Constants.redirect, userController.showResult(model, session, req));
+		
+		User user1 = new User("test@email.eu", false);
+		setUserPassword(user1);
+		localUserService.save(user1);
+		Result result2 = new Result(user1);
+		localResultService.saveResult(result2);
+		when(req.getParameter("number")).thenReturn(Integer.toString(result2.getId()));
+		assertEquals(Constants.redirect, userController.showResult(model, session, req));
+		
+		User user2 = new User("duncan@email.eu", true);
+		setUserPassword(user2);
+		localUserService.save(user2);
+		when(session.getAttribute("email")).thenReturn(user2.getEmailAddress());
+		Result result3 = new Result(user2);
+		result3.setScoreDenial(1);
+		result3.setScoreRecognition(2);
+		result3.setScoreDevelopment(3);
 		ArrayList<Answer> testResultAnswers = new ArrayList<>();
 		PersonalityType type1 = new PersonalityType("Type1", "PrimaryDescr", "SecondaryDescr");
 		PersonalityType type2 = new PersonalityType("Type2", "PrimaryDescr", "SecondaryDescr");
@@ -107,12 +126,14 @@ public class UserControllerTest {
 		Question question = new TheoremBattle("Text", theorem1, theorem2);
 		Answer answer = new Answer(question, "A", new Date());
 		testResultAnswers.add(answer);
-		result.setTestResultAnswers(testResultAnswers);
-		localResultService.saveResult(result);
-		ResultTypePercentage resultTypePercentage = new ResultTypePercentage(result, type1, 100);
+		result3.setTestResultAnswers(testResultAnswers);
+		localResultService.saveResult(result3);
+		ResultTypePercentage resultTypePercentage = new ResultTypePercentage(result3, type1, 100);
 		localResultService.saveResultTypePercentage(resultTypePercentage);
-		when(req.getParameter("number")).thenReturn(Integer.toString(result.getId()));
+		when(req.getParameter("number")).thenReturn(Integer.toString(result3.getId()));
 		assertEquals(Constants.result, userController.showResult(model, session, req));
+		when(session.getAttribute(Constants.email)).thenReturn("wrong@email.eu");
+		assertEquals(Constants.redirect, userController.showResult(model, session, req));
 	}
 	
 	private void setUserPassword(User user) {
