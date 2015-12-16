@@ -11,7 +11,6 @@
 						<tr>
 							<th>Datum</th>
 							<th>Persoonlijkheidstype</th>
-							<th>secondary persoonlijkheidstype</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -20,7 +19,6 @@
 							<form action="showResult" method="POST">
 								<td th:text="${i.date}"></td>
 								<input type="hidden" name="number" th:value="${i.getId()}"/>
-								<td >type</td>
 								<td>type</td>
 								<td><input type="submit" class="pure-button watchButton" name="aanpassen" value="Bekijken"/></td>
 							</form>
