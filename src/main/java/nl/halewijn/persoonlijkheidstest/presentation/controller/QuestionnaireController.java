@@ -1,5 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
+import nl.halewijn.persoonlijkheidstest.domain.Question;
 import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.*;
@@ -44,7 +45,14 @@ public class QuestionnaireController {
     	if(session.getAttribute(Constants.questionnaire) == null) {
     		return Constants.questionnaire;
     	} else {
-    		return Constants.redirect + "showQuestion";
+            if (session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
+                Questionnaire questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
+                if (!questionnaire.isTestFinished()) {
+                    return Constants.redirect + "showQuestion";
+                }
+            }
+            session.setAttribute(Constants.questionnaire, null);
+            return Constants.questionnaire;
     	}
     }
     

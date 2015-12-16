@@ -56,6 +56,6 @@ public class UserControllerTest {
 		User user = new User("email@mail.com", false);
 		user.setPasswordHash(passwordHash.hashPassword("aa"));
 		localUserService.save(user);
-		assertEquals("myResults", userController.myResults(model, session, req));
+		assertEquals(Constants.myresults, userController.myResults(model, session, req));
 		}
 }

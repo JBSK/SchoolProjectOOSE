@@ -1,23 +1,18 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import nl.halewijn.persoonlijkheidstest.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import nl.halewijn.persoonlijkheidstest.domain.Answer;
-import nl.halewijn.persoonlijkheidstest.domain.Question;
-import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
-import nl.halewijn.persoonlijkheidstest.domain.Result;
-import nl.halewijn.persoonlijkheidstest.domain.ResultTypePercentage;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
@@ -34,9 +29,7 @@ public class UserController {
 	
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
-	
-	private Questionnaire questionnaire = new Questionnaire();
-	
+
 	/**
 	 * Check whether there is an email address in the browser session.
 	 * If not, redirect to the home page.
@@ -45,20 +38,28 @@ public class UserController {
 	 * Then, find the finished questionnaires by this user.
 	 * Return a web page where these are all displayed.
 	 */
-	@RequestMapping(value="/myResults")
+	@RequestMapping(value="/myresults")
 	public String myResults(Model model, HttpSession session, HttpServletRequest request) {
-		String email;
 		if (session.getAttribute("email") != null) {
-			email = session.getAttribute("email").toString();
-			int id = localUserService.findByEmailAddress(email).getId();
-			List<Result> userResults = localResultService.getByUserId(id);
-			model.addAttribute("userResults", userResults);
-			return "myResults";
+            String email = session.getAttribute("email").toString();
+            if (!email.equals("")) {
+                int id = localUserService.findByEmailAddress(email).getId();
+                List<Result> userResults = localResultService.getByUserId(id);
+                model.addAttribute("userResults", userResults);
+                return Constants.myresults;
+            } else {
+                return Constants.redirect;
+            }
 		} else {
 			return Constants.redirect;
 		}
 	}
-	
+
+    @RequestMapping(value="/showResult", method=RequestMethod.GET)
+    public String showResultGET(Model model, HttpSession session, HttpServletRequest request) {
+        return Constants.redirect;
+    }
+
 	/**
 	 * Currently makes use of the same result page that is shown right after finishing a questionnaire.
 	 * 
@@ -67,38 +68,53 @@ public class UserController {
 	 */
 	@RequestMapping(value="/showResult", method=RequestMethod.POST)
 	public String showResult(Model model, HttpSession session, HttpServletRequest request) {
-		List<Question> answeredQuestions = new ArrayList<>();
-		List<Answer> answers = new ArrayList<>();
-		Result result = localResultService.getByResultId(Integer.parseInt(request.getParameter("number")));
-		List<Answer> testAnswers = result.getTestResultAnswers();
-        answers.addAll(testAnswers);
-		
-		double[] pTypeResultArray = new double[9];
-		for (int i = 0; i < pTypeResultArray.length; i ++) {
-			List<ResultTypePercentage> findAllResultTypePercentages = localResultService.findResultTypePercentageByResult(result);
-			if (result.getId() == findAllResultTypePercentages.get(i).getResult().getId()) {
-				pTypeResultArray[i] = findAllResultTypePercentages.get(i).getPercentage();
-			}
-		}
-		model.addAttribute("scores", pTypeResultArray);
-		
-		double[] subTypeResultArray = new double[3];
-        subTypeResultArray[0] = localResultService.getByResultId(result.getId()).getScoreDenial();
-        subTypeResultArray[1] = localResultService.getByResultId(result.getId()).getScoreRecognition();
-        subTypeResultArray[2] = localResultService.getByResultId(result.getId()).getScoreDevelopment();
+        int resultIdParam = Integer.parseInt(request.getParameter("number"));
+		Result result = localResultService.getByResultId(resultIdParam);
+        if (result != null) {
+            if (result.getUser() != null) {
+                User user = localUserService.getById(result.getUser().getId());
+                if (user != null) {
+                    if (user.getEmailAddress().equalsIgnoreCase((String) session.getAttribute(Constants.email))) {
+                        Questionnaire questionnaire = new Questionnaire();
 
-        for (int i = 0; i < subTypeResultArray.length; i++) {
-            subTypeResultArray[i] = subTypeResultArray[i] / 100;
+                        List<ResultTypePercentage> findAllResultTypePercentages = localResultService.findResultTypePercentageByResult(result);
+                        double[] pTypeResultArray = new double[findAllResultTypePercentages.size()];
+                        for (int i = 0; i < pTypeResultArray.length; i++) {
+                            if (result.getId() == findAllResultTypePercentages.get(i).getResult().getId()) {
+                                pTypeResultArray[i] = findAllResultTypePercentages.get(i).getPercentage();
+                            }
+                        }
+                        model.addAttribute("scores", pTypeResultArray);
+
+                        double[] subTypeResultArray = new double[3];
+                        subTypeResultArray[0] = localResultService.getByResultId(result.getId()).getScoreDenial();
+                        subTypeResultArray[1] = localResultService.getByResultId(result.getId()).getScoreRecognition();
+                        subTypeResultArray[2] = localResultService.getByResultId(result.getId()).getScoreDevelopment();
+
+                        for (int i = 0; i < subTypeResultArray.length; i++) {
+                            subTypeResultArray[i] = subTypeResultArray[i] / 100;
+                        }
+                        model.addAttribute("subTypeScores", subTypeResultArray);
+
+                        String[] personalityTypes = questionnaire.getPersonalityTypesFromDb(localPersonalityTypeService);
+                        model.addAttribute("personalityTypes", personalityTypes);
+                        double[] pTypeResultArrayCopy = Arrays.copyOf(pTypeResultArray, pTypeResultArray.length);
+                        int primaryPersonalityTypeID = questionnaire.addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
+                        pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
+                        questionnaire.addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
+
+                        return Constants.result;
+                    } else {
+                        return Constants.redirect;
+                    }
+                } else {
+                    return Constants.redirect;
+                }
+            } else {
+            return Constants.redirect;
         }
-        model.addAttribute("subTypeScores", subTypeResultArray);
-        
-        String[] personalityTypes = questionnaire.getPersonalityTypesFromDb(localPersonalityTypeService);
-        model.addAttribute("personalityTypes", personalityTypes);
-        double[] pTypeResultArrayCopy = Arrays.copyOf(pTypeResultArray, pTypeResultArray.length);
-        int primaryPersonalityTypeID = questionnaire.addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
-        pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
-        questionnaire.addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
-		
-		return Constants.result;
+        } else {
+            return Constants.redirect;
+        }
 	}
 }

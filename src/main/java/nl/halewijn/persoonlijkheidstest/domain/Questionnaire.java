@@ -16,6 +16,7 @@ public class Questionnaire {
 	
 	private List<Question> answeredQuestions = new ArrayList<>();
     private ArrayList<String> errors = new ArrayList<>();
+	private boolean testFinished = false;
 
     LocalScoreConstantService localScoreConstantService;
 
@@ -70,9 +71,14 @@ public class Questionnaire {
 		if(nextQuestion != null) {
 			return showNextQuestion(model, nextQuestion);
 		} else {
+			this.testFinished = true;
 			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
 			return showResults(model, session, localPersonalityTypeService);
 		}	
+	}
+
+	public boolean isTestFinished() {
+		return testFinished;
 	}
 
 	/**

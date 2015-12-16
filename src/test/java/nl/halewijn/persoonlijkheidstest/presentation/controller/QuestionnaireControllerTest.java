@@ -1,5 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
+import nl.halewijn.persoonlijkheidstest.services.Constants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,8 @@ public class QuestionnaireControllerTest {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		assertEquals("questionnaire", questionnaireController.questionnaire(model, httpSession));
-		when(httpSession.getAttribute("questionnaire")).thenReturn("redirect:/showQuestion");
-		assertEquals("redirect:/showQuestion", questionnaireController.questionnaire(model, httpSession));
+		when(httpSession.getAttribute("questionnaire")).thenReturn(Constants.questionnaire);
+		assertEquals(Constants.questionnaire, questionnaireController.questionnaire(model, httpSession));
 	}
 	
 	@Test

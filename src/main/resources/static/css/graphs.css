@@ -43,21 +43,12 @@
 		}
 			
 		.content .resultrow1 #radarChartContainer svg {
-			background:url("/imgs/star.png");
+			/*background:url("/imgs/star.png");
 			background-size: contain;
 			background-repeat:no-repeat;
-			background-position: center;
+			background-position: center;*/
 			margin:0; /* If you want no margin */
 			padding:0; /*if your want no padding */
-			width:100%;
-		}
-		.content .resultrow1 #radarChartContainer svg {
-			background:url("/imgs/star.png");
-			background-size: contain;
-			background-repeat:no-repeat;
-			background-position: center; 
-			margin:0; /* If you want no margin */
-			padding:0; /*if your want to padding */
 			width:100%;
 		}
 		.content .resultrow1 #barChartCont .barChart{
