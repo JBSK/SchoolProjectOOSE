@@ -1,19 +1,17 @@
 <!doctype html>
 <html lang="en">
-<head th:replace="fragments/headTag-Admin :: headTag"> </head>
+<head th:replace="fragments/headTag :: headTag"> </head>
 <body>
-	<div id="layout">
-	<div th:include="fragments/menu-admin" th:remove="tag"></div>
+    <div th:include="fragments/menu" th:remove="tag"></div>
 		<div id="main"  class="pure-skin-PT">
 			<div class="content">
 				<h2 class="content-subhead">Mijn resultaten</h2><hr />
-				<table class="pure-table pure-table-bordered tableManageTheorems">
+				<table class="pure-table pure-table-bordered tableHistory">
 					<thead>
 						<tr>
 							<th>Datum</th>
-							<th>Ontkenning score</th>
-							<th>Ontwikkeling score</th>
-							<th>Herkenning score</th>
+							<th>Persoonlijkheidstype</th>
+							<th>secondary persoonlijkheidstype</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -22,17 +20,16 @@
 							<form action="showResult" method="POST">
 								<td th:text="${i.date}"></td>
 								<input type="hidden" name="number" th:value="${i.getId()}"/>
-								<td th:text="${i.scoreDenial}"></td>
-								<td th:text="${i.scoreDevelopment}"></td>
-								<td th:text="${i.scoreRecognition}"></td>
-								<td><input type="submit" class="pure-button tableEditButton" name="aanpassen" value="Aanpassen"/></td>
+								<td >type</td>
+								<td>type</td>
+								<td><input type="submit" class="pure-button watchButton" name="aanpassen" value="Bekijken"/></td>
 							</form>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-	</div>
-<div th:include="fragments/footer-admin" th:remove="tag"></div>
+	
+<div th:include="fragments/footer" th:remove="tag"></div>
 </body>
 </html>

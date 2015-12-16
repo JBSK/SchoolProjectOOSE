@@ -774,3 +774,14 @@ z-index:90;
 	.socialmediabar {
 		line-height: 13px;
 	}
+/******geschiedenis(myresult*******/
+.content .tableHistory{
+		width:100%;
+	}
+		.content .tableHistory tr:first-child th:last-child{
+			min-width: 130px;
+		}
+	.content .tableHistory .watchButton{
+		    width: 100%;
+	    min-height: 100%;
+	}
