@@ -333,8 +333,9 @@ public class QuestionnaireTest {
 		assertEquals(result.getScoreDevelopment(), subTypeResultArray[0], 0);
 		
 		int totalResults = 0;
-		if(localResultService.findAll() != null)
+		if(localResultService.findAll() != null) {
 			totalResults = localResultService.findAll().size();
+		}
 		
 		when(httpServletRequest.getParameter("answer")).thenReturn("C");
 		questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService);

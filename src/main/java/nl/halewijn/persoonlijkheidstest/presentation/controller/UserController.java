@@ -42,7 +42,7 @@ public class UserController {
 	public String myResults(Model model, HttpSession session, HttpServletRequest request) {
 		if (session.getAttribute("email") != null) {
             String email = session.getAttribute("email").toString();
-            if (!email.equals("")) {
+            if (!"".equals(email)) {
                 int id = localUserService.findByEmailAddress(email).getId();
                 List<Result> userResults = localResultService.getByUserId(id);
                 model.addAttribute("userResults", userResults);

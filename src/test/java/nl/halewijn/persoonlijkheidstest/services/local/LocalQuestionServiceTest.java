@@ -210,13 +210,11 @@ public class LocalQuestionServiceTest {
         Question openQuestionTwo = new OpenQuestion("Open Question");
         Question openQuestionThree = new OpenQuestion("Open Question");
         openQuestionOne = localQuestionService.save(openQuestionOne);
+        openQuestionTwo.setActive(false);
         openQuestionTwo = localQuestionService.save(openQuestionTwo);
         openQuestionThree = localQuestionService.save(openQuestionThree);
-        openQuestionTwo.setActive(false);
         
         assertEquals(openQuestionThree.getQuestionId(), localQuestionService.getNextQuestion(openQuestionOne, "Test").getQuestionId());
-        
-        
     }
     
     @Test
