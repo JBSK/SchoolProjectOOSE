@@ -136,6 +136,24 @@
                         </div>
                     </div>
                 </div><!-- end resultRow1-->
+                <div class="pure-g resultrow2">
+                    <div class="textResultRow pure-u-2-3">
+                        <h3 th:text="${primaryPersonalityType.name}"></h3>
+                        <p th:text="${primaryPersonalityType.primaryDescription}"></p>
+                    </div>
+                    <div class="pure-u-1-4 linkList textResultRow">
+                    	<h3>Linkjes</h3>
+                    	<p class="links">
+                    	link link link link
+                    	</p>
+					</div>
+				</div>
+				<div class="pure-g resultrow2">
+                    <div class="textResultRow pure-u-1">
+                        <h3 th:text="${secondaryPersonalityType.name}"></h3>
+                        <p th:text="${secondaryPersonalityType.secondaryDescription}"></p>
+                    </div>
+                </div><!-- end resultRow2-->
             </div><!-- end content -->
 		    <div th:include="fragments/footer" th:remove="tag"></div>
 		</div><!-- end pure skin / main -->
