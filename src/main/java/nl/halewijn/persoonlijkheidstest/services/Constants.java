@@ -8,6 +8,7 @@ public class Constants {
     public static final String currentQuestion = "currentQuestion";
     public static final String admin = "admin";
     public static final String email = "email";
+    public static final String linkpage = "linkpage";
     public static final String login = "login";
     public static final String myresults = "myresults";
     public static final String password = "password";

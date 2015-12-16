@@ -1,9 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityTypeLink;
-import nl.halewijn.persoonlijkheidstest.domain.Question;
-import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
+import nl.halewijn.persoonlijkheidstest.domain.*;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.*;
 
@@ -17,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -80,10 +78,8 @@ public class QuestionnaireController {
 			questionnaire = new Questionnaire();
 			questionnaire.startNewTest(model, session, localQuestionService);
 		} else {
-			if(session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
-				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
-			}
-			questionnaire.setLocalScoreConstantService(localScoreConstantService);
+            questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
+            questionnaire.setLocalScoreConstantService(localScoreConstantService);
 			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
 		}
 		return Constants.questionnaire;
@@ -103,9 +99,7 @@ public class QuestionnaireController {
 		if(session.getAttribute(Constants.questionnaire) == null) {
 			return Constants.questionnaire;
 		} else {
-			if(session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
-				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
-			}
+            questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
 			questionnaire.getCurrentQuestion(model);
 		}
 		return Constants.questionnaire;
@@ -113,12 +107,15 @@ public class QuestionnaireController {
 
     @RequestMapping(value="/showLinks", method=RequestMethod.GET)
     public String showLinks(Model model, HttpSession session) {
+        List<PersonalityTypeLinkContainer> containers = new ArrayList<>();
         List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
         for (PersonalityType type : personalityTypes) {
             List<PersonalityTypeLink> typeLinks = localPersonalityTypeLinkService.getAllByPersonalityType(type);
-
+            PersonalityTypeLinkContainer container = new PersonalityTypeLinkContainer(type, typeLinks);
+            containers.add(container);
         }
-        return Constants.questionnaire;
+        model.addAttribute("personalityTypeLinkContainers", containers);
+        return Constants.linkpage;
     }
 
 }
