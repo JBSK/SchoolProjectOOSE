@@ -204,6 +204,19 @@ public class LocalQuestionServiceTest {
         routeRule6 = localRoutingService.save(routeRule6);
 
         assertEquals(null, localQuestionService.getNextQuestion(battle5, "A"));
+        
+        // isActive test:
+        Question openQuestionOne = new OpenQuestion("Open Question");
+        Question openQuestionTwo = new OpenQuestion("Open Question");
+        Question openQuestionThree = new OpenQuestion("Open Question");
+        openQuestionOne = localQuestionService.save(openQuestionOne);
+        openQuestionTwo = localQuestionService.save(openQuestionTwo);
+        openQuestionThree = localQuestionService.save(openQuestionThree);
+        openQuestionTwo.setActive(false);
+        
+        assertEquals(openQuestionThree.getQuestionId(), localQuestionService.getNextQuestion(openQuestionOne, "Test").getQuestionId());
+        
+        
     }
     
     @Test
