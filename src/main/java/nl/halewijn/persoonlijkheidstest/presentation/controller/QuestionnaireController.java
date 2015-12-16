@@ -100,7 +100,10 @@ public class QuestionnaireController {
 			return Constants.questionnaire;
 		} else {
             questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
-			questionnaire.getCurrentQuestion(model);
+            Question currentQuestion = questionnaire.getPreviousQuestion();
+            int progress = questionnaire.calculateProgress(currentQuestion.getQuestionId() - 1);
+            questionnaire.addProgressToModel(model, progress);
+            model.addAttribute(Constants.currentQuestion, currentQuestion);
 		}
 		return Constants.questionnaire;
 	}

@@ -286,4 +286,8 @@ public class LocalQuestionService implements IQuestionService  {
 			((OpenQuestion) previousQuestion).setAnswer(answer);
 		}
 	}
+
+	public int countActiveQuestions() {
+		return questionRepository.countActiveQuestions();
+	}
 }
