@@ -15,6 +15,4 @@ public interface PersonalityTypeLinkRepository extends JpaSpecificationExecutor<
 
 	List<PersonalityTypeLink> findAllByPersonalityType(PersonalityType personalityType);
 
-	List<PersonalityTypeLink> findAllByUrl(String url);
-
 }

@@ -15,12 +15,16 @@ public class PersonalityTypeLink {
     @JoinColumn(name = "personalityType")
 	private PersonalityType personalityType;
 
+    @NotNull
+    private String title;
+
 	@NotNull
 	@Column(columnDefinition = "VARCHAR(1500)")
 	private String url;
 
-	public PersonalityTypeLink(PersonalityType personalityType, String url) {
+	public PersonalityTypeLink(PersonalityType personalityType, String title, String url) {
 		this.personalityType = personalityType;
+        this.title = title;
 		this.url = url;
 	}
 
@@ -41,6 +45,21 @@ public class PersonalityTypeLink {
 	public void setPersonalityType(PersonalityType personalityType) {
 		this.personalityType = personalityType;
 	}
+
+    /*
+     * Return the title if it's not empty, else just return the URL.
+     */
+    public String getTitle() {
+        if (title != null && !"".equals(title)) {
+            return title;
+        } else {
+            return url;
+        }
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
 	public String getUrl() {
 		return url;

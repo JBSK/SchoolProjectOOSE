@@ -39,10 +39,6 @@ public class LocalPersonalityTypeLinkService implements IObjectService<Personali
 		return personalityTypeLinkRepository.findAllByPersonalityType(personalityType);
 	}
 
-	public List<PersonalityTypeLink> getAllByURL(String URL) {
-		return personalityTypeLinkRepository.findAllByUrl(URL);
-	}
-
 	@Override
 	public PersonalityTypeLink update(PersonalityTypeLink personalityTypeLink) {
 		return personalityTypeLinkRepository.save(personalityTypeLink);
