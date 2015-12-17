@@ -117,4 +117,13 @@ public class UserController {
             return Constants.redirect;
         }
 	}
+	@RequestMapping("/contact")
+    public String contact() {
+        return "contact";
+    }
+	@RequestMapping("/aboutUs")
+    public String aboutUs() {
+        return "aboutUs";
+    }
+
 }
