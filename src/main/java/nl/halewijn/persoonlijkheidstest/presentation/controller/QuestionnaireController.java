@@ -37,6 +37,15 @@ public class QuestionnaireController {
 
     @Autowired
     private LocalPersonalityTypeLinkService localPersonalityTypeLinkService;
+    
+    @Autowired
+    private LocalWebsiteContentTextService localWebsiteContentTextService;
+    
+    @Autowired
+	private LocalButtonService localButtonService;
+    
+    @Autowired
+    private LocalImageService localImageService;
 	
 	/**
 	 * If the file path relative to the base was "/questionnaire", return the relevant web page.
@@ -47,7 +56,11 @@ public class QuestionnaireController {
 	 */
     @RequestMapping(value="/questionnaire", method=RequestMethod.GET)
     public String questionnaire(Model model, HttpSession session) {
+    	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
     	if(session.getAttribute(Constants.questionnaire) == null) {
+    		Button button9 = localButtonService.getByButtonId(9);
+    		model.addAttribute("NinthButtonText", button9);
+    		
     		return Constants.questionnaire;
     	} else {
             if (session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
@@ -74,12 +87,17 @@ public class QuestionnaireController {
     @RequestMapping(value="/showQuestion", method=RequestMethod.POST)
     public String showQuestionPOST(Model model, HttpSession session, HttpServletRequest httpServletRequest) {
     	Questionnaire questionnaire = null;
+    	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
     	if(session.getAttribute(Constants.questionnaire) == null) {
 			questionnaire = new Questionnaire();
 			questionnaire.startNewTest(model, session, localQuestionService);
 		} else {
             questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
             questionnaire.setLocalScoreConstantService(localScoreConstantService);
+            questionnaire.setLocalWebsiteContentTextService(localWebsiteContentTextService);
+            questionnaire.setLocalButtonService(localButtonService);
+            questionnaire.setLocalImageService(localImageService);
+            
 			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
 		}
 		return Constants.questionnaire;
@@ -96,6 +114,7 @@ public class QuestionnaireController {
 	@RequestMapping(value="/showQuestion", method=RequestMethod.GET)
     public String showQuestionGET(Model model, HttpSession session) {
     	Questionnaire questionnaire = null;
+    	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 		if(session.getAttribute(Constants.questionnaire) == null) {
 			return Constants.questionnaire;
 		} else {
@@ -110,6 +129,7 @@ public class QuestionnaireController {
 
     @RequestMapping(value="/showLinks", method=RequestMethod.GET)
     public String showLinks(Model model, HttpSession session) {
+    	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
         List<PersonalityTypeLinkContainer> containers = new ArrayList<>();
         List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
         for (PersonalityType type : personalityTypes) {
@@ -118,6 +138,10 @@ public class QuestionnaireController {
             containers.add(container);
         }
         model.addAttribute("personalityTypeLinkContainers", containers);
+        
+        WebsiteContentText text6 = localWebsiteContentTextService.getByContentId(6);
+		model.addAttribute("SixthContentBox", text6);
+        
         return Constants.linkpage;
     }
 

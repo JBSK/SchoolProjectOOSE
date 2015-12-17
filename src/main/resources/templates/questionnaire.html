@@ -9,7 +9,7 @@
 			<div th:if="${session.questionnaire == null}">
 				<form class="startTest" action="showQuestion" method="post">
 		        	<p>
-		        		<input class="pure-button" type="submit" value="Klik hier om een nieuwe test te starten!" />
+		        		<input class="pure-button" type="submit" th:value="${NinthButtonText.buttonText}" />
 	        		</p>
 		    	</form>
 			</div>

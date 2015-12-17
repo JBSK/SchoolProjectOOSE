@@ -4,10 +4,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class PasswordHash {
 
-    private static final int HASH_STRENGTH = 12;
+    private static final int hashStrength = 12;
 
     public String hashPassword(String password) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(HASH_STRENGTH);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(hashStrength);
         return passwordEncoder.encode(password);
     }
 

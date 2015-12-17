@@ -42,7 +42,7 @@
 			fill: #333333;
 		}
 			
-		.content .resultrow1 #radarChartContainer svg {
+		.content .resultrow1 .radarChart{
 			background:url("/imgs/star.png");
 			background-size: contain;
 			background-repeat:no-repeat;

@@ -62,13 +62,13 @@ public class RegisterControllerTest {
 		assertEquals(Constants.redirect + "register?attempt=mismatch", registerController.registerDB(model, httpSession, httpServletRequest));
 
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password");
-		assertEquals(Constants.redirect, registerController.registerDB(model, httpSession, httpServletRequest));
+		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model, httpSession, httpServletRequest));
 
 		User user = new User("testMail@mail.nl", false);
 		PasswordHash passwordHash = new PasswordHash();
 		user.setPasswordHash(passwordHash.hashPassword("password"));
 		localUserService.save(user);
-		assertEquals(Constants.redirect + "register?attempt=fail", registerController.registerDB(model,  httpSession, httpServletRequest));
+		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model,  httpSession, httpServletRequest));
 	}	
 	
 	@Test

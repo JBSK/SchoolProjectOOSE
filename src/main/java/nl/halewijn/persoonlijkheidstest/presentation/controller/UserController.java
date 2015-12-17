@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
 
 @Controller
 public class UserController {
@@ -29,6 +32,15 @@ public class UserController {
 	
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
+	
+	@Autowired
+    private LocalWebsiteContentTextService localWebsiteContentTextService;
+	
+	@Autowired
+	private LocalButtonService localButtonService;
+	
+	@Autowired
+	private LocalImageService localImageService;
 
 	/**
 	 * Check whether there is an email address in the browser session.
@@ -46,6 +58,15 @@ public class UserController {
                 int id = localUserService.findByEmailAddress(email).getId();
                 List<Result> userResults = localResultService.getByUserId(id);
                 model.addAttribute("userResults", userResults);
+                
+                WebsiteContentText text9 = localWebsiteContentTextService.getByContentId(9);
+        		model.addAttribute("NinthContentBox", text9);
+                
+        		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+        		
+        		Button button12 = localButtonService.getByButtonId(12);
+        		model.addAttribute("TwelfthButtonText", button12);
+        		
                 return Constants.myresults;
             } else {
                 return Constants.redirect;
@@ -102,6 +123,20 @@ public class UserController {
                         int primaryPersonalityTypeID = questionnaire.addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
                         pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
                         questionnaire.addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
+                        
+                        WebsiteContentText text5 = localWebsiteContentTextService.getByContentId(5);
+                		model.addAttribute("FifthContentBox", text5);
+                		
+                		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+                		
+                		Button button10 = localButtonService.getByButtonId(10);
+                		model.addAttribute("TenthButtonText", button10);
+                		
+                		Button button11 = localButtonService.getByButtonId(11);
+                		model.addAttribute("EleventhButtonText", button11);
+                		
+                		Image image2 = localImageService.getByImageId(2);
+                		model.addAttribute("SecondImage", image2);
 
                         return Constants.result;
                     } else {
@@ -117,4 +152,30 @@ public class UserController {
             return Constants.redirect;
         }
 	}
+	
+	/**
+	 * 
+	 */
+	@RequestMapping("/contact")
+    public String contact(Model model) {
+		WebsiteContentText text7 = localWebsiteContentTextService.getByContentId(7);
+		model.addAttribute("SeventhContentBox", text7);
+		
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		
+        return "contact";
+    }
+	
+	/**
+	 * 
+	 */
+	@RequestMapping("/aboutUs")
+    public String aboutUs(Model model) {
+		WebsiteContentText text8 = localWebsiteContentTextService.getByContentId(8);
+		model.addAttribute("EigthContentBox", text8);
+		
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		
+		return "aboutUs";
+    }
 }
