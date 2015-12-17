@@ -102,8 +102,8 @@ public class RegisterControllerTest {
 		RegisterController registerController = mock(RegisterController.class);
         String captchaFormData = "";
         String clientIp = "127.0.0.1";
-        when(registerController.verifyCaptchaResponse(captchaFormData, clientIp)).thenReturn(true);
-        assertTrue(registerController.verifyCaptchaResponse(captchaFormData, clientIp));
+        //when(registerController.verifyCaptchaResponse(captchaFormData, clientIp)).thenReturn(true);
+        assertEquals(false, registerController.verifyCaptchaResponse(captchaFormData, clientIp));
 	}
 
 }
