@@ -23,8 +23,8 @@ public class Image {
 		return this.imageId;
 	}
 	
-	public Image() {
-		
+	public void setImageId(int imageId) {
+		this.imageId = imageId;
 	}
 
 	public String getImagePath() {
@@ -50,8 +50,4 @@ public class Image {
 	public void setImageDescription(String imageDescription) {
 		this.imageDescription = imageDescription;
 	}
-
-	public void setImageId(int imageId) {
-		this.imageId = imageId;
-	}	
 }

@@ -14,7 +14,7 @@ public class User {
     private int id;
 
 	@NotNull
-    // TODO: @UniqueConstraint()
+    // TODO: @UniqueConstraint() of @Column(unique=true)
 	private String emailAddress;
 
     @NotNull
@@ -81,5 +81,4 @@ public class User {
     public void setBanned(boolean banned) {
         isBanned = banned;
     }
-
 }
