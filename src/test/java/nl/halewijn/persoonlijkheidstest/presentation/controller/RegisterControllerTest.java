@@ -99,11 +99,13 @@ public class RegisterControllerTest {
 
 	@Test
 	public void verifyCaptchaResponseTest() {
-		RegisterController registerController = mock(RegisterController.class);
         String captchaFormData = "";
         String clientIp = "127.0.0.1";
-        //when(registerController.verifyCaptchaResponse(captchaFormData, clientIp)).thenReturn(true);
-        assertEquals(false, registerController.verifyCaptchaResponse(captchaFormData, clientIp));
+
+        boolean verificationResult = registerController.verifyCaptchaResponse(captchaFormData, clientIp);
+        assertEquals(false, verificationResult);
+        
+        
 	}
 
 }
