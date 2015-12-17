@@ -24,6 +24,7 @@ public class Constants {
     public static final String redirect = "redirect:/"; // redirects to index
     public static final String result = "result";
     public static final String resultId = "result_id";
+    public static final String utf8 = "UTF-8";
 
 	private Constants() {
 

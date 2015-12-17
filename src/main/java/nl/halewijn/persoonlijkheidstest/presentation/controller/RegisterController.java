@@ -105,12 +105,12 @@ public class RegisterController {
      */
     public boolean verifyCaptchaResponse(String captchaFormData, String clientIp) {
         try {
-            captchaFormData = URLEncoder.encode(captchaFormData, "UTF-8");
-            String encodedClientIp = URLEncoder.encode(clientIp, "UTF-8");
+            captchaFormData = URLEncoder.encode(captchaFormData, Constants.utf8);
+            String encodedClientIp = URLEncoder.encode(clientIp, Constants.utf8);
             String apiUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + captchaApiSecretKey + "&response=" + captchaFormData + "&remoteip=" + encodedClientIp;
 
             InputStream response = new URL(apiUrl).openStream();
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(response, "UTF-8"));
+            BufferedReader streamReader = new BufferedReader(new InputStreamReader(response, Constants.utf8));
             StringBuilder responseStrBuilder = new StringBuilder();
             String inputStr;
             while ((inputStr = streamReader.readLine()) != null) {
