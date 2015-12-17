@@ -856,3 +856,14 @@ z-index:90;
 	float: left;
 	min-width: 130px;
 }
+.content .ErrorImg{
+   margin: 0 0 0 5px;
+    padding: 0;
+    width: 85%;
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+	
+}
