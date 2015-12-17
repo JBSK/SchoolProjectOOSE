@@ -74,17 +74,15 @@ public class UserController {
 		return Constants.redirect;
 	}
 
-	private void setResultPrimaryType(List<Result> userResults) {
+	public void setResultPrimaryType(List<Result> userResults) {
 		for(Result result : userResults) {
 			List<ResultTypePercentage> typePercentages = localResultService.findResultTypePercentageByResult(result);
 			ResultTypePercentage primaryTypePercentage = null;
-			for(ResultTypePercentage typePercentage : typePercentages) {
-				if(primaryTypePercentage == null) {
+			for (ResultTypePercentage typePercentage : typePercentages) {
+				if (primaryTypePercentage == null) {
 					primaryTypePercentage = typePercentage;
-				}
-				else {
-					if(primaryTypePercentage.getPercentage() < typePercentage.getPercentage())
-						primaryTypePercentage = typePercentage;
+				} else if(typePercentage.getPercentage() > primaryTypePercentage.getPercentage()) {
+                    primaryTypePercentage = typePercentage;
 				}
 			}
 			result.setPrimaryType(primaryTypePercentage.getPersonalityType());
@@ -106,17 +104,14 @@ public class UserController {
 	public String showResult(Model model, HttpSession session, HttpServletRequest request) {
         int resultIdParam = Integer.parseInt(request.getParameter("number"));
 		Result result = localResultService.getByResultId(resultIdParam);
-        if (result != null) {
-            if (result.getUser() != null) {
-                User user = result.getUser();
-                if (user != null) {
-                    if (user.getEmailAddress().equalsIgnoreCase((String) session.getAttribute(Constants.email))) {
-                        getResultPageData(model, result);
-                        loadContentFromDatabase(model);
-                        return Constants.result;
-                    } 
-                } 
-            } 
+        if (result != null && result.getUser() != null) {
+            User user = result.getUser();
+            String emailInSession = (String) session.getAttribute(Constants.email);
+            if (user != null && user.getEmailAddress().equalsIgnoreCase(emailInSession)) {
+                getResultPageData(model, result);
+                loadContentFromDatabase(model);
+                return Constants.result;
+            }
         } 
         return Constants.redirect;
 	}
