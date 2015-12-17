@@ -25,6 +25,8 @@ public class Questionnaire {
     LocalWebsiteContentTextService localWebsiteContentTextService;
     
     LocalButtonService localButtonService;
+    
+    LocalImageService localImageService;
 
 	public Questionnaire() {
         /*
@@ -260,6 +262,9 @@ public class Questionnaire {
 		
 		Button button11 = localButtonService.getByButtonId(11);
 		model.addAttribute("EleventhButtonText", button11);
+		
+		Image image2 = localImageService.getByImageId(2);
+		model.addAttribute("SecondImage", image2);
 		
         return Constants.result;
     }
@@ -521,6 +526,10 @@ public class Questionnaire {
     
     public void setLocalButtonService(LocalButtonService localButtonService) {
     	this.localButtonService = localButtonService;
+    }
+    
+    public void setLocalImageService(LocalImageService localImageService) {
+    	this.localImageService = localImageService;
     }
 
 	public void setTestFinished(boolean b) {

@@ -96,6 +96,7 @@ public class QuestionnaireController {
             questionnaire.setLocalScoreConstantService(localScoreConstantService);
             questionnaire.setLocalWebsiteContentTextService(localWebsiteContentTextService);
             questionnaire.setLocalButtonService(localButtonService);
+            questionnaire.setLocalImageService(localImageService);
             
 			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
 		}
