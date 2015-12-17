@@ -21,10 +21,6 @@ public class WebsiteContentText {
 	
 	private String contentDescription;
 	
-	public int getTextId() {
-		return this.contentId;
-	}
-	
 	public int getContentId() {
 		return contentId;
 	}

@@ -17,10 +17,6 @@ public class Button {
 	
 	private String buttonDescription;
 	
-	public Button() {
-		
-	}
-	
 	public int getButtonId() {
 		return this.buttonId;
 	}
