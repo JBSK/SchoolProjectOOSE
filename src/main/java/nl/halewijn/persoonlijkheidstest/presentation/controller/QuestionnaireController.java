@@ -57,9 +57,10 @@ public class QuestionnaireController {
     @RequestMapping(value="/questionnaire", method=RequestMethod.GET)
     public String questionnaire(Model model, HttpSession session) {
     	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		Button button9 = localButtonService.getByButtonId(9);
+		model.addAttribute("NinthButtonText", button9);
     	if(session.getAttribute(Constants.questionnaire) == null) {
-    		Button button9 = localButtonService.getByButtonId(9);
-    		model.addAttribute("NinthButtonText", button9);
+
     		
     		return Constants.questionnaire;
     	} else {
