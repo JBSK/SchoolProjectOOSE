@@ -30,6 +30,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -141,5 +142,45 @@ public class UserControllerTest {
 		String passwordHash = new PasswordHash().hashPassword(password); // Hashed password
 		password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
 		user.setPasswordHash(passwordHash); // Stored hash in user
+	}
+
+	@Test
+	public void setResultPrimaryTypeTest() {
+        User user = new User("a@a.com", false);
+        user.setPasswordHash("x");
+        localUserService.save(user);
+
+		Result result1 = new Result(user);
+		Result result2 = new Result(user);
+		localResultService.saveResult(result1);
+		localResultService.saveResult(result2);
+
+        PersonalityType type1 = new PersonalityType("Type 1", "Primary description", "Secondary description");
+        PersonalityType type2 = new PersonalityType("Type 2", "Primary description", "Secondary description");
+        localPersonalityTypeService.save(type1);
+        localPersonalityTypeService.save(type2);
+
+        List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
+
+		ResultTypePercentage result1TypePercentage1 = new ResultTypePercentage(result1, personalityTypes.get(0), 50.0);
+		ResultTypePercentage result1TypePercentage2 = new ResultTypePercentage(result1, personalityTypes.get(1), 75.0);
+		ResultTypePercentage result2TypePercentage1 = new ResultTypePercentage(result2, personalityTypes.get(0), 80.0);
+		ResultTypePercentage result2TypePercentage2 = new ResultTypePercentage(result2, personalityTypes.get(1), 60.0);
+		localResultService.saveResultTypePercentage(result1TypePercentage1);
+		localResultService.saveResultTypePercentage(result1TypePercentage2);
+		localResultService.saveResultTypePercentage(result2TypePercentage1);
+		localResultService.saveResultTypePercentage(result2TypePercentage2);
+
+		List<Result> userResults = new ArrayList<>();
+		userResults.add(result1);
+		userResults.add(result2);
+
+		userController.setResultPrimaryType(userResults);
+
+		PersonalityType result1ActualPrimaryType = userResults.get(0).getPrimaryType();
+		PersonalityType result2ActualPrimaryType = userResults.get(1).getPrimaryType();
+
+		assertEquals(type2, result1ActualPrimaryType);
+		assertEquals(type1, result2ActualPrimaryType);
 	}
 }
