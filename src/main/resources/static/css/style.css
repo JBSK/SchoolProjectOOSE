@@ -345,8 +345,8 @@ z-index:90;
 		color:yellow;
 		text-align:center; /* center-left? */
 		margin:0px;
+		display: inline;
 	}
-
 /*
  * -- CONTENT STYLES --
  * This represents the content area (everything below the blue section)
