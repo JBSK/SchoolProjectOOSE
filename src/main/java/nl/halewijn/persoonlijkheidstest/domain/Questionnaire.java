@@ -522,4 +522,8 @@ public class Questionnaire {
     public void setLocalButtonService(LocalButtonService localButtonService) {
     	this.localButtonService = localButtonService;
     }
+
+	public void setTestFinished(boolean b) {
+		testFinished = b;
+	}
 }
