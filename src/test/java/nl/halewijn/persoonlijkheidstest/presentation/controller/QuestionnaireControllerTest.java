@@ -53,6 +53,9 @@ public class QuestionnaireControllerTest {
 		assertEquals("questionnaire", questionnaireController.questionnaire(model, httpSession));
 		when(httpSession.getAttribute("questionnaire")).thenReturn(Constants.questionnaire);
 		assertEquals(Constants.questionnaire, questionnaireController.questionnaire(model, httpSession));
+		
+		when(httpSession.getAttribute(Constants.questionnaire)).thenReturn(new Questionnaire());
+		assertEquals(Constants.redirect+"showQuestion", questionnaireController.questionnaire(model, httpSession));
 	}
 	
 	@Test
@@ -78,7 +81,7 @@ public class QuestionnaireControllerTest {
 			localPersonalityTypeService.save(type);
 		}
 		
-		assertEquals("result", questionnaireController.showQuestionPOST(model, httpSession, httpServletRequest));
+		assertEquals(Constants.result, questionnaireController.showQuestionPOST(model, httpSession, httpServletRequest));
 	}
 	
 	@Test
@@ -86,7 +89,7 @@ public class QuestionnaireControllerTest {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		
-		assertEquals("questionnaire", questionnaireController.showQuestionGET(model, httpSession));
+		assertEquals(Constants.questionnaire, questionnaireController.showQuestionGET(model, httpSession));
 		Questionnaire questionnaire = new Questionnaire();
 		OpenQuestion question = new OpenQuestion("Open Question");
 		questionnaire.addQuestion(question);
@@ -94,14 +97,16 @@ public class QuestionnaireControllerTest {
 		when(httpSession.getAttribute("questionnaire")).thenReturn(questionnaire);
 		questionnaireController.showQuestionGET(model, httpSession);
 		assertEquals(false, model.containsAttribute("currentQuestion"));
-		assertEquals("questionnaire", questionnaireController.showQuestionGET(model, httpSession));
+		assertEquals(Constants.questionnaire, questionnaireController.showQuestionGET(model, httpSession));
 	}
 	
 	@Test
 	public void showLinksTest() {
 		Model model = mock(Model.class);
+		PersonalityType typeOne = new PersonalityType("Type 1", "prim", "sec");
+		localPersonalityTypeService.save(typeOne);
 		HttpSession httpSession = mock(HttpSession.class);
-		assertEquals("linkpage", questionnaireController.showLinks(model, httpSession));
+		assertEquals(Constants.linkpage, questionnaireController.showLinks(model, httpSession));
 	}
 
 }
