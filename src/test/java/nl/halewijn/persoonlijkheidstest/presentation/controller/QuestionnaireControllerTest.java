@@ -56,6 +56,12 @@ public class QuestionnaireControllerTest {
 		
 		when(httpSession.getAttribute(Constants.questionnaire)).thenReturn(new Questionnaire());
 		assertEquals(Constants.redirect+"showQuestion", questionnaireController.questionnaire(model, httpSession));
+	
+		Questionnaire q = new Questionnaire(); 
+		q.setTestFinished(true);
+		
+		when(httpSession.getAttribute(Constants.questionnaire)).thenReturn(q);
+		assertEquals(Constants.questionnaire, questionnaireController.questionnaire(model, httpSession));
 	}
 	
 	@Test

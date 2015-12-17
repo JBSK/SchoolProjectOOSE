@@ -500,4 +500,8 @@ public class Questionnaire {
     public void setLocalScoreConstantService(LocalScoreConstantService localScoreConstantService) {
         this.localScoreConstantService = localScoreConstantService;
     }
+
+	public void setTestFinished(boolean b) {
+		testFinished = b;
+	}
 }
