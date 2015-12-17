@@ -1,6 +1,8 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
+import nl.halewijn.persoonlijkheidstest.domain.*;
 import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.services.local.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,25 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.Answer;
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Question;
-import nl.halewijn.persoonlijkheidstest.domain.Result;
-import nl.halewijn.persoonlijkheidstest.domain.ResultTypePercentage;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
-import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
-import nl.halewijn.persoonlijkheidstest.domain.User;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -54,6 +45,15 @@ public class UserControllerTest {
 	
 	@Autowired
 	private UserController userController;
+
+    @Autowired
+    private LocalWebsiteContentTextService localWebsiteContentTextService;
+
+    @Autowired
+    private LocalButtonService localButtonService;
+
+    @Autowired
+    private LocalImageService localImageService;
 	
 	private PasswordHash passwordHash = new PasswordHash();
 	
@@ -142,4 +142,74 @@ public class UserControllerTest {
 		password = null; // Prepare plaintext password for clearing from memory by the Java garbage collector.
 		user.setPasswordHash(passwordHash); // Stored hash in user
 	}
+
+	@Test
+	public void setResultPrimaryTypeTest() {
+        User user = new User("a@a.com", false);
+        user.setPasswordHash("x");
+        localUserService.save(user);
+
+		Result result1 = new Result(user);
+		Result result2 = new Result(user);
+		localResultService.saveResult(result1);
+		localResultService.saveResult(result2);
+
+        PersonalityType type1 = new PersonalityType("Type 1", "Primary description", "Secondary description");
+        PersonalityType type2 = new PersonalityType("Type 2", "Primary description", "Secondary description");
+        localPersonalityTypeService.save(type1);
+        localPersonalityTypeService.save(type2);
+
+        List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
+
+		ResultTypePercentage result1TypePercentage1 = new ResultTypePercentage(result1, personalityTypes.get(0), 50.0);
+		ResultTypePercentage result1TypePercentage2 = new ResultTypePercentage(result1, personalityTypes.get(1), 75.0);
+		ResultTypePercentage result2TypePercentage1 = new ResultTypePercentage(result2, personalityTypes.get(0), 80.0);
+		ResultTypePercentage result2TypePercentage2 = new ResultTypePercentage(result2, personalityTypes.get(1), 60.0);
+		localResultService.saveResultTypePercentage(result1TypePercentage1);
+		localResultService.saveResultTypePercentage(result1TypePercentage2);
+		localResultService.saveResultTypePercentage(result2TypePercentage1);
+		localResultService.saveResultTypePercentage(result2TypePercentage2);
+
+		List<Result> userResults = new ArrayList<>();
+		userResults.add(result1);
+		userResults.add(result2);
+
+		userController.setResultPrimaryType(userResults);
+
+		PersonalityType result1ActualPrimaryType = userResults.get(0).getPrimaryType();
+		PersonalityType result2ActualPrimaryType = userResults.get(1).getPrimaryType();
+
+		assertEquals(type2, result1ActualPrimaryType);
+		assertEquals(type1, result2ActualPrimaryType);
+	}
+
+    @Test
+    public void contactTest() {
+        Model model = mock(Model.class);
+
+        WebsiteContentText text7 = new WebsiteContentText();
+        text7.setContentId(7);
+        localWebsiteContentTextService.save(text7);
+
+        assertEquals("contact", userController.contact(model));
+        when(model.containsAttribute("SeventhContentBox")).thenReturn(true);
+        assertTrue(model.containsAttribute("SeventhContentBox"));
+        when(model.containsAttribute("FirstImage")).thenReturn(true);
+        assertTrue(model.containsAttribute("FirstImage"));
+    }
+
+    @Test
+    public void aboutUsTest() {
+        Model model = mock(Model.class);
+
+        WebsiteContentText text8 = new WebsiteContentText();
+        text8.setContentId(8);
+        localWebsiteContentTextService.save(text8);
+
+        assertEquals("aboutUs", userController.aboutUs(model));
+        when(model.containsAttribute("EigthContentBox")).thenReturn(true);
+        assertTrue(model.containsAttribute("EigthContentBox"));
+        when(model.containsAttribute("FirstImage")).thenReturn(true);
+        assertTrue(model.containsAttribute("FirstImage"));
+    }
 }
