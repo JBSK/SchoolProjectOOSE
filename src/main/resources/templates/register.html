@@ -15,6 +15,7 @@
 					<div th:switch="${attempt}">
 						<p th:case="'mismatch'" class="errorMessage"> De ingevulde wachtwoorden komen niet overeen. Vul alstublieft tweemaal hetzelfde wachtwoord in. </p>
 						<p th:case="'fail'" class="errorMessage"> Registeren is momenteel niet mogelijk, probeer het later opnieuw. </p>
+						<p th:case="'captcha'" class="errorMessage"> Zet alstublieft een vinkje bij de CAPTCHA. </p>
 						<p th:case="'length'" class="errorMessage"> Een wachtwoord moet minimaal uit <span th:text="${minimumPasswordLength}"></span> karakters bestaan. Probeer het alstublieft opnieuw met een langer wachtwoord. </p>
 						<p th:case="'*'" class=""> </p>
                     </div>
