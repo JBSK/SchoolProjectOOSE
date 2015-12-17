@@ -287,49 +287,59 @@ z-index:90;
 
 /***************slash**************/
 .splash-container {
-    z-index: 1;
-    overflow: hidden;
-    /* The following styles are required for the "scroll-over" effect */
-    width: 100%;
-    height: 50%;
-    top: 0;
-    left: 0;
-    position: fixed !important;
+	z-index: 1;
+	overflow: hidden;
+	/* The following styles are required for the "scroll-over" effect */
+	width: 100%;
+	height: 50%;
+	top: 0;
+	left: 0;
+	position: fixed !important;
 }
+
 .splashbg{
 	height:100%;
 	width:100%;
-    background-image: url('/imgs/splash.png');
-    background-repeat: no-repeat;
-    background-position: center; 
+	background-image: url('/imgs/splash.png');
+	background-repeat: no-repeat;
+	background-position: center;
 	background-size:100%;
 	position: absolute;
-    top: 50px;
+	top: 50px;
 	background-color:#0C1F7E;
-
 }
-	/*.splash-container:hover .splashbg{
-		background-image: url('/imgs/splash2.png');
-		transition: background-image 1s ease-in-out;
-		
-	}*/
-	.splashfader{
+
+
+.splashfader{
 	height:100%;
 	width:100%;
-    background-image: url('/imgs/splash2.png');
-    background-repeat: no-repeat;
-    background-position: center; 
+	background-image: url('/imgs/splash2.png');
+	background-repeat: no-repeat;
+	background-position: center;
 	background-size:100%;
 	position: absolute;
-    top: 50px;
+	top: 50px;
 	background-color:#0C1F7E;
-  opacity: 0;
-  -webkit-transition: opacity 0.25s linear;
-  -moz-transition: opacity 0.25s linear;
-  transition: opacity 0.25s linear;
+	animation: fadeOutTopBG 20s infinite;
 }
-.splash-container:hover .splashfader{ background-position: center; opacity: 1; }
-	
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes fadeOutTopBG {
+	0%   {opacity: 1;}
+	40%  {opacity: 1;}
+	50%  {opacity: 0;}
+	90%  {opacity: 0;}
+	100%  {opacity: 1;}
+}
+
+/* Standard syntax */
+@keyframes fadeOutTopBG {
+	0%   {opacity: 1;}
+	40%  {opacity: 1;}
+	50%  {opacity: 0;}
+	90%  {opacity: 0;}
+	100%  {opacity: 1;}
+}
 
 .splash {
     /* absolute center .splash within .splash-container */
