@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "Result")
@@ -30,6 +31,9 @@ public class Result {
 	private double scoreDenial;
 	private double scoreRecognition;
 	private double scoreDevelopment;
+	
+	@Transient
+	private PersonalityType primaryType;
 	
 	@ManyToMany
     @JoinTable(
@@ -106,5 +110,13 @@ public class Result {
 
 	public void setScoreDevelopment(double scoreDevelopment) {
 		this.scoreDevelopment = scoreDevelopment;
+	}
+
+	public PersonalityType getPrimaryType() {
+		return primaryType;
+	}
+
+	public void setPrimaryType(PersonalityType primaryType) {
+		this.primaryType = primaryType;
 	}
 }

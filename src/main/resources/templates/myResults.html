@@ -21,7 +21,7 @@
 							<form action="showResult" method="POST">
 								<td th:text="${i.date}"></td>
 								<input type="hidden" name="number" th:value="${i.getId()}"/>
-								<td>type</td>
+								<td th:text="${i.primaryType.name}">type</td>
 								<td><input type="submit" class="pure-button watchButton" name="aanpassen" th:value="${TwelfthButtonText.buttonText}"/></td>
 							</form>
 						</tr>

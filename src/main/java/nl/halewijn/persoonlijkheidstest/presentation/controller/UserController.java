@@ -56,7 +56,8 @@ public class UserController {
             String email = session.getAttribute("email").toString();
             if (!"".equals(email)) {
                 int id = localUserService.findByEmailAddress(email).getId();
-                List<Result> userResults = localResultService.getByUserId(id);
+                List<Result> userResults = localResultService.getByUserId(id);          
+                setResultPrimaryType(userResults);
                 model.addAttribute("userResults", userResults);
                 
                 WebsiteContentText text9 = localWebsiteContentTextService.getByContentId(9);
@@ -68,11 +69,25 @@ public class UserController {
         		model.addAttribute("TwelfthButtonText", button12);
         		
                 return Constants.myresults;
-            } else {
-                return Constants.redirect;
             }
-		} else {
-			return Constants.redirect;
+		}
+		return Constants.redirect;
+	}
+
+	private void setResultPrimaryType(List<Result> userResults) {
+		for(Result result : userResults) {
+			List<ResultTypePercentage> typePercentages = localResultService.findResultTypePercentageByResult(result);
+			ResultTypePercentage primaryTypePercentage = null;
+			for(ResultTypePercentage typePercentage : typePercentages) {
+				if(primaryTypePercentage == null) {
+					primaryTypePercentage = typePercentage;
+				}
+				else {
+					if(primaryTypePercentage.getPercentage() < typePercentage.getPercentage())
+						primaryTypePercentage = typePercentage;
+				}
+			}
+			result.setPrimaryType(primaryTypePercentage.getPersonalityType());
 		}
 	}
 
@@ -93,68 +108,78 @@ public class UserController {
 		Result result = localResultService.getByResultId(resultIdParam);
         if (result != null) {
             if (result.getUser() != null) {
-                User user = localUserService.getById(result.getUser().getId());
+                User user = result.getUser();
                 if (user != null) {
                     if (user.getEmailAddress().equalsIgnoreCase((String) session.getAttribute(Constants.email))) {
-                        Questionnaire questionnaire = new Questionnaire();
-
-                        List<ResultTypePercentage> findAllResultTypePercentages = localResultService.findResultTypePercentageByResult(result);
-                        double[] pTypeResultArray = new double[findAllResultTypePercentages.size()];
-                        for (int i = 0; i < pTypeResultArray.length; i++) {
-                            if (result.getId() == findAllResultTypePercentages.get(i).getResult().getId()) {
-                                pTypeResultArray[i] = findAllResultTypePercentages.get(i).getPercentage();
-                            }
-                        }
-                        model.addAttribute("scores", pTypeResultArray);
-
-                        double[] subTypeResultArray = new double[3];
-                        subTypeResultArray[0] = localResultService.getByResultId(result.getId()).getScoreDenial();
-                        subTypeResultArray[1] = localResultService.getByResultId(result.getId()).getScoreRecognition();
-                        subTypeResultArray[2] = localResultService.getByResultId(result.getId()).getScoreDevelopment();
-
-                        for (int i = 0; i < subTypeResultArray.length; i++) {
-                            subTypeResultArray[i] = subTypeResultArray[i] / 100;
-                        }
-                        model.addAttribute("subTypeScores", subTypeResultArray);
-
-                        String[] personalityTypes = questionnaire.getPersonalityTypesFromDb(localPersonalityTypeService);
-                        model.addAttribute("personalityTypes", personalityTypes);
-                        double[] pTypeResultArrayCopy = Arrays.copyOf(pTypeResultArray, pTypeResultArray.length);
-                        int primaryPersonalityTypeID = questionnaire.addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
-                        pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
-                        questionnaire.addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
-                        
-                        WebsiteContentText text5 = localWebsiteContentTextService.getByContentId(5);
-                		model.addAttribute("FifthContentBox", text5);
-                		
-                		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-                		
-                		Button button10 = localButtonService.getByButtonId(10);
-                		model.addAttribute("TenthButtonText", button10);
-                		
-                		Button button11 = localButtonService.getByButtonId(11);
-                		model.addAttribute("EleventhButtonText", button11);
-                		
-                		Image image2 = localImageService.getByImageId(2);
-                		model.addAttribute("SecondImage", image2);
-
+                        getResultPageData(model, result);
+                        loadContentFromDatabase(model);
                         return Constants.result;
-                    } else {
-                        return Constants.redirect;
-                    }
-                } else {
-                    return Constants.redirect;
-                }
-            } else {
-            return Constants.redirect;
+                    } 
+                } 
+            } 
+        } 
+        return Constants.redirect;
+	}
+
+	private void getResultPageData(Model model, Result result) {
+		Questionnaire questionnaire = new Questionnaire();
+
+		double[] pTypeResultArray = findAllResultTypePercentages(result);
+		model.addAttribute("scores", pTypeResultArray);
+
+		double[] subTypeResultArray = findAllSubTypePercentages(result);
+		model.addAttribute("subTypeScores", subTypeResultArray);
+
+		String[] personalityTypes = questionnaire.getPersonalityTypesFromDb(localPersonalityTypeService);
+		model.addAttribute("personalityTypes", personalityTypes);
+		
+		double[] pTypeResultArrayCopy = Arrays.copyOf(pTypeResultArray, pTypeResultArray.length);
+		int primaryPersonalityTypeID = questionnaire.addPrimaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
+		pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
+		questionnaire.addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
+	}
+
+	private void loadContentFromDatabase(Model model) {
+		WebsiteContentText text5 = localWebsiteContentTextService.getByContentId(5);
+		model.addAttribute("FifthContentBox", text5);
+		
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		
+		Button button10 = localButtonService.getByButtonId(10);
+		model.addAttribute("TenthButtonText", button10);
+		
+		Button button11 = localButtonService.getByButtonId(11);
+		model.addAttribute("EleventhButtonText", button11);
+		
+		Image image2 = localImageService.getByImageId(2);
+		model.addAttribute("SecondImage", image2);
+	}
+
+	private double[] findAllSubTypePercentages(Result result) {
+		double[] subTypeResultArray = new double[3];
+		subTypeResultArray[0] = localResultService.getByResultId(result.getId()).getScoreDenial();
+		subTypeResultArray[1] = localResultService.getByResultId(result.getId()).getScoreRecognition();
+		subTypeResultArray[2] = localResultService.getByResultId(result.getId()).getScoreDevelopment();
+		
+        for (int i = 0; i < subTypeResultArray.length; i++) {
+            subTypeResultArray[i] = subTypeResultArray[i] / 100;
         }
-        } else {
-            return Constants.redirect;
-        }
+		return subTypeResultArray;
+	}
+
+	private double[] findAllResultTypePercentages(Result result) {
+		List<ResultTypePercentage> findAllResultTypePercentages = localResultService.findResultTypePercentageByResult(result);
+		double[] pTypeResultArray = new double[findAllResultTypePercentages.size()];
+		for (int i = 0; i < pTypeResultArray.length; i++) {
+		    if (result.getId() == findAllResultTypePercentages.get(i).getResult().getId()) {
+		        pTypeResultArray[i] = findAllResultTypePercentages.get(i).getPercentage();
+		    }
+		}
+		return pTypeResultArray;
 	}
 	
 	/**
-	 * 
+	 * A controller method that redirects to the contact page.
 	 */
 	@RequestMapping("/contact")
     public String contact(Model model) {
@@ -167,7 +192,7 @@ public class UserController {
     }
 	
 	/**
-	 * 
+	 * A controller method that redirects to the about us page.
 	 */
 	@RequestMapping("/aboutUs")
     public String aboutUs(Model model) {
