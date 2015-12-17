@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head th:replace="fragments/headTag :: headTag"> </head>
+<body>
+    <div th:include="fragments/menu" th:remove="tag"></div>
+		<div id="main"  class="pure-skin-PT">
+			<div class="content">
+				<h2 class="content-subhead" th:text="${SixthContentBox.contentTitle}"></h2>
+	            <p th:text="${SixthContentBox.contentText}"></p>
+				<hr />
+				<table style="table-layout: fixed;" th:each="c : ${personalityTypeLinkContainers}" class="pure-table pure-table-bordered tableHistory">
+					<thead>
+						<tr>
+							<th th:text="${c.personalityType.name}"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="l : ${c.links}">
+							<td style="word-wrap: break-word"><a th:href="${l.url}" th:text="${l.title}" target="_blank"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+<div th:include="fragments/footer" th:remove="tag"></div>
+</body>
+</html>

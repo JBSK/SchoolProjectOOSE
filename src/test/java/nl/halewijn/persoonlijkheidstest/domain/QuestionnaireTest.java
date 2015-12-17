@@ -222,7 +222,8 @@ public class QuestionnaireTest {
 		questionnaire.addQuestion(newQuestion);
 		assertEquals(newQuestion, questionnaire.getAnsweredQuestions().get(questionnaire.getAnsweredQuestions().size()-1));
 		
-		questionnaire.getCurrentQuestion(model);
+		Question currentQuestion = questionnaire.getPreviousQuestion();
+        model.addAttribute(Constants.currentQuestion, currentQuestion);
 		when(model.containsAttribute("currentQuestion")).thenReturn(true);
 		assertEquals(true, model.containsAttribute("currentQuestion"));
 	}

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import nl.halewijn.persoonlijkheidstest.services.local.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.services.Constants;
@@ -18,10 +19,12 @@ public class Questionnaire {
 	private List<Question> answeredQuestions = new ArrayList<>();
     private ArrayList<String> errors = new ArrayList<>();
 	private boolean testFinished = false;
+    private int totalAmountOfQuestions = 1;
 
     LocalScoreConstantService localScoreConstantService;
     
-   LocalWebsiteContentTextService localWebsiteContentTextService;
+    @Autowired
+    private LocalWebsiteContentTextService localWebsiteContentTextService;
 
 	public Questionnaire() {
         /*
@@ -40,12 +43,17 @@ public class Questionnaire {
 	 * If nothing goes wrong, however, the first question is displayed.
 	 */
 	public String startNewTest(Model model, HttpSession session, LocalQuestionService localQuestionService) {
-		Question firstQuestion = localQuestionService.getFirstQuestion(this);
+        totalAmountOfQuestions = localQuestionService.countActiveQuestions() + 1;
+
+        Question firstQuestion = localQuestionService.getFirstQuestion(this);
 		
 		if(firstQuestion == null) {
 			return Constants.questionnaire;
 		}
-		
+
+        int progress = calculateProgress(0);
+        addProgressToModel(model, progress);
+
 		session.setAttribute(Constants.questionnaire, this);
 		model.addAttribute(Constants.currentQuestion, firstQuestion);
 		return "";
@@ -71,13 +79,30 @@ public class Questionnaire {
         }
 		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
+
 		if(nextQuestion != null) {
+            int progress = calculateProgress(nextQuestion.getQuestionId() - 1);
+            addProgressToModel(model, progress);
 			return showNextQuestion(model, nextQuestion);
 		} else {
-			this.testFinished = true;
 			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
+            this.testFinished = true;
 			return showResults(model, session, localPersonalityTypeService);
 		}	
+	}
+
+    public void addProgressToModel(Model model, int progress) {
+        model.addAttribute("questionnaireProgress", progress);
+        model.addAttribute("questionnaireProgressStyle", "width: " + progress + "%");
+    }
+
+	public int calculateProgress(int currentQuestionId) {
+        int progress = (int) calculatePercentage(currentQuestionId, totalAmountOfQuestions);
+        if (progress == 100) {
+            return 99;
+        } else {
+            return progress;
+        }
 	}
 
 	public boolean isTestFinished() {
@@ -105,7 +130,6 @@ public class Questionnaire {
         return stringBuilder.toString();
     }
 
-
 	/**
 	 * Creates a new Result object that contains a list of newly created Answer objects based on
 	 * the questionlist in the Questionnaire object. Both the Result and Answer objects get saved
@@ -115,22 +139,24 @@ public class Questionnaire {
 	 * column will remain null.
 	 */
 	private void saveResults(HttpSession session, LocalResultService localResultService, LocalUserService localUserService, LocalPersonalityTypeService localPersonalityTypeService) {
-		double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
-		double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
-		Result result;
-		String userName = (String) session.getAttribute(Constants.email);
-		if(userName != null) {
-			User user = localUserService.findByEmailAddress(userName);
-			result = new Result(user);
-		} else {
-			result = new Result(null);
-		}
-		result = localResultService.saveResult(result);
-		setSubScores(subTypeResultArray, result);
-		saveResultTypePercentagesInDb(localResultService, localPersonalityTypeService, pTypeResultArray, result);
-		saveQuestionAnswersInDb(localResultService, result, this);
-		result = localResultService.saveResult(result);
-		session.setAttribute(Constants.resultId, result.getId());
+		if (!testFinished) { // Prevent duplicate result entries in the database if you refresh the result page.
+            double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
+            double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
+            Result result;
+            String userName = (String) session.getAttribute(Constants.email);
+            if (userName != null) {
+                User user = localUserService.findByEmailAddress(userName);
+                result = new Result(user);
+            } else {
+                result = new Result(null);
+            }
+            result = localResultService.saveResult(result);
+            setSubScores(subTypeResultArray, result);
+            saveResultTypePercentagesInDb(localResultService, localPersonalityTypeService, pTypeResultArray, result);
+            saveQuestionAnswersInDb(localResultService, result, this);
+            result = localResultService.saveResult(result);
+            session.setAttribute(Constants.resultId, result.getId());
+        }
 	}
 
 	/**
@@ -275,16 +301,6 @@ public class Questionnaire {
         }
         return indexOfHighestNumber;
     }
-	
-    /**
-     * Firstly requests all the questions which have been asked so far.
-     * Then it assigns the last question to the variable "currentQuestion".
-     * Lastly this variable is added to the "model".
-     */
-	public void getCurrentQuestion(Model model) {
-		Question currentQuestion = answeredQuestions.get(answeredQuestions.size()-1);
-		model.addAttribute(Constants.currentQuestion, currentQuestion);
-	}
 	
 	public void addQuestion(Question question) {
 		answeredQuestions.add(question);
@@ -491,8 +507,5 @@ public class Questionnaire {
 
     public void setLocalScoreConstantService(LocalScoreConstantService localScoreConstantService) {
         this.localScoreConstantService = localScoreConstantService;
-    }
-    public void setLocalWebsiteContentTextService(LocalWebsiteContentTextService localWebsiteContentTextService) {
-        this.localWebsiteContentTextService = localWebsiteContentTextService;
     }
 }

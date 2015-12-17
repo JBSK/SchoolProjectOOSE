@@ -14,5 +14,4 @@ public interface ResultTypePercentageRepository extends JpaSpecificationExecutor
 
 	List<ResultTypePercentage> findByResult(Result result);
 
-
 }

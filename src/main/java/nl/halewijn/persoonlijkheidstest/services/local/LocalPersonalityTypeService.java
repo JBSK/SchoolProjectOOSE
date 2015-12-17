@@ -3,7 +3,6 @@ package nl.halewijn.persoonlijkheidstest.services.local;
 import nl.halewijn.persoonlijkheidstest.datasource.repository.PersonalityTypeRepository;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.services.IObjectService;
-import nl.halewijn.persoonlijkheidstest.services.IPersonalityTypeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class LocalPersonalityTypeService implements IObjectService<PersonalityType>,  IPersonalityTypeService {
+public class LocalPersonalityTypeService implements IObjectService<PersonalityType> {
 
 	@Autowired
 	private PersonalityTypeRepository personalityTypeRepository;

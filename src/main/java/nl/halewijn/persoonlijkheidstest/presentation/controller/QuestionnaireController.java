@@ -1,7 +1,6 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.domain.Question;
-import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
+import nl.halewijn.persoonlijkheidstest.domain.*;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.*;
 
@@ -14,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class QuestionnaireController {
@@ -29,12 +31,15 @@ public class QuestionnaireController {
 
 	@Autowired
 	private LocalScoreConstantService localScoreConstantService;
-	
-	@Autowired
-	private LocalWebsiteContentTextService localWebsiteContentTextService;
     
     @Autowired
     private LocalUserService localUserService;
+
+    @Autowired
+    private LocalPersonalityTypeLinkService localPersonalityTypeLinkService;
+    
+    @Autowired
+    private LocalWebsiteContentTextService localWebsiteContentTextService;
 	
 	/**
 	 * If the file path relative to the base was "/questionnaire", return the relevant web page.
@@ -76,11 +81,9 @@ public class QuestionnaireController {
 			questionnaire = new Questionnaire();
 			questionnaire.startNewTest(model, session, localQuestionService);
 		} else {
-			if(session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
-				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
-			}
-			questionnaire.setLocalScoreConstantService(localScoreConstantService);
-			questionnaire.setLocalWebsiteContentTextService(localWebsiteContentTextService);
+            questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
+            questionnaire.setLocalScoreConstantService(localScoreConstantService);
+            
 			return questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, session, localResultService, localUserService);
 		}
 		return Constants.questionnaire;
@@ -100,11 +103,30 @@ public class QuestionnaireController {
 		if(session.getAttribute(Constants.questionnaire) == null) {
 			return Constants.questionnaire;
 		} else {
-			if(session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
-				questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
-			}
-			questionnaire.getCurrentQuestion(model);
+            questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
+            Question currentQuestion = questionnaire.getPreviousQuestion();
+            int progress = questionnaire.calculateProgress(currentQuestion.getQuestionId() - 1);
+            questionnaire.addProgressToModel(model, progress);
+            model.addAttribute(Constants.currentQuestion, currentQuestion);
 		}
 		return Constants.questionnaire;
 	}
+
+    @RequestMapping(value="/showLinks", method=RequestMethod.GET)
+    public String showLinks(Model model, HttpSession session) {
+        List<PersonalityTypeLinkContainer> containers = new ArrayList<>();
+        List<PersonalityType> personalityTypes = localPersonalityTypeService.getAll();
+        for (PersonalityType type : personalityTypes) {
+            List<PersonalityTypeLink> typeLinks = localPersonalityTypeLinkService.getAllByPersonalityType(type);
+            PersonalityTypeLinkContainer container = new PersonalityTypeLinkContainer(type, typeLinks);
+            containers.add(container);
+        }
+        model.addAttribute("personalityTypeLinkContainers", containers);
+        
+        WebsiteContentText text6 = localWebsiteContentTextService.getByContentId(6);
+		model.addAttribute("SixthContentBox", text6);
+        
+        return Constants.linkpage;
+    }
+
 }

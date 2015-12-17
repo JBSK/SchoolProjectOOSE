@@ -50,6 +50,10 @@ public class UserController {
                 int id = localUserService.findByEmailAddress(email).getId();
                 List<Result> userResults = localResultService.getByUserId(id);
                 model.addAttribute("userResults", userResults);
+                
+                WebsiteContentText text9 = localWebsiteContentTextService.getByContentId(9);
+        		model.addAttribute("NinthContentBox", text9);
+                
                 return Constants.myresults;
             } else {
                 return Constants.redirect;
