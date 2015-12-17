@@ -16,7 +16,7 @@
 			<div class="content pure-g">
 				<div class="pure-u-1">
 					<h2 class="content-subhead" th:text="${FirstContentBox.contentTitle}"></h2>
-					<p th:text="${FirstContentBox.contentText}"></p>
+					<p th:utext="${FirstContentBox.contentText}"></p>
 				</div>
 			
 			</div>
@@ -24,14 +24,14 @@
 			<div class="content pure-g">
 				<div class="pure-u-1">
 					<h2 class="content-subhead" th:text="${SecondContentBox.contentTitle}"></h2>
-					<p th:text="${SecondContentBox.contentText}"></p>
+					<p th:utext="${SecondContentBox.contentText}"></p>
 				</div>
 			
 			</div>
 			<div class="content pure-g">
 				<div class="pure-u-1">
 					<h2 class="content-subhead" th:text="${ThirdContentBox.contentText}"></h2>
-					<p th:text="${ThirdContentBox.contentText}"></p>
+					<p th:utext="${ThirdContentBox.contentText}"></p>
 				</div>
 			</div>
 			<!-- einde content blokken -->
