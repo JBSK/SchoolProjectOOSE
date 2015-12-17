@@ -60,6 +60,6 @@ function PDFFromHTML() {
             'width': 170,
             'elementHandlers': specialElementHandlers
         });
-        doc.save('Test.pdf');
+        doc.save('persoonlijkheidsTypeTest.pdf');
     });
 }
