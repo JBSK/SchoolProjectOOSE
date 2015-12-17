@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 	<head th:replace="fragments/headTag-resultpage :: headTag"></head>
 	<body>
+		<div id="loading"></div>
         <div id="fb-root"></div>
         <script>
         	//Facebook share begin
@@ -20,53 +21,6 @@
 	            fjs.parentNode.insertBefore(js, fjs);
 	        }(document, 'script', 'facebook-jssdk'));
 			//Facebook share end
-        
-            // Using jsPDF to save the page as PDF.
-		    function PDFFromHTML() {
-				
-		    	svgAsPngUri(document.getElementById("radarChartBox").firstChild, {}, function(uri) {
-				    
-		    		if(document.getElementById('barChartContainer').firstChild == null)
-		    			return alert('Wacht tot dat de pagina volledig geladen is.');
-		    		
-		    		var doc = new jsPDF();
-				    			
-				    	doc.text(15, 20, 'Resultaten');
-				    	var specialElementHandlers = {
-				    			'#radarChartBox': function(element, renderer){
-				    				return true;
-				    			}, 
-				    			'#barChartContainer': function(element, renderer){
-				    				return true;
-				    			}
-				    		};
-				    	
-						doc.fromHTML($('#uitkomst').get(0), 15, 15, {
-							'width': 170,
-							'elementHandlers': specialElementHandlers
-						});
-						
-						var barChart = document.getElementById('barChartContainer').firstChild.firstChild;
-						
-						doc.addImage(uri, 'PNG', 55, 40, 100, 100);
-						doc.addImage(barChart.toDataURL(), 'PNG', 40, 155, 100, 100);
-						
-						
-						doc.addPage();
-						doc.fromHTML($('#primaryType-info').get(0), 15, 15, {
-							'width': 170,
-							'elementHandlers': specialElementHandlers
-						});
-						
-						doc.addPage();		
-						doc.fromHTML($('#secondaryType-info').get(0), 15, 15, {
-							'width': 170,
-							'elementHandlers': specialElementHandlers
-						});
-						
-				    	doc.save('Test.pdf');
-				});
-		    }
         </script>
 
 		<div th:include="fragments/menu" th:remove="tag"></div>
@@ -92,7 +46,7 @@
                         </div>
                     </div>
                     <div class="pure-u-1 pure-u-md-1-2">
-                        <a href="javascript:PDFFromHTML()"> <button class="downloadPDF pure-button" type="button">Download als PDF</button> </a>
+                        <a href="javascript:PDFFromHTML()"> <button class="downloadPDF pure-button" type="button" disabled="disabled">Download als PDF</button> </a>
                     </div>
                 </div>
 				<div id="resultaten">
