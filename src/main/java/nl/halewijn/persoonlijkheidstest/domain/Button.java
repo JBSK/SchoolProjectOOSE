@@ -24,4 +24,24 @@ public class Button {
 	public int getButtonId() {
 		return this.buttonId;
 	}
+	
+	public void setButtonId(int buttonId) {
+		this.buttonId = buttonId;
+	}
+
+	public String getButtonText() {
+		return buttonText;
+	}
+
+	public void setButtonText(String buttonText) {
+		this.buttonText = buttonText;
+	}
+
+	public String getButtonDescription() {
+		return buttonDescription;
+	}
+
+	public void setButtonDescription(String buttonDescription) {
+		this.buttonDescription = buttonDescription;
+	}
 }

@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import nl.halewijn.persoonlijkheidstest.services.local.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.services.Constants;
@@ -23,8 +22,9 @@ public class Questionnaire {
 
     LocalScoreConstantService localScoreConstantService;
     
-    @Autowired
-    private LocalWebsiteContentTextService localWebsiteContentTextService;
+    LocalWebsiteContentTextService localWebsiteContentTextService;
+    
+    LocalButtonService localButtonService;
 
 	public Questionnaire() {
         /*
@@ -254,7 +254,13 @@ public class Questionnaire {
 		
 		WebsiteContentText text5 = localWebsiteContentTextService.getByContentId(5);
 		model.addAttribute("FifthContentBox", text5);
-
+		
+		Button button10 = localButtonService.getByButtonId(10);
+		model.addAttribute("TenthButtonText", button10);
+		
+		Button button11 = localButtonService.getByButtonId(11);
+		model.addAttribute("EleventhButtonText", button11);
+		
         return Constants.result;
     }
 
@@ -507,5 +513,13 @@ public class Questionnaire {
 
     public void setLocalScoreConstantService(LocalScoreConstantService localScoreConstantService) {
         this.localScoreConstantService = localScoreConstantService;
+    }
+    
+    public void setLocalWebsiteContentTextService(LocalWebsiteContentTextService localWebsiteContentTextService) {
+    	this.localWebsiteContentTextService = localWebsiteContentTextService;
+    }
+    
+    public void setLocalButtonService(LocalButtonService localButtonService) {
+    	this.localButtonService = localButtonService;
     }
 }

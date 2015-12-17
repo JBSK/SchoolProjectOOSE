@@ -12,7 +12,11 @@ public class LocalButtonService {
 	@Autowired
 	private ButtonRepository buttonRepository;
 	
-	public Button getById(int id) {
+	public Button getByButtonId(int id) {
 		return buttonRepository.findByButtonId(id);
+	}
+
+	public Button save(Button button) {
+		return buttonRepository.save(button);
 	}
 }

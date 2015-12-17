@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 
 import nl.halewijn.persoonlijkheidstest.domain.Result;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,12 @@ public class RegisterController {
 
     @Autowired
     private LocalResultService localResultService;
+    
+    @Autowired
+	private LocalButtonService localButtonService;
+    
+    @Autowired
+    private LocalImageService localImageService;
 
 	private static final int minimumPasswordLength = 7;
 
@@ -32,6 +40,7 @@ public class RegisterController {
 	 */
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String register(Model model, HttpServletRequest req) {
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 		String attempt = req.getParameter("attempt");
 		model.addAttribute("attempt", attempt);
 		model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
@@ -45,7 +54,8 @@ public class RegisterController {
 	 */
 	@RequestMapping(value="/registerDB", method=RequestMethod.POST)
     public String registerDB(Model model, HttpSession session, HttpServletRequest req) {
-        String regEmail = req.getParameter("regEmail");
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		String regEmail = req.getParameter("regEmail");
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
 
@@ -80,7 +90,7 @@ public class RegisterController {
 		return Constants.redirect;
 	}
 
-    /*
+    /**
      * Check if we have just finished a test, if yes:
      * - Retrieve the result ID,
      * - Lookup the corresponding Result,

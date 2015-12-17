@@ -52,6 +52,15 @@ public class QuestionnaireTest {
     @Autowired
     private LocalTheoremService localTheoremService;
     
+    @Autowired
+    private LocalImageService localImageService;
+    
+    @Autowired
+    private LocalWebsiteContentTextService localWebsiteContentTextService;
+    
+    @Autowired
+    private LocalButtonService localButtonService;
+    
 	@Before
     public void setUp() {
 		questionnaire = new Questionnaire();
@@ -85,6 +94,12 @@ public class QuestionnaireTest {
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
+		
+		questionnaire.setLocalScoreConstantService(localScoreConstantService);
+	    questionnaire.setLocalWebsiteContentTextService(localWebsiteContentTextService);
+	    questionnaire.setLocalButtonService(localButtonService);
+		
+		addDynamicContentToMockDatabase();
 		
 		for(int i = 0; i < 9; i++) {
 			PersonalityType newType = new PersonalityType("Perfectionist", "primary tekst", "secondary tekst");
@@ -268,6 +283,13 @@ public class QuestionnaireTest {
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 		Model model = mock(Model.class);
 		HttpSession httpSession = mock(HttpSession.class);
+		
+		questionnaire.setLocalScoreConstantService(localScoreConstantService);
+	    questionnaire.setLocalWebsiteContentTextService(localWebsiteContentTextService);
+	    questionnaire.setLocalButtonService(localButtonService);
+		
+		addDynamicContentToMockDatabase();
+		
 		User user = new User("User", false);
 		user.setPasswordHash("abc");
 		localUserService.save(user);
@@ -348,5 +370,29 @@ public class QuestionnaireTest {
 		theoremBattleSix.setAnswer('G');
 		openQuestionOne.setAnswer("Example answer");
 		assertEquals(9, questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions()).length);
+	}
+	
+	private void addDynamicContentToMockDatabase(){
+		for (int i = 1; i < 100; i ++) {
+			Image image = new Image();
+			image.setImageId(i);
+			image.setImageDescription("imageDescription");
+			image.setImagePath("imagePath");
+			image.setImageAlt("imageAlt");
+			localImageService.save(image);
+			
+			WebsiteContentText text = new WebsiteContentText();
+			text.setContentId(i);
+			text.setContentDescription("contentDescription");
+			text.setContentText("contentText");
+			text.setContentTitle("contentTitle");
+			localWebsiteContentTextService.save(text);
+			
+			Button button = new Button();
+			button.setButtonId(i);
+			button.setButtonDescription("buttonDescription");
+			button.setButtonText("buttonText");
+			localButtonService.save(button);
+		}
 	}
 }

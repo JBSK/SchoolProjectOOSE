@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import nl.halewijn.persoonlijkheidstest.domain.User;
 import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 @Controller
@@ -19,6 +21,12 @@ public class LoginController {
 	
 	@Autowired
 	private LocalUserService localUserService;
+	
+	@Autowired
+	private LocalButtonService localButtonService;
+	
+	@Autowired
+	private LocalImageService localImageService;
 	
 	private PasswordHash passwordHash = new PasswordHash();
 	
@@ -29,6 +37,9 @@ public class LoginController {
     public String login(Model model, HttpServletRequest req) {
 		String attempt = req.getParameter("attempt");
 		model.addAttribute("attempt", attempt);
+		
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		
         return "login";
     }
 	
@@ -45,6 +56,7 @@ public class LoginController {
 	public String loginCheck(Model model, HttpSession session, HttpServletRequest req) {
 		String email = req.getParameter(Constants.email);
 		User user = localUserService.findByEmailAddress(email);
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 
 		if (user != null) {
 			boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());
@@ -71,6 +83,7 @@ public class LoginController {
 	@RequestMapping(value="/logOut", method=RequestMethod.GET)
 	public String logOut(Model model, HttpSession session) {
         session.invalidate();
+        Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
         return Constants.redirect;
 	}
 	

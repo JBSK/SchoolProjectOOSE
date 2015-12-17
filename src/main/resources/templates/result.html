@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="pure-u-1 pure-u-md-1-2">
-                        <a href="javascript:PDFFromHTML()"> <button class="downloadPDF pure-button" type="button">Download als PDF</button> </a>
+                        <a href="javascript:PDFFromHTML()"> <button class="downloadPDF pure-button" type="button" th:text="${TenthButtonText.buttonText}"></button> </a>
                     </div>
                 </div>
 				<div id="resultaten">
@@ -100,7 +100,7 @@
 	                <p th:text="${FifthContentBox.contentText}"></p>
 	                <div class="pure-g resultrow1">
 	                    <div id="radarChartContainer" class="pure-u-1 pure-u-lg-1-3">
-	                        <div class="radarChart" id="radarChartBox"></div>
+	                        <div class="radarChart" id="radarChartBox" th:style="'background-image: url(' + @{${SecondImage.imagePath}} + ');'" th:alt="${SecondImage.imageAlt}"></div>
 	                    </div>
 	                    <div id="barChartCont" class="pure-u-1 pure-u-lg-1-3">
 	                        <div class="barChart" id="barChartContainer"></div>
@@ -131,7 +131,7 @@
                 </div> <!-- end resultaten -->
                 <div class="pure-g resultrow3">
                 	<div class="pure-u-1">
-                        <a href="showLinks" class="readMore pure-button">Lees meer..</a>
+                        <a href="showLinks" class="readMore pure-button" th:text="${EleventhButtonText.buttonText}"></a>
                     </div>
                 </div><!-- end resultRow2-->
             </div><!-- end content -->

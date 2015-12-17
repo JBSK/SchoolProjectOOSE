@@ -15,4 +15,8 @@ public class LocalWebsiteContentTextService {
 	public WebsiteContentText getByContentId(int id) {
 		return websiteContentTextRepository.findByContentId(id);
 	}
+
+	public WebsiteContentText save(WebsiteContentText text) {
+		return websiteContentTextRepository.save(text);
+	}
 }

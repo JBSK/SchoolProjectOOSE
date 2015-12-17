@@ -5,8 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import nl.halewijn.persoonlijkheidstest.domain.Button;
 import nl.halewijn.persoonlijkheidstest.domain.Image;
 import nl.halewijn.persoonlijkheidstest.domain.WebsiteContentText;
+import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
 
@@ -15,6 +18,12 @@ public class IndexController {
 	
 	@Autowired
 	private LocalWebsiteContentTextService localWebsiteContentTextService;
+	
+	@Autowired
+	private LocalButtonService localButtonService;
+	
+	@Autowired
+	private LocalImageService localImageService;
 	
 	@RequestMapping("/")
     public String index(Model model) {
@@ -29,6 +38,18 @@ public class IndexController {
 		
 		WebsiteContentText text4 = localWebsiteContentTextService.getByContentId(4);
 		model.addAttribute("FourthContentBox", text4);
+		
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		
+		Button button8 = localButtonService.getByButtonId(8);
+		model.addAttribute("EightButtonText", button8);
+		
+		Image image3 = localImageService.getByImageId(3);
+		model.addAttribute("ThirdImage", image3);
+		
+		Image image4 = localImageService.getByImageId(4);
+		model.addAttribute("FourthImage", image4);
+		
         return "index";
     }
 }

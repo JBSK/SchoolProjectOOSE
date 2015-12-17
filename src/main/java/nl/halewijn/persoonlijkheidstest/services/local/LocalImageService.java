@@ -12,7 +12,11 @@ public class LocalImageService {
 	@Autowired
 	private ImageRepository localImageRepository;
 	
-	public Image getById(int id) {
+	public Image getByImageId(int id) {
 		return localImageRepository.findByImageId(id);
+	}
+
+	public Image save(Image image) {
+		return localImageRepository.save(image);
 	}
 }

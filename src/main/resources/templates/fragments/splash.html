@@ -1,16 +1,16 @@
 <!-- De splash(druppel)container  -->
 
 <div class="splash-container">
-	<div class="splashbg"></div>
+	<div class="splashbg" th:style="'background-image: url(' + @{${ThirdImage.imagePath}} + ');'" th:alt="${ThirdImage.imageAlt}"></div>
 
 	<div class="splash">
 		<h1 class="shoutTitle" th:text="${FourthContentBox.contentTitle}"></h1>
 			<p class="shoutOut" th:text="${FourthContentBox.contentText}"></p>
-				<a href="questionnaire"><input type="submit" name="teststarter" class="startTest pure-button-selected pure-button pure-button " value="Start!" /></a>
+				<a href="questionnaire"><input type="submit" name="teststarter" class="startTest pure-button-selected pure-button pure-button " th:value="${EightButtonText.buttonText}" /></a>
 			
 		
 	</div>
-	<div class="splashfader">
+	<div class="splashfader" th:style="'background-image: url(' + @{${FourthImage.imagePath}} + ');'" th:alt="${FourthImage.imageAlt}">
 	</div>
 </div>
 <!-- einde van de menudruppel  -->

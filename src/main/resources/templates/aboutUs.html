@@ -5,8 +5,8 @@
     <div th:include="fragments/menu" th:remove="tag"></div>
 		<div id="main"  class="pure-skin-PT">
 			<div class="content">
-				<h2 class="content-subhead">Over ons</h2>
-				testtasdsf
+				<h2 class="content-subhead" th:text="${EigthContentBox.contentTitle}"></h2>
+	        	<p th:text="${EigthContentBox.contentText}"></p>
 			</div>
 		</div>
 	

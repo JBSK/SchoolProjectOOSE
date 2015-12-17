@@ -5,8 +5,8 @@
     <div th:include="fragments/menu" th:remove="tag"></div>
 		<div id="main"  class="pure-skin-PT">
 			<div class="content">
-				<h2 class="content-subhead">test</h2>
-				test
+				<h2 class="content-subhead" th:text="${SeventhContentBox.contentTitle}"></h2>
+	            <p th:text="${SeventhContentBox.contentText}"></p>
 			</div>
 		</div>
 	
