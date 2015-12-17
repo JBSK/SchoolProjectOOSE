@@ -98,6 +98,7 @@ public class QuestionnaireTest {
 		questionnaire.setLocalScoreConstantService(localScoreConstantService);
 	    questionnaire.setLocalWebsiteContentTextService(localWebsiteContentTextService);
 	    questionnaire.setLocalButtonService(localButtonService);
+	    questionnaire.setLocalImageService(localImageService);
 		
 		addDynamicContentToMockDatabase();
 		
@@ -287,6 +288,7 @@ public class QuestionnaireTest {
 		questionnaire.setLocalScoreConstantService(localScoreConstantService);
 	    questionnaire.setLocalWebsiteContentTextService(localWebsiteContentTextService);
 	    questionnaire.setLocalButtonService(localButtonService);
+	    questionnaire.setLocalImageService(localImageService);
 		
 		addDynamicContentToMockDatabase();
 		
