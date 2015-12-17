@@ -96,5 +96,12 @@ public class QuestionnaireControllerTest {
 		assertEquals(false, model.containsAttribute("currentQuestion"));
 		assertEquals("questionnaire", questionnaireController.showQuestionGET(model, httpSession));
 	}
+	
+	@Test
+	public void showLinksTest() {
+		Model model = mock(Model.class);
+		HttpSession httpSession = mock(HttpSession.class);
+		assertEquals("linkpage", questionnaireController.showLinks(model, httpSession));
+	}
 
 }
