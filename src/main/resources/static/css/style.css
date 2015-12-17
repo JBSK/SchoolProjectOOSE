@@ -815,3 +815,10 @@ z-index:90;
 		    width: 100%;
 	    min-height: 100%;
 	}
+	
+/* PersonalityType links table*/
+.typeLinkTable {
+	margin: 5px;
+	float: left;
+	min-width: 130px;
+}

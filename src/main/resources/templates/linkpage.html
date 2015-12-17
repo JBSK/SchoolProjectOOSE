@@ -4,21 +4,23 @@
 <body>
     <div th:include="fragments/menu" th:remove="tag"></div>
 		<div id="main"  class="pure-skin-PT">
-			<div class="content">
+			<div class="content" style="overflow: auto;">
 				<h2 class="content-subhead">Meer informatie</h2>
 				<hr />
-				<table style="table-layout: fixed;" th:each="c : ${personalityTypeLinkContainers}" class="pure-table pure-table-bordered tableHistory">
-					<thead>
-						<tr>
-							<th th:text="${c.personalityType.name}"></th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr th:each="l : ${c.links}">
-							<td style="word-wrap: break-word"><a th:href="${l.url}" th:text="${l.title}" target="_blank"></a></td>
-						</tr>
-					</tbody>
-				</table>
+				<span th:each="c : ${personalityTypeLinkContainers}" >
+					<table style="table-layout: fixed; width: calc(33% - 10px)" class="pure-table pure-table-bordered tableHistory typeLinkTable">
+						<thead>
+							<tr>
+								<th th:text="${c.personalityType.name}"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="l : ${c.links}">
+								<td style="word-wrap: break-word"><a th:href="${l.url}" th:text="${l.title}" target="_blank"></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</span>
 			</div>
 		</div>
 <div th:include="fragments/footer" th:remove="tag"></div>
