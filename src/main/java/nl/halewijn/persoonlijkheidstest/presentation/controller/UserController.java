@@ -62,9 +62,8 @@ public class UserController {
                 
                 WebsiteContentText text9 = localWebsiteContentTextService.getByContentId(9);
         		model.addAttribute("NinthContentBox", text9);
-                
+
         		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-        		
         		Button button12 = localButtonService.getByButtonId(12);
         		model.addAttribute("TwelfthButtonText", button12);
         		

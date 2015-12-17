@@ -20,6 +20,9 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -99,11 +102,20 @@ public class RegisterControllerTest {
 
 	@Test
 	public void verifyCaptchaResponseTest() {
-		RegisterController registerController = mock(RegisterController.class);
         String captchaFormData = "";
         String clientIp = "127.0.0.1";
-        //when(registerController.verifyCaptchaResponse(captchaFormData, clientIp)).thenReturn(true);
-        assertEquals(false, registerController.verifyCaptchaResponse(captchaFormData, clientIp));
+
+        boolean verificationResult = registerController.verifyCaptchaResponse(captchaFormData, clientIp, Constants.utf8);
+        assertEquals(false, verificationResult);  
+	}
+	
+	@Test
+	public void verifyCaptchaResponseExceptionTest() {
+        String captchaFormData = "asda&sd";
+        String clientIp = "asda&ds";
+
+        boolean verificationResult = registerController.verifyCaptchaResponse(captchaFormData, clientIp, "--");
+        assertEquals(false, verificationResult);  
 	}
 
 }

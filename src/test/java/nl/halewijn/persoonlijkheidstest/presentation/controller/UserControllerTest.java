@@ -1,6 +1,8 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
+import nl.halewijn.persoonlijkheidstest.domain.*;
 import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.services.local.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.Answer;
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Question;
-import nl.halewijn.persoonlijkheidstest.domain.Result;
-import nl.halewijn.persoonlijkheidstest.domain.ResultTypePercentage;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
-import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
-import nl.halewijn.persoonlijkheidstest.domain.User;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -55,6 +45,15 @@ public class UserControllerTest {
 	
 	@Autowired
 	private UserController userController;
+
+    @Autowired
+    private LocalWebsiteContentTextService localWebsiteContentTextService;
+
+    @Autowired
+    private LocalButtonService localButtonService;
+
+    @Autowired
+    private LocalImageService localImageService;
 	
 	private PasswordHash passwordHash = new PasswordHash();
 	
@@ -183,4 +182,34 @@ public class UserControllerTest {
 		assertEquals(type2, result1ActualPrimaryType);
 		assertEquals(type1, result2ActualPrimaryType);
 	}
+
+    @Test
+    public void contactTest() {
+        Model model = mock(Model.class);
+
+        WebsiteContentText text7 = new WebsiteContentText();
+        text7.setContentId(7);
+        localWebsiteContentTextService.save(text7);
+
+        assertEquals("contact", userController.contact(model));
+        when(model.containsAttribute("SeventhContentBox")).thenReturn(true);
+        assertTrue(model.containsAttribute("SeventhContentBox"));
+        when(model.containsAttribute("FirstImage")).thenReturn(true);
+        assertTrue(model.containsAttribute("FirstImage"));
+    }
+
+    @Test
+    public void aboutUsTest() {
+        Model model = mock(Model.class);
+
+        WebsiteContentText text8 = new WebsiteContentText();
+        text8.setContentId(8);
+        localWebsiteContentTextService.save(text8);
+
+        assertEquals("aboutUs", userController.aboutUs(model));
+        when(model.containsAttribute("EigthContentBox")).thenReturn(true);
+        assertTrue(model.containsAttribute("EigthContentBox"));
+        when(model.containsAttribute("FirstImage")).thenReturn(true);
+        assertTrue(model.containsAttribute("FirstImage"));
+    }
 }
