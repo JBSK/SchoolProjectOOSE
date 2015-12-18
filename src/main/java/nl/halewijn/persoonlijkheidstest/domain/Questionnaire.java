@@ -72,10 +72,15 @@ public class Questionnaire {
 	public String submitAnswer(HttpServletRequest httpServletRequest, LocalQuestionService localQuestionService, LocalPersonalityTypeService localPersonalityTypeService, Model model, HttpSession session, LocalResultService localResultService, LocalUserService localUserService) {
         Question previousQuestion = getPreviousQuestion();
         String answerString = httpServletRequest.getParameter("answer");
+
         if (previousQuestion instanceof TheoremBattle) {
-        	List<Character> validAnswers = Arrays.asList('A', 'B', 'C', 'D', 'E');
-            char answer = answerString.charAt(0);
-            if(!validAnswers.contains(answer)) {
+            if (answerString != null && !"".equals(answerString)) {
+                List<Character> validAnswers = Arrays.asList('A', 'B', 'C', 'D', 'E');
+                char answer = answerString.charAt(0);
+                if (!validAnswers.contains(answer)) {
+                    return showInvalidAnswerError(model, previousQuestion);
+                }
+            } else {
                 return showInvalidAnswerError(model, previousQuestion);
             }
         }
@@ -117,6 +122,11 @@ public class Questionnaire {
 	private String showInvalidAnswerError(Model model, Question previousQuestion) {
 		errors.add("Het ingevulde antwoord is ongeldig, probeer het alstublieft opnieuw.");
 		model.addAttribute("error", getErrorsInLines());
+        errors.clear();
+
+        int progress = calculateProgress(previousQuestion.getQuestionId() - 1);
+        addProgressToModel(model, progress);
+
 		return showNextQuestion(model, previousQuestion);
 	}
 
