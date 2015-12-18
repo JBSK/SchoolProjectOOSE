@@ -5,10 +5,12 @@
 var over = '<div id="overlay">' +
     '<img id="loading" src="../imgs/loading.gif">' +
     '</div>';
+
 $(document).ready(function(){
     $(over).appendTo('body');
     console.log("added overlay")
 });
+
 $(window).load(function(){
     $('#overlay').remove();
     console.log("remove overlay");
@@ -27,39 +29,62 @@ function PDFFromHTML() {
             return alert('Wacht tot dat de pagina volledig geladen is.');
 
         var doc = new jsPDF();
+        var primaryResultName = $('#uitkomst > .primaryPType').text();
+        var secondaryResultName = $('#uitkomst > .secondaryPType').text();
+        var primaryResultInfoText = $('#primaryType-info > p').text();
+        var secondaryResultInfoText = $('#secondaryType-info > p').text();
+
+        /******** cuts the string into lines so it fits on the page ************/
+        var primaryResultInfoTextP = doc.splitTextToSize(primaryResultInfoText,200);
+        var secondaryResultInfoTextP = doc.splitTextToSize(secondaryResultInfoText,200);
+
+        /***** remove excess whitespace from beginning and end of string ***/
+        primaryResultName = primaryResultName.trim();
+        secondaryResultName = secondaryResultName.trim();
+
+        /*** constants **/
+        var headerSize = 18;
+        var textSize = 15;
+        var textOffset = 10;
+        var titleSize = 20;
+
+
         doc.setTextColor(0,0,0);
-        doc.text(15, 20, 'Resultaten');
-        var specialElementHandlers = {
-            '#radarChartBox': function(element, renderer){
-                return true;
-            },
-            '#barChartContainer': function(element, renderer){
-                return true;
-            }
-        };
-        doc.setTextColor(0,0,0);
-        doc.fromHTML($('#uitkomst').get(0), 15, 15, {
-            'width': 170,
-            'elementHandlers': specialElementHandlers
-        });
+        doc.setFontSize(titleSize);
+        doc.setFontType("bold");
+        doc.setFont("courier");
+        doc.text(textOffset,20, 'Resultaten');
+        doc.setFontType("normal");
+        doc.setFontSize(headerSize);
+        doc.text(textOffset,30,primaryResultName);
+        doc.text(textOffset,40,secondaryResultName);
 
         var barChart = document.getElementById('barChartContainer').firstChild.firstChild;
 
         doc.addImage(uri, 'PNG', 55, 40, 100, 100);
         doc.addImage(barChart.toDataURL(), 'PNG', 40, 155, 100, 100);
 
+        /**** primary result info page ********/
+        doc.addPage();
+        doc.setFontSize(headerSize);
+        doc.setFontType("bold");
+        doc.text(textOffset,20, primaryResultName.split(" ").splice(-1)[0]);
+
+        doc.setFontType("normal");
+        doc.setFontSize(textSize);
+        doc.text(textOffset,40, primaryResultInfoTextP);
+
+        /**** secondary result info page ********/
 
         doc.addPage();
-        doc.fromHTML($('#primaryType-info').get(0), 15, 15, {
-            'width': 170,
-            'elementHandlers': specialElementHandlers
-        });
+        doc.setFontSize(headerSize);
+        doc.setFontType("bold");
+        doc.text(textOffset,20, secondaryResultName.split(" ").splice(-1)[0]);
 
-        doc.addPage();
-        doc.fromHTML($('#secondaryType-info').get(0), 15, 15, {
-            'width': 170,
-            'elementHandlers': specialElementHandlers
-        });
+        doc.setFontType("normal");
+        doc.setFontSize(textSize);
+        doc.text(textOffset,40, secondaryResultInfoTextP);
+
         doc.save('persoonlijkheidsTypeTest.pdf');
     });
 }
