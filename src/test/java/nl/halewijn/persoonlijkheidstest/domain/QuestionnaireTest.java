@@ -377,21 +377,18 @@ public class QuestionnaireTest {
 	private void addDynamicContentToMockDatabase(){
 		for (int i = 1; i < 100; i ++) {
 			Image image = new Image();
-			image.setImageId(i);
 			image.setImageDescription("imageDescription");
 			image.setImagePath("imagePath");
 			image.setImageAlt("imageAlt");
 			localImageService.save(image);
 			
 			WebsiteContentText text = new WebsiteContentText();
-			text.setContentId(i);
 			text.setContentDescription("contentDescription");
 			text.setContentText("contentText");
 			text.setContentTitle("contentTitle");
 			localWebsiteContentTextService.save(text);
 			
 			Button button = new Button();
-			button.setButtonId(i);
 			button.setButtonDescription("buttonDescription");
 			button.setButtonText("buttonText");
 			localButtonService.save(button);

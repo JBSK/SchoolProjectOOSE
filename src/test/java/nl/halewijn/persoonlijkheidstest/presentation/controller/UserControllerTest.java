@@ -187,8 +187,8 @@ public class UserControllerTest {
     public void contactTest() {
         Model model = mock(Model.class);
 
-        WebsiteContentText text7 = new WebsiteContentText();
-        text7.setContentId(7);
+        WebsiteContentText text7 = new WebsiteContentText(7);
+		text7.setContentText("");
         localWebsiteContentTextService.save(text7);
 
         assertEquals("contact", userController.contact(model));
@@ -202,8 +202,8 @@ public class UserControllerTest {
     public void aboutUsTest() {
         Model model = mock(Model.class);
 
-        WebsiteContentText text8 = new WebsiteContentText();
-        text8.setContentId(8);
+        WebsiteContentText text8 = new WebsiteContentText(8);
+		text8.setContentText("");
         localWebsiteContentTextService.save(text8);
 
         assertEquals("aboutUs", userController.aboutUs(model));

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "WebsiteContentText")
@@ -15,18 +16,26 @@ public class WebsiteContentText {
 	private int contentId;
 	
 	private String contentTitle;
-	
-	@Column(name="contentText", columnDefinition="varchar(25000)") 
+
+	@NotNull
+	@Column(name="contentText", columnDefinition="varchar(25000)")
 	private String contentText;
 	
 	private String contentDescription;
+
+    public WebsiteContentText() {
+        /*
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
+    }
+
+    public WebsiteContentText(int contentId) {
+        this.contentId = contentId;
+    }
 	
 	public int getContentId() {
 		return contentId;
-	}
-
-	public void setContentId(int contentId) {
-		this.contentId = contentId;
 	}
 
 	public String getContentTitle() {

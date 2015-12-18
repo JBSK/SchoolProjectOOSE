@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Images")
@@ -12,7 +13,8 @@ public class Image {
 	@Id
 	@GeneratedValue
 	private int imageId;
-	
+
+	@NotNull
 	private String imagePath;
 	
 	private String imageAlt;
@@ -21,10 +23,6 @@ public class Image {
 	
 	public int getImageId() {
 		return this.imageId;
-	}
-	
-	public void setImageId(int imageId) {
-		this.imageId = imageId;
 	}
 
 	public String getImagePath() {
