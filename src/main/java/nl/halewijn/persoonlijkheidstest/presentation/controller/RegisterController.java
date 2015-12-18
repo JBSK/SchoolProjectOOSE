@@ -76,7 +76,7 @@ public class RegisterController {
 			if (regPassword.length() >= minimumPasswordLength) {
                 String captchaData = req.getParameter("g-recaptcha-response");
                 if (captchaData != null && !"".equals(captchaData)) {
-                    boolean captchaSuccess = verifyCaptchaResponse(captchaData, req.getRemoteAddr());
+                    boolean captchaSuccess = verifyCaptchaResponse(captchaData, req.getRemoteAddr(), Constants.utf8);
                     if (captchaSuccess) {
                         User doesUserExist = localUserService.findByEmailAddress(regEmail);
                         if (doesUserExist == null) {
@@ -103,10 +103,10 @@ public class RegisterController {
      * the form was filled by a spammer/robot/program or a human. We'll interpret
      * the JSON response from their API and return true if human, else false.
      */
-    public boolean verifyCaptchaResponse(String captchaFormData, String clientIp) {
+    public boolean verifyCaptchaResponse(String captchaFormData, String clientIp, String encoding) {
         try {
-            captchaFormData = URLEncoder.encode(captchaFormData, Constants.utf8);
-            String encodedClientIp = URLEncoder.encode(clientIp, Constants.utf8);
+            captchaFormData = URLEncoder.encode(captchaFormData, encoding);
+            String encodedClientIp = URLEncoder.encode(clientIp, encoding);
             String apiUrl = "https://www.google.com/recaptcha/api/siteverify?secret=" + captchaApiSecretKey + "&response=" + captchaFormData + "&remoteip=" + encodedClientIp;
 
             InputStream response = new URL(apiUrl).openStream();

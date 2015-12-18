@@ -10,13 +10,13 @@ import nl.halewijn.persoonlijkheidstest.domain.Image;
 public class LocalImageService {
 	
 	@Autowired
-	private ImageRepository localImageRepository;
+	private ImageRepository imageRepository;
 	
 	public Image getByImageId(int id) {
-		return localImageRepository.findByImageId(id);
+		return imageRepository.findByImageId(id);
 	}
 
 	public Image save(Image image) {
-		return localImageRepository.save(image);
+		return imageRepository.save(image);
 	}
 }

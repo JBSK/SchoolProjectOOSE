@@ -32,11 +32,9 @@ public class Answer {
 	
 	public Answer() {
 		/*
-		 * Standing here proudly, to ward off an error.
-		 * Not even from Sonar, imagine the terror!
-		 * 
-		 * UserController calls an Answer ArrayList, which apparently requires an empty constructor.
-		 */
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
 	}
 	
 	public int getId() {

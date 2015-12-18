@@ -197,4 +197,17 @@ public class UserController {
 		
 		return "aboutUs";
     }
+	
+	@RequestMapping("/errorPage")
+    public String errorPage(Model model) {
+		WebsiteContentText text10 = localWebsiteContentTextService.getByContentId(10);
+		model.addAttribute("TenthContentBox", text10);
+		
+		Image image6 = localImageService.getByImageId(6);
+		model.addAttribute("SixthImage", image6);
+		
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		
+        return "errorPage";
+    }
 }
