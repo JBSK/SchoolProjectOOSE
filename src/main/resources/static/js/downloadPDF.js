@@ -53,22 +53,22 @@ function PDFFromHTML() {
         doc.setFontSize(titleSize);
         doc.setFontType("bold");
         doc.setFont("courier");
-        doc.text(textOffset,20, 'Resultaten');
+        doc.text(textOffset,30, 'Resultaten');
         doc.setFontType("normal");
         doc.setFontSize(headerSize);
-        doc.text(textOffset,30,primaryResultName);
-        doc.text(textOffset,40,secondaryResultName);
+        doc.text(textOffset,40,primaryResultName);
+        doc.text(textOffset,50,secondaryResultName);
 
         var barChart = document.getElementById('barChartContainer').firstChild.firstChild;
 
-        doc.addImage(uri, 'PNG', 55, 40, 100, 100);
-        doc.addImage(barChart.toDataURL(), 'PNG', 40, 155, 100, 100);
+        doc.addImage(uri, 'PNG', 55, 50, 100, 100);
+        doc.addImage(barChart.toDataURL(), 'PNG', 60, 155, 100, 100);
 
         /**** primary result info page ********/
         doc.addPage();
         doc.setFontSize(headerSize);
         doc.setFontType("bold");
-        doc.text(textOffset,20, primaryResultName.split(" ").splice(-1)[0]);
+        doc.text(textOffset,30, primaryResultName.split(" ").splice(-1)[0]);
 
         doc.setFontType("normal");
         doc.setFontSize(textSize);
@@ -79,7 +79,7 @@ function PDFFromHTML() {
         doc.addPage();
         doc.setFontSize(headerSize);
         doc.setFontType("bold");
-        doc.text(textOffset,20, secondaryResultName.split(" ").splice(-1)[0]);
+        doc.text(textOffset,30, secondaryResultName.split(" ").splice(-1)[0]);
 
         doc.setFontType("normal");
         doc.setFontSize(textSize);
