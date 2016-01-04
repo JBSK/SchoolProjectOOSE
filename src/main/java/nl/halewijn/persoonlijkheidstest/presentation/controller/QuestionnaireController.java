@@ -59,9 +59,7 @@ public class QuestionnaireController {
     	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 		Button button9 = localButtonService.getByButtonId(9);
 		model.addAttribute("NinthButtonText", button9);
-    	if(session.getAttribute(Constants.questionnaire) == null) {
-
-    		
+    	if(session.getAttribute(Constants.questionnaire) == null) {	
     		return Constants.questionnaire;
     	} else {
             if (session.getAttribute(Constants.questionnaire) instanceof Questionnaire) {
@@ -91,7 +89,7 @@ public class QuestionnaireController {
     	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
     	if(session.getAttribute(Constants.questionnaire) == null) {
 			questionnaire = new Questionnaire();
-			questionnaire.startNewTest(model, session, localQuestionService);
+			questionnaire.startNewTest(model, session, localQuestionService);		
 		} else {
             questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
             questionnaire.setLocalScoreConstantService(localScoreConstantService);
@@ -117,6 +115,9 @@ public class QuestionnaireController {
     	Questionnaire questionnaire = null;
     	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 		if(session.getAttribute(Constants.questionnaire) == null) {
+			Button button9 = localButtonService.getByButtonId(9);
+			model.addAttribute("NinthButtonText", button9);	
+			
 			return Constants.questionnaire;
 		} else {
             questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
