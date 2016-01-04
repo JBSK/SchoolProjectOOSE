@@ -37,11 +37,6 @@ public class LocalUserService implements IObjectService<User>, IUserService  {
 	}
 
 	@Override
-	public User update(User user) {
-		return userRepository.save(user);
-	}
-
-	@Override
 	public User findByEmailAddress(String emailAddress) {
 		User user;
 

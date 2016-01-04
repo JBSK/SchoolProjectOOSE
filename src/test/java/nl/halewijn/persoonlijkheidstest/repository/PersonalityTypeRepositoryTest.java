@@ -32,7 +32,7 @@ public class PersonalityTypeRepositoryTest {
 		localPersonalityTypeService.save(examplePersonalityType);
 
 		examplePersonalityType.setName(updatedTypeName);
-		localPersonalityTypeService.update(examplePersonalityType);
+		localPersonalityTypeService.save(examplePersonalityType);
 
         PersonalityType updatedPersonalityType = localPersonalityTypeService.getById(examplePersonalityType.getTypeID());
         assertEquals(updatedTypeName, updatedPersonalityType.getName());

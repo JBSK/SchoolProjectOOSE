@@ -8,6 +8,5 @@ public interface IObjectService<O> {
 	void delete(O o);
 	List<O> getAll();
 	O getById(int id);
-	O update(O o);
 
 }

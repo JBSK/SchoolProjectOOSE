@@ -72,7 +72,7 @@ public class TheoremRepositoryTest {
 		localTheoremService.save(exampleTheorem);
 
         exampleTheorem.setText(updatedTheoremName);
-		localTheoremService.update(exampleTheorem);
+		localTheoremService.save(exampleTheorem);
 
         Theorem updatedTheorem = localTheoremService.getById(exampleTheorem.getTheoremID());
 		assertEquals(updatedTheoremName, updatedTheorem.getText());

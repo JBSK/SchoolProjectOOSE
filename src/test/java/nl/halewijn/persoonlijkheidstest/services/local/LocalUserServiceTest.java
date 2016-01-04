@@ -43,7 +43,7 @@ public class LocalUserServiceTest {
 		
 		user.setAdmin(true);
         user.setEmailAddress("name@test.com");
-		user = localUserService.update(user);
+		user = localUserService.save(user);
 		assertEquals(true, localUserService.findByEmailAddress("name@test.com").isAdmin());
 		
 		localUserService.delete(user);

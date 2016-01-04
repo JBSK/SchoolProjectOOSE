@@ -38,9 +38,4 @@ public class LocalPersonalityTypeLinkService implements IObjectService<Personali
 	public List<PersonalityTypeLink> getAllByPersonalityType(PersonalityType personalityType) {
 		return personalityTypeLinkRepository.findAllByPersonalityType(personalityType);
 	}
-
-	@Override
-	public PersonalityTypeLink update(PersonalityTypeLink personalityTypeLink) {
-		return personalityTypeLinkRepository.save(personalityTypeLink);
-	}
 }

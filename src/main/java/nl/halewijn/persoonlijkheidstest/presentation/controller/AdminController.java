@@ -192,7 +192,7 @@ public class AdminController {
 
 			getTheoremValues(req, theorem);
 
-			localTheoremService.update(theorem);
+			localTheoremService.save(theorem);
 
 			return Constants.redirect + manageTheorems;
 		} else {

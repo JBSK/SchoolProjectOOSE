@@ -43,8 +43,4 @@ public class LocalTheoremService implements IObjectService<Theorem>, ITheoremSer
 		return theoremRepository.findByTheoremId(id);
 	}
 
-	@Override
-	public Theorem update(Theorem theorem) {
-		return theoremRepository.save(theorem);
-	}
 }

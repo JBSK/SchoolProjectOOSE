@@ -66,7 +66,7 @@ public class LocalRoutingServiceTest {
 		localRoutingService.save(table);
 		
 		table.setRoutingRuleParam('C');
-		table = localRoutingService.update(table);
+		table = localRoutingService.save(table);
 		assertEquals('C', table.getRoutingRuleParam());
 
 		localRoutingService.delete(table);
