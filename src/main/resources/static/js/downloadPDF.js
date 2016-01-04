@@ -62,7 +62,7 @@ function PDFFromHTML() {
         var barChart = document.getElementById('barChartContainer').firstChild.firstChild;
 
         doc.addImage(uri, 'PNG', 55, 50, 100, 100);
-        doc.addImage(barChart.toDataURL(), 'PNG', 60, 155, 100, 100);
+        doc.addImage(barChart.toDataURL(), 'PNG', 45, 155, 100, 100);
 
         /**** primary result info page ********/
         doc.addPage();
