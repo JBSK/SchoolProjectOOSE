@@ -56,5 +56,7 @@ public class Constants {
 			Image image = localImageService.getByImageId(e.getValue());
 			model.addAttribute(e.getKey(), image);
 		}
+
+		// TODO: write a test for this method.
 	}
 }

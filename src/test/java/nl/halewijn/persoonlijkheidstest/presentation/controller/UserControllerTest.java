@@ -10,6 +10,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
@@ -212,4 +213,15 @@ public class UserControllerTest {
         when(model.containsAttribute("FirstImage")).thenReturn(true);
         assertTrue(model.containsAttribute("FirstImage"));
     }
+
+	@Test
+	public void errorPageTest() {
+		Model model = new ExtendedModelMap();
+		String expectedResult = "errorPage";
+		String actualResult = userController.errorPage(model);
+		assertEquals(true, model.containsAttribute("TenthContentBox"));
+		assertEquals(true, model.containsAttribute("SixthImage"));
+		assertEquals(expectedResult, actualResult);
+		//Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+	}
 }
