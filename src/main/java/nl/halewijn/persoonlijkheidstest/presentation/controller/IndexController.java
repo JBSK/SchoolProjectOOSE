@@ -52,10 +52,4 @@ public class IndexController {
 		
         return "index";
     }
-	
-	@RequestMapping("/history")
-    public String history(Model model) {
-		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-		return "history";
-	}
 }
