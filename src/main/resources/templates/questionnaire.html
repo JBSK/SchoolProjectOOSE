@@ -5,7 +5,7 @@
 <body>
 <div th:include="fragments/menu" th:remove="tag"></div>
 	<div id="main" class="pure-skin-PT">
-		<div class="content">
+		<div class="content questionaireBox">
 			<div th:if="${session.questionnaire == null}">
 				<form class="startTest" action="showQuestion" method="post">
 		        	<p>
