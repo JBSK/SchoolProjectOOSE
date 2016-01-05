@@ -233,10 +233,12 @@ public class UserController {
 	 *
 	 * If the user exists, check whether or not the password is correct.
 	 * If the password is correct, check whether or not the new emailaddress isn't empty.
+     * If it isn't, then check if the new emailaddress is already registered to someone else.
 	 * If it isn't, change the emailaddress on the user, save the modified user,
      * alter the user's new email in the session, and then log them out as a security precaution.
 	 *
-	 * If the user doesn't exist, or the password is incorrect, or the emailaddress is empty, then return to the change password page and show an error message.
+	 * If the user doesn't exist, or the password is incorrect, or the emailaddress is empty or already in use,
+     * then return to the change password page and show an error message.
 	 */
 	@RequestMapping(value="/changeEmail", method=RequestMethod.POST)
 	public String changeEmailCheck(Model model, HttpSession session, HttpServletRequest req) {
@@ -250,9 +252,13 @@ public class UserController {
                 if (correctPassword) {
                     String newEmail = req.getParameter(Constants.email);
                     if (newEmail != null && !"".equals(newEmail)) {
-                        user.setEmailAddress(newEmail);
-                        localUserService.save(user);
-                        return Constants.redirect + "logOut";
+                        if (localUserService.findByEmailAddress(newEmail) == null) {
+                            user.setEmailAddress(newEmail);
+                            localUserService.save(user);
+                            return Constants.redirect + "logOut";
+                        } else {
+                            return Constants.redirect + "changeEmail?attempt=wrong";
+                        }
                     } else {
                         return Constants.redirect + "changeEmail?attempt=empty";
                     }
