@@ -6,23 +6,21 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import nl.halewijn.persoonlijkheidstest.domain.*;
-import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.domain.*;
 import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
-import sun.security.util.Password;
 
 @Controller
 public class UserController {
@@ -45,6 +43,7 @@ public class UserController {
 	@Autowired
 	private LocalImageService localImageService;
 	
+	private PasswordHash passwordHash = new PasswordHash();
 	private static final int minimumPasswordLength = 7;
 
 	/**
@@ -57,8 +56,8 @@ public class UserController {
 	 */
 	@RequestMapping(value="/myresults")
 	public String myResults(Model model, HttpSession session, HttpServletRequest request) {
-		if (session.getAttribute("email") != null) {
-            String email = session.getAttribute("email").toString();
+		if (session.getAttribute(Constants.email) != null) {
+            String email = session.getAttribute(Constants.email).toString();
             if (!"".equals(email)) {
                 int id = localUserService.findByEmailAddress(email).getId();
                 List<Result> userResults = localResultService.getByUserId(id);          
@@ -224,8 +223,8 @@ public class UserController {
 	public String changePassword(Model model, HttpSession session, HttpServletRequest req) {
 		if (session.getAttribute(Constants.email) != null) {
 			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-			String attempt = req.getParameter("attempt");
-			model.addAttribute("attempt", attempt);
+			String attempt = req.getParameter(Constants.attempt);
+			model.addAttribute(Constants.attempt, attempt);
 			model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
 			return "changePassword";
 		}
@@ -240,13 +239,12 @@ public class UserController {
 	@RequestMapping("/changePasswordDB")
 	public String changePasswordDB(Model model, HttpSession session, HttpServletRequest req) {
 		if (session.getAttribute(Constants.email) != null) {
-            String email = session.getAttribute("email").toString();
+            String email = session.getAttribute(Constants.email).toString();
         	User user = localUserService.findByEmailAddress(email);
         	String newPassword = req.getParameter("newPassword");
         	String newPassword2 = req.getParameter("newPassword2");
         	
         	if (user != null) {
-        		final PasswordHash passwordHash = new PasswordHash();
         		boolean oldPasswordCorrect = passwordHash.verifyPassword(req.getParameter("oldPassword"), user.getPasswordHash());
             	if (oldPasswordCorrect && newPassword.equals(newPassword2)) {
         			if (newPassword.length() >= minimumPasswordLength) {
@@ -268,8 +266,8 @@ public class UserController {
 	@RequestMapping(value="/changeEmail", method=RequestMethod.GET)
     public String changeEmail(Model model, HttpSession session, HttpServletRequest req) {
 		if (session.getAttribute(Constants.email) != null) {
-			String attempt = req.getParameter("attempt");
-			model.addAttribute("attempt", attempt);
+			String attempt = req.getParameter(Constants.attempt);
+			model.addAttribute(Constants.attempt, attempt);
 			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 			return "changeEmail";
 		}
@@ -291,7 +289,6 @@ public class UserController {
 	@RequestMapping(value="/changeEmail", method=RequestMethod.POST)
 	public String changeEmailCheck(Model model, HttpSession session, HttpServletRequest req) {
         if (session.getAttribute(Constants.email) != null) {
-            PasswordHash passwordHash = new PasswordHash();
             String email = (String) session.getAttribute(Constants.email);
             User user = localUserService.findByEmailAddress(email);
             if (user != null) {

@@ -83,8 +83,7 @@ public class RegisterController {
                             return getUserInfo(session, regEmail, regPassword);
                         } 
                         return Constants.redirect + "register?attempt=fail";
-                    } 
-                    return Constants.redirect + "register?attempt=captcha";
+                    }
                 }
                 return Constants.redirect + "register?attempt=captcha";
 			} 
