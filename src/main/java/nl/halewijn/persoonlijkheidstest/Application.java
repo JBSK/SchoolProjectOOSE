@@ -12,18 +12,6 @@ import org.springframework.http.HttpStatus;
 @SpringBootApplication
 public class Application {
 
-    @Bean
-    public EmbeddedServletContainerCustomizer containerCustomizer() {
-
-        return new EmbeddedServletContainerCustomizer() {
-            @Override
-            public void customize(ConfigurableEmbeddedServletContainer container) {
-                ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/errorPage.html");
-                container.addErrorPages(error404Page);
-            }
-        };
-    }
-
     @PersistenceConstructor
 	public Application() {
 		/*
