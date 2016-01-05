@@ -24,7 +24,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
 
 @Transactional
-@WebIntegrationTest("server.port:85")
+@WebIntegrationTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import static org.mockito.Mockito.*;
 
 @Transactional
-@WebIntegrationTest("server.port:85")
+@WebIntegrationTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")

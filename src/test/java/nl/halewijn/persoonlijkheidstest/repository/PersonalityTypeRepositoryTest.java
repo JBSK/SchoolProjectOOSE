@@ -16,7 +16,7 @@ import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 
 @Transactional
-@WebIntegrationTest("server.port:85")
+@WebIntegrationTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")

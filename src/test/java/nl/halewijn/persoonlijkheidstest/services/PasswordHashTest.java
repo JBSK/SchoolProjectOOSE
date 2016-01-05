@@ -8,7 +8,7 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@WebIntegrationTest("server.port:85")
+@WebIntegrationTest
 @SpringApplicationConfiguration(Application.class)
 public class PasswordHashTest {
 
