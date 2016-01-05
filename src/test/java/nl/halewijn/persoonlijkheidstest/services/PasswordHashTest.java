@@ -5,10 +5,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@WebIntegrationTest
+@WebAppConfiguration
 @SpringApplicationConfiguration(Application.class)
 public class PasswordHashTest {
 

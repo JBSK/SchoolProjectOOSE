@@ -10,13 +10,14 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import nl.halewijn.persoonlijkheidstest.Application;
 import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 
 @Transactional
-@WebIntegrationTest
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
