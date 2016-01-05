@@ -80,6 +80,15 @@ public class RegisterControllerTest {
 	
 		when(httpServletRequest.getParameter("g-recaptcha-response")).thenReturn("test");
 		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model,  httpSession, httpServletRequest));
+	
+		when(httpServletRequest.getRemoteAddr()).thenReturn("127.0.0.1");
+		when(registerController.verifyCaptchaResponse("test", "127.0.0.1", Constants.utf8)).thenReturn(true);
+		
+		when(httpServletRequest.getParameter("regEmail")).thenReturn("testMail@mail.nl");
+		assertEquals(Constants.redirect, registerController.registerDB(model,  httpSession, httpServletRequest));
+		
+		when(httpServletRequest.getParameter("regEmail")).thenReturn("nonExistingEmail@mail.nl");
+		assertEquals(Constants.redirect + "register?attempt=fail", registerController.registerDB(model,  httpSession, httpServletRequest));
 	}	
 	
 	@Test
