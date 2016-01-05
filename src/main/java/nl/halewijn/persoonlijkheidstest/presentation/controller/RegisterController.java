@@ -47,8 +47,8 @@ public class RegisterController {
 	 * If the file path relative to the base was "/register", return the "register" web page.
 	 */
 	@RequestMapping(value="/register", method=RequestMethod.GET)
-	public String register(Model model, HttpServletRequest req) {
-        if (req.getSession().getAttribute(Constants.email) == null) {
+	public String register(Model model, HttpSession session, HttpServletRequest req) {
+        if (session.getAttribute(Constants.email) == null) {
             Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
             String attempt = req.getParameter("attempt");
             model.addAttribute("attempt", attempt);
