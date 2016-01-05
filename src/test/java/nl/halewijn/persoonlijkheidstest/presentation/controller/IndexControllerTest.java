@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import nl.halewijn.persoonlijkheidstest.Application;
 
 @Transactional
-@WebIntegrationTest("server.port:9000")
+@WebIntegrationTest("server.port:85")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
