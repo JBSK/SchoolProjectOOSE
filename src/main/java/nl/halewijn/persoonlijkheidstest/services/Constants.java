@@ -28,6 +28,8 @@ public class Constants {
     public static final String result = "result";
     public static final String resultId = "result_id";
     public static final String utf8 = "UTF-8";
+    
+    public static final String attempt = "attempt";
 
 	private Constants() {
 
