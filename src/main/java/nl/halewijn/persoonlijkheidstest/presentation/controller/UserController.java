@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
@@ -43,6 +44,8 @@ public class UserController {
 	
 	@Autowired
 	private LocalImageService localImageService;
+	
+	private static final int minimumPasswordLength = 7;
 
 	/**
 	 * Check whether there is an email address in the browser session.
@@ -213,6 +216,60 @@ public class UserController {
 		model.addAttribute("error", "Not Found");
         return "errorPage";
     }
+	
+	/**
+	 * Display the 'change password' web page.
+	 */
+	@RequestMapping("/changePassword")
+	public String changePassword(Model model, HttpServletRequest req) {
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		String attempt = req.getParameter("attempt");
+		model.addAttribute("attempt", attempt);
+		model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
+		return "changePassword";
+	}
+	
+	/**
+	 * Check whether a user is logged in. If yes, check whether the old password is correct.
+	 * Then make sure the new password matches and whether it complies with the set standards.
+	 * If this is the case, the new password is saved as a hash.
+	 */
+	@RequestMapping("/changePasswordDB")
+	public String changePasswordDB(Model model, HttpSession session, HttpServletRequest req) {
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		
+		if (session.getAttribute("email") != null) {
+            String email = session.getAttribute("email").toString();
+            if (!"".equals(email)) {
+            	User user = localUserService.findByEmailAddress(email);
+            	String oldPassword = req.getParameter("oldPassword");
+            	String newPassword = req.getParameter("newPassword");
+            	String newPassword2 = req.getParameter("newPassword2");
+            	
+            	if (user != null) {
+            		final PasswordHash passwordHash = new PasswordHash();
+            		String oldPasswordDB = user.getPasswordHash();
+            		boolean oldPasswordCorrect = passwordHash.verifyPassword(oldPassword, oldPasswordDB);
+	            	if (oldPasswordCorrect == true) {
+	            		if (newPassword.equals(newPassword2)) {
+	            			if (newPassword.length() >= minimumPasswordLength) {
+	            				user.setPasswordHash(passwordHash.hashPassword(newPassword));
+	            				localUserService.save(user);
+	            				
+	            				return Constants.redirect;
+	            			}
+	            			return Constants.redirect + "changePassword?attempt=length";
+	            		}
+	            		return Constants.redirect + "changePassword?attempt=mismatch";
+        			}
+	            	return Constants.redirect + "changePassword?attempt=mismatch";
+            	}
+            	return Constants.redirect;
+            }
+            return Constants.redirect;
+		}
+		return Constants.redirect;
+	}
 
 	/**
 	 * If the file path relative to the base was "/changeEmail", return the "changeEmail" web page.
