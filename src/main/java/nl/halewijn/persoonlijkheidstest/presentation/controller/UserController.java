@@ -207,7 +207,8 @@ public class UserController {
 		model.addAttribute("SixthImage", image6);
 		
 		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-		
+		model.addAttribute("status", 404);
+		model.addAttribute("error", "Not Found");
         return "errorPage";
     }
 }

@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -26,6 +27,7 @@ import nl.halewijn.persoonlijkheidstest.services.Constants;
 import static org.mockito.Mockito.*;
 
 @Transactional
+@WebIntegrationTest("server.port:9000")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
@@ -145,6 +147,9 @@ public class QuestionnaireTest {
 		localQuestionService.setQuestionAnswer(httpServletRequest, battle1);
 		
 		when(httpServletRequest.getParameter("answer")).thenReturn("G");
+		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
+		
+		when(httpServletRequest.getParameter("answer")).thenReturn(null);
 		assertEquals("questionnaire", questionnaire.submitAnswer(httpServletRequest, localQuestionService, localPersonalityTypeService, model, httpSession, localResultService, localUserService));
 	}
 	
@@ -371,6 +376,12 @@ public class QuestionnaireTest {
 	
 		theoremBattleSix.setAnswer('G');
 		openQuestionOne.setAnswer("Example answer");
+		assertEquals(9, questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions()).length);
+	
+		User gebruiker = new User("gebruiker@email.nl", false);
+		gebruiker.setPasswordHash("hash");
+		localUserService.save(gebruiker);
+		when(httpSession.getAttribute(Constants.email)).thenReturn("gebruiker@email.nl");
 		assertEquals(9, questionnaire.calculatePersonalityTypeResults(questionnaire.getAnsweredQuestions()).length);
 	}
 	

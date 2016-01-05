@@ -8,12 +8,16 @@
 				<h2 class="content-subhead" th:text="${TenthContentBox.contentTitle}"></h2>
 				<hr />
 	            <p th:text="${TenthContentBox.contentText}"></p> 
+	            <strong>
+					<div id='created' th:text="${timeStamp}"></div>
+					<div>There was an unexpected error (type = <span th:text="${error}">Error</span>, status = <span th:text="${status}">Status</span>).</div>
+				</strong>
 	            <img class="ErrorImg" th:src="@{${SixthImage.imagePath}}" th:alt="${SixthImage.imageAlt}"/>
-
-				<div id='created'>${timestamp}</div>
-				<div>There was an unexpected error (type=${error}, status=${status}).</div>
-				<div>${message}</div>
-
+				<div th:if="${trace} != null">
+					<br />
+					<strong>Stack trace:</strong><br />
+					<span th:text="${trace}"></span>
+				</div>
 			</div>
 		</div>
 <div th:include="fragments/footer" th:remove="tag"></div>
