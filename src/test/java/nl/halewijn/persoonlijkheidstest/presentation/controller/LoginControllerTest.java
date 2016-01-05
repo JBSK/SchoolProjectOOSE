@@ -39,7 +39,11 @@ public class LoginControllerTest {
 	public void loginTest() {
 		Model model = mock(Model.class);
 		HttpServletRequest req = mock(HttpServletRequest.class);
-		assertEquals("login", loginController.login(model, req));
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute(Constants.email)).thenReturn("email@mail.com");
+		assertEquals(Constants.redirect, loginController.login(model, session, req));
+		when(session.getAttribute(Constants.email)).thenReturn(null);
+        assertEquals("login", loginController.login(model, session, req));
 	}
 	
 	@Test

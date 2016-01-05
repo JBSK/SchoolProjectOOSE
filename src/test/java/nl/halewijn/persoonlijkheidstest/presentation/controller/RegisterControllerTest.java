@@ -46,9 +46,12 @@ public class RegisterControllerTest {
 	@Test
 	public void registerTest() {
 		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-		
-		assertEquals("register", registerController.register(model, httpServletRequest));
+		when(session.getAttribute(Constants.email)).thenReturn("email@mail.com");
+		assertEquals(Constants.redirect, registerController.register(model, session, httpServletRequest));
+		when(session.getAttribute(Constants.email)).thenReturn(null);
+		assertEquals("register", registerController.register(model, session, httpServletRequest));
 	}
 	
 	@Test

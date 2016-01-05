@@ -34,8 +34,8 @@ public class LoginController {
 	 * If the file path relative to the base was "/login", return the "login" web page.
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.GET)
-    public String login(Model model, HttpServletRequest req) {
-		if (req.getSession().getAttribute(Constants.email) == null) {
+    public String login(Model model, HttpSession session, HttpServletRequest req) {
+		if (session.getAttribute(Constants.email) == null) {
 			String attempt = req.getParameter("attempt");
 			model.addAttribute("attempt", attempt);
 			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
