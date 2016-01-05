@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Transactional
+@WebIntegrationTest("server.port:9000")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
@@ -37,7 +39,11 @@ public class LoginControllerTest {
 	public void loginTest() {
 		Model model = mock(Model.class);
 		HttpServletRequest req = mock(HttpServletRequest.class);
-		assertEquals("login", loginController.login(model, req));
+        HttpSession session = mock(HttpSession.class);
+        when(session.getAttribute(Constants.email)).thenReturn("email@mail.com");
+		assertEquals(Constants.redirect, loginController.login(model, session, req));
+		when(session.getAttribute(Constants.email)).thenReturn(null);
+        assertEquals("login", loginController.login(model, session, req));
 	}
 	
 	@Test

@@ -4,9 +4,11 @@ import nl.halewijn.persoonlijkheidstest.Application;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
+@WebIntegrationTest("server.port:9000")
 @SpringApplicationConfiguration(Application.class)
 public class PasswordHashTest {
 

@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Transactional
+@WebIntegrationTest("server.port:9000")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
 @ActiveProfiles("test")
@@ -44,9 +46,12 @@ public class RegisterControllerTest {
 	@Test
 	public void registerTest() {
 		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
 		HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
-		
-		assertEquals("register", registerController.register(model, httpServletRequest));
+		when(session.getAttribute(Constants.email)).thenReturn("email@mail.com");
+		assertEquals(Constants.redirect, registerController.register(model, session, httpServletRequest));
+		when(session.getAttribute(Constants.email)).thenReturn(null);
+		assertEquals("register", registerController.register(model, session, httpServletRequest));
 	}
 	
 	@Test

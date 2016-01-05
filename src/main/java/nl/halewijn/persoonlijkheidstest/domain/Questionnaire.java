@@ -459,11 +459,9 @@ public class Questionnaire {
 		List<Double> theoremPoints = new ArrayList<>();
 
         ScoreConstant scoreConstant;
-        try {
-            scoreConstant = this.localScoreConstantService.findByAnswer(questionAnswer);
-        } catch (NullPointerException npe) {
+        scoreConstant = this.localScoreConstantService.findByAnswer(questionAnswer);
+        if(scoreConstant == null)
             scoreConstant = this.localScoreConstantService.findByAnswer('C');
-        }
 
 		switch(questionAnswer) {
             case 'A':
