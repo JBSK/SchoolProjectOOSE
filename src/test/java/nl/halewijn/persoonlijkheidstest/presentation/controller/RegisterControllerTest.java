@@ -64,6 +64,11 @@ public class RegisterControllerTest {
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password2");
 		assertEquals(Constants.redirect + "register?attempt=mismatch", registerController.registerDB(model, httpSession, httpServletRequest));
 
+		when(httpServletRequest.getParameter("regPassword")).thenReturn("1");
+		when(httpServletRequest.getParameter("regPassword2")).thenReturn("1");
+		assertEquals(Constants.redirect + "register?attempt=length", registerController.registerDB(model, httpSession, httpServletRequest));
+
+		when(httpServletRequest.getParameter("regPassword")).thenReturn("password");
 		when(httpServletRequest.getParameter("regPassword2")).thenReturn("password");
 		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model, httpSession, httpServletRequest));
 
@@ -71,6 +76,9 @@ public class RegisterControllerTest {
 		PasswordHash passwordHash = new PasswordHash();
 		user.setPasswordHash(passwordHash.hashPassword("password"));
 		localUserService.save(user);
+		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model,  httpSession, httpServletRequest));
+	
+		when(httpServletRequest.getParameter("g-recaptcha-response")).thenReturn("test");
 		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model,  httpSession, httpServletRequest));
 	}	
 	

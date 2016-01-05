@@ -77,21 +77,16 @@ public class RegisterController {
                         User doesUserExist = localUserService.findByEmailAddress(regEmail);
                         if (doesUserExist == null) {
                             return getUserInfo(session, regEmail, regPassword);
-                        } else {
-                            return Constants.redirect + "register?attempt=fail";
-                        }
-                    } else {
-                        return Constants.redirect + "register?attempt=captcha";
-                    }
-                } else {
+                        } 
+                        return Constants.redirect + "register?attempt=fail";
+                    } 
                     return Constants.redirect + "register?attempt=captcha";
                 }
-			} else {
-				return Constants.redirect + "register?attempt=length";
-			}
-		} else {
-			return Constants.redirect + "register?attempt=mismatch";
-		}
+                return Constants.redirect + "register?attempt=captcha";
+			} 
+			return Constants.redirect + "register?attempt=length";
+		} 
+		return Constants.redirect + "register?attempt=mismatch";
     }
 
     /**
