@@ -202,50 +202,68 @@ public class UserController {
 		
 		return "aboutUs";
     }
-	
+
 	/**
 	 * Display the 'change password' web page.
 	 */
-	@RequestMapping("/changePassword")
+    @RequestMapping(value="/changePassword", method=RequestMethod.GET)
 	public String changePassword(Model model, HttpSession session, HttpServletRequest req) {
-		if (session.getAttribute(Constants.email) != null) {
-			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-			String attempt = req.getParameter("attempt");
-			model.addAttribute("attempt", attempt);
-			model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
-			return "changePassword";
-		}
-		return Constants.redirect;
+        if (session.getAttribute(Constants.email) != null) {
+            Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+            String attempt = req.getParameter("attempt");
+            model.addAttribute("attempt", attempt);
+            model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
+            return "changePassword";
+        } else {
+            return Constants.redirect;
+        }
 	}
 	
 	/**
 	 * Check whether a user is logged in. If yes, check whether the old password is correct.
 	 * Then make sure the new password matches and whether it complies with the set standards.
-	 * If this is the case, the new password is saved as a hash.
+	 * If this is the case, the new password is hashed and saved in the database and the user is logged out.
 	 */
-	@RequestMapping("/changePasswordDB")
-	public String changePasswordDB(Model model, HttpSession session, HttpServletRequest req) {
-		if (session.getAttribute(Constants.email) != null) {
+    @RequestMapping(value="/changePassword", method=RequestMethod.POST)
+	public String changePasswordCheck(Model model, HttpSession session, HttpServletRequest req) {
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+		
+		if (session.getAttribute("email") != null) {
             String email = session.getAttribute("email").toString();
-        	User user = localUserService.findByEmailAddress(email);
-        	String newPassword = req.getParameter("newPassword");
-        	String newPassword2 = req.getParameter("newPassword2");
-        	
-        	if (user != null) {
-        		final PasswordHash passwordHash = new PasswordHash();
-        		boolean oldPasswordCorrect = passwordHash.verifyPassword(req.getParameter("oldPassword"), user.getPasswordHash());
-            	if (oldPasswordCorrect && newPassword.equals(newPassword2)) {
-        			if (newPassword.length() >= minimumPasswordLength) {
-        				user.setPasswordHash(passwordHash.hashPassword(newPassword));
-        				localUserService.save(user);
-        				return Constants.redirect;
-        			}
-        			return Constants.redirect + "changePassword?attempt=length";
-            	}
-            	return Constants.redirect + "changePassword?attempt=mismatch";
-        	}
+            if (!"".equals(email)) {
+            	User user = localUserService.findByEmailAddress(email);
+            	String oldPassword = req.getParameter("oldPassword");
+            	String newPassword = req.getParameter("newPassword");
+            	String newPassword2 = req.getParameter("newPassword2");
+            	
+            	if (user != null) {
+            		final PasswordHash passwordHash = new PasswordHash();
+            		String oldPasswordDB = user.getPasswordHash();
+            		boolean oldPasswordCorrect = passwordHash.verifyPassword(oldPassword, oldPasswordDB);
+	            	if (oldPasswordCorrect) {
+	            		if (newPassword.equals(newPassword2)) {
+	            			if (newPassword.length() >= minimumPasswordLength) {
+	            				user.setPasswordHash(passwordHash.hashPassword(newPassword));
+	            				localUserService.save(user);
+	            				return Constants.redirect + "logOut";
+	            			} else {
+                                return Constants.redirect + "changePassword?attempt=length";
+                            }
+	            		} else {
+                            return Constants.redirect + "changePassword?attempt=mismatch";
+                        }
+        			} else {
+                        return Constants.redirect + "changePassword?attempt=mismatch";
+                    }
+            	} else {
+                    return Constants.redirect;
+                }
+            } else {
+                return Constants.redirect;
+            }
+		} else {
+            return Constants.redirect;
         }
-		return Constants.redirect;
 	}
 
 	/**
@@ -258,8 +276,9 @@ public class UserController {
 			model.addAttribute("attempt", attempt);
 			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 			return "changeEmail";
+		} else {
+			return Constants.redirect;
 		}
-		return Constants.redirect;
 	}
 
 	/**
@@ -278,8 +297,9 @@ public class UserController {
 	public String changeEmailCheck(Model model, HttpSession session, HttpServletRequest req) {
         if (session.getAttribute(Constants.email) != null) {
             PasswordHash passwordHash = new PasswordHash();
-            String email = (String) session.getAttribute(Constants.email);
+            String email = session.getAttribute(Constants.email).toString();
             User user = localUserService.findByEmailAddress(email);
+            Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
             if (user != null) {
                 boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());
                 if (correctPassword) {
@@ -289,14 +309,20 @@ public class UserController {
                             user.setEmailAddress(newEmail);
                             localUserService.save(user);
                             return Constants.redirect + "logOut";
+                        } else {
+                            return Constants.redirect + "changeEmail?attempt=wrong";
                         }
-                        return Constants.redirect + "changeEmail?attempt=wrong";
+                    } else {
+                        return Constants.redirect + "changeEmail?attempt=empty";
                     }
-                    return Constants.redirect + "changeEmail?attempt=empty";
+                } else {
+                    return Constants.redirect + "changeEmail?attempt=wrong";
                 }
+            } else {
+                return Constants.redirect + "changeEmail?attempt=wrong";
             }
-            return Constants.redirect + "changeEmail?attempt=wrong";
+        } else {
+            return Constants.redirect;
         }
-        return Constants.redirect;
 	}
 }
