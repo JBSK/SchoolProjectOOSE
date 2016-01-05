@@ -48,11 +48,15 @@ public class RegisterController {
 	 */
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	public String register(Model model, HttpServletRequest req) {
-		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-		String attempt = req.getParameter("attempt");
-		model.addAttribute("attempt", attempt);
-		model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
-		return "register";
+        if (req.getSession().getAttribute(Constants.email) == null) {
+            Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+            String attempt = req.getParameter("attempt");
+            model.addAttribute("attempt", attempt);
+            model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
+            return "register";
+        } else {
+            return Constants.redirect;
+        }
 	}
 	
 	/**

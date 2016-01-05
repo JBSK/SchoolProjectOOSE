@@ -35,12 +35,14 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.GET)
     public String login(Model model, HttpServletRequest req) {
-		String attempt = req.getParameter("attempt");
-		model.addAttribute("attempt", attempt);
-		
-		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-		
-        return "login";
+		if (req.getSession().getAttribute(Constants.email) == null) {
+			String attempt = req.getParameter("attempt");
+			model.addAttribute("attempt", attempt);
+			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+			return "login";
+		} else {
+			return Constants.redirect;
+		}
     }
 	
 	/**
@@ -86,6 +88,5 @@ public class LoginController {
         Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
         return Constants.redirect;
 	}
-	
-	
+
 }

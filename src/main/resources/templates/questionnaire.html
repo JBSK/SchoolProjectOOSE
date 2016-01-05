@@ -23,7 +23,7 @@
 					 		 <span th:style="${questionnaireProgressStyle}"></span>
 						</div>
 					</div>
-					<p th:text="${currentQuestion.text}"> Vraag </p>	
+					<p class="question" th:text="${currentQuestion.text}"> Vraag </p>	
 				</h2>					
 				<div th:if="${currentQuestion.type == 'OpenQuestion'}">
 					<form action="showQuestion" method="post">

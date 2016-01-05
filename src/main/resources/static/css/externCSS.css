@@ -1,62 +1,188 @@
-/*******Home Pagina********/
-	.indexBox1{
-		color: #777;
-		font-size: 18px;
-		font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
-	}
-	.indexBox2{
-		color: #777;
-		font-size: 18px;
-		font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
-	}
-	.indexBox3{
-		color: #777;
-		font-size: 18px;
-		font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
-	}
-	.splashBox{
-		color: #FFFF00;
-		font-size: 1.5em;
-		font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
-	}
+/*******algemeen*********/
+	/***alle teksten***/
+		body{ /*tekst voor de hele website*/
+			color:#777;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
+		h1{ /*grote titels*/
+			color: #fff;
+		}
+		h2{ /*kleine titels*/
+		    color: #888;
+		}
+		.content {/*alle content blokken*/
+			color:#777;
+		}
+		
+	/***alle kleuren***/
+		.content-wrapper{ /*kleur achtergrond*/
+			background-color: #EECB6D;
+		}
+		.costum-menu-wrapper{ /*kleur menubalk*/
+			background-color:#0C1F7E;
+		}
+		.content{ /*tekstboxen*/
+			padding: 10px; /*afstand tussen de rand en de tekst*/
+			background: -webkit-repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%); /*achtergrond in chrome*/
+			background: -o-repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%); /*achtergrond in opera*/
+			background: -moz-repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%); /*achtergrond in firefox*/
+			background: repeating-radial-gradient(#E6CB83, #F1D17D 10%, #eecb6d 16%); /*achtergrond in voor de rest*/
+			border-color: #EECB6D; /*border kleur*/
+			margin: 20px auto; /*minimale ruimte tussen de randen van de website en de tekstboxen*/
+			border-radius: 12px; /*ronde bolling van de tekstblokken*/
+			max-width: 60%; /*maximale breedte van de tekstblokken*/
+		}
+		
+		
+	/***alle buttons***/
+
+
+/*******Home Pagina*******/
+	/***teksten***/
+		.indexBox1{ /*eerste tekstvlak*/
+			color: #777;
+			font-size: 18px;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
+		.indexBox2{ /*tweede tekstvlak*/
+			color: #777;
+			font-size: 18px;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
+		.indexBox3{ /*derde tekstvlak*/
+			color: #777;
+			font-size: 18px;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
+		.splashBox .title{ /**grote tekst op de afbeelding**/
+			color: #FFF;
+		}
+		.splashBox .shoutOut{ /**kleine tekst op de afbeelding**/
+			color: #FFFF00;
+			font-size: 1.5em;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
+
+	/***kleuren***/
+		
+		
 /*******Login Pagina********/
-	.loginBox{
+	/***teksten***/
+		.loginBox{
+			
+		}
+
+	/***kleuren***/
 		
-	}
 /*******Registratie Pagina********/
-	.registerBox{
+	/***teksten***/
+		.registerBox{
+			
+		}
 		
-	}
+	/***kleuren***/
+
+	
 /*******Vragenlijst Pagina********/
-	.questionaireBox{
+	/***teksten***/
+		.questionaireBox{
+			
+		}
+		.question{
+		    font-weight: 300;
+			color: #888;
+			font-size: 27px;
+		}
+		.theorems{
+			color:#777;
+			font-size: 18px;
+		}
+	/***kleuren***/
+		.tableHeader{ /*bovenste rij in de tabel*/
+			text-align:center;
+			border:1px solid #e6eaf4;
+			background-color:#d1d7eb;
+			font-weight: bold;
+		}
+		.radioButtonOften{ /*buitenste kolommen van de tabel(vaak)*/
+			text-align:center;
+			margin:0;
+			background-color:#e6eaf4;
+		}
+		.radioButtonSometimes{/*een na buitenste kolommen van de tabel(soms)*/
+			text-align:center;
+			margin:0;
+			background-color: #f1f3f9;
+		}
+
+		.radioButtonAverage{ /*middleste kolom van de tabel(gemiddeld)*/
+			text-align:center;
+			margin:0;
+			background-color: #ffffff;
+
+		}
+
 		
-	}
 /*******Resultaat Pagina********/
-	.resultBox{
+	/***teksten***/
+		.resultBox{
+			color: #777;
+			font-size: 18px;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
 		
-	}
+	/***kleuren***/
+
+	
 /*******Geschiedenis Pagina********/
-	.myResultBox{
+	/***teksten***/
+		.myResultBox{
+			
+		}
 		
-	}
+	/***kleuren***/	
+
+	
 /*******Over Ons Pagina********/
-	.aboutUsBox{
+	/***teksten***/
+		.aboutUsBox{
+			color: #777;
+			font-size: 18px;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
 		
-	}
+	/***kleuren***/	
+
+	
 /*******Contact Pagina********/
-	.contactBox{
+	/***teksten***/
+		.contactBox{
+			color: #777;
+			font-size: 18px;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
 		
-	}
+	/***kleuren***/	
+
+	
 /*******Link Pagina********/
-	.linkpageBox{
+	/***teksten***/
+		.linkpageBox{
+			color: #777;
+			font-size: 18px;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
 		
-	}
-/*******Registratie Pagina********/
-	.registerBox{
-		
-	}
+	/***kleuren***/	
+
+	
 /*******error Pagina********/
-	.errorBox{
+	/***teksten***/
+		.errorBox{
+			color: #777;
+			font-size: 18px;
+			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
+		}
 		
-	}
+	/***kleuren***/	
 
