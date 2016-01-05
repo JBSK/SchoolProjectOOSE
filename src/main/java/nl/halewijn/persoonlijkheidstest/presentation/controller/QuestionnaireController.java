@@ -115,8 +115,8 @@ public class QuestionnaireController {
     	Questionnaire questionnaire = null;
     	Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 		if(session.getAttribute(Constants.questionnaire) == null) {
-//			Button button9 = localButtonService.getByButtonId(9);
-//			model.addAttribute("NinthButtonText", button9);	
+			Button button9 = localButtonService.getByButtonId(9);
+			model.addAttribute("NinthButtonText", button9);	
 			
 			return Constants.questionnaire;
 		} else {
