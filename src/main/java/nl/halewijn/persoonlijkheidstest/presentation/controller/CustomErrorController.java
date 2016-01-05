@@ -57,11 +57,11 @@ public class CustomErrorController implements ErrorController {
 		
     	model.addAttribute("status", response.getStatus());
     	
-    	Map<String, Object> errorAttributes = getErrorAttributes(request, errorPageShowStackTrace);
-        model.addAttribute("error", (String) errorAttributes.get("error"));
-        model.addAttribute("message", (String) errorAttributes.get("message"));
-        model.addAttribute("timeStamp", errorAttributes.get("timestamp").toString());
-        model.addAttribute("trace", (String) errorAttributes.get("trace"));
+    	Map<String, Object> errorAttributesMap = getErrorAttributes(request, errorPageShowStackTrace);
+        model.addAttribute("error", (String) errorAttributesMap.get("error"));
+        model.addAttribute("message", (String) errorAttributesMap.get("message"));
+        model.addAttribute("timeStamp", errorAttributesMap.get("timestamp").toString());
+        model.addAttribute("trace", (String) errorAttributesMap.get("trace"));
         return "errorPage";
     }
 

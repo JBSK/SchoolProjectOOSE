@@ -39,4 +39,9 @@ public class CustomErrorControllerTest {
 		assertEquals("errorPage", customErrorController.error(request, response, model));
 	}
 	
+	@Test
+	public void getErrorPathTest() {
+		assertEquals("/error", customErrorController.getErrorPath());
+	}
+	
 }
