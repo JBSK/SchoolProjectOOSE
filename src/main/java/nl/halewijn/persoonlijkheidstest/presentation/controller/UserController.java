@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import nl.halewijn.persoonlijkheidstest.domain.*;
+import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeServi
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
+import sun.security.util.Password;
 
 @Controller
 public class UserController {
@@ -210,4 +212,58 @@ public class UserController {
 		
         return "errorPage";
     }
+
+	/**
+	 * If the file path relative to the base was "/changeEmail", return the "changeEmail" web page.
+	 */
+	@RequestMapping(value="/changeEmail", method=RequestMethod.GET)
+    public String changeEmail(Model model, HttpSession session, HttpServletRequest req) {
+		if (session.getAttribute(Constants.email) != null) {
+			String attempt = req.getParameter("attempt");
+			model.addAttribute("attempt", attempt);
+			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+			return "changeEmail";
+		} else {
+			return Constants.redirect;
+		}
+	}
+
+	/**
+	 * If someone presses the change password button, check in the database whether this user exists.
+	 *
+	 * If the user exists, check whether or not the password is correct.
+	 * If the password is correct, check whether or not the new emailaddress isn't empty.
+	 * If it isn't, change the emailaddress on the user, save the modified user,
+     * alter the user's new email in the session, and then log them out as a security precaution.
+	 *
+	 * If the user doesn't exist, or the password is incorrect, or the emailaddress is empty, then return to the change password page and show an error message.
+	 */
+	@RequestMapping(value="/changeEmail", method=RequestMethod.POST)
+	public String changeEmailCheck(Model model, HttpSession session, HttpServletRequest req) {
+        if (session.getAttribute(Constants.email) != null) {
+            PasswordHash passwordHash = new PasswordHash();
+            String email = (String) session.getAttribute(Constants.email);
+            User user = localUserService.findByEmailAddress(email);
+            Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+            if (user != null) {
+                boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());
+                if (correctPassword) {
+                    String newEmail = req.getParameter(Constants.email);
+                    if (newEmail != null && !"".equals(newEmail)) {
+                        user.setEmailAddress(newEmail);
+                        localUserService.save(user);
+                        return Constants.redirect + "logOut";
+                    } else {
+                        return Constants.redirect + "changeEmail?attempt=empty";
+                    }
+                } else {
+                    return Constants.redirect + "changeEmail?attempt=wrong";
+                }
+            } else {
+                return Constants.redirect + "changeEmail?attempt=wrong";
+            }
+        } else {
+            return Constants.redirect;
+        }
+	}
 }

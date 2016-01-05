@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+	<head th:replace="fragments/headTag :: headTag"></head>
+	<body>
+		<div th:include="fragments/menu" th:remove="tag"></div>
+		<div id="main" class="pure-skin-PT">
+			<div class="content loginBox">
+				<h2 class="content-subhead"></h2>
+				<form class="loginForm" action="changeEmail" method="POST">
+					<input th:if="${attempt == null}" type="password" name="password" placeholder="Huidig wachtwoord" required="required" />
+                    <input th:if="${attempt != null}" type="password" class="formError" name="password" placeholder="Huidig wachtwoord" required="required" />
+					<input type="email" class="zocial-dribbble" name="email" placeholder="Nieuwe e-mailadres" required="required" />
+					<div th:switch="${attempt}">
+						<p th:case="'wrong'" class="errorMessage"> Het ingevulde wachtwoord is onjuist. </p>
+						<p th:case="'empty'" class="errorMessage"> Voer alstublieft beide velden in. </p>
+						<p th:case="'*'" class=""> </p>
+					</div>
+					<input type="submit" class="pure-button" name="change" value="Wijzigen" />
+				</form>
+			</div><!-- einde content -->
+			<div th:include="fragments/footer" th:remove="tag"></div>
+		</div><!-- end pure skin / main -->
+	</body>
+</html>
