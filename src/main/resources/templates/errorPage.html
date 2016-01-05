@@ -10,10 +10,6 @@
 	            <p th:text="${TenthContentBox.contentText}"></p> 
 	            <img class="ErrorImg" th:src="@{${SixthImage.imagePath}}" th:alt="${SixthImage.imageAlt}"/>
 
-				<div id='created'>${timestamp}</div>
-				<div>There was an unexpected error (type=${error}, status=${status}).</div>
-				<div>${message}</div>
-
 			</div>
 		</div>
 <div th:include="fragments/footer" th:remove="tag"></div>
