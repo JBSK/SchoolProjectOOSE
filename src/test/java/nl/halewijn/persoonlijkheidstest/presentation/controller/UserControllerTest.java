@@ -216,15 +216,4 @@ public class UserControllerTest {
         when(model.containsAttribute("FirstImage")).thenReturn(true);
         assertTrue(model.containsAttribute("FirstImage"));
     }
-
-	@Test
-	public void errorPageTest() {
-		Model model = new ExtendedModelMap();
-		String expectedResult = "errorPage";
-		String actualResult = userController.errorPage(model);
-		assertEquals(true, model.containsAttribute("TenthContentBox"));
-		assertEquals(true, model.containsAttribute("SixthImage"));
-		assertEquals(expectedResult, actualResult);
-		//Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-	}
 }
