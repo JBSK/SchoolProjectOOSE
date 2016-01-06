@@ -209,8 +209,8 @@ public class UserController {
 	public String changePassword(Model model, HttpSession session, HttpServletRequest req) {
         if (session.getAttribute(Constants.email) != null) {
             Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-            String attempt = req.getParameter("attempt");
-            model.addAttribute("attempt", attempt);
+            String attempt = req.getParameter(Constants.attempt);
+            model.addAttribute(Constants.attempt, attempt);
             model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
             return "changePassword";
         } else {
@@ -227,8 +227,8 @@ public class UserController {
 	public String changePasswordCheck(Model model, HttpSession session, HttpServletRequest req) {
 		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 
-		if (session.getAttribute("email") != null) {
-            String email = session.getAttribute("email").toString();
+		if (session.getAttribute(Constants.email) != null) {
+            String email = session.getAttribute(Constants.email).toString();
             if (!"".equals(email)) {
             	User user = localUserService.findByEmailAddress(email);
             	String oldPassword = req.getParameter("oldPassword");
@@ -299,7 +299,7 @@ public class UserController {
             User user = localUserService.findByEmailAddress(email);
             Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
             if (user != null) {
-                boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());
+                boolean correctPassword = passwordHash.verifyPassword(req.getParameter(Constants.password), user.getPasswordHash());
                 if (correctPassword) {
                     String newEmail = req.getParameter(Constants.email);
                     if (newEmail != null && !"".equals(newEmail)) {
