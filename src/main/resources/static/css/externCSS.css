@@ -44,6 +44,9 @@
 			font-size: 18px;
 			font-family: FreeSans,Arimo,"Droid Sans",Helvetica,Arial,sans-serif;
 		}
+		.indexBox1 iframe{
+			border: 0px;
+		}
 		.indexBox2{ /*tweede tekstvlak*/
 			color: #777;
 			font-size: 18px;

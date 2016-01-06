@@ -88,7 +88,6 @@ public class Questionnaire {
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
 
 		if(nextQuestion != null) {
-            //int progress = calculateProgress(nextQuestion.getQuestionId() - 1);
 			int progress = calculateProgress(answeredQuestions.size());
             addProgressToModel(model, progress);
 			return showNextQuestion(model, nextQuestion);
