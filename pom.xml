@@ -87,11 +87,7 @@
       <classifier>jdk15</classifier>
     </dependency>
     
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <scope>runtime</scope>
-   </dependency>
+
    <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
