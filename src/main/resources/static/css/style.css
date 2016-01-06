@@ -3,7 +3,7 @@ body{
 }
 
 .mobileButton{
-	background-image: url("../imgs/mobile-arrow-next.png");
+	background-image: url("../images/mobile-arrow-next.png");
 	/* text-align: center; */
 	height: 138px;
 	background-size: 100% 100%;
@@ -45,7 +45,7 @@ body{
 	height: 120px; 
 }
 	.logo {
-	   background-image: url("/imgs/logo.jpg");
+	   background-image: url("/images/logo.jpg");
 		background-repeat: no-repeat;
 		background-position: center center;
 		background-size: 100% auto;
@@ -310,7 +310,7 @@ z-index:90;
 .splashbg{
 	height:100%;
 	width:100%;
-	background-image: url('/imgs/splash.png');
+	background-image: url('/images/splash.png');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size:100%;
@@ -323,7 +323,7 @@ z-index:90;
 .splashfader{
 	height:100%;
 	width:100%;
-	background-image: url('/imgs/splash2.png');
+	background-image: url('/images/splash2.png');
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size:100%;
