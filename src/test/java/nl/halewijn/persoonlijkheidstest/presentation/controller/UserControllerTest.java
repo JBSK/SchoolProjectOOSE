@@ -52,12 +52,6 @@ public class UserControllerTest {
 
     @Autowired
     private LocalWebsiteContentTextService localWebsiteContentTextService;
-
-    @Autowired
-    private LocalButtonService localButtonService;
-
-    @Autowired
-    private LocalImageService localImageService;
 	
 	private PasswordHash passwordHash = new PasswordHash();
 	
@@ -106,6 +100,9 @@ public class UserControllerTest {
 		setUserPassword(user1);
 		localUserService.save(user1);
 		Result result2 = new Result(user1);
+        when(session.getAttribute("email")).thenReturn("");
+        assertEquals(Constants.redirect, userController.showResult(model, session, req));
+        when(session.getAttribute("email")).thenReturn(null);
 		localResultService.saveResult(result2);
 		when(req.getParameter("number")).thenReturn(Integer.toString(result2.getId()));
 		assertEquals(Constants.redirect, userController.showResult(model, session, req));

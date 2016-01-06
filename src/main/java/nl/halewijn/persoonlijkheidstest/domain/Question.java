@@ -7,7 +7,7 @@ import java.util.Date;
 @Entity
 @Table(name = "Question")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Question {
+public abstract class Question {
 
 	@Id
 	@GeneratedValue

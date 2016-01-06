@@ -83,7 +83,13 @@ public class RegisterControllerTest {
 		user.setPasswordHash(passwordHash.hashPassword("password"));
 		localUserService.save(user);
 		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model,  httpSession, httpServletRequest));
-	
+
+		when(httpServletRequest.getParameter("g-recaptcha-response")).thenReturn(null);
+		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model,  httpSession, httpServletRequest));
+
+		when(httpServletRequest.getParameter("g-recaptcha-response")).thenReturn("");
+		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model,  httpSession, httpServletRequest));
+
 		when(httpServletRequest.getParameter("g-recaptcha-response")).thenReturn("test");
 		assertEquals(Constants.redirect + "register?attempt=captcha", registerController.registerDB(model,  httpSession, httpServletRequest));
 	}	

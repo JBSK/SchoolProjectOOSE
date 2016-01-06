@@ -67,7 +67,7 @@ public class Result {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public List<Answer> getTestResultAnswers() {
 		return testResultAnswers;
 	}

@@ -118,6 +118,7 @@ public class LocalResultServiceTest {
 		list.add(answer);
 		
 		assertEquals(list.size(), localResultService.getAnswersByResultId(result.getId()).size());
+		assertEquals(list.size(), result.getTestResultAnswers().size());
 	}
 	
 }
