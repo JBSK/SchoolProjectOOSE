@@ -216,4 +216,112 @@ public class UserControllerTest {
         when(model.containsAttribute("FirstImage")).thenReturn(true);
         assertTrue(model.containsAttribute("FirstImage"));
     }
+
+	@Test
+	public void changeEmailTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+
+		when(session.getAttribute(Constants.email)).thenReturn(null);
+		assertEquals(Constants.redirect, userController.changeEmail(model, session, req));
+
+		when(session.getAttribute(Constants.email)).thenReturn("email@mail.com");
+		assertEquals("changeEmail", userController.changeEmail(model, session, req));
+	}
+
+    @Test
+    public void changeEmailCheckTest() {
+        Model model = mock(Model.class);
+        HttpSession session = mock(HttpSession.class);
+        HttpServletRequest req = mock(HttpServletRequest.class);
+
+        String email = "email@mail.com";
+        String newEmail = "email@email.com";
+        String password = "abc";
+        User user = new User(email, false);
+        user.setPasswordHash(new PasswordHash().hashPassword(password));
+        user = localUserService.save(user);
+
+        when(session.getAttribute(Constants.email)).thenReturn(null);
+        assertEquals(Constants.redirect, userController.changeEmailCheck(model, session, req));
+
+        when(session.getAttribute(Constants.email)).thenReturn("");
+        assertEquals(Constants.redirect + "changeEmail?attempt=wrong", userController.changeEmailCheck(model, session, req));
+
+        when(session.getAttribute(Constants.email)).thenReturn(email);
+        when(req.getParameter(Constants.password)).thenReturn("a");
+        assertEquals(Constants.redirect + "changeEmail?attempt=wrong", userController.changeEmailCheck(model, session, req));
+
+        when(req.getParameter(Constants.password)).thenReturn(password);
+        when(req.getParameter(Constants.email)).thenReturn(null);
+        assertEquals(Constants.redirect + "changeEmail?attempt=empty", userController.changeEmailCheck(model, session, req));
+
+        when(req.getParameter(Constants.email)).thenReturn("");
+        assertEquals(Constants.redirect + "changeEmail?attempt=empty", userController.changeEmailCheck(model, session, req));
+
+        when(req.getParameter(Constants.email)).thenReturn(email);
+        assertEquals(Constants.redirect + "changeEmail?attempt=wrong", userController.changeEmailCheck(model, session, req));
+
+        when(req.getParameter(Constants.email)).thenReturn(newEmail);
+        assertEquals(Constants.redirect + "logOut", userController.changeEmailCheck(model, session, req));
+
+        localUserService.delete(user);
+        assertEquals(Constants.redirect + "changeEmail?attempt=wrong", userController.changeEmailCheck(model, session, req));
+    }
+
+	@Test
+	public void changePasswordTest() {
+		Model model = mock(Model.class);
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+
+		when(session.getAttribute(Constants.email)).thenReturn(null);
+		assertEquals(Constants.redirect, userController.changePassword(model, session, req));
+
+		when(session.getAttribute(Constants.email)).thenReturn("email@mail.com");
+		assertEquals("changePassword", userController.changePassword(model, session, req));
+	}
+
+    @Test
+    public void changePasswordCheckTest() {
+        Model model = mock(Model.class);
+        HttpSession session = mock(HttpSession.class);
+        HttpServletRequest req = mock(HttpServletRequest.class);
+
+        String email = "email@mail.com";
+        String password = "abc";
+        String newPassword = "abcdefg123";
+        String newPasswordTooShort = "abcd";
+        User user = new User(email, false);
+        user.setPasswordHash(new PasswordHash().hashPassword(password));
+        user = localUserService.save(user);
+
+        when(session.getAttribute(Constants.email)).thenReturn(null);
+        assertEquals(Constants.redirect, userController.changePasswordCheck(model, session, req));
+
+        when(session.getAttribute(Constants.email)).thenReturn("");
+        assertEquals(Constants.redirect, userController.changePasswordCheck(model, session, req));
+
+        when(session.getAttribute(Constants.email)).thenReturn(email);
+        when(req.getParameter("oldPassword")).thenReturn("a");
+        assertEquals(Constants.redirect + "changePassword?attempt=mismatch", userController.changePasswordCheck(model, session, req));
+
+        when(req.getParameter("oldPassword")).thenReturn(password);
+        when(req.getParameter("newPassword")).thenReturn("abcdefg12");
+        when(req.getParameter("newPassword2")).thenReturn(newPassword);
+        assertEquals(Constants.redirect + "changePassword?attempt=mismatch", userController.changePasswordCheck(model, session, req));
+
+        when(req.getParameter("newPassword")).thenReturn(newPasswordTooShort);
+        when(req.getParameter("newPassword2")).thenReturn(newPasswordTooShort);
+        assertEquals(Constants.redirect + "changePassword?attempt=length", userController.changePasswordCheck(model, session, req));
+
+        when(req.getParameter("newPassword")).thenReturn(newPassword);
+        when(req.getParameter("newPassword2")).thenReturn(newPassword);
+        assertEquals(Constants.redirect + "logOut", userController.changePasswordCheck(model, session, req));
+
+        localUserService.delete(user);
+        assertEquals(Constants.redirect, userController.changePasswordCheck(model, session, req));
+    }
+
 }

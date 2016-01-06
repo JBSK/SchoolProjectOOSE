@@ -29,13 +29,10 @@ public class IndexController {
     public String index(Model model) {
 		WebsiteContentText text1 = localWebsiteContentTextService.getByContentId(1);
 		model.addAttribute("FirstContentBox", text1);
-		
 		WebsiteContentText text2 = localWebsiteContentTextService.getByContentId(2);
 		model.addAttribute("SecondContentBox", text2);
-		
 		WebsiteContentText text3 = localWebsiteContentTextService.getByContentId(3);
 		model.addAttribute("ThirdContentBox", text3);
-		
 		WebsiteContentText text4 = localWebsiteContentTextService.getByContentId(4);
 		model.addAttribute("FourthContentBox", text4);
 		
@@ -46,7 +43,6 @@ public class IndexController {
 		
 		Image image3 = localImageService.getByImageId(3);
 		model.addAttribute("ThirdImage", image3);
-		
 		Image image4 = localImageService.getByImageId(4);
 		model.addAttribute("FourthImage", image4);
 		

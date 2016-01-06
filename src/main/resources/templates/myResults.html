@@ -5,8 +5,14 @@
     <div th:include="fragments/menu" th:remove="tag"></div>
 		<div id="main"  class="pure-skin-PT">
 			<div class="content myResultBox">
-				<a href="changePassword">Wachtwoord wijzigen</a><br />
-				<a href="changeEmail">E-mailadres wijzigen</a><br />
+                <div class="pure-g resultrow3">
+                    <div class="pure-u-1 pure-u-md-1-4">
+                        <a href="changeEmail" class="pure-button">E-mailadres wijzigen</a>
+                    </div>
+                    <div class="pure-u-1 pure-u-md-1-4">
+                        <a href="changePassword" class="pure-button">Wachtwoord wijzigen</a>
+                    </div>
+                </div>
 				<h2 class="content-subhead" th:text="${NinthContentBox.contentTitle}"></h2>
 	            <p th:text="${NinthContentBox.contentText}"></p>
 	            <hr />

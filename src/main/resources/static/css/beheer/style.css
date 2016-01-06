@@ -1,5 +1,5 @@
 body{
-	/* background-image: url(/./../imgs/bg.png"); */
+	/* background-image: url(/./../images/bg.png"); */
     background-color: #BDCDF5;
 	background-repeat: no-repeat;
 
@@ -29,9 +29,9 @@ body{
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+50,7db9e8+100 */
 }
 	div.logo {
-	   background:url(/./../imgs/admin-logo.png);
+	   background:url(/./../images/admin-logo.png);
 	   background-size:100%;
-	   background-repeat: no-repeat;
+	   background-repeat: no-repeat; 
 	   margin:0; /* If you want no margin */
 	   padding:0; /*if your want to padding */
 	   height:120px;

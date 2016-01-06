@@ -6,23 +6,21 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import nl.halewijn.persoonlijkheidstest.domain.*;
-import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.domain.*;
 import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
-import sun.security.util.Password;
 
 @Controller
 public class UserController {
@@ -45,6 +43,7 @@ public class UserController {
 	@Autowired
 	private LocalImageService localImageService;
 	
+	private PasswordHash passwordHash = new PasswordHash();
 	private static final int minimumPasswordLength = 7;
 
 	/**
@@ -57,8 +56,8 @@ public class UserController {
 	 */
 	@RequestMapping(value="/myresults")
 	public String myResults(Model model, HttpSession session, HttpServletRequest request) {
-		if (session.getAttribute("email") != null) {
-            String email = session.getAttribute("email").toString();
+		if (session.getAttribute(Constants.email) != null) {
+            String email = session.getAttribute(Constants.email).toString();
             if (!"".equals(email)) {
                 int id = localUserService.findByEmailAddress(email).getId();
                 List<Result> userResults = localResultService.getByUserId(id);          
@@ -202,50 +201,67 @@ public class UserController {
 		
 		return "aboutUs";
     }
-	
+
 	/**
 	 * Display the 'change password' web page.
 	 */
-	@RequestMapping("/changePassword")
+    @RequestMapping(value="/changePassword", method=RequestMethod.GET)
 	public String changePassword(Model model, HttpSession session, HttpServletRequest req) {
-		if (session.getAttribute(Constants.email) != null) {
-			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
-			String attempt = req.getParameter("attempt");
-			model.addAttribute("attempt", attempt);
-			model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
-			return "changePassword";
-		}
-		return Constants.redirect;
+        if (session.getAttribute(Constants.email) != null) {
+            Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+            String attempt = req.getParameter(Constants.attempt);
+            model.addAttribute(Constants.attempt, attempt);
+            model.addAttribute(Constants.minimumPasswordLength, minimumPasswordLength);
+            return "changePassword";
+        } else {
+            return Constants.redirect;
+        }
 	}
 	
 	/**
 	 * Check whether a user is logged in. If yes, check whether the old password is correct.
 	 * Then make sure the new password matches and whether it complies with the set standards.
-	 * If this is the case, the new password is saved as a hash.
+	 * If this is the case, the new password is hashed and saved in the database and the user is logged out.
 	 */
-	@RequestMapping("/changePasswordDB")
-	public String changePasswordDB(Model model, HttpSession session, HttpServletRequest req) {
+    @RequestMapping(value="/changePassword", method=RequestMethod.POST)
+	public String changePasswordCheck(Model model, HttpSession session, HttpServletRequest req) {
+		Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
+
 		if (session.getAttribute(Constants.email) != null) {
-            String email = session.getAttribute("email").toString();
-        	User user = localUserService.findByEmailAddress(email);
-        	String newPassword = req.getParameter("newPassword");
-        	String newPassword2 = req.getParameter("newPassword2");
-        	
-        	if (user != null) {
-        		final PasswordHash passwordHash = new PasswordHash();
-        		boolean oldPasswordCorrect = passwordHash.verifyPassword(req.getParameter("oldPassword"), user.getPasswordHash());
-            	if (oldPasswordCorrect && newPassword.equals(newPassword2)) {
-        			if (newPassword.length() >= minimumPasswordLength) {
-        				user.setPasswordHash(passwordHash.hashPassword(newPassword));
-        				localUserService.save(user);
-        				return Constants.redirect;
-        			}
-        			return Constants.redirect + "changePassword?attempt=length";
-            	}
-            	return Constants.redirect + "changePassword?attempt=mismatch";
-        	}
+            String email = session.getAttribute(Constants.email).toString();
+            if (!"".equals(email)) {
+            	User user = localUserService.findByEmailAddress(email);
+            	String oldPassword = req.getParameter("oldPassword");
+            	String newPassword = req.getParameter("newPassword");
+            	String newPassword2 = req.getParameter("newPassword2");
+
+            	if (user != null) {
+            		String oldPasswordDB = user.getPasswordHash();
+            		boolean oldPasswordCorrect = passwordHash.verifyPassword(oldPassword, oldPasswordDB);
+	            	if (oldPasswordCorrect) {
+	            		if (newPassword.equals(newPassword2)) {
+	            			if (newPassword.length() >= minimumPasswordLength) {
+	            				user.setPasswordHash(passwordHash.hashPassword(newPassword));
+	            				localUserService.save(user);
+	            				return Constants.redirect + "logOut";
+	            			} else {
+                                return Constants.redirect + "changePassword?attempt=length";
+                            }
+	            		} else {
+                            return Constants.redirect + "changePassword?attempt=mismatch";
+                        }
+        			} else {
+                        return Constants.redirect + "changePassword?attempt=mismatch";
+                    }
+            	} else {
+                    return Constants.redirect;
+                }
+            } else {
+                return Constants.redirect;
+            }
+		} else {
+            return Constants.redirect;
         }
-		return Constants.redirect;
 	}
 
 	/**
@@ -254,12 +270,13 @@ public class UserController {
 	@RequestMapping(value="/changeEmail", method=RequestMethod.GET)
     public String changeEmail(Model model, HttpSession session, HttpServletRequest req) {
 		if (session.getAttribute(Constants.email) != null) {
-			String attempt = req.getParameter("attempt");
-			model.addAttribute("attempt", attempt);
+			String attempt = req.getParameter(Constants.attempt);
+			model.addAttribute(Constants.attempt, attempt);
 			Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
 			return "changeEmail";
+		} else {
+			return Constants.redirect;
 		}
-		return Constants.redirect;
 	}
 
 	/**
@@ -277,11 +294,11 @@ public class UserController {
 	@RequestMapping(value="/changeEmail", method=RequestMethod.POST)
 	public String changeEmailCheck(Model model, HttpSession session, HttpServletRequest req) {
         if (session.getAttribute(Constants.email) != null) {
-            PasswordHash passwordHash = new PasswordHash();
-            String email = (String) session.getAttribute(Constants.email);
+            String email = session.getAttribute(Constants.email).toString();
             User user = localUserService.findByEmailAddress(email);
+            Constants.menuItemsFromDatabase(model, localButtonService, localImageService);
             if (user != null) {
-                boolean correctPassword = passwordHash.verifyPassword(req.getParameter("password"), user.getPasswordHash());
+                boolean correctPassword = passwordHash.verifyPassword(req.getParameter(Constants.password), user.getPasswordHash());
                 if (correctPassword) {
                     String newEmail = req.getParameter(Constants.email);
                     if (newEmail != null && !"".equals(newEmail)) {
@@ -289,14 +306,20 @@ public class UserController {
                             user.setEmailAddress(newEmail);
                             localUserService.save(user);
                             return Constants.redirect + "logOut";
+                        } else {
+                            return Constants.redirect + "changeEmail?attempt=wrong";
                         }
-                        return Constants.redirect + "changeEmail?attempt=wrong";
+                    } else {
+                        return Constants.redirect + "changeEmail?attempt=empty";
                     }
-                    return Constants.redirect + "changeEmail?attempt=empty";
+                } else {
+                    return Constants.redirect + "changeEmail?attempt=wrong";
                 }
+            } else {
+                return Constants.redirect + "changeEmail?attempt=wrong";
             }
-            return Constants.redirect + "changeEmail?attempt=wrong";
+        } else {
+            return Constants.redirect;
         }
-        return Constants.redirect;
 	}
 }
