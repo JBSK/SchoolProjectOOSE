@@ -45,7 +45,7 @@ public class Questionnaire {
 	 * If nothing goes wrong, however, the first question is displayed.
 	 */
 	public String startNewTest(Model model, HttpSession session, LocalQuestionService localQuestionService) {
-        totalAmountOfQuestions = localQuestionService.countActiveQuestions() + 1;
+        totalAmountOfQuestions = localQuestionService.countActiveQuestions();
 
         Question firstQuestion = localQuestionService.getFirstQuestion(this);
 		
@@ -88,7 +88,8 @@ public class Questionnaire {
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
 
 		if(nextQuestion != null) {
-            int progress = calculateProgress(nextQuestion.getQuestionId() - 1);
+            //int progress = calculateProgress(nextQuestion.getQuestionId() - 1);
+			int progress = calculateProgress(answeredQuestions.size());
             addProgressToModel(model, progress);
 			return showNextQuestion(model, nextQuestion);
 		} else {
