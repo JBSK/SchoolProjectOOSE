@@ -12,6 +12,8 @@ import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
 import nl.halewijn.persoonlijkheidstest.services.IQuestionService;
 import java.util.*;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +31,8 @@ public class LocalQuestionService implements IQuestionService  {
 	
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
+	
+	final static Logger logger = Logger.getLogger(Logger.class);
 	
 	@Override
 	public List<Question> findAll() {
@@ -260,7 +264,8 @@ public class LocalQuestionService implements IQuestionService  {
         Question firstQuestion = getByQuestionId(1);
 
         if (firstQuestion == null) {
-            System.out.println("There is no question in the database with question ID 1! Please make a new question first, before running the personality test.");
+            //System.out.println("There is no question in the database with question ID 1! Please make a new question first, before running the personality test.");
+        	logger.error("There is no question in the database with question ID 1! Please make a new question first, before running the personality test.");
         }
 
         firstQuestion = checkIfQuestionActive(firstQuestion);
