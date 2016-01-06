@@ -33,7 +33,7 @@ public class LocalQuestionService implements IQuestionService  {
 	private LocalPersonalityTypeService localPersonalityTypeService;
 	
 	private static final Logger logger = Logger.getLogger(Logger.class);
-	
+
 	@Override
 	public List<Question> findAll() {
 		return questionRepository.findAll();
