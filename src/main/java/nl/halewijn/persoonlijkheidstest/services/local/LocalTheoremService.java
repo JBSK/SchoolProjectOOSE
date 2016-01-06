@@ -34,6 +34,7 @@ public class LocalTheoremService implements IObjectService<Theorem>, ITheoremSer
 		return theoremRepository.findAll();
 	}
 	
+	@Override
 	public List<Theorem> getAllByPersonalityType(PersonalityType type) {
 		return theoremRepository.findByPersonalityType(type);
 	}
