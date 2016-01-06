@@ -236,7 +236,6 @@ public class UserController {
             	String newPassword2 = req.getParameter("newPassword2");
 
             	if (user != null) {
-            		final PasswordHash passwordHash = new PasswordHash();
             		String oldPasswordDB = user.getPasswordHash();
             		boolean oldPasswordCorrect = passwordHash.verifyPassword(oldPassword, oldPasswordDB);
 	            	if (oldPasswordCorrect) {

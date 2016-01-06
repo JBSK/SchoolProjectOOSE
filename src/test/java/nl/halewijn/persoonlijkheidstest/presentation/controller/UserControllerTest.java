@@ -260,6 +260,9 @@ public class UserControllerTest {
         when(req.getParameter(Constants.email)).thenReturn("");
         assertEquals(Constants.redirect + "changeEmail?attempt=empty", userController.changeEmailCheck(model, session, req));
 
+        when(req.getParameter(Constants.email)).thenReturn(email);
+        assertEquals(Constants.redirect + "changeEmail?attempt=wrong", userController.changeEmailCheck(model, session, req));
+
         when(req.getParameter(Constants.email)).thenReturn(newEmail);
         assertEquals(Constants.redirect + "logOut", userController.changeEmailCheck(model, session, req));
 
