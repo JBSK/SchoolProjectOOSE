@@ -3,7 +3,7 @@
  */
 // Using jsPDF to save the page as PDF.
 var over = '<div id="overlay">' +
-    '<img id="loading" src="../imgs/loading.gif">' +
+    '<img id="loading" src="../images/loading.gif">' +
     '</div>';
 
 $(document).ready(function(){
