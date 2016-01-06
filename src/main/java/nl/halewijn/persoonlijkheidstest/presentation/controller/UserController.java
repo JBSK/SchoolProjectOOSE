@@ -277,8 +277,8 @@ public class UserController {
         if (session.getAttribute(Constants.email) != null) {
             String email = session.getAttribute(Constants.email).toString();
             User user = localUserService.findByEmailAddress(email);
-            boolean correctPassword = passwordHash.verifyPassword(req.getParameter(Constants.password), user.getPasswordHash());
             if (user != null) {
+            	boolean correctPassword = passwordHash.verifyPassword(req.getParameter(Constants.password), user.getPasswordHash());
                 if (correctPassword) {
                     String newEmail = req.getParameter(Constants.email);
                     if (newEmail != null && !"".equals(newEmail)) {

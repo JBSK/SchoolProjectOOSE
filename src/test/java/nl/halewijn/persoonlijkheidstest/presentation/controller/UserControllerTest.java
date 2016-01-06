@@ -244,7 +244,7 @@ public class UserControllerTest {
         assertEquals(Constants.redirect, userController.changeEmailCheck(model, session, req));
 
         when(session.getAttribute(Constants.email)).thenReturn("");
-        assertEquals(Constants.redirect + "changeEmail?attempt=wrong", userController.changeEmailCheck(model, session, req));
+        assertEquals(Constants.redirect, userController.changeEmailCheck(model, session, req));
 
         when(session.getAttribute(Constants.email)).thenReturn(email);
         when(req.getParameter(Constants.password)).thenReturn("a");
@@ -264,7 +264,7 @@ public class UserControllerTest {
         assertEquals(Constants.redirect + "logOut", userController.changeEmailCheck(model, session, req));
 
         localUserService.delete(user);
-        assertEquals(Constants.redirect + "changeEmail?attempt=wrong", userController.changeEmailCheck(model, session, req));
+        assertEquals(Constants.redirect, userController.changeEmailCheck(model, session, req));
     }
 
 	@Test
