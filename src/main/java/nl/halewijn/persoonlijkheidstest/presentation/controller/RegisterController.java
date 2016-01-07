@@ -71,7 +71,6 @@ public class RegisterController {
 		String regEmail = req.getParameter("regEmail");
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
-
 		if (!(regPassword.equals(regPassword2))) {
 			return Constants.redirect + "register?attempt=mismatch";
 		}
@@ -89,7 +88,8 @@ public class RegisterController {
                 return getUserInfo(session, regEmail, regPassword);
             } 
             return Constants.redirect + "register?attempt=fail";
-        }return Constants.redirect + "register?attempt=captcha";
+        }
+        return Constants.redirect + "register?attempt=captcha";
     }
 
     /**
