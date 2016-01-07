@@ -72,14 +72,14 @@ public class RegisterController {
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
 
-		if (regPassword.equals(regPassword2)) {} else {
+		if (!(regPassword.equals(regPassword2))) {
 			return Constants.redirect + "register?attempt=mismatch";
 		}
-		if (regPassword.length() >= minimumPasswordLength) {} else {
+		if (!(regPassword.length() >= minimumPasswordLength)) {
 			return Constants.redirect + "register?attempt=length";
 		}
         String captchaData = req.getParameter("g-recaptcha-response");
-        if (captchaData != null && !"".equals(captchaData)) {} else {
+        if (!(captchaData != null && !"".equals(captchaData))) {
         	return Constants.redirect + "register?attempt=captcha";
         }
         boolean captchaSuccess = verifyCaptchaResponse(captchaData, req.getRemoteAddr(), Constants.utf8);
