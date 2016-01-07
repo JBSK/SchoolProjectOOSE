@@ -5,7 +5,8 @@
 		<div th:include="fragments/menu" th:remove="tag"></div>
 		<div id="main" class="pure-skin-PT">
 			<div class="content registerBox">
-				<h2 class="content-subhead"></h2>
+				<!--<h2 class="content-subhead"></h2>-->
+				<br /><br />
 				<form class="registerForm" action="registerDB" method="POST">
 					<input type="email" class="zocial-dribbble" name="regEmail"  placeholder="E-mailadres" required="required" />
 					<input th:if="${attempt != 'mismatch'}" type="password" name="regPassword" placeholder="Wachtwoord" th:attr="minlength=${minimumPasswordLength}" required="required" />

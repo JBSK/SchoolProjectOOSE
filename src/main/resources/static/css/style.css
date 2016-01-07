@@ -2,6 +2,26 @@ body{
 	background-color: #EECB6D;
 }
 
+/***** linkspage div table css ********/
+.th{
+	background-color: #d1d7eb;
+	text-align: center;
+	padding:1%;
+}
+
+.tr{
+	background-color: #FFF6F6;
+	padding:1% 2%;
+}
+
+.divTableBlocks{
+}
+
+.innerDivBlock{
+	padding:2px;
+}
+/**** end div table***/
+
 .mobileButton{
 	background-image: url("../images/mobile-arrow-next.png");
 	/* text-align: center; */
