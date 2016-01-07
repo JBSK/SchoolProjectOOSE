@@ -9,10 +9,10 @@
 				<br /><br />
 				<form class="registerForm" action="registerDB" method="POST">
 					<input type="email" class="zocial-dribbble" name="regEmail"  placeholder="E-mailadres" required="required" />
-					<input th:if="${attempt != 'mismatch'}" type="password" name="regPassword" placeholder="Wachtwoord" th:attr="pattern=${'{' + minimumPasswordLength + '}'}" required="required" />
-					<input th:if="${attempt != 'mismatch'}" type="password" name="regPassword2" placeholder="Wachtwoord herhalen" th:attr="pattern=${'{' + minimumPasswordLength + '}'}" required="required" />
-					<input th:if="${attempt == 'mismatch'}" type="password" class="formError" name="regPassword" placeholder="Wachtwoord" th:attr="pattern=${'{' + minimumPasswordLength + '}'}" required="required" />
-					<input th:if="${attempt == 'mismatch'}" type="password" class="formError" name="regPassword2" placeholder="Wachtwoord herhalen" th:attr="pattern=${'{' + minimumPasswordLength + '}'}" required="required" />
+					<input th:if="${attempt != 'mismatch'}" type="password" name="regPassword" placeholder="Wachtwoord" th:attr="minlength=${minimumPasswordLength}" required="required" />
+					<input th:if="${attempt != 'mismatch'}" type="password" name="regPassword2" placeholder="Wachtwoord herhalen" th:attr="minlength=${minimumPasswordLength}" required="required" />
+					<input th:if="${attempt == 'mismatch'}" type="password" class="formError" name="regPassword" placeholder="Wachtwoord" th:attr="minlength=${minimumPasswordLength}" required="required" />
+					<input th:if="${attempt == 'mismatch'}" type="password" class="formError" name="regPassword2" placeholder="Wachtwoord herhalen" th:attr="minlength=${minimumPasswordLength}" required="required" />
 					<div th:switch="${attempt}">
 						<p th:case="'mismatch'" class="errorMessage"> De ingevulde wachtwoorden komen niet overeen. Vul alstublieft tweemaal hetzelfde wachtwoord in. </p>
 						<p th:case="'fail'" class="errorMessage"> Registeren is momenteel niet mogelijk, probeer het later opnieuw. </p>
