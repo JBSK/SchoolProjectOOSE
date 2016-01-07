@@ -655,11 +655,7 @@ z-index:90;
 	.content .loginForm input[type="password"]:focus{
         border: 2px solid #1abc9d
 	}
-
-	.content .loginForm input[type="text"]:focus{
-	  border: 2px solid #1abc9d
-	}
-
+	
 	.content .loginForm input[type="submit"]{
         display: block;
         /* background: #1abc9d;*/
