@@ -72,24 +72,24 @@ public class RegisterController {
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
 
-		if (regPassword.equals(regPassword2)) {
-			if (regPassword.length() >= minimumPasswordLength) {
-                String captchaData = req.getParameter("g-recaptcha-response");
-                if (captchaData != null && !"".equals(captchaData)) {
-                    boolean captchaSuccess = verifyCaptchaResponse(captchaData, req.getRemoteAddr(), Constants.utf8);
-                    if (captchaSuccess) {
-                        User doesUserExist = localUserService.findByEmailAddress(regEmail);
-                        if (doesUserExist == null) {
-                            return getUserInfo(session, regEmail, regPassword);
-                        } 
-                        return Constants.redirect + "register?attempt=fail";
-                    }
-                }
-                return Constants.redirect + "register?attempt=captcha";
-			} 
+		if (regPassword.equals(regPassword2)) {} else {
+			return Constants.redirect + "register?attempt=mismatch";
+		}
+		if (regPassword.length() >= minimumPasswordLength) {} else {
 			return Constants.redirect + "register?attempt=length";
-		} 
-		return Constants.redirect + "register?attempt=mismatch";
+		}
+        String captchaData = req.getParameter("g-recaptcha-response");
+        if (captchaData != null && !"".equals(captchaData)) {} else {
+        	return Constants.redirect + "register?attempt=captcha";
+        }
+        boolean captchaSuccess = verifyCaptchaResponse(captchaData, req.getRemoteAddr(), Constants.utf8);
+        if (captchaSuccess) {
+            User doesUserExist = localUserService.findByEmailAddress(regEmail);
+            if (doesUserExist == null) {
+                return getUserInfo(session, regEmail, regPassword);
+            } 
+            return Constants.redirect + "register?attempt=fail";
+        }return Constants.redirect + "register?attempt=captcha";
     }
 
     /**

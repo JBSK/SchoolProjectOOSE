@@ -47,7 +47,7 @@ public class Constants {
 		buttons.put("SixthButtonText", 6);
 		buttons.put("SeventhButtonText", 7);
 		images.put("FirstImage", 1);
-		// TODO: add all other database entries
+
 		for (Map.Entry<String, Integer> e : buttons.entrySet()) {
 			Button button = localButtonService.getByButtonId(e.getValue());
 			model.addAttribute(e.getKey(), button);
