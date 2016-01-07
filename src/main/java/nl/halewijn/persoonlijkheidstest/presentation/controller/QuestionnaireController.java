@@ -122,7 +122,7 @@ public class QuestionnaireController {
 		} else {
             questionnaire = (Questionnaire) session.getAttribute(Constants.questionnaire);
             Question currentQuestion = questionnaire.getPreviousQuestion();
-            int progress = questionnaire.calculateProgress(currentQuestion.getQuestionId() - 1);
+            int progress = questionnaire.calculateProgress(questionnaire.getAnsweredQuestions().size());
             questionnaire.addProgressToModel(model, progress);
             model.addAttribute(Constants.currentQuestion, currentQuestion);
 		}

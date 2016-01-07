@@ -53,7 +53,7 @@ public class Questionnaire {
 			return Constants.questionnaire;
 		}
 
-        int progress = calculateProgress(0);
+        int progress = calculateProgress(getAnsweredQuestions().size());
         addProgressToModel(model, progress);
 
 		session.setAttribute(Constants.questionnaire, this);
@@ -80,8 +80,6 @@ public class Questionnaire {
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
 
 		if(nextQuestion != null) {
-			int progress = calculateProgress(answeredQuestions.size());
-            addProgressToModel(model, progress);
 			return showNextQuestion(model, nextQuestion);
 		} else {
 			saveResults(session, localResultService, localUserService, localPersonalityTypeService);
@@ -113,8 +111,8 @@ public class Questionnaire {
         model.addAttribute("questionnaireProgressStyle", "width: " + progress + "%");
     }
 
-	public int calculateProgress(int currentQuestionId) {
-        int progress = (int) calculatePercentage(currentQuestionId, totalAmountOfQuestions);
+	public int calculateProgress(int answeredQuestionsAmount) {
+        int progress = (int) calculatePercentage(answeredQuestionsAmount, totalAmountOfQuestions);
         if (progress == 100) {
             return 99;
         } else {
@@ -232,6 +230,8 @@ public class Questionnaire {
 	 */
 	private String showNextQuestion(Model model, Question nextQuestion) {
 		this.addQuestion(nextQuestion);
+		int progress = calculateProgress(answeredQuestions.size());
+        addProgressToModel(model, progress);
 		model.addAttribute("currentQuestion", nextQuestion);
 		return "questionnaire";
 	}
