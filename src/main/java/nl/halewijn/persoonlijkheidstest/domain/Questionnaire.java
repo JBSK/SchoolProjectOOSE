@@ -229,10 +229,13 @@ public class Questionnaire {
 	 * Lastly returns the kind of webpage that has to be shown.
 	 */
 	private String showNextQuestion(Model model, Question nextQuestion) {
-		this.addQuestion(nextQuestion);
+		if (!answeredQuestions.contains(nextQuestion)) {
+			this.addQuestion(nextQuestion);
+		}
 		int progress = calculateProgress(answeredQuestions.size());
         addProgressToModel(model, progress);
 		model.addAttribute("currentQuestion", nextQuestion);
+		
 		return "questionnaire";
 	}
 
