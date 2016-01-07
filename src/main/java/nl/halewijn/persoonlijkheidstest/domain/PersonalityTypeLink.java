@@ -35,9 +35,6 @@ public class PersonalityTypeLink {
          */
 	}
 
-    // TODO: Repo en Service?
-    // TODO: QuestionnaireController -> /showLinks
-
 	public PersonalityType getPersonalityType() {
 		return personalityType;
 	}

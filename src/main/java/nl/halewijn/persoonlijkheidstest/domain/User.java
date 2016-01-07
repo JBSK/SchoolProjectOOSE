@@ -14,7 +14,7 @@ public class User {
     private int id;
 
 	@NotNull
-    // TODO: @UniqueConstraint() of @Column(unique=true)
+    @Column(unique = true)
 	private String emailAddress;
 
     @NotNull
