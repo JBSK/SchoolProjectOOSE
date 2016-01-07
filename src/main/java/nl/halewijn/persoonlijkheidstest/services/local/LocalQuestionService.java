@@ -32,7 +32,7 @@ public class LocalQuestionService implements IQuestionService  {
 	@Autowired
 	private LocalPersonalityTypeService localPersonalityTypeService;
 	
-	private static final Logger logger = Logger.getLogger(Logger.class);
+	private static final Logger LOGGER = Logger.getLogger(Logger.class);
 
 	@Override
 	public List<Question> findAll() {
@@ -209,7 +209,7 @@ public class LocalQuestionService implements IQuestionService  {
 				firstQuestionInTheList = relevantQuestions.get(0);
 			} catch (Exception e) {
 				firstQuestionInTheList = null;
-				logger.info("Er is iets misgegaan: " + e);
+				LOGGER.info("Er is iets misgegaan: " + e);
 				break;
 			}
 		}
@@ -265,7 +265,7 @@ public class LocalQuestionService implements IQuestionService  {
         Question firstQuestion = getByQuestionId(1);
 
         if (firstQuestion == null) {
-        	logger.error("There is no question in the database with question ID 1! Please make a new question first, before running the personality test.");
+        	LOGGER.error("There is no question in the database with question ID 1! Please make a new question first, before running the personality test.");
         }
 
         firstQuestion = checkIfQuestionActive(firstQuestion);

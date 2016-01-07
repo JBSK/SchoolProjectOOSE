@@ -73,17 +73,9 @@ public class Questionnaire {
         Question previousQuestion = getPreviousQuestion();
         String answerString = httpServletRequest.getParameter("answer");
 
-        if (previousQuestion instanceof TheoremBattle) {
-            if (answerString != null && !"".equals(answerString)) {
-                List<Character> validAnswers = Arrays.asList('A', 'B', 'C', 'D', 'E');
-                char answer = answerString.charAt(0);
-                if (!validAnswers.contains(answer)) {
-                    return showInvalidAnswerError(model, previousQuestion);
-                }
-            } else {
-                return showInvalidAnswerError(model, previousQuestion);
-            }
-        }
+		if (checkIfAnswerIsValid(previousQuestion, answerString))
+			return showInvalidAnswerError(model, previousQuestion);
+
 		localQuestionService.setQuestionAnswer(httpServletRequest, previousQuestion);		
 		Question nextQuestion = localQuestionService.getNextQuestion(previousQuestion, answerString);
 
@@ -98,7 +90,25 @@ public class Questionnaire {
 		}	
 	}
 
-    public void addProgressToModel(Model model, int progress) {
+	/** checks if the question is a theorem battle
+	* 	checks if the answer given is a valid answer
+	*/
+	private boolean checkIfAnswerIsValid(Question previousQuestion, String answerString) {
+		if (previousQuestion instanceof TheoremBattle) {
+            if (answerString != null && !"".equals(answerString)) {
+                List<Character> validAnswers = Arrays.asList('A', 'B', 'C', 'D', 'E');
+                char answer = answerString.charAt(0);
+                if (!validAnswers.contains(answer)) {
+					return true;
+                }
+            } else {
+				return true;
+            }
+        }
+		return false;
+	}
+
+	public void addProgressToModel(Model model, int progress) {
         model.addAttribute("questionnaireProgress", progress);
         model.addAttribute("questionnaireProgressStyle", "width: " + progress + "%");
     }
@@ -261,23 +271,27 @@ public class Questionnaire {
         pTypeResultArrayCopy[primaryPersonalityTypeID - 1] = 0;
         addSecondaryPersonalityTypeToModel(model, localPersonalityTypeService, pTypeResultArrayCopy);
 
-		String tweetText = "Mijn persoonlijkheidstype is " + personalityTypes[0] + "! Test jezelf hier!";
-		model.addAttribute("tweetText", tweetText);
-		
-		WebsiteContentText text5 = localWebsiteContentTextService.getByContentId(5);
-		model.addAttribute("FifthContentBox", text5);
-		
-		Button button10 = localButtonService.getByButtonId(10);
-		model.addAttribute("TenthButtonText", button10);
-		
-		Button button11 = localButtonService.getByButtonId(11);
-		model.addAttribute("EleventhButtonText", button11);
-		
-		Image image2 = localImageService.getByImageId(2);
-		model.addAttribute("SecondImage", image2);
-		
+		addTextToModel(model, personalityTypes[0]);
+
         return Constants.result;
     }
+
+	private void addTextToModel(Model model, String personalityType) {
+		String tweetText = "Mijn persoonlijkheidstype is " + personalityType + "! Test jezelf hier!";
+		model.addAttribute("tweetText", tweetText);
+
+		WebsiteContentText text5 = localWebsiteContentTextService.getByContentId(5);
+		model.addAttribute("FifthContentBox", text5);
+
+		Button button10 = localButtonService.getByButtonId(10);
+		model.addAttribute("TenthButtonText", button10);
+
+		Button button11 = localButtonService.getByButtonId(11);
+		model.addAttribute("EleventhButtonText", button11);
+
+		Image image2 = localImageService.getByImageId(2);
+		model.addAttribute("SecondImage", image2);
+	}
 
 	public void addSecondaryPersonalityTypeToModel(Model model,
 			LocalPersonalityTypeService localPersonalityTypeService, double[] pTypeResultArrayCopy) {
@@ -457,34 +471,21 @@ public class Questionnaire {
 	
 	private List<Double> determinePointsScoredPerTheorem(char questionAnswer, Theorem firstTheorem, Theorem secondTheorem, double firstTheoremPoints, double secondTheoremPoints) {
 		List<Double> theoremPoints = new ArrayList<>();
-
         ScoreConstant scoreConstant;
         scoreConstant = this.localScoreConstantService.findByAnswer(questionAnswer);
         if(scoreConstant == null)
             scoreConstant = this.localScoreConstantService.findByAnswer('C');
 
-		switch(questionAnswer) {
-            case 'A':
-				firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
-				break;
-            case 'B':
-				firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
-				break;
-            case 'C':
-				firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
-				secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
-				break;
-            case 'D':
-				secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
-				break;
-            case 'E':
-				secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
-				break;
-            default:
-				scoreConstant = this.localScoreConstantService.findByAnswer('C');
-				firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
-				secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
-				break;
+		if(questionAnswer == 'A' || questionAnswer == 'B' || questionAnswer == 'C'){
+			firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+		}
+		if(questionAnswer == 'C' || questionAnswer == 'D' || questionAnswer == 'E'){
+			secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
+		}
+		if(questionAnswer != 'A' && questionAnswer != 'B' && questionAnswer != 'C' && questionAnswer != 'D' && questionAnswer != 'E'){
+			scoreConstant = this.localScoreConstantService.findByAnswer('C');
+			firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+			secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
 		}
 		theoremPoints.add(firstTheoremPoints);
 		theoremPoints.add(secondTheoremPoints);
