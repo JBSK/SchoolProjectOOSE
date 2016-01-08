@@ -60,8 +60,8 @@ public class UserController {
             String email = session.getAttribute(Constants.email).toString();
             if (!"".equals(email)) {
                 int id = localUserService.findByEmailAddress(email).getId();
-                List<Result> userResults = localResultService.getByUserId(id);          
-                setResultPrimaryType(userResults);
+                List<Result> userResults = localResultService.getByUserId(id);
+				setResultPrimaryType(userResults);
                 model.addAttribute("userResults", userResults);
                 
                 WebsiteContentText text9 = localWebsiteContentTextService.getByContentId(9);
@@ -71,7 +71,7 @@ public class UserController {
         		Button button12 = localButtonService.getByButtonId(12);
         		model.addAttribute("TwelfthButtonText", button12);
         		
-                return Constants.myresults;
+                return Constants.myResults;
             }
 		}
 		return Constants.redirect;

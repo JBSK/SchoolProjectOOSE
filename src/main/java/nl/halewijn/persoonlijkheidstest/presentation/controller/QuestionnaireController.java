@@ -144,7 +144,7 @@ public class QuestionnaireController {
         WebsiteContentText text6 = localWebsiteContentTextService.getByContentId(6);
 		model.addAttribute("SixthContentBox", text6);
         
-        return Constants.linkpage;
+        return Constants.linkPage;
     }
 
 }

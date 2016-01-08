@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -115,7 +114,7 @@ public class QuestionnaireControllerTest {
 		PersonalityType typeOne = new PersonalityType("Type 1", "prim", "sec");
 		localPersonalityTypeService.save(typeOne);
 		HttpSession httpSession = mock(HttpSession.class);
-		assertEquals(Constants.linkpage, questionnaireController.showLinks(model, httpSession));
+		assertEquals(Constants.linkPage, questionnaireController.showLinks(model, httpSession));
 	}
 
 }
