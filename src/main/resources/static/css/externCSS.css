@@ -30,9 +30,8 @@
 			border-color: #EECB6D; /*border kleur*/
 			margin: 20px auto; /*minimale ruimte tussen de randen van de website en de tekstboxen*/
 			border-radius: 12px; /*ronde bolling van de tekstblokken*/
-			max-width: 60%; /*maximale breedte van de tekstblokken*/
+			/* max-width: 60%; maximale breedte van de tekstblokken */
 		}
-		
 		
 	/***alle buttons***/
 
