@@ -85,7 +85,12 @@ public class RegisterController {
         	return Constants.redirect + "register?attempt=captcha";
         }
         boolean captchaSuccess = verifyCaptchaResponse(captchaData, req.getRemoteAddr(), Constants.utf8);
-        if (captchaSuccess) {
+        return checkCaptchaCorrectAndUserExist(session, regEmail, regPassword, captchaSuccess);
+    }
+
+	private String checkCaptchaCorrectAndUserExist(HttpSession session, String regEmail, String regPassword,
+			boolean captchaSuccess) {
+		if (captchaSuccess) {
             User doesUserExist = localUserService.findByEmailAddress(regEmail);
             if (doesUserExist == null) {
                 return getUserInfo(session, regEmail, regPassword);
@@ -93,7 +98,7 @@ public class RegisterController {
             return Constants.redirect + "register?attempt=fail";
         }
         return Constants.redirect + "register?attempt=captcha";
-    }
+	}
 
     /**
      * Submit the form data for the CAPTCHA to Google, they will verify whether

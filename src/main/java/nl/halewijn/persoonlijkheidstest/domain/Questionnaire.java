@@ -159,7 +159,8 @@ public class Questionnaire {
 	 * column will remain null.
 	 */
 	private void saveResults(HttpSession session, LocalResultService localResultService, LocalUserService localUserService, LocalPersonalityTypeService localPersonalityTypeService) {
-		if (!testFinished) { // Prevent duplicate result entries in the database if you refresh the result page.
+		// Prevent duplicate result entries in the database if you refresh the result page.
+		if (!testFinished) {
             double[] pTypeResultArray = this.calculatePersonalityTypeResults(answeredQuestions);
             double[] subTypeResultArray = this.calculateSubTypeResults(answeredQuestions);
             Result result;
@@ -479,13 +480,11 @@ public class Questionnaire {
         if(scoreConstant == null)
             scoreConstant = this.localScoreConstantService.findByAnswer('C');
 
-		if(questionAnswer == 'A' || questionAnswer == 'B' || questionAnswer == 'C'){
-			firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
-		}
-		if(questionAnswer == 'C' || questionAnswer == 'D' || questionAnswer == 'E'){
-			secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
-		}
-		if(questionAnswer != 'A' && questionAnswer != 'B' && questionAnswer != 'C' && questionAnswer != 'D' && questionAnswer != 'E'){
+		firstTheoremPoints = calculateFirstTheoremPoints(questionAnswer, firstTheorem, firstTheoremPoints,
+				scoreConstant);
+		secondTheoremPoints = calculateSecondTheoremPoints(questionAnswer, secondTheorem, secondTheoremPoints,
+				scoreConstant);
+		if(questionAnswer != 'A' && questionAnswer != 'B' && questionAnswer != 'D' && questionAnswer != 'E'){
 			scoreConstant = this.localScoreConstantService.findByAnswer('C');
 			firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
 			secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
@@ -493,6 +492,22 @@ public class Questionnaire {
 		theoremPoints.add(firstTheoremPoints);
 		theoremPoints.add(secondTheoremPoints);
 		return theoremPoints;
+	}
+
+	private double calculateSecondTheoremPoints(char questionAnswer, Theorem secondTheorem, double secondTheoremPoints,
+			ScoreConstant scoreConstant) {
+		if(questionAnswer == 'D' || questionAnswer == 'E'){
+			secondTheoremPoints = scoreConstant.getScore() * secondTheorem.getWeight();
+		}
+		return secondTheoremPoints;
+	}
+
+	private double calculateFirstTheoremPoints(char questionAnswer, Theorem firstTheorem, double firstTheoremPoints,
+			ScoreConstant scoreConstant) {
+		if(questionAnswer == 'A' || questionAnswer == 'B'){
+			firstTheoremPoints = scoreConstant.getScore() * firstTheorem.getWeight();
+		}
+		return firstTheoremPoints;
 	}
 	
     /**
