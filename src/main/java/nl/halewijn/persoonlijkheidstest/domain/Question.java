@@ -25,6 +25,13 @@ public abstract class Question {
 
 	private boolean active = true;
 
+	private Question() {
+		/*
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
+	}
+
 	public Question(String questionText) {
         this.text = questionText;
 	}
