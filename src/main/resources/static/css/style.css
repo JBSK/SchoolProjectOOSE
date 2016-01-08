@@ -875,13 +875,26 @@ z-index:90;
 		    width: 100%;
 	    min-height: 100%;
 	}
-	
+	.content .changeButton{
+		margin: 5px;
+	}
+/**********Linkpage***************/
 /* PersonalityType links table*/
 .typeLinkTable {
-	margin: 5px;
+	margin: 0px;
 	float: left;
 	min-width: 130px;
 }
+.typeLinkTable .personalityTypeLink{
+    border-bottom: groove #e6eaf4;
+    border-width: 1px;
+    background-color:#e6eaf4;
+}
+
+.typeLinkTable .personalityTypeLink:last-child{
+    border:none;
+}
+
 
 /** manually added css for overiding pure and allowing the hidding of pure elements by using the name pure-hidden-***/
 @media screen and (max-width:567px) {
@@ -922,7 +935,9 @@ z-index:90;
 	.pure-visible-md{display:none}
 	.pure-visible-lg{display:none}
 	.pure-hidden-xl{display:none}
-}.content .ErrorImg{
+}
+/*******error page***********/
+.content .ErrorImg{
    margin: 0 0 0 5px;
     padding: 0;
     width: 85%;
