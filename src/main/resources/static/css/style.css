@@ -574,11 +574,20 @@ z-index:90;
 		padding-top:0;
 		margin-top:0;
 		text-align: center;
-
+		margin-bottom: 5px;
+	}
+	.content .question{
+		margin-bottom: 0px;
+		border-bottom: solid #888;
+    	border-width: 1px;
+	}
+	
+	.theoremBoxs{
+		text-align:center;
 	}
 
 	.theorems{
-		text-align:center;
+		    margin: 0px;
 	}
 
 	/************Div Table****************/
@@ -895,13 +904,9 @@ z-index:90;
 	min-width: 130px;
 }
 .typeLinkTable .personalityTypeLink{
-    border-bottom: groove #e6eaf4;
+    border: solid #fff;
     border-width: 1px;
     background-color:#e6eaf4;
-}
-
-.typeLinkTable .personalityTypeLink:last-child{
-    border:none;
 }
 
 

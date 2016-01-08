@@ -94,9 +94,12 @@
 			color: #888;
 			font-size: 20px;
 		}
-		.theorems{
+		.theoremBoxs{
 			color:#777;
 			font-size: 18px;
+		}
+		.theorems{
+			
 		}
 	/***kleuren***/
 		.tableHeader{ /*bovenste rij in de tabel*/
