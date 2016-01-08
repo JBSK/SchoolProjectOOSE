@@ -9,6 +9,8 @@ import nl.halewijn.persoonlijkheidstest.services.Constants;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +44,7 @@ public class RegisterController {
 
     private static final String captchaApiSecretKey = "6LfACBMTAAAAAPIsxV8pRHsjQQVRA353jEK8OILp";
 	private static final int minimumPasswordLength = 7;
+	private static final Logger LOGGER = Logger.getLogger(Logger.class);
 
 	/**
 	 * If the file path relative to the base was "/register", return the "register" web page.
@@ -71,26 +74,31 @@ public class RegisterController {
 		String regEmail = req.getParameter("regEmail");
 		String regPassword = req.getParameter("regPassword");
 		String regPassword2 = req.getParameter("regPassword2");
-
-		if (regPassword.equals(regPassword2)) {} else {
+		if (!(regPassword.equals(regPassword2))) {
 			return Constants.redirect + "register?attempt=mismatch";
 		}
-		if (regPassword.length() >= minimumPasswordLength) {} else {
+		if (!(regPassword.length() >= minimumPasswordLength)) {
 			return Constants.redirect + "register?attempt=length";
 		}
         String captchaData = req.getParameter("g-recaptcha-response");
-        if (captchaData != null && !"".equals(captchaData)) {} else {
+        if (!(captchaData != null && !"".equals(captchaData))) {
         	return Constants.redirect + "register?attempt=captcha";
         }
         boolean captchaSuccess = verifyCaptchaResponse(captchaData, req.getRemoteAddr(), Constants.utf8);
-        if (captchaSuccess) {
+        return checkCaptchaCorrectAndUserExist(session, regEmail, regPassword, captchaSuccess);
+    }
+
+	private String checkCaptchaCorrectAndUserExist(HttpSession session, String regEmail, String regPassword,
+			boolean captchaSuccess) {
+		if (captchaSuccess) {
             User doesUserExist = localUserService.findByEmailAddress(regEmail);
             if (doesUserExist == null) {
                 return getUserInfo(session, regEmail, regPassword);
             } 
             return Constants.redirect + "register?attempt=fail";
-        }return Constants.redirect + "register?attempt=captcha";
-    }
+        }
+        return Constants.redirect + "register?attempt=captcha";
+	}
 
     /**
      * Submit the form data for the CAPTCHA to Google, they will verify whether
@@ -114,7 +122,8 @@ public class RegisterController {
             JSONObject json = JSONObject.fromObject(responseStrBuilder.toString());
             return json.getBoolean("success");
         } catch (Exception e) {
-            return false;
+            LOGGER.info("Er is iets fout gegaan met de captcha" + e);
+        	return false;
         }
     }
 

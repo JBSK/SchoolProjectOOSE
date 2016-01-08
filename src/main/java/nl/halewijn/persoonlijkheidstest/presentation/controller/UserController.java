@@ -232,18 +232,23 @@ public class UserController {
 
         	if (user != null) {
         		boolean oldPasswordCorrect = passwordHash.verifyPassword(req.getParameter("oldPassword"), user.getPasswordHash());
-            	if (oldPasswordCorrect && newPassword.equals(newPassword2)) {
-        			if (newPassword.length() >= minimumPasswordLength) {
-        				user.setPasswordHash(passwordHash.hashPassword(newPassword));
-        				localUserService.save(user);
-        				return Constants.redirect + "logOut";
-        			}
-                    return Constants.redirect + "changePassword?attempt=length";
-    			}
-                return Constants.redirect + "changePassword?attempt=mismatch";
+            	return checkIfPasswordCorrect(user, newPassword, newPassword2, oldPasswordCorrect);
             }
 		}
         return Constants.redirect;
+	}
+
+	private String checkIfPasswordCorrect(User user, String newPassword, String newPassword2,
+			boolean oldPasswordCorrect) {
+		if (oldPasswordCorrect && newPassword.equals(newPassword2)) {
+			if (newPassword.length() >= minimumPasswordLength) {
+				user.setPasswordHash(passwordHash.hashPassword(newPassword));
+				localUserService.save(user);
+				return Constants.redirect + "logOut";
+			}
+		    return Constants.redirect + "changePassword?attempt=length";
+		}
+		return Constants.redirect + "changePassword?attempt=mismatch";
 	}
 
 	/**
@@ -279,21 +284,25 @@ public class UserController {
             User user = localUserService.findByEmailAddress(email);
             if (user != null) {
             	boolean correctPassword = passwordHash.verifyPassword(req.getParameter(Constants.password), user.getPasswordHash());
-                if (correctPassword) {
-                    String newEmail = req.getParameter(Constants.email);
-                    if (newEmail != null && !"".equals(newEmail)) {
-                        if (localUserService.findByEmailAddress(newEmail) == null) {
-                            user.setEmailAddress(newEmail);
-                            localUserService.save(user);
-                            return Constants.redirect + "logOut";
-                        }
-                        return Constants.redirect + "changeEmail?attempt=wrong";
-                    }
-                    return Constants.redirect + "changeEmail?attempt=empty";
-                }
-                return Constants.redirect + "changeEmail?attempt=wrong";
+                return checkCorrectPasswordAndEmail(req, user, correctPassword);
             }
         }
         return Constants.redirect;
+	}
+
+	private String checkCorrectPasswordAndEmail(HttpServletRequest req, User user, boolean correctPassword) {
+		if (correctPassword) {
+		    String newEmail = req.getParameter(Constants.email);
+		    if (newEmail != null && !"".equals(newEmail)) {
+		        if (localUserService.findByEmailAddress(newEmail) == null) {
+		            user.setEmailAddress(newEmail);
+		            localUserService.save(user);
+		            return Constants.redirect + "logOut";
+		        }
+		        return Constants.redirect + "changeEmail?attempt=wrong";
+		    }
+		    return Constants.redirect + "changeEmail?attempt=empty";
+		}
+		return Constants.redirect + "changeEmail?attempt=wrong";
 	}
 }
