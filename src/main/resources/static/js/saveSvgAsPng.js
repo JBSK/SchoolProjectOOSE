@@ -1,3 +1,8 @@
+/**
+ * saveSvgAsPng - v1.0.1 - http://exupero.org/saveSvgAsPng/
+ * Copyright 2014 Eric Shull
+ * License: MIT ( https://opensource.org/licenses/MIT )
+ */
 (function() {
     var out$ = typeof exports != 'undefined' && exports || this;
 

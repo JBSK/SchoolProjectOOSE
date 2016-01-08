@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import net.sf.json.JSONObject;
 import nl.halewijn.persoonlijkheidstest.domain.Result;
 import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.services.CustomLogger;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
 import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
@@ -44,7 +45,6 @@ public class RegisterController {
 
     private static final String captchaApiSecretKey = "6LfACBMTAAAAAPIsxV8pRHsjQQVRA353jEK8OILp";
 	private static final int minimumPasswordLength = 7;
-	private static final Logger LOGGER = Logger.getLogger(Logger.class);
 
 	/**
 	 * If the file path relative to the base was "/register", return the "register" web page.
@@ -122,7 +122,7 @@ public class RegisterController {
             JSONObject json = JSONObject.fromObject(responseStrBuilder.toString());
             return json.getBoolean("success");
         } catch (Exception e) {
-            LOGGER.info("Er is iets fout gegaan met de captcha" + e);
+            new CustomLogger().log("Error on processing CAPTCHA: " + e.getMessage());
         	return false;
         }
     }

@@ -1,5 +1,9 @@
 package nl.halewijn.persoonlijkheidstest.domain;
 
+import nl.halewijn.persoonlijkheidstest.services.CustomLogger;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +58,22 @@ public class Result {
          * ThymeLeaf requires us to have default constructors, further explanation can be found here:
          * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
          */
+	}
+
+    /**
+     * Reformats the date that we retrieve from the database to a prettier format.
+     * Used by myResults.html
+     */
+	public String getFormattedDate() {
+		String unformattedDate = this.getDate().toString();
+		String formattedDate = unformattedDate;
+		try {
+			Date simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(unformattedDate);
+			formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(simpleDate);
+		} catch (Exception e) {
+            new CustomLogger().log("Error parsing formatted date of Result: " + e.getMessage());
+		}
+		return formattedDate;
 	}
 
 	public int getId() {
