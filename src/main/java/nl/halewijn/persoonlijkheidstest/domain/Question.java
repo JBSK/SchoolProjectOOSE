@@ -7,7 +7,7 @@ import java.util.Date;
 @Entity
 @Table(name = "Question")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Question {
+public class Question {
 
 	@Id
 	@GeneratedValue
@@ -25,7 +25,14 @@ public abstract class Question {
 
 	private boolean active = true;
 
-	public Question(String questionText) {
+	private Question() {
+		/*
+         * ThymeLeaf requires us to have default constructors, further explanation can be found here:
+         * http://javarevisited.blogspot.in/2014/01/why-default-or-no-argument-constructor-java-class.html
+         */
+	}
+
+	protected Question(String questionText) {
         this.text = questionText;
 	}
 

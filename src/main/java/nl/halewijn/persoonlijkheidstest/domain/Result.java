@@ -70,7 +70,7 @@ public class Result {
 			Date simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(unformattedDate);
 			formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(simpleDate);
 		} catch (Exception e) {
-            new CustomLogger().getLogger().info("Error parsing formatted date of Result: " + e.getMessage());
+            new CustomLogger().log(e);
 		}
 		return formattedDate;
 	}

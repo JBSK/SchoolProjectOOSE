@@ -6,7 +6,7 @@ public class CustomLogger {
 
     private static final Logger LOGGER = Logger.getLogger(Logger.class);
 
-    public Logger getLogger() {
-        return LOGGER;
+    public void log(Exception e) {
+        LOGGER.info(e);
     }
 }
