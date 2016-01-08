@@ -12,24 +12,27 @@ import java.util.Map;
 
 public class Constants {
 
-    /*
+    /**
      * Serves to resolve some 'major' issues in Sonar.
      */
-    public static final String currentQuestion = "currentQuestion";
     public static final String admin = "admin";
+    public static final String attempt = "attempt";
+    public static final String currentQuestion = "currentQuestion";
     public static final String email = "email";
-    public static final String linkpage = "linkpage";
+    public static final String linkPage = "linkPage";
     public static final String login = "login";
     public static final String minimumPasswordLength = "minimumPasswordLength";
-    public static final String myresults = "myResults";
+    public static final String myResults = "myResults";
     public static final String password = "password";
     public static final String questionnaire = "questionnaire";
-    public static final String redirect = "redirect:/"; // redirects to index
+
+	// redirects to index
+    public static final String redirect = "redirect:/";
+
     public static final String result = "result";
     public static final String resultId = "result_id";
     public static final String utf8 = "UTF-8";
-    
-    public static final String attempt = "attempt";
+
 
 	private Constants() {
 

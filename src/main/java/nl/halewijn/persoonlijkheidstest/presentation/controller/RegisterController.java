@@ -121,7 +121,7 @@ public class RegisterController {
             JSONObject json = JSONObject.fromObject(responseStrBuilder.toString());
             return json.getBoolean("success");
         } catch (Exception e) {
-            new CustomLogger().log("Error on processing CAPTCHA: " + e.getMessage());
+            new CustomLogger().getLogger().info("Error on processing CAPTCHA: " + e.getMessage());
         	return false;
         }
     }

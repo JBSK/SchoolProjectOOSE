@@ -71,7 +71,7 @@ public class UserController {
         		Button button12 = localButtonService.getByButtonId(12);
         		model.addAttribute("TwelfthButtonText", button12);
         		
-                return Constants.myresults;
+                return Constants.myResults;
             }
 		}
 		return Constants.redirect;

@@ -2,7 +2,6 @@ package nl.halewijn.persoonlijkheidstest.domain;
 
 import nl.halewijn.persoonlijkheidstest.services.CustomLogger;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,7 +70,7 @@ public class Result {
 			Date simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").parse(unformattedDate);
 			formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(simpleDate);
 		} catch (Exception e) {
-            new CustomLogger().log("Error parsing formatted date of Result: " + e.getMessage());
+            new CustomLogger().getLogger().info("Error parsing formatted date of Result: " + e.getMessage());
 		}
 		return formattedDate;
 	}

@@ -7,12 +7,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
@@ -70,7 +68,7 @@ public class UserControllerTest {
 		User user = new User("email@mail.com", false);
 		user.setPasswordHash(passwordHash.hashPassword("aa"));
 		localUserService.save(user);
-		assertEquals(Constants.myresults, userController.myResults(model, session, req));
+		assertEquals(Constants.myResults, userController.myResults(model, session, req));
 	}
 	
 	@Test

@@ -4,9 +4,9 @@ import org.apache.log4j.Logger;
 
 public class CustomLogger {
 
-    private static final Logger logger = Logger.getLogger(Logger.class);
+    private static final Logger LOGGER = Logger.getLogger(Logger.class);
 
-    public void log(String message) {
-        logger.info(message);
+    public Logger getLogger() {
+        return LOGGER;
     }
 }
