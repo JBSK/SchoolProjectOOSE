@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import nl.halewijn.persoonlijkheidstest.domain.Answer;
-import nl.halewijn.persoonlijkheidstest.domain.Result;
+import nl.halewijn.persoonlijkheidstest.application.domain.Answer;
+import nl.halewijn.persoonlijkheidstest.application.domain.Result;
 
 @Repository
 public interface ResultRepository extends JpaSpecificationExecutor<Result>, JpaRepository<Result, Long> {

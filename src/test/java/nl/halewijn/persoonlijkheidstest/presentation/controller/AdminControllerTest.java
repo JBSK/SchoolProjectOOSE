@@ -1,6 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Result;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
-import nl.halewijn.persoonlijkheidstest.domain.User;
-import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
+import nl.halewijn.persoonlijkheidstest.application.domain.PersonalityType;
+import nl.halewijn.persoonlijkheidstest.application.domain.Result;
+import nl.halewijn.persoonlijkheidstest.application.domain.Theorem;
+import nl.halewijn.persoonlijkheidstest.application.domain.User;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalPersonalityTypeService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalResultService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalTheoremService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalUserService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

@@ -1,8 +1,8 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.domain.*;
-import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.*;
+import nl.halewijn.persoonlijkheidstest.application.domain.*;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.local.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

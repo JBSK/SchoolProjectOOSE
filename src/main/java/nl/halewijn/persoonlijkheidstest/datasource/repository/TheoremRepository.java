@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
+import nl.halewijn.persoonlijkheidstest.application.domain.PersonalityType;
+import nl.halewijn.persoonlijkheidstest.application.domain.Theorem;
 
 @Repository
 public interface TheoremRepository extends JpaSpecificationExecutor<Theorem>, JpaRepository<Theorem, Long> {

@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import nl.halewijn.persoonlijkheidstest.domain.Button;
-import nl.halewijn.persoonlijkheidstest.domain.Image;
-import nl.halewijn.persoonlijkheidstest.domain.WebsiteContentText;
-import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
+import nl.halewijn.persoonlijkheidstest.application.domain.Button;
+import nl.halewijn.persoonlijkheidstest.application.domain.Image;
+import nl.halewijn.persoonlijkheidstest.application.domain.WebsiteContentText;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalButtonService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalImageService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalWebsiteContentTextService;
 
 @Controller
 public class IndexController {

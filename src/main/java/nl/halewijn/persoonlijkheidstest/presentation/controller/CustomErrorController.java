@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import nl.halewijn.persoonlijkheidstest.domain.Image;
-import nl.halewijn.persoonlijkheidstest.domain.WebsiteContentText;
-import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
+import nl.halewijn.persoonlijkheidstest.application.domain.Image;
+import nl.halewijn.persoonlijkheidstest.application.domain.WebsiteContentText;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalButtonService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalImageService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalWebsiteContentTextService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

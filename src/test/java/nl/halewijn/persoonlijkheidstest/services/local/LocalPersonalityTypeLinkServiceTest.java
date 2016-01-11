@@ -1,8 +1,11 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityTypeLink;
+import nl.halewijn.persoonlijkheidstest.application.domain.PersonalityType;
+import nl.halewijn.persoonlijkheidstest.application.domain.PersonalityTypeLink;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalPersonalityTypeLinkService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalPersonalityTypeService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

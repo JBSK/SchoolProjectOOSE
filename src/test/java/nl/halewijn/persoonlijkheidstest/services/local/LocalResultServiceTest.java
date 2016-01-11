@@ -3,11 +3,14 @@ package nl.halewijn.persoonlijkheidstest.services.local;
 import static org.junit.Assert.*;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.Answer;
-import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Result;
-import nl.halewijn.persoonlijkheidstest.domain.ResultTypePercentage;
+import nl.halewijn.persoonlijkheidstest.application.domain.Answer;
+import nl.halewijn.persoonlijkheidstest.application.domain.OpenQuestion;
+import nl.halewijn.persoonlijkheidstest.application.domain.PersonalityType;
+import nl.halewijn.persoonlijkheidstest.application.domain.Result;
+import nl.halewijn.persoonlijkheidstest.application.domain.ResultTypePercentage;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalPersonalityTypeService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalQuestionService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalResultService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

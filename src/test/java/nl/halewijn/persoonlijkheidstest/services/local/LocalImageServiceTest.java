@@ -1,7 +1,9 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.Image;
+import nl.halewijn.persoonlijkheidstest.application.domain.Image;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalImageService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

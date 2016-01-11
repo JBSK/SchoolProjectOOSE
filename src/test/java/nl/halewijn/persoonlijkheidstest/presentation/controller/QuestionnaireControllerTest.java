@@ -1,6 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.services.Constants;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.OpenQuestion;
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Questionnaire;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalQuestionService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
+import nl.halewijn.persoonlijkheidstest.application.domain.OpenQuestion;
+import nl.halewijn.persoonlijkheidstest.application.domain.PersonalityType;
+import nl.halewijn.persoonlijkheidstest.application.domain.Questionnaire;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalPersonalityTypeService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalQuestionService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalResultService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalUserService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

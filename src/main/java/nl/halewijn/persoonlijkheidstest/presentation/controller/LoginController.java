@@ -3,18 +3,18 @@ package nl.halewijn.persoonlijkheidstest.presentation.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.domain.User;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalButtonService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalImageService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalUserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import nl.halewijn.persoonlijkheidstest.domain.User;
-import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 @Controller
 public class LoginController {

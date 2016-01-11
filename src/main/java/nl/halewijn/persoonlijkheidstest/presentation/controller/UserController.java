@@ -12,15 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import nl.halewijn.persoonlijkheidstest.domain.*;
-import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
-import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalButtonService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalImageService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalWebsiteContentTextService;
+import nl.halewijn.persoonlijkheidstest.application.domain.*;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalButtonService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalImageService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalPersonalityTypeService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalResultService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalUserService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalWebsiteContentTextService;
 
 @Controller
 public class UserController {

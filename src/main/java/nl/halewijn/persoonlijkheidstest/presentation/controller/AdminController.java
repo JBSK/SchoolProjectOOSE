@@ -1,12 +1,13 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.domain.PersonalityType;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
-import nl.halewijn.persoonlijkheidstest.domain.User;
-
-import nl.halewijn.persoonlijkheidstest.services.Constants;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalPersonalityTypeService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalResultService;
+import nl.halewijn.persoonlijkheidstest.application.domain.PersonalityType;
+import nl.halewijn.persoonlijkheidstest.application.domain.Theorem;
+import nl.halewijn.persoonlijkheidstest.application.domain.User;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalPersonalityTypeService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalResultService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalTheoremService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalUserService;
 
 import java.util.List;
 
@@ -18,9 +19,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import nl.halewijn.persoonlijkheidstest.services.local.LocalTheoremService;
-import nl.halewijn.persoonlijkheidstest.services.local.LocalUserService;
 
 @Controller
 public class AdminController {

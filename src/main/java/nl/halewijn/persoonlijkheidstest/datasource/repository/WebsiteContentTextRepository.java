@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import nl.halewijn.persoonlijkheidstest.domain.WebsiteContentText;
+import nl.halewijn.persoonlijkheidstest.application.domain.WebsiteContentText;
 
 @Repository
 public interface WebsiteContentTextRepository extends JpaSpecificationExecutor<WebsiteContentText>, JpaRepository<WebsiteContentText, Long>{

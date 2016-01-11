@@ -1,8 +1,5 @@
 package nl.halewijn.persoonlijkheidstest.presentation.controller;
 
-import nl.halewijn.persoonlijkheidstest.domain.*;
-import nl.halewijn.persoonlijkheidstest.services.PasswordHash;
-import nl.halewijn.persoonlijkheidstest.services.local.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.domain.*;
+import nl.halewijn.persoonlijkheidstest.application.services.Constants;
+import nl.halewijn.persoonlijkheidstest.application.services.PasswordHash;
+import nl.halewijn.persoonlijkheidstest.application.services.local.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

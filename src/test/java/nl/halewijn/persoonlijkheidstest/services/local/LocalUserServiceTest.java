@@ -3,7 +3,9 @@ package nl.halewijn.persoonlijkheidstest.services.local;
 import static org.junit.Assert.*;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.*;
+import nl.halewijn.persoonlijkheidstest.application.domain.*;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalUserService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

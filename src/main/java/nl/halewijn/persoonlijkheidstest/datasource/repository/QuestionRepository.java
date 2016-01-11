@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import nl.halewijn.persoonlijkheidstest.domain.Question;
-import nl.halewijn.persoonlijkheidstest.domain.Theorem;
-import nl.halewijn.persoonlijkheidstest.domain.TheoremBattle;
+
+import nl.halewijn.persoonlijkheidstest.application.domain.Question;
+import nl.halewijn.persoonlijkheidstest.application.domain.Theorem;
+import nl.halewijn.persoonlijkheidstest.application.domain.TheoremBattle;
 
 @Repository
 public interface QuestionRepository extends JpaSpecificationExecutor<Question>, JpaRepository<Question, Long> {

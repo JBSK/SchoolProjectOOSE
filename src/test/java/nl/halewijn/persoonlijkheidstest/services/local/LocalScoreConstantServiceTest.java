@@ -1,8 +1,10 @@
 package nl.halewijn.persoonlijkheidstest.services.local;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.ScoreConstant;
-import nl.halewijn.persoonlijkheidstest.domain.User;
+import nl.halewijn.persoonlijkheidstest.application.domain.ScoreConstant;
+import nl.halewijn.persoonlijkheidstest.application.domain.User;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalScoreConstantService;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

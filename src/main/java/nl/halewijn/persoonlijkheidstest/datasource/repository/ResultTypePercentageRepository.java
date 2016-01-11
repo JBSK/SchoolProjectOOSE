@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import nl.halewijn.persoonlijkheidstest.domain.Result;
-import nl.halewijn.persoonlijkheidstest.domain.ResultTypePercentage;
+import nl.halewijn.persoonlijkheidstest.application.domain.Result;
+import nl.halewijn.persoonlijkheidstest.application.domain.ResultTypePercentage;
 
 @Repository
 public interface ResultTypePercentageRepository extends JpaSpecificationExecutor<ResultTypePercentage>, JpaRepository<ResultTypePercentage, Long> {

@@ -3,7 +3,12 @@ package nl.halewijn.persoonlijkheidstest.services.local;
 import static org.junit.Assert.*;
 
 import nl.halewijn.persoonlijkheidstest.Application;
-import nl.halewijn.persoonlijkheidstest.domain.*;
+import nl.halewijn.persoonlijkheidstest.application.domain.*;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalPersonalityTypeService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalQuestionService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalRoutingService;
+import nl.halewijn.persoonlijkheidstest.application.services.local.LocalTheoremService;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
